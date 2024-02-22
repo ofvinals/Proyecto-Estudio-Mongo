@@ -1,0 +1,149 @@
+.offcanvas-title {
+	font-size: 150%;
+	color: rgb(207, 207, 207);
+	font-weight: 700;
+	text-wrap: wrap;
+	text-align: center;
+}
+.botones {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+}
+.estadolog {
+	font-size: 80%;
+	text-align: center;
+	align-items: center;
+	margin-top: 1vw;
+	width: 100%;
+	color: rgb(207, 207, 207);
+}
+.barranav{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+.btnnav {
+	font-weight: 500;
+	font-size: 100%;
+	margin: 5px;
+	background-color: rgb(28, 28, 28);
+	color: rgb(207, 207, 207);
+	width: 65% !important;
+	border: 0.2vw outset rgb(143, 142, 139) !important;
+	border-radius: 5px;
+	padding: 5px;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	text-align: center;
+	align-items: center;
+	cursor: pointer;
+	text-decoration: none;
+}
+.btnnav:hover {
+	opacity: 0.8;
+	color: white;
+	background-color: transparent;
+}
+.iconavbar {
+	font-size: 130% !important;
+	color: rgb(207, 207, 207);
+   padding-left: 15px;
+	padding-top: 0vw !important;
+	padding-bottom: 0vw !important;
+	padding-right: 10px;
+}
+.botonnavlog {
+	font-weight: 500;
+	font-size: 100%;
+	margin: 5px;
+	background-color: rgb(10, 61, 4) !important;
+	color: rgb(207, 207, 207);
+	width: auto;
+	border: 0.2vw outset rgb(143, 142, 139) !important;
+	border-radius: 5px;
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+	align-items: center;
+	padding: 5px !important;
+	cursor: pointer;
+	text-align: center;
+	text-decoration: none !important;
+}
+.botonnavlog:hover {
+	opacity: 0.8;
+	color: white;
+	background-color: transparent !important;
+}
+.logdisable {
+	background-color: rgb(10, 61, 4);
+	opacity: 0.3;
+	background-color: transparent !important;
+	text-decoration: none;
+	cursor: no-drop;
+}
+.botonlogout {
+	margin: 5px;
+	font-weight: 500;
+	padding: 5px;
+	background-color: rgb(60, 5, 5) !important;
+	color: rgb(207, 207, 207);
+	width: auto!important;
+	border: 0.2vw outset rgb(143, 142, 139) !important;
+	border-radius: 5px;
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+	align-items: center;
+	cursor: pointer;
+	text-align: center;
+	text-decoration: none;
+	align-self: center;
+	font-size: 100%;
+}
+.botonnavreg {
+	font-weight: 500;
+	font-size: 100%;
+	margin: 5px;
+	background-color: rgb(81, 74, 7);
+	color: rgb(207, 207, 207);
+	width: auto;
+	border: 0.2vw outset rgb(143, 142, 139) !important;
+	border-radius: 5px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 5px !important;
+	cursor: pointer;
+	text-align: center;
+	text-decoration: none !important;
+}
+.botonnavreg:hover {
+	opacity: 0.8;
+	color: white;
+	background-color: transparent;
+}
+.regdisable {
+	background-color: rgb(10, 61, 4);
+	opacity: 0.3;
+	background-color: transparent !important;
+	cursor: no-drop;
+}
+
+@media (min-width: 1400px) {
+	.btnnav {
+		width: 100%!important;
+		margin: 5px;
+		display: flex!important;
+		flex-direction: column!important;
+		align-items: center;
+		text-wrap: nowrap;
+		justify-content: center;
+		padding: 5px !important;
+	}
+}

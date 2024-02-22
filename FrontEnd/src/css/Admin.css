@@ -1,0 +1,108 @@
+.bodyadmin{
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	background-image: linear-gradient(
+			100deg,
+			rgba(255, 255, 240, 0.02),
+			rgba(0, 0, 0, 1) 85%
+		),
+		url(/01.jpg);
+	background-size: cover;
+	background-position: center;
+	object-fit: cover;
+	padding-bottom: 10px;
+}
+.titlead {
+	margin-top:20px;
+	margin-bottom: 20px;
+	font-size: 130%;
+	font-weight: 800;
+	color: rgb(207, 207, 207);
+	text-align: center;
+}
+.subtitleadusu {
+	font-size: 120%;
+	font-weight: 400;
+   margin-bottom: 20px;
+	color: rgb(207, 207, 207);
+}
+.main {
+	display: flex;
+	flex-direction: column;
+	text-align: center;
+}
+.botonesadm {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	align-content: center;
+	justify-content: space-around;
+}
+.botonadm {
+	padding: 5px;
+	margin: 5px;
+	font-weight: 600;
+	background-color: rgb(27, 27, 27);
+	color: rgb(207, 207, 207)!important;
+	width: 230px;
+	border: 0.2vw outset rgb(143, 142, 139) !important;
+	border-radius: 5px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	text-align: center;
+	text-decoration: none!important;
+	align-self: center;
+	font-size: 100%;
+	text-wrap: nowrap;
+}
+.botonadm:hover {
+	opacity: 1;
+	color: white;
+	background-color: transparent;
+}
+.linkadmin{ 
+	color: rgb(207, 207, 207)!important;
+	text-decoration: none!important;
+}
+.botonlogoutadmin {
+	margin: 5px;
+	font-weight: 600;
+	padding: 5px;
+	background-color: rgb(60, 5, 5) !important;
+	color: rgb(207, 207, 207);
+	width: 230px;
+	border: 0.2vw outset rgb(143, 142, 139) !important;
+	border-radius: 5px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
+	text-align: center;
+	text-decoration: none;
+	align-self: center;
+	font-size: 100%;
+}
+.botonlogout:hover {
+	opacity: 0.8;
+	color: white;
+	background-color: transparent;
+}
+.botonlogoutadmin:hover {
+	opacity: 0.8;
+	color: white;
+	background-color: transparent;
+}
+.Formcargarecord{
+	display: flex !important;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: space-around !important;
+	align-items: center;
+	align-content: center;
+	opacity: 0.85;
+}

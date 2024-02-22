@@ -1,0 +1,401 @@
+.imagennav {
+	position: relative;
+	height: 450px;
+	background-image: linear-gradient(
+			120deg,
+			rgba(255, 255, 240, 0.02) 0.5%,
+			rgba(0, 0, 0, 1) 85%
+		),
+		url(/01.jpg);
+	background-size: cover;
+	object-fit: cover;
+	background-position: cover;
+}
+.parrafo1 {
+	position: absolute;
+	top: 15px;
+	left: 25px;
+	width: 50vw;
+	font-size: 24px;
+	color: rgb(207, 207, 207);
+	padding-left: 5%;
+	font-weight: 600;
+}
+.parrafo2 {
+	position: absolute;
+	top: 200px;
+	width: 100%;
+	text-align: center;
+	font-size: 190%;
+	font-weight: 700;
+	color: rgb(207, 207, 207) !important;
+	text-wrap: wrap;
+}
+.botonturno {
+	padding: 5px;
+	font-size: 14px;
+	background-color: rgb(207, 207, 207) !important;
+	color: rgb(28, 28, 28);
+	border: 0.3vw outset rgb(143, 142, 139) !important;
+	border-radius: 5px;
+	font-weight: 600;
+	width: 213px !important;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	text-align: center;
+	text-decoration: none;
+	align-self: center;
+}
+.botonturno:hover {
+	opacity: 0.8;
+	background-color: transparent;
+	color: rgb(28, 28, 28);
+}
+.icosecboton {
+	font-size: 150%;
+	color: rgb(28, 28, 28) !important;
+	padding-right: 1%;
+}
+
+/* Section 2 LOGO */
+.imagenlogosec2 {
+	position: relative;
+	height: 270px;
+	filter: brightness(80%);
+	margin-top: 15px;
+	color: white!important ;
+	background-color: white!important;
+	background-image: url(/LOGOHOME.jpg);
+	background-size:  contain;
+	background-repeat: no-repeat;
+	object-fit: contain;
+	background-position: center;
+	display: flex;
+	justify-content: center;
+}
+.textosec2 {
+	font-size: 32px;
+	font-weight: 700;
+	text-align: center;
+	color: rgb(207, 207, 207);
+	margin-top: 50px;
+	margin-bottom: 50px;
+	text-shadow: 9px 12px 7px rgba(241, 241, 241, 0.41)!important;
+}
+.btnhome {
+	padding: 5px;
+	margin-top: 220px;
+	font-size: 14px;
+	color: rgb(207, 207, 207) !important;
+	background-color: rgb(28, 28, 28);
+	border: 0.3vw outset rgb(143, 142, 139) !important;
+	border-radius: 5px;
+	font-weight: 600;
+	width: 180px !important;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	text-align: center;
+	text-decoration: none;
+	align-self: center;
+}
+.btnhome:hover {
+	opacity: 0.9;
+	color: white;
+	background-color: rgb(81, 80, 80);
+}
+
+/* Section 3 Carrousel */
+.imagencar1 {
+	height: 450px;
+	margin-top: 10px;
+	background-image: linear-gradient(
+			60deg,
+			rgba(255, 255, 240, 0.02) 0.5%,
+			rgba(0, 0, 0, 1) 85%
+		),
+		url(/vista-superior-elementos-orientacion-profesional-jueces.jpg);
+	filter: brightness(80%);
+	background-size: cover;
+	background-position: center;
+	object-fit: cover;
+	background-position: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.carousel-control-prev {
+	width: 5vw;
+}
+.carousel-control-next {
+	width: 5vw;
+}
+.titlecar {
+	color: white !important;
+	width: 100%;
+	font-size: 32px;
+	font-weight: 700;
+	text-align: center;
+	margin-bottom: 10%;
+}
+.listacar {
+	color: white !important;
+	font-size: 14px;
+	font-weight: 700;
+	display: flex;
+	flex-direction: column;
+	margin-right: 20%;
+	margin-left: 20%;
+	text-align: center;
+}
+.imagencar2 {
+	position: relative;
+	color: rgb(207, 207, 207);
+	height: 450px;
+	margin-top: 10px;
+	filter: brightness(75%);
+	background-image: linear-gradient(
+			60deg,
+			rgba(255, 255, 240, 0.02) 0.5%,
+			rgba(0, 0, 0, 1) 85%
+		),
+		url('/descarga (1).jpeg');
+	background-size: cover;
+	background-position: center;
+	object-fit: cover;
+	background-position: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.imagencar3 {
+	position: relative;
+	color: rgb(207, 207, 207) !important;
+	height: 450px;
+	margin-top: 10px;
+	filter: brightness(75%);
+	background-image: linear-gradient(
+			60deg,
+			rgba(255, 255, 240, 0.02) 0.5%,
+			rgba(0, 0, 0, 1) 85%
+		),
+		url('/descarga (2).jpeg');
+	background-size: cover;
+	background-position: center;
+	object-fit: cover;
+	background-position: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+/* section 4 LOGO */
+.imagenlogosec4 {
+	position: relative;
+	height: 380px;
+	width: 50%;
+	max-width: 380px!important;
+	filter: brightness(80%);
+	opacity: 0.8;
+	margin-top: 15px;
+	color: white!important;
+	background-color: white!important;
+	background-image: url(/LOGOHOME.jpg);
+	background-size: contain;
+	background-repeat: no-repeat;
+	object-fit: fill;
+	background-position: center;
+	display: flex;
+	justify-content: center;
+}
+.titlesect4 {
+	color: rgb(207, 207, 207) !important;
+	width: 100%;
+	display: flex;
+	font-weight: 700;
+	margin-top: 15px;
+	text-align: center;
+	justify-content: center;
+	font-size: 32px;
+}
+.textsec4 {
+	color: rgb(207, 207, 207) !important;
+	font-size: 16px;
+	width: 100%;
+	text-align: center;
+}
+
+/* Section 5 Contacto */
+.imagensection4 {
+	position: relative;
+	margin-top: 10px;
+	height: 450px;
+	background-image: linear-gradient(
+			120deg,
+			rgba(255, 255, 240, 0.02) 0.5%,
+			rgba(0, 0, 0, 1) 85%
+		),
+		url(/414635-PD6SLS-602-1a.jpg);
+	background-size: cover;
+	background-position: center;
+	object-fit: cover;
+	background-position: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.titlecontac {
+	position: absolute;
+	top: 20px;
+	font-size: 32px;
+	font-weight: 700;
+	color: rgb(207, 207, 207) !important;
+}
+.conttel {
+	position: absolute;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	text-align: center;
+	justify-content: center;
+	top: 90px;
+	font-size: 90%;
+	width: 100%;
+}
+.contmail {
+	position: absolute;
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+	text-align: center;
+	align-items: center;
+	justify-content: center;
+	top: 170px;
+	font-size: 90%;
+	width: 100%;
+}
+.contdir {
+	position: absolute;
+	display: flex;
+	flex-direction: column;
+	text-align: center;
+	align-items: center;
+	justify-content: center;
+	top: 240px;
+	font-size: 80%;
+	width: 100%;
+}
+.textosec4 {
+	font-size: 150%;
+	color: rgb(207, 207, 207) !important;
+	text-wrap: wrap;
+	width: 200px;
+}
+.icosec4 {
+	font-size: 150%;
+	color: rgb(207, 207, 207) !important;
+	padding-right: 1%;
+}
+.contbtn {
+	position: absolute;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	bottom: 20px;
+	left: 15px;
+	right: 15px;
+	font-size: 80%;
+}
+.float {
+	position: fixed;
+	width: 60px;
+	height: 60px;
+	bottom: 50px;
+	right: 30px;
+	background-color: #25d366;
+	color: #fff;
+	border-radius: 50px;
+	text-align: center;
+	font-size: 30px;
+	box-shadow: 2px 2px 3px #999;
+	z-index: 100;
+}
+.float:hover {
+	text-decoration: none;
+	color: #25d366;
+	background-color: #fff;
+}
+.my-float {
+	margin-top: 16px;
+}
+
+
+@media (min-width: 495px) {
+	.parrafo1 {
+		font-size: 32px;
+	}
+	.parrafo2 {
+		font-size: 42px;
+		text-align: center;
+		padding-left: 0px;
+	}
+	.botonturno {
+		width: 50%;
+	}
+	.textosec2{
+		font-size: 42px;
+	}
+	.titlecar {
+		font-size: 42px;
+	}
+	.listacar {
+		font-size: 18px;
+	}
+	.titlesect4{
+		font-size: 36px;
+		text-align: center;
+	}
+	.textsec4{
+		font-size: 16px;
+	}
+}
+@media (min-width: 576px) {
+}
+@media (min-width: 768px) {
+	.titlecontac {
+		font-size: 48px;
+	}
+	.titlesect4{
+		font-size: 48px;
+		text-align: center;
+	}
+	.textosec2{
+		font-size: 48px;
+	}
+}
+@media (min-width: 992px) {
+	.textsec4{
+		font-size: 24px;
+	}
+}
+
+@media (min-width: 1200px) {
+	.titlecar {
+		font-size: 52px;
+	}
+	.titlecontac {
+		font-size: 52px;
+	}
+}
+@media (min-width: 1400px) {
+	.parrafo1 {
+		font-size: 40px;
+	}
+	.parrafo2 {
+		font-size: 48px;
+	}
+}

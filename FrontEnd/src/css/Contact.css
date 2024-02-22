@@ -1,0 +1,76 @@
+.bodycontact {
+	background-image: linear-gradient(100deg, rgba(255,255, 240, 0.02), rgba(0, 0, 0, 1)),
+		url(/01.jpg);
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+	background-size: cover;
+	object-fit: cover;
+	background-position: center;
+   padding-bottom: 8vw;
+}
+.titulocont {
+	color:rgb(207,207,207);
+   font-size: 200%;
+	font-weight: 800;
+	margin-top: 4vw;
+}
+.Parrafo2 {
+	color: rgb(207,207,207);
+   font-size: 100%;
+	font-weight: 500;
+	padding: 2vw;
+}
+.cajaForm{
+   display: flex!important;
+   flex-wrap: wrap;
+	flex-direction: column;
+   justify-content: center;
+	align-items: center;
+	width: auto;
+   margin: 5vw;
+	padding: 2vw;
+   border-radius: 5px;
+   border: 0.2vw outset rgb(143, 142, 139);
+   opacity: 0.85;
+}
+.labelcontact{
+   font-weight: 600;
+	text-align: center;
+   color:rgb(207,207,207);
+   font-size: 100%;
+	margin: 1vw;
+	margin-left: 10vw;
+	margin-right:10vw
+
+}
+.inputcontactcoment{
+	font-size: 100% !important;
+	width: 100%;
+	height: 150px
+}
+.inputcontactemail{
+	font-size:100%!important;
+	margin: 1vw;
+}
+.btncont {
+	font-weight: 700;
+	font-size: 100%;
+	margin-top: 2vw!important;
+	margin-bottom: 2vw!important;
+	background-color: rgb(28, 28, 28);
+   color: rgb(207,207,207);
+   width: auto;
+   border: 0.2vw outset rgb(143, 142, 139)!important;
+	border-radius: 5px;
+	padding:1vw;
+   cursor: pointer;
+	text-align: center;
+	text-decoration: none;
+}
+.btncont:hover{
+   opacity:0.8;
+	color: white;
+	background-color: transparent;
+}
