@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+const mongoose = require ('mongoose');
 
 const cajaSchema = new mongoose.Schema(
 	{
@@ -26,7 +26,7 @@ const cajaSchema = new mongoose.Schema(
 			filename: String,
 			filePath: String,
 		},
-		url:{
+		fileUrl:{
 			type: String,
 		},
 		estado: {
@@ -48,5 +48,4 @@ cajaSchema.methods.setFile = function setFile(
 		filePath: filePath,
 	};
 };
-
-export default mongoose.model('Caja', cajaSchema);
+module.exports = mongoose.model('Caja', cajaSchema);

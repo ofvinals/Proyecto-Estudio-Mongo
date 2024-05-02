@@ -1,6 +1,6 @@
-import Caja from '../models/caja.model.js';
+const Caja = require('../models/caja.model.js');
 
-export const getCajas = async (req, res) => {
+const getCajas = async (req, res) => {
 	try {
 		const cajas = await Caja.find();
 		res.json(cajas);
@@ -9,32 +9,29 @@ export const getCajas = async (req, res) => {
 	}
 };
 
-export const createCaja = async (req, res) => {
+const createCaja = async (req, res) => {
 	// Extraer los campos del cuerpo de la solicitud (request body)
-	const { fecha, concepto, tipo, monto, estado } = req.body;
+	const { fecha, concepto, tipo, monto, estado, fileUrl } = req.body;
 
 	try {
-		const fechaObj = new Date(fecha);
 		// Crear una nueva instancia del modelo Caja utilizando los datos de la solicitud
-		const { result } = req.body;
-
 		const newCaja = new Caja({
-			fecha: fechaObj,
+			fecha,
 			concepto,
 			tipo,
 			monto,
-			url: result,
+			fileUrl, 
 			estado,
 		});
-
+		const partesFecha = fecha.split('/');
+		const fechaObj = new Date(
+			partesFecha[2],
+			partesFecha[1] - 1,
+			partesFecha[0]
+		);
 		const month = fechaObj.getMonth() + 1;
 		newCaja.mes = month;
 
-		if (req.file) {
-			const { filename } = req.file;
-			const filePath = `/uploads/${filename}`; // ajusta la ruta según tu estructura de archivos
-			newCaja.setFile(filename, filePath);
-		}
 		const savedCaja = await newCaja.save();
 		res.json(savedCaja);
 	} catch (error) {
@@ -43,18 +40,18 @@ export const createCaja = async (req, res) => {
 	}
 };
 
-export const getCaja = async (req, res) => {
+const getCaja = async (req, res) => {
 	try {
 		const caja = await Caja.findById(req.params.id);
 		if (!caja)
-			return res.status(404).json({ message: 'Expediente no encontrado' });
+			return res.status(404).json({ message: 'Caja no encontrado' });
 		res.json(caja);
 	} catch (error) {
 		return res.status(500).json({ message: error.message });
 	}
 };
 
-export const updateCaja = async (req, res) => {
+const updateCaja = async (req, res) => {
 	try {
 		const { fecha, concepto, tipo, monto, adjunto, estado } = req.body;
 
@@ -67,7 +64,7 @@ export const updateCaja = async (req, res) => {
 	}
 };
 
-export const deleteCaja = async (req, res) => {
+const deleteCaja = async (req, res) => {
 	try {
 		const deletedCaja = await Caja.findByIdAndDelete(req.params.id);
 		if (!deletedCaja)
@@ -77,4 +74,11 @@ export const deleteCaja = async (req, res) => {
 	} catch (error) {
 		return res.status(500).json({ message: error.message });
 	}
+};
+module.exports = {
+	getCaja,
+	getCajas,
+	createCaja,
+	updateCaja,
+	deleteCaja,
 };

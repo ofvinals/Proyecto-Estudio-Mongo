@@ -1,5 +1,4 @@
-import mongoose from 'mongoose';
-import { date } from 'zod';
+const mongoose = require ('mongoose');
 
 const turnoSchema = new mongoose.Schema(
 	{
@@ -21,5 +20,4 @@ const turnoSchema = new mongoose.Schema(
 		timestamps: true,
 	}
 );
-
-export default mongoose.model('Turno', turnoSchema);
+module.exports = mongoose.model('Turno', turnoSchema);

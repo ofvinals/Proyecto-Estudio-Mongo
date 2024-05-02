@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { google} from 'googleapis';
+import { google } from 'googleapis';
 import { config } from 'dotenv';
 
 config();

@@ -1,77 +1,73 @@
+/* eslint-disable no-mixed-spaces-and-tabs */
 import React, { useEffect, useState } from 'react';
 import Swal from 'sweetalert2';
-import '../css/Admin.css';
+import '../css/Header.css';
+import CheckIcon from '@mui/icons-material/Check';
+import PendingActionsIcon from '@mui/icons-material/PendingActions';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
 import { useForm } from 'react-hook-form';
-import { Button, Form, Table } from 'react-bootstrap';
-import {
-	collection,
-	addDoc,
-	getDocs,
-	deleteDoc,
-	doc,
-} from 'firebase/firestore';
-import { db } from '../firebase/config';
+import { Button, Form } from 'react-bootstrap';
+import { getNotas, updateNota, createNota } from '../hooks/UseNotes.js';
+import { Table } from '../components/Gestion/Table';
+import Tooltip from '@mui/material/Tooltip';
 
 export const Notas = () => {
 	const [notas, setNotas] = useState();
-	const [tablaNotas, setTablaNotas] = useState();
-	const { register, handleSubmit, reset } = useForm();
+	const [notasPendientes, setNotasPendientes] = useState([]);
+	const [notasArchivadas, setNotasArchivadas] = useState([]);
+	const [data, setData] = useState([notasPendientes]);
+	const [mostrarNotasPendientes, setMostrarNotasPendientes] = useState(true);
+	const {
+		register,
+		handleSubmit,
+		reset,
+		formState: { errors },
+	} = useForm();
+
+	const toggleMostrarNotas = () => {
+		setMostrarNotasPendientes(!mostrarNotasPendientes);
+		if (mostrarNotasPendientes) {
+			setData(notasArchivadas);
+		} else {
+			setData(notasPendientes);
+		}
+	};
 
 	useEffect(() => {
-		const fetchData = async () => {
+		const loadNotas = async () => {
 			try {
-				const notasRef = collection(db, 'notas');
-				const snapshot = await getDocs(notasRef);
-				const notasArray = snapshot.docs.map((doc) => {
-					return { ...doc.data(), id: doc.id };
-				});
-				setNotas(notasArray);
-				cargarTablaNotas(notasArray);
+				const notas = await getNotas();
+				if (notas) {
+					const notasArray = notas.map((doc) => {
+						return { ...doc, id: doc._id };
+					});
+					const notasPendientes = notasArray.filter(
+						(nota) => nota.estado === 'Pendiente'
+					);
+					const notasArchivadas = notasArray.filter(
+						(nota) => nota.estado === 'Archivado'
+					);
+					setNotasArchivadas(notasArchivadas);
+					setNotasPendientes(notasPendientes);
+				} else {
+					console.error('No se encontraron notas');
+				}
 			} catch (error) {
 				console.error('Error al obtener notas:', error);
 			}
 		};
-		fetchData();
-	}, []);
-
-	// funcion para cargar notas
-	function cargarTablaNotas(datosNotas) {
-		if (datosNotas) {
-			const tabla = datosNotas.map((nota) => (
-				<tr key={nota.id}>
-					<td className='align-middle w-25'>{nota.responsable}</td>
-					<td className='align-middle '>{nota.recordatorio}</td>
-					<td className='align-middle d-flex flex-row'>
-						<button
-							className='btneditgestion'
-							onClick={() => borrarNota(nota.id)}>
-							<i className='bi bi-check2-circle acciconoagusu'></i>
-						</button>
-					</td>
-				</tr>
-			));
-			setTablaNotas(tabla);
-		} else {
-			setTablaNotas(
-				<tr key='no-turnos'>
-					<td colSpan='4'>
-						<p>No hay notas o recordatorios pendientes</p>
-					</td>
-				</tr>
-			);
-		}
-	}
+		loadNotas();
+	}, [notas]);
 
 	const onSubmit = handleSubmit(async (values) => {
-		const notaRef = collection(db, 'notas');
-		await addDoc(notaRef, values);
-		const updatedNotas = await getDocs(collection(db, 'notas'));
-		const updatedNotasArray = updatedNotas.docs.map((doc) => ({
-			...doc.data(),
-			id: doc.id,
-		}));
+		values.estado = 'Pendiente';
+		await createNota(values);
+		const updatedNotas = await getNotas();
+		const updatedNotasArray = updatedNotas.map((doc) => {
+			return { ...doc, id: doc._id };
+		});
 		setNotas(updatedNotasArray);
-		cargarTablaNotas(updatedNotasArray);
 		Swal.fire({
 			icon: 'success',
 			title: 'Nota Registrada!',
@@ -81,40 +77,36 @@ export const Notas = () => {
 		reset();
 	});
 
-	// funcion para eliminar notas
-	const deleteNota = (id) => deleteDoc(doc(db, 'notas', id));
-
-	async function borrarNota(id) {
+	// funcion para archivar notas
+	async function archivarNota(id) {
 		try {
-			Swal.fire({
-				title: 'Cargando...',
-				allowOutsideClick: false,
-				showConfirmButton: false,
-			});
 			const result = await Swal.fire({
 				title: '¿Estás seguro?',
-				text: 'Confirmas la eliminacion de la nota?',
+				text: 'Confirmas el archivo de la nota?',
 				icon: 'warning',
 				showCancelButton: true,
 				confirmButtonColor: '#d33',
 				cancelButtonColor: '#8f8e8b',
-				confirmButtonText: 'Sí, eliminar',
+				confirmButtonText: 'Sí, archivar',
 				cancelButtonText: 'Cancelar',
 			});
 			if (result.isConfirmed) {
-				await deleteNota(id);
+				await updateNota(id, { estado: 'Archivado' });
 				Swal.fire({
 					icon: 'success',
-					title: 'Nota eliminada correctamente',
+					title: 'Nota archivada correctamente',
 					showConfirmButton: false,
 					timer: 1500,
 				});
-				Swal.close();
-				const updatedNotas = await getDocs(collection(db, 'notas'));
-				const updatedNotasArray = updatedNotas.docs.map((doc) => ({
-					...doc.data(),
-					id: doc.id,
+				const updatedNotas = await getNotas();
+				const updatedNotasArray = updatedNotas.map((doc) => ({
+					...doc,
+					id: doc._id,
 				}));
+				const updatedNotasPendientes = updatedNotasArray.filter(
+					(nota) => (nota.estado = 'Pendiente')
+				);
+				setNotasPendientes(updatedNotasPendientes);
 				setNotas(updatedNotasArray);
 			}
 		} catch (error) {
@@ -122,60 +114,184 @@ export const Notas = () => {
 		}
 	}
 
+	// funcion para desarchivar notas
+	async function desarchivarNota(id) {
+		try {
+			const result = await Swal.fire({
+				title: '¿Estás seguro?',
+				text: 'Confirmas el desarchivo de la nota?',
+				icon: 'warning',
+				showCancelButton: true,
+				confirmButtonColor: '#d33',
+				cancelButtonColor: '#8f8e8b',
+				confirmButtonText: 'Sí, desarchivar',
+				cancelButtonText: 'Cancelar',
+			});
+			if (result.isConfirmed) {
+				await updateNota(id, { estado: 'Pendiente' });
+				Swal.fire({
+					icon: 'success',
+					title: 'Nota desarchivada correctamente',
+					showConfirmButton: false,
+					timer: 1500,
+				});
+				const updatedNotas = await getNotas();
+				const updatedNotasArray = updatedNotas.map((doc) => ({
+					...doc,
+					id: doc._id,
+				}));
+				const updatedNotasPendientes = updatedNotasArray.filter(
+					(nota) => (nota.estado = 'Pendiente')
+				);
+				setNotasPendientes(updatedNotasPendientes);
+				setNotas(updatedNotasArray);
+			}
+		} catch (error) {
+			console.error('Error al eliminar la nota:', error);
+		}
+	}
+
+	const columns = React.useMemo(() => {
+		return [
+			{
+				header: 'Fecha',
+				accessorKey: 'fecha',
+				size: 50,
+			},
+			{
+				header: 'Responsable',
+				accessorKey: 'responsable',
+				show: false,
+				size: 50,
+			},
+			{
+				header: 'Recordatorio',
+				accessorKey: 'recordatorio',
+				size: 250,
+			},
+		];
+	}, []);
+
+	const actions = mostrarNotasPendientes
+		? [
+				{
+					text: 'Check',
+					icon: (
+						<Tooltip title='Tarea realizada' arrow>
+							<CheckIcon color='success' cursor='pointer' />
+						</Tooltip>
+					),
+					onClick: (row) => archivarNota(row.original._id),
+				},
+		  ]
+		: [
+				{
+					text: 'NoCheck',
+					icon: (
+						<Tooltip title='Colocar como tarea pendiente' arrow>
+							<PendingActionsIcon color='warning' cursor='pointer' />
+						</Tooltip>
+					),
+					onClick: (row) => desarchivarNota(row.original._id),
+				},
+		  ];
+
+	const darkTheme = createTheme({
+		palette: {
+			mode: 'dark',
+		},
+	});
+
 	return (
 		<>
-			<div>
-				<hr className='linea mx-3' />
-				<h2 className='titlead'>Tablero de Notas y Recordatorios</h2>
-				<Form className='Formcargarecord' onSubmit={onSubmit}>
+			<div className='py-3'>
+				<hr className='linea text-white mx-3' />
+				<h2 className='my-4 text-3xl font-extrabold text-center bg-gradient-to-t from-primary to-blue-200 text-transparent bg-clip-text'>
+					Tablero de Notas y Recordatorios
+				</h2>
+				<Form
+					className=' flex flex-row flex-wrap justify-evenly items-center'
+					onSubmit={onSubmit}>
 					<Form.Group className='w-25 mb-3' controlId='resp'>
-						<Form.Label className='labelcarga'>Responsable</Form.Label>
+						<Form.Label className='text-white font-medium'>
+							Responsable
+						</Form.Label>
 						<select
-							className='inputcarga'
+							className='items-center shadow-2xl w-full rounded-md p-2 focus:outline-none border-2 border-black text-black'
 							type='text'
-							{...register('responsable')}>
-							<option>Selecciona..</option>
+							{...register('responsable', {
+								required: {
+									value: true,
+									message: 'El responsable es requerido',
+								},
+							})}>
+							<option value=''>Selecciona..</option>
 							<option value='OSCAR'>OSCAR</option>
 							<option value='JORGE'>JORGE</option>
 							<option value='MARIA'>MARIA</option>
 						</select>
+						{errors.responsable && (
+							<span className='error-message'>
+								{errors.responsable.message}
+							</span>
+						)}
 					</Form.Group>
 					<Form.Group className='mb-3' controlId='record'>
-						<Form.Label className='labelcarga'>
+						<Form.Label className='text-white font-medium'>
 							Recordatorio/Nota
 						</Form.Label>
 						<Form.Control
 							as='textarea'
+							className='items-center shadow-2xl w-full rounded-md p-2 focus:outline-none border-2 border-black text-black'
+							placeholder='Ingresa el recordatorio o nota...'
 							rows={3}
 							cols={35}
-							{...register('recordatorio')}
+							{...register('recordatorio', {
+								required: {
+									value: true,
+									message: 'El recordatorio es requerido',
+								},
+							})}
 						/>
+						{errors.recordatorio && (
+							<span className='error-message'>
+								{errors.email.recordatorio}
+							</span>
+						)}
 					</Form.Group>
-					<Form.Group id='inputrecord'>
-						<Button className='botoneditcarga' type='submit'>
-							<i className='iconavbar bi bi-check2-square'></i>
-							Registrar
+					<Form.Group
+						id='inputrecord'
+						className='flex flex-row flex-wrap justify-between w-7/12'>
+						<Button
+							className='bg-white shadow-3xl btnAdmin text-primary text-center p-1 py-2 border-2 w-[170px] mb-1 border-primary rounded-xl'
+							type='submit'>
+							<i className='text-xl pe-2 bi bi-check2-square'></i>
+							Registrar Nota
+						</Button>
+						<Button
+							type='button'
+							className='bg-white shadow-3xl btnAdmin text-primary text-center p-1 border-2 py-2 w-[200px] mb-1 border-primary rounded-xl'
+							onClick={toggleMostrarNotas}>
+							<i className='text-xl pe-2 bi bi-archive'></i>
+							{mostrarNotasPendientes
+								? 'Ver Notas Archivadas'
+								: 'Ver Notas Pendientes'}
 						</Button>
 					</Form.Group>
 				</Form>
-				<hr className='linea mx-3' />
-				<div className='table-responsive'>
-					<Table
-						striped
-						hover
-						variant='dark'
-						className='tablaagusu table border border-secondary-subtle'>
-						<thead>
-							<tr>
-								<th>Responsable</th>
-								<th className='w-100'>Recordatorio</th>
-								<th className='accag'>Acciones</th>
-							</tr>
-						</thead>
-						<tbody id='tablaTurnos' className='table-group-divider'>
-							{tablaNotas}
-						</tbody>
-					</Table>
+				<hr className='linea text-white mx-3 mt-3' />
+				<div className='table-responsive container-lg'>
+					<h2 className='text-white my-3 text-center text-2xl font-bold'>
+						{mostrarNotasPendientes
+							? 'Notas Pendientes'
+							: 'Notas Archivadas'}
+					</h2>
+					<div className='table-responsive'>
+						<ThemeProvider theme={darkTheme}>
+							<CssBaseline />
+							<Table columns={columns} data={data} actions={actions} />
+						</ThemeProvider>
+					</div>
 				</div>
 			</div>
 		</>

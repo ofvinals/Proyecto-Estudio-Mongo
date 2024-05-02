@@ -1,8 +1,8 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema(
 	{
-		username: {
+		nombre: {
 			type: String,
 			required: true,
 			trim: true,
@@ -24,7 +24,10 @@ const userSchema = new mongoose.Schema(
 		dni: {
 			type: String,
 			required: true,
-			maxlength:  [10, 'El DNI/CUIT debe contener hasta 11 caracteres numericos (sin espacios ni guiones)']
+			maxlength: [
+				10,
+				'El DNI/CUIT debe contener hasta 11 caracteres numericos (sin espacios ni guiones)',
+			],
 		},
 		domicilio: {
 			type: String,
@@ -33,12 +36,19 @@ const userSchema = new mongoose.Schema(
 		celular: {
 			type: String,
 			required: true,
-			maxlength:10
+			maxlength: 10,
 		},
+		admin:{
+			type:Boolean,
+			defaultValue: false
+		},
+		active:{
+			type:Boolean,
+			defaultValue: true
+		}
 	},
 	{
 		timestamps: true,
 	}
 );
-
-export default mongoose.model('User', userSchema);
+module.exports = mongoose.model('User', userSchema);

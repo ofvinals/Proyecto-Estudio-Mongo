@@ -1,26 +1,20 @@
-import { Router } from 'express';
-import { authRequired } from '../src/middlewares/validateToken.js';
-import {
+const express = require('express');
+const { authRequired } = require('../middlewares/validateToken.js');
+const {
 	getCajas,
 	getCaja,
 	createCaja,
 	deleteCaja,
 	updateCaja,
-} from '../src/controllers/caja.controller.js';
-// import { validateSchema } from '../middlewares/validator.Middleware.js';
-import {upload} from '../src/controllers/upload.controller.js'
+} = require('../controllers/caja.controller.js');
+const { upload } = require('../controllers/upload.controller.js');
 
-const router = Router();
+const router = express.Router();
 
 router.get('/cajas', authRequired, getCajas);
 router.get('/cajas/:id', authRequired, getCaja);
-router.post(
-	'/cajas',
-	upload.single('file'),
-	authRequired,
-	createCaja
-);
+router.post('/cajas', upload.single('file'), authRequired, createCaja);
 router.delete('/cajas/:id', authRequired, deleteCaja);
 router.put('/cajas/:id', authRequired, updateCaja);
 
-export default router;
+module.exports = router;

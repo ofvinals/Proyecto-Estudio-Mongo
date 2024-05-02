@@ -1,25 +1,21 @@
-import { Router } from 'express';
-import { authRequired } from '../src/middlewares/validateToken.js';
-import {
+const express = require('express');
+const { authRequired } = require('../middlewares/validateToken.js');
+const {
 	getUsers,
 	getUser,
+	getUserByGoogle,
 	createUser,
 	deleteUser,
 	updateUser,
-} from '../src/controllers/user.controller.js';
-import { validateSchema } from '../src/middlewares/validator.Middleware.js';
+} = require('../controllers/user.controller.js');
 
-const router = Router();
+const router = express.Router();
 
 router.get('/users', authRequired, getUsers);
+router.get('/users/google/:userEmail', getUserByGoogle);
 router.get('/users/:id', authRequired, getUser);
-router.post(
-	'/users',
-	authRequired,
-	validateSchema(),
-	createUser
-);
+router.post('/users', authRequired, createUser);
 router.delete('/users/:id', authRequired, deleteUser);
 router.put('/users/:id', authRequired, updateUser);
 
-export default router;
+module.exports = router;

@@ -1,19 +1,10 @@
-import React, { useState } from 'react';
+/* eslint-disable react/prop-types */
 import { Modal, Form } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
 
-export const Pagos = () => {
-	const [showModal, setShowModal] = useState(true);
-	const navigate = useNavigate();
-	// Función para cerrar el modal
-	const handleCloseModal = () => {
-		setShowModal(false);
-		navigate('/gestiongastos');
-	};
-
+export const Pagos = ({ showModal, onClose }) => {
 	return (
 		<>
-			<Modal show={showModal} onHide={handleCloseModal}>
+			<Modal show={showModal} onHide={onClose}>
 				<Modal.Header closeButton>
 					<Modal.Title className='text-white'>
 						Consultar Medios de Pago
@@ -92,7 +83,7 @@ export const Pagos = () => {
 					<button
 						className='btneditgestion px-2'
 						onClick={() => {
-							handleCloseModal();
+							onClose();
 						}}>
 						Volver
 					</button>

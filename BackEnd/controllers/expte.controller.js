@@ -1,6 +1,6 @@
-import Expte from '../models/expte.model.js';
+const Expte = require('../models/expte.model.js');
 
-export const getExptes = async (req, res) => {
+const getExptes = async (req, res) => {
 	try {
 		const exptes = await Expte.find();
 		res.json(exptes);
@@ -9,7 +9,7 @@ export const getExptes = async (req, res) => {
 	}
 };
 
-export const createExpte = async (req, res) => {
+const createExpte = async (req, res) => {
 	// Extraer los campos del cuerpo de la solicitud (request body)
 	const {
 		cliente,
@@ -44,7 +44,7 @@ export const createExpte = async (req, res) => {
 	}
 };
 
-export const getExpte = async (req, res) => {
+const getExpte = async (req, res) => {
 	try {
 		const expte = await Expte.findById(req.params.id);
 		if (!expte)
@@ -55,7 +55,7 @@ export const getExpte = async (req, res) => {
 	}
 };
 
-export const updateExpte = async (req, res) => {
+const updateExpte = async (req, res) => {
 	try {
 		const {
 			cliente,
@@ -91,7 +91,7 @@ export const updateExpte = async (req, res) => {
 	}
 };
 
-export const deleteExpte = async (req, res) => {
+const deleteExpte = async (req, res) => {
 	try {
 		const deletedExpte = await Expte.findByIdAndDelete(req.params.id);
 		if (!deletedExpte)
@@ -103,10 +103,10 @@ export const deleteExpte = async (req, res) => {
 	}
 };
 
-export const createMov = async (req, res) => {
-	const { fecha, descripcion } = req.body;
+const createMov = async (req, res) => {
+	const { fecha, descripcion, fileUrl } = req.body;
+
 	try {
-		const { result } = req.body;
 		const expteId = req.params.id; // Asegúrate de ajustar esto según tu ruta de API
 
 		// Buscar el expediente por ID
@@ -114,20 +114,12 @@ export const createMov = async (req, res) => {
 		if (!expte) {
 			return res.status(404).json({ message: 'Expediente no encontrado' });
 		}
-
 		// Crear una nueva instancia del modelo Expte utilizando los datos de la solicitud
 		const newMovimiento = {
 			fecha,
 			descripcion,
-			url:result
+			fileUrl,
 		};
-
-		if (req.file) {
-			const { filename } = req.file;
-			const filePath = `/uploads/${filename}`; // ajusta la ruta según tu estructura de archivos
-			newMovimiento.setFile(filename, filePath);
-		}
-
 		expte.movimientos.push(newMovimiento);
 
 		// Guardar el expediente actualizado en la base de datos
@@ -138,20 +130,59 @@ export const createMov = async (req, res) => {
 	}
 };
 
-export const deleteMov = async (req, res) => {
-   try {
-      const { expedienteId, movimientoId } = req.params; // Obtén los parámetros desde la URL
+const updateMov = async (req, res) => {
+	try {
+		const { fecha, descripcion, fileUrl } = req.body;
+		const { movimientoId } = req.params;
+		const expte = await Expte.findById(req.params.expedienteId);
+
+		if (!expte) {
+			return res.status(404).json({ message: 'Expte no encontrado' });
+		}
+		const movimiento = expte.movimientos.find(
+			(mov) => mov._id.toString() === movimientoId
+		);
+		if (!movimiento) {
+			return res.status(404).json({ message: 'Movimiento no encontrado' });
+		}
+
+		movimiento.fecha = fecha;
+		movimiento.descripcion = descripcion;
+		movimiento.fileUrl = fileUrl;
+
+		await expte.save();
+
+		res.json(movimiento);
+	} catch (error) {
+		return res.status(500).json({ message: error.message });
+	}
+};
+
+const deleteMov = async (req, res) => {
+	try {
+		const { expedienteId, movimientoId } = req.params; // Obtén los parámetros desde la URL
 		const deletedMov = await Expte.findByIdAndUpdate(
-         expedienteId,
-         { $pull: { movimientos: { _id: movimientoId } } },
-         { new: true }
-      );
-      if (!deletedMov) {
-         return res.status(404).json({ message: 'Expediente no encontrado' });
-      }
-      res.json(deletedMov);
-   } catch (error) {
-      console.error('Error al eliminar movimiento:', error);
-      return res.status(500).json({ message: error.message });
-   }
+			expedienteId,
+			{ $pull: { movimientos: { _id: movimientoId } } },
+			{ new: true }
+		);
+		if (!deletedMov) {
+			return res.status(404).json({ message: 'Expediente no encontrado' });
+		}
+		res.json(deletedMov);
+	} catch (error) {
+		console.error('Error al eliminar movimiento:', error);
+		return res.status(500).json({ message: error.message });
+	}
+};
+
+module.exports = {
+	getExpte,
+	getExptes,
+	createExpte,
+	updateExpte,
+	deleteExpte,
+	createMov,
+	deleteMov,
+	updateMov,
 };

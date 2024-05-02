@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+const mongoose = require ('mongoose');
 
 const gastoSchema = new mongoose.Schema(
 	{
@@ -15,12 +15,15 @@ const gastoSchema = new mongoose.Schema(
 			type: String,
 			required: true,
 		},
+		cliente:{
+			type:String,
+		},
 		file: {
 			type: mongoose.Schema.Types.Mixed,
 			filename: String,
 			filePath: String,
 		},	
-		url:{
+		fileUrl:{
 			type: String,
 		},
 		monto: {
@@ -46,5 +49,4 @@ gastoSchema.methods.setFile = function setFile(
 		filePath: filePath,
 	};
 };
-
-export default mongoose.model('Gasto', gastoSchema);
+module.exports = mongoose.model('Gasto', gastoSchema);

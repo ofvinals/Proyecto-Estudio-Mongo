@@ -1,27 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../context/AuthContext.jsx';
 import '../css/Header.css';
 import Swal from 'sweetalert2';
 
 export const Header = () => {
-	const [estadoLogin, setEstadoLogin] = useState('');
 	const [expand, setExpand] = useState(false);
+	const [scrolled, setScrolled] = useState(false);
 	const { currentUser, logout } = useAuth();
 	const navigate = useNavigate();
 	const user = currentUser ? currentUser.email : null;
-
-	useEffect(() => {
-		if (!user) {
-			setEstadoLogin('No hay usuario logueado');
-		} else {
-			setEstadoLogin(user);
-		}
-	}, [user]);
+	const admin = currentUser ? currentUser.admin : null;
 
 	const handleNavCollapseToggle = () => {
 		setExpand(true);
@@ -42,118 +35,136 @@ export const Header = () => {
 		navigate('/home');
 	};
 
+	useEffect(() => {
+		const handleScroll = () => {
+			if (window.scrollY > 0) {
+				setScrolled(true);
+			} else {
+				setScrolled(false);
+			}
+		};
+
+		window.addEventListener('scroll', handleScroll);
+		return () => {
+			window.removeEventListener('scroll', handleScroll);
+		};
+	}, []);
+	const navbarClassName = scrolled
+		? 'w-full bg-background sticky-top navbar text-black'
+		: 'w-full bg-transparent sticky-top navbar';
+
 	return (
 		<>
-			<Navbar bg='dark' data-bs-theme='dark' expand='xxl' className='mb-3'>
-				<Container className='-d-flex flex-column justify-content-center'>
-					<Navbar.Brand href='/home'><img className='ms-3'
-								src='/logo estudio.png'
-								width={40}
-								alt='logoestudio'
-							/></Navbar.Brand>
-					<h1 className='offcanvas-title align-content-center'>
-						Estudio Juridico Posse & Asociados
-					</h1>
+			<Navbar
+				data-bs-theme='dark'
+				expand='lg'
+				id='navbar'
+				className={navbarClassName}>
+				<Container className='flex flex-row justify-between'>
+					<Navbar.Brand href='/home'>
+						<img
+							className='ms-3'
+							src='/logo estudio.png'
+							width={60}
+							alt='logoestudio'
+						/>
+					</Navbar.Brand>
 
 					<Navbar.Toggle
-						aria-controls={`offcanvasNavbar-expand-xxl`}
+						aria-controls={`offcanvasNavbar-expand-lg`}
 						onClick={handleNavCollapseToggle}
 					/>
 					<Navbar.Offcanvas
-						id={`offcanvasNavbar-expand-xxl`}
-						bg='dark'
-						data-bs-theme='dark'
+						id={`offcanvasNavbar-expand-lg`}
 						show={expand}
 						onHide={() => setExpand(false)}
-						aria-labelledby={`offcanvasNavbarLabel-expand-xxl`}
+						aria-labelledby={`offcanvasNavbarLabel-expand-lg`}
 						placement='end'>
-						<Offcanvas.Header closeButton>
-							<Offcanvas.Title id={`offcanvasNavbarLabel-expand-xxl`}>
-								Menu
-							</Offcanvas.Title>
-						</Offcanvas.Header>
-						<Offcanvas.Body>
-							<Nav className='barranav'>
+						<Offcanvas.Header closeButton></Offcanvas.Header>
+						<Offcanvas.Body className='flex flex-row justify-start lg:justify-end items-start'>
+							<Nav className='flex flex-col flex-wrap justify-center'>
 								<Link
-									className='btnnav'
+									className='p-3 text-wrap hover:underline hover:decoration-2 lg:text-center hover:decoration-blue-600 hover:underline-offset-8 '
 									to='/home'
 									onClick={handleNavCollapse}>
-									<i className='iconavbar bi bi-house-fill'></i>
+									<i className='lg:hidden pr-2 text-xl text-[#185574] bi bi-house-fill'></i>
 									Home
 								</Link>
 								<Link
-									className='btnnav'
+									className='p-3 text-wrap hover:underline hover:decoration-2 lg:text-center hover:decoration-blue-600 hover:underline-offset-8'
 									to='/especialidad'
 									onClick={handleNavCollapse}>
-									<i className='iconavbar bi bi-server'></i>
-									Areas de Actuacion
+									<i className='pr-2 text-xl text-[#185574] lg:hidden bi bi-server'></i>
+									Servicios
 								</Link>
 								<Link
-									className='btnnav'
+									className='p-3 text-wrap hover:underline hover:decoration-2 lg:text-center hover:decoration-blue-600 hover:underline-offset-8'
 									to='/nosotros'
 									onClick={handleNavCollapse}>
-									<i className='iconavbar bi bi-file-person-fill'></i>
+									<i className='pr-2 text-xl text-[#185574] lg:hidden bi bi-file-person-fill'></i>
 									Quienes Somos
 								</Link>
 								<Link
-									className='btnnav'
+									className='p-3 text-wrap  hover:underline hover:decoration-2 lg:text-center hover:decoration-blue-600 hover:underline-offset-8'
 									to='/contact'
 									onClick={handleNavCollapse}>
-									<i className='iconavbar bi bi-chat-square-text-fill'></i>
+									<i className='pr-2 text-xl text-[#185574] lg:hidden bi bi-chat-square-text-fill'></i>
 									Contacto
 								</Link>
 								<Link
-									className='btnnav'
+									className='p-3 text-wrap hover:underline hover:decoration-2 lg:text-center hover:decoration-blue-600 hover:underline-offset-8'
 									to='/interes'
 									onClick={handleNavCollapse}>
-									<i className='iconavbar bi bi-browser-safari'></i>
+									<i className='pr-2 text-xl text-[#185574] lg:hidden bi bi-browser-safari'></i>
 									Sitios de interes
 								</Link>
-								<Link
-									className='btnnav'
-									to='/adminusu'
-									onClick={handleNavCollapse}>
-									<i className='iconavbar bi bi-person-fill-check'></i>
-									Panel de Usuarios
-								</Link>
-								{user === 'ofvinals@gmail.com' || user === 'estudioposseyasociados@gmail.com' ? (
+								{user ? (
 									<Link
-										className='btnnav'
+										className='p-3 text-wrap hover:underline  hover:decoration-2 lg:text-center hover:decoration-blue-600 hover:underline-offset-8'
+										to='/adminusu'
+										onClick={handleNavCollapse}>
+										<i className='pr-2 text-xl text-[#185574] lg:hidden bi bi-person-fill-check'></i>
+										Panel de Usuarios
+									</Link>
+								) : null}
+								{admin ? (
+									<Link
+										className='p-3 text-wrap hover:underline hover:decoration-2 lg:text-center hover:decoration-blue-600 hover:underline-offset-8'
 										to='/admin'
 										onClick={handleNavCollapse}>
-										<i className='iconavbar bi bi-person-fill-gear'></i>
+										<i className='pr-2 text-xl text-[#185574] lg:hidden bi bi-person-fill-gear'></i>
 										Panel de Administracion
 									</Link>
-								):null}
-								<div className='botones'>
-									<p className='estadolog'>
-										Estas logueado como: {estadoLogin}
-									</p>
+								) : null}
+								<div className='flex flex-wrap items-center justify-center'>
 									{user ? (
 										<button
-											onClick={(e) => {handleNavCollapse(); handleLogOut()}}
-											className='botonlogout'>
-											<i className='iconavbar bi bi-box-arrow-left'></i>
+											onClick={() => {
+												handleNavCollapse();
+												handleLogOut();
+											}}
+											className='mx-3 lg:m-0 btnlogin md:mb-2 lg:mb-0 w-[142px] bg-transparent border-2 border-white p-2 lg:mr-3 rounded-lg'>
+											<i className='pr-2 text-xl bi bi-box-arrow-left'></i>
 											Cerrar Sesión
 										</button>
 									) : (
 										<Link
 											to='/login'
 											onClick={handleNavCollapse}
-											className='botonnavlog'>
-											<i className='iconavbar bi bi-box-arrow-in-right'></i>
+											className='m-3 lg:m-0 btnlogin md:mb-2 lg:mb-0 w-[142px] bg-transparent border-2 border-[#185574] p-2 lg:mr-3 rounded-lg'>
+											<i className='pr-2 text-xl bi bi-box-arrow-in-right'></i>
 											Iniciar Sesión
 										</Link>
 									)}
 									<Link
 										to='/registro'
-										className={`botonnavreg ${
-											user ? 'regdisable' : ''
+										className={`btnreg md:mb-1 bg-[#185574] w-[142px] text-white border-2 border-[#185574] p-2 rounded-lg  ${
+											user ? 'hidden' : ''
 										}`}
-										onClick={(e) => {
+										onClick={() => {
 											handleNavCollapse();
 										}}>
-										<i className='iconavbar bi bi-r-circle-fill'></i>
+										<i className='btnreg pr-2 text-xl bi bi-r-circle-fill '></i>
 										Registrarme
 									</Link>
 								</div>

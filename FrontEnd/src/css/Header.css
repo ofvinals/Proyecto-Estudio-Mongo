@@ -1,149 +1,95 @@
-.offcanvas-title {
-	font-size: 150%;
-	color: rgb(207, 207, 207);
-	font-weight: 700;
-	text-wrap: wrap;
-	text-align: center;
+.stickytop {
+	position: sticky;
+	top: 0;
+	z-index: 1000; /* Asegura que el Navbar esté por encima de otros elementos */
+	background-color: #fff; /* O el color que desees */
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra opcional para resaltar */
 }
-.botones {
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: center;
-	align-items: center;
-	width: 100%;
-}
-.estadolog {
-	font-size: 80%;
-	text-align: center;
-	align-items: center;
-	margin-top: 1vw;
-	width: 100%;
-	color: rgb(207, 207, 207);
-}
-.barranav{
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-}
-.btnnav {
-	font-weight: 500;
-	font-size: 100%;
-	margin: 5px;
-	background-color: rgb(28, 28, 28);
-	color: rgb(207, 207, 207);
-	width: 65% !important;
-	border: 0.2vw outset rgb(143, 142, 139) !important;
-	border-radius: 5px;
-	padding: 5px;
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: center;
-	text-align: center;
-	align-items: center;
-	cursor: pointer;
-	text-decoration: none;
-}
-.btnnav:hover {
-	opacity: 0.8;
+.btnlogin:hover {
+	background-color: #185574 !important;
 	color: white;
-	background-color: transparent;
+	border-color: white !important;
 }
-.iconavbar {
-	font-size: 130% !important;
-	color: rgb(207, 207, 207);
-   padding-left: 15px;
-	padding-top: 0vw !important;
-	padding-bottom: 0vw !important;
-	padding-right: 10px;
+.btnreg:hover {
+	background-color: transparent !important;
+	border-color: #185574 !important;
+	color: #185574 !important;
 }
-.botonnavlog {
-	font-weight: 500;
-	font-size: 100%;
-	margin: 5px;
-	background-color: rgb(10, 61, 4) !important;
-	color: rgb(207, 207, 207);
-	width: auto;
-	border: 0.2vw outset rgb(143, 142, 139) !important;
-	border-radius: 5px;
-	display: flex;
-	justify-content: center;
-	flex-wrap: wrap;
-	align-items: center;
-	padding: 5px !important;
-	cursor: pointer;
+/* bg-gradient-to-tl from-[#1e1e1e] to-[#4077ad] */
+.error-message {
+	color: rgb(237, 8, 8) !important;
 	text-align: center;
-	text-decoration: none !important;
+	font-size: 16px;
+	font-weight: 600;
+	padding-top: 5px;
+	margin-bottom: 5px !important;
 }
-.botonnavlog:hover {
+.link:hover {
 	opacity: 0.8;
-	color: white;
-	background-color: transparent !important;
+	color: #25b0f0 !important;
 }
-.logdisable {
-	background-color: rgb(10, 61, 4);
-	opacity: 0.3;
-	background-color: transparent !important;
-	text-decoration: none;
-	cursor: no-drop;
+.btngoogle:hover {
+	background-color: white;
+	color: #185574 !important;
 }
-.botonlogout {
-	margin: 5px;
-	font-weight: 500;
-	padding: 5px;
-	background-color: rgb(60, 5, 5) !important;
-	color: rgb(207, 207, 207);
-	width: auto!important;
-	border: 0.2vw outset rgb(143, 142, 139) !important;
-	border-radius: 5px;
-	display: flex;
-	justify-content: center;
-	flex-wrap: wrap;
-	align-items: center;
-	cursor: pointer;
-	text-align: center;
-	text-decoration: none;
-	align-self: center;
-	font-size: 100%;
+.btnAdmin:hover {
+	background-color: #185574 !important;
+	color: white !important;
+	border-color: white !important;
 }
-.botonnavreg {
-	font-weight: 500;
-	font-size: 100%;
-	margin: 5px;
-	background-color: rgb(81, 74, 7);
-	color: rgb(207, 207, 207);
-	width: auto;
-	border: 0.2vw outset rgb(143, 142, 139) !important;
-	border-radius: 5px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	padding: 5px !important;
-	cursor: pointer;
-	text-align: center;
-	text-decoration: none !important;
+.btnLogout:hover {
+	background-color: white !important;
+	color: #0d6efd !important;
+	border-color: #0d6efd !important;
 }
-.botonnavreg:hover {
-	opacity: 0.8;
-	color: white;
-	background-color: transparent;
-}
-.regdisable {
-	background-color: rgb(10, 61, 4);
-	opacity: 0.3;
-	background-color: transparent !important;
-	cursor: no-drop;
+.textshadow {
+	text-shadow: 3px 5px 6px rgba(0, 0, 0, 0.6) !important;
 }
 
-@media (min-width: 1400px) {
-	.btnnav {
-		width: 100%!important;
-		margin: 5px;
-		display: flex!important;
-		flex-direction: column!important;
-		align-items: center;
-		text-wrap: nowrap;
-		justify-content: center;
-		padding: 5px !important;
-	}
+.swal2-confirm {
+	background-color: red !important;
+	border-width: 2px;
+	border-radius: 12px !important;
+	font-weight: 600;
+	box-shadow: 7px 5px 10px 0px rgba(0, 0, 0, 0.62) !important;
+}
+.swal2-cancel {
+	background-color: #0d6efd !important;
+	border-width: 2px;
+	border-radius: 12px !important;
+	font-weight: 600;
+	box-shadow: 7px 5px 10px 0px rgba(0, 0, 0, 0.62) !important;
+}
+.bodycontact {
+	background-image: linear-gradient(100deg, rgba(255,255, 240, 0.02), rgba(0, 0, 0, 1)),
+		url(/imagenfondo.jpg);
+	background-size: cover;
+	object-fit: cover;
+	background-position: center;
+}
+.about{
+	background-image: linear-gradient(100deg, rgba(255,255, 240, 0.02), rgba(0, 0, 0, 1)),
+	url(/imagenfondo.jpg);
+	background-size: cover;
+	object-fit: cover;
+	background-position: center;
+}
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+
+#navbar.sticky-top {
+	transition: background-color 0.3s ease-in-out;
+}
+
+#navbar.scrolled {
+	background-color: white;
+}
+#navbar {
+	position: fixed;
+	top: 0;
+	width: 100%;
+	z-index: 1000; 
 }

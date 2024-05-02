@@ -1,19 +1,9 @@
-import React, { useState, useEffect, createContext, useContext } from 'react';
+import { useState, useEffect, createContext, useContext } from 'react';
+import Cookies from 'js-cookie';
+import { apiURL } from '/api/apiURL.js';
 import { auth } from '../firebase/config.js';
-import {
-	createUserWithEmailAndPassword,
-	signInWithEmailAndPassword,
-	GoogleAuthProvider,
-	signInWithPopup,
-	sendPasswordResetEmail,
-	signOut,
-	onAuthStateChanged,
-	updatePassword,
-	updateProfile,
-} from 'firebase/auth';
-import { useNavigate } from 'react-router-dom';
-import { collection, addDoc } from 'firebase/firestore';
-import { db } from '../firebase/config';
+import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { getUserbyGoogle } from '../hooks/UseUsers.js';
 
 // crea contexto
 const AuthContext = createContext();
@@ -28,46 +18,41 @@ export const useAuth = () => {
 };
 
 export const AuthProvider = ({ children }) => {
-	const [currentUser, setCurrentUser] = useState(null);
-	const [accessToken, setAccessToken] = useState(null);
+	const [currentUser, setCurrentUser] = useState();
+	const [errors, setErrors] = useState([]);
+	const [googleToken, setGoogleToken] = useState(null);
 	const [isAuthenticated, setIsAuthenticated] = useState(false);
 	const [isLoading, setIsLoading] = useState(true);
-	const navigate = useNavigate();
 
 	// FUNCION REGISTRO DE USUARIOS
 	const registro = async (values) => {
-		await createUserWithEmailAndPassword(auth, values.email, values.password);
-		const currentUser = auth.currentUser;
-		const displayNameValue = `${values.username} ${values.apellido}`;
-		const phoneNumberValue = values.cel;
-		await updateProfile(currentUser, {
-			displayName: displayNameValue,
-			phoneNumber: phoneNumberValue,
-		});
-		const usuariosRef = collection(db, 'usuarios');
-		await addDoc(usuariosRef, values);
-		if (
-			currentUser.email === 'ofvinals@gmail.com' ||
-			currentUser.email === 'estudioposseyasociados@gmail.com'
-		) {
-			navigate('/admin', { replace: true });
-		} else {
-			navigate('/adminusu', { replace: true });
+		try {
+			const res = await apiURL.post('/api/register', values);
+			if (res.status === 200) {
+				setCurrentUser(res.data);
+				setIsAuthenticated(true);
+				return res.data;
+			}
+		} catch (error) {
+			console.log(error.response.data);
+			setErrors(error.response.data);
 		}
 	};
 
 	// FUNCION LOGIN CON CORREO ELECTRONICO
-	const login = async (data) => {
-		await signInWithEmailAndPassword(auth, data.email, data.password);
-		const currentUser = auth.currentUser;
-		setCurrentUser(currentUser);
-		if (
-			currentUser.email === 'ofvinals@gmail.com' ||
-			currentUser.email === 'estudioposseyasociados@gmail.com'
-		) {
-			navigate('/admin', { replace: true });
-		} else {
-			navigate('/adminusu', { replace: true });
+	const login = async (values) => {
+		try {
+			const res = await apiURL.post('/api/login', values, {
+				credentials: 'include',
+			});
+			localStorage.setItem('token', res.data.accessToken);
+			setIsAuthenticated(true);
+			setCurrentUser(res.data);
+			return res.data;
+		} catch (error) {
+			console.log(error.response.data);
+			setErrors(error.response.data);
+			throw error;
 		}
 	};
 
@@ -80,92 +65,89 @@ export const AuthProvider = ({ children }) => {
 		provider.addScope('https://www.googleapis.com/auth/userinfo.profile');
 		provider.addScope('https://www.googleapis.com/auth/calendar.events');
 
-		const result = await signInWithPopup(auth, provider)
-			.then((result) => {
-				const credential = GoogleAuthProvider.credentialFromResult(result);
-				const accessToken = credential.accessToken;
-				console.log(result.user);
-
-				const currentUser = result.user.providerData[0];
-				setCurrentUser(currentUser);
-				setAccessToken(accessToken);
-				if (
-					currentUser.email === 'ofvinals@gmail.com' ||
-					currentUser.email === 'estudioposseyasociados@gmail.com'
-				) {
-					navigate('/admin', { replace: true });
-				} else {
-					navigate('/adminusu', { replace: true });
-				}
-			})
-			.catch((error) => {
-				console.error(error);
-			});
-	};
-
-	// FUNCION LOGOUT
-	const logout = async () => {
-		await signOut(auth);
-	};
-
-	// FUNCION PARA RECUPERAR CONTRASEÑA
-	const resetPassword = (email) => {
-		sendPasswordResetEmail(auth, email)
-			.then(() => {})
-			.catch((error) => {
-				console.error(error);
-			});
-	};
-
-	// FUNCION PARA MODIFICAR CONTRASEÑA
-	const updatePass = async (newPassword) => {
 		try {
-			if (auth.currentUser) {
-				await updatePassword(auth.currentUser, newPassword);
-				await auth.currentUser.getIdToken();
-			} else {
-				console.error('Usuario no autenticado');
+			const result = await signInWithPopup(auth, provider);
+			const credential = GoogleAuthProvider.credentialFromResult(result);
+			const GoogleToken = credential.accessToken;
+			const currentUser = result.user.providerData[0];
+			const userEmail = currentUser.email;
+			const user = await getUserbyGoogle(userEmail);
+			if (!user) {
+				setIsAuthenticated(false); 
+				setGoogleToken(null);
+				throw new Error('Usuario no registrado'); 
 			}
+			localStorage.setItem('token', user.accessToken);
+			localStorage.setItem('googleToken', credential.accessToken);
+			setCurrentUser(user);
+			setGoogleToken(GoogleToken);
+			setIsAuthenticated(true);
+			return user;
 		} catch (error) {
 			console.error(error);
+			return { error: error.message }
 		}
 	};
+	// FUNCION LOGOUT
+	const logout = async () => {
+		Cookies.remove('token');
+		localStorage.removeItem('token');
+		setCurrentUser(null);
+		setIsAuthenticated(false);
+	};
 
-	// Función que se ejecutará al cambiar el estado de autenticación
+	// Función de autenticacion de usuario logueado
 	useEffect(() => {
-		const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-			if (currentUser) {
-				console.log(currentUser);
-				setCurrentUser(currentUser);
-				setIsAuthenticated(true);
-				setAccessToken(accessToken);
-				setIsLoading(false);
-			} else {
-				console.log('No hay usuario autenticado en Firebase');
-				setCurrentUser(null);
+		async function checkLogin() {
+			const token = localStorage.getItem('token');
+			if (!token) {
 				setIsAuthenticated(false);
 				setIsLoading(false);
+				return setCurrentUser(null);
 			}
-		});
-		return () => unsubscribe();
+			try {
+				const token = localStorage.getItem('token');
+				const res = await apiURL.get('/api/verify', {
+					withCredentials: true,
+					headers: {
+						authorization: `Bearer ${token}`,
+					},
+				});
+				if (!res.data) {
+					setIsAuthenticated(false);
+					setIsLoading(false);
+					setCurrentUser(null);
+					return;
+				}
+				setIsAuthenticated(true);
+				setCurrentUser(res.data);
+				setGoogleToken();
+
+				setIsLoading(false);
+			} catch (error) {
+				setIsAuthenticated(false);
+				setIsLoading(false);
+				setCurrentUser(null);
+			}
+		}
+		checkLogin();
 	}, []);
 
 	return (
 		<AuthContext.Provider
 			value={{
 				currentUser,
-				accessToken,
-				loginWithGoogle,
+				googleToken,
 				isAuthenticated,
 				registro,
 				login,
+				loginWithGoogle,
 				logout,
-				resetPassword,
 				isLoading,
-				updatePass,
 			}}>
 			{children}
 		</AuthContext.Provider>
 	);
 };
+
 export default AuthContext;

@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+const mongoose = require ('mongoose');
 
 const expteSchema = new mongoose.Schema(
 	{
@@ -59,7 +59,7 @@ const expteSchema = new mongoose.Schema(
 					filename: String,
 					filePath: String,
 				},
-				url:{
+				fileUrl:{
 					type: String,
 				},
 			},
@@ -80,6 +80,5 @@ expteSchema.methods.setFile = function setFile(
 		filePath: filePath,
 	};
 };
-
-export default mongoose.model('Expte', expteSchema);
+module.exports = mongoose.model('Expte', expteSchema);
 

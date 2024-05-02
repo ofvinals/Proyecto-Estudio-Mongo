@@ -1,9 +1,9 @@
-// import { Router } from 'express';
-// import { authRequired } from '../middlewares/validateToken.js';
-// import { upload } from '../controllers/upload.controller.js';
+const { Router } = require('express');
+const { authRequired } = require('../middlewares/validateToken.js');
+const { upload, handleFileUpload } = require('../controllers/upload.controller.js');
 
-// const router = Router();
+const router = Router();
 
-// router.post('uploads', authRequired, upload.single('file'))
+router.post('/uploads',  upload.single('file'), handleFileUpload);
 
-// export default router;
+module.exports = router;

@@ -1,6 +1,6 @@
-import Turno from '../models/turno.model.js';
+const Turno = require('../models/turno.model.js');
 
-export const getTurnos = async (req, res) => {
+const getTurnos = async (req, res) => {
 	try {
 		const turnos = await Turno.find();
 		res.json(turnos);
@@ -9,18 +9,16 @@ export const getTurnos = async (req, res) => {
 	}
 };
 
-export const createTurno = async (req, res) => {
+const createTurno = async (req, res) => {
 	// Extraer los campos del cuerpo de la solicitud (request body)
-	const { turno, email, motivo } =
-		req.body;
+	const { turno, email, motivo } = req.body;
 
 	try {
-
 		// Crear una nueva instancia del modelo Turno utilizando los datos de la solicitud
 		const newTurno = new Turno({
-		turno, 
-		email, 
-		motivo,
+			turno,
+			email,
+			motivo,
 		});
 		const savedTurno = await newTurno.save();
 
@@ -35,7 +33,7 @@ export const createTurno = async (req, res) => {
 	}
 };
 
-export const getTurno = async (req, res) => {
+const getTurno = async (req, res) => {
 	try {
 		const turno = await Turno.findById(req.params.id);
 		if (!turno)
@@ -46,20 +44,23 @@ export const getTurno = async (req, res) => {
 	}
 };
 
-export const updateTurno = async (req, res) => {
+const updateTurno = async (req, res) => {
 	try {
-		const { turno, email, motivo } =
-			req.body;
-		const updateTurno = await Turno.findByIdAndUpdate(req.params.id, req.body, {
-			new: true,
-		});
+		const { turno, email, motivo } = req.body;
+		const updateTurno = await Turno.findByIdAndUpdate(
+			req.params.id,
+			req.body,
+			{
+				new: true,
+			}
+		);
 		res.json(updateTurno);
 	} catch (error) {
 		return res.status(500).json({ message: error.message });
 	}
 };
 
-export const deleteTurno = async (req, res) => {
+const deleteTurno = async (req, res) => {
 	try {
 		const deletedTurno = await Turno.findByIdAndDelete(req.params.id);
 		if (!deletedTurno)
@@ -69,4 +70,11 @@ export const deleteTurno = async (req, res) => {
 	} catch (error) {
 		return res.status(500).json({ message: error.message });
 	}
+};
+module.exports = {
+	getTurno,
+	getTurnos,
+	createTurno,
+	updateTurno,
+	deleteTurno,
 };

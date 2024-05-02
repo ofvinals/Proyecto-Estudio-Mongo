@@ -1,26 +1,27 @@
-import User from '../models/user.model.js';
-import bcrypt from 'bcryptjs';
+const User = require('../models/user.model.js');
+const bcrypt = require('bcryptjs');
+const createAccessToken = require('../libs/jwt.js');
 
-export const getUsers = async (req, res) => {
+const getUsers = async (req, res) => {
 	try {
-		const users = await User.find();
+		const users = await User.find().select('-password');
 		res.json(users);
 	} catch (error) {
 		return res.status(500).json({ message: error.message });
 	}
 };
 
-export const createUser = async (req, res) => {
+const createUser = async (req, res) => {
 	// Extraer los campos del cuerpo de la solicitud (request body)
-	const { username, apellido, email, dni, domicilio, celular, password } =
+	const { nombre, apellido, email, dni, domicilio, celular, password } =
 		req.body;
 
 	try {
-		// encripta el password (bcrypt instalado)
+		// encripta el password
 		const passwordHash = await bcrypt.hash(password, 10);
 		// Crear una nueva instancia del modelo User utilizando los datos de la solicitud
 		const newUser = new User({
-			username,
+			nombre,
 			apellido,
 			email,
 			dni,
@@ -46,9 +47,9 @@ export const createUser = async (req, res) => {
 	}
 };
 
-export const getUser = async (req, res) => {
+const getUser = async (req, res) => {
 	try {
-		const user = await User.findById(req.params.id);
+		const user = await User.findById(req.params.id).select('-password');
 		if (!user)
 			return res.status(404).json({ message: 'Usuario no encontrado' });
 		res.json(user);
@@ -57,27 +58,75 @@ export const getUser = async (req, res) => {
 	}
 };
 
-export const updateUser = async (req, res) => {
+const getUserByGoogle = async (req, res) => {
 	try {
-		const { username, apellido, email, dni, domicilio, celular, password } =
-			req.body;
-		const updateUser = await User.findByIdAndUpdate(req.params.id, req.body, {
-			new: true,
+		const userEmail = req.params.userEmail;
+		const userFound = await User.findOne({ email: userEmail })	
+		const token = await createAccessToken({
+			id: userFound._id,
+			displayName: `${userFound.nombre} ${userFound.apellido}`,
+			email: userFound.email,
+			admin: userFound.admin,
 		});
+		res.cookie('token', token);
+		return res.status(200).json({
+			id: userFound._id,
+			email: userFound.email,
+			displayName: `${userFound.nombre} ${userFound.apellido}`,
+			accessToken: token,
+			admin: userFound.admin,
+		});
+	} catch (error) {
+		return res.status(500).json({ message: error.message });
+	}
+};
+
+const updateUser = async (req, res) => {
+	try {
+		const { nombre, apellido, email, dni, domicilio, celular, password } =
+			req.body;
+		const updateFields = {
+			nombre,
+			apellido,
+			email,
+			dni,
+			domicilio,
+			celular,
+		};
+
+		// Verificar si el campo password está presente en la solicitud
+		if (password) {
+			// Si el password está presente, agregarlo al objeto de campos a actualizar
+			updateFields.password = password;
+		}
+		const updateUser = await User.findByIdAndUpdate(
+			req.params.id,
+			updateFields,
+			{
+				new: true,
+			}
+		);
 		res.json(updateUser);
 	} catch (error) {
 		return res.status(500).json({ message: error.message });
 	}
 };
 
-export const deleteUser = async (req, res) => {
+const deleteUser = async (req, res) => {
 	try {
 		const deletedUser = await User.findByIdAndDelete(req.params.id);
 		if (!deletedUser)
 			return res.status(404).json({ message: 'Expediente no encontrado' });
-
 		res.json(deletedUser);
 	} catch (error) {
 		return res.status(500).json({ message: error.message });
 	}
+};
+module.exports = {
+	getUser,
+	getUsers,
+	getUserByGoogle,
+	createUser,
+	updateUser,
+	deleteUser,
 };

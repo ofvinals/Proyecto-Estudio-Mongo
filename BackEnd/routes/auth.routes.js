@@ -1,23 +1,16 @@
-import { Router } from 'express';
-import {
+const express = require('express');
+const {
 	login,
 	register,
 	logout,
-	profile,
 	verifyToken,
-} from '../src/controllers/auth.controller.js';
-import { authRequired } from '../src/middlewares/validateToken.js';
-import { validateSchema } from '../src/middlewares/validator.Middleware.js';
-import { registerSchema, loginSchema } from '../src/schemas/auth.Schema.js';
-import { config } from 'dotenv';
+} = require('../controllers/auth.controller.js');
 
-config();
-const router = Router();
+const router = express.Router();
 
-router.post('/register', validateSchema(registerSchema), register);
-router.post('/login', validateSchema(loginSchema), login);
-router.post('/logout', verifyToken, logout);
+router.post('/register', register);
+router.post('/login', login);
+router.post('/logout', logout);
 router.get('/verify', verifyToken);
-router.get('/profile', authRequired, profile);
 
-export default router;
+module.exports = router;
