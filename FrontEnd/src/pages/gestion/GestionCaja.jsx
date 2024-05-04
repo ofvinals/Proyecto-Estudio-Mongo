@@ -200,22 +200,22 @@ export const GestionCaja = () => {
 		},
 		{
 			text: 'Editar',
-			icon: (admin || coadmin) && (
+			icon: (admin || coadmin)? (
 				<Tooltip title='Tarea realizada' arrow>
 					<EditIcon color='success' cursor='pointer' />
 				</Tooltip>
-			),
+			): null,
 			onClick: (row) => {
 				handleOpenEditModal(row.original._id);
 			},
 		},
 		{
 			text: 'Eliminar',
-			icon: admin && (
+			icon: admin ? (
 				<Tooltip title='Tarea realizada' arrow>
 					<DeleteIcon color='error' cursor='pointer'/>
 				</Tooltip>
-			),
+			): null,
 			onClick: (row) => borrarCaja(row.original._id),
 		},
 	];

@@ -158,22 +158,22 @@ export const GestionGastos = () => {
 		},
 		{
 			text: 'Editar',
-			icon: (admin || coadmin) && (
+			icon: (admin || coadmin) ? (
 				<Tooltip title='Colocar como tarea pendiente' arrow>
 					<EditIcon color='success' cursor='pointer' />
 				</Tooltip>
-			),
+			): null,
 			onClick: (row) => {
 				handleOpenEditModal(row.original._id);
 			},
 		},
 		{
 			text: 'Eliminar',
-			icon: admin && (
+			icon: admin ? (
 				<Tooltip title='Colocar como tarea pendiente' arrow>
 					<DeleteIcon color='error' cursor='pointer' />
 				</Tooltip>
-			),
+			): null,
 			onClick: (row) => borrarGasto(row.original._id),
 		},
 	];
@@ -224,7 +224,7 @@ export const GestionGastos = () => {
 			<div className='container-lg '>
 				<div>
 					<div className='flex justify-around flex-row  items-center flex-wrap my-3'>
-						{admin || coadmin ? (
+						{(admin || coadmin) ? (
 							<button
 								type='button'
 								className='bg-white shadow-3xl btnAdmin text-primary text-center p-2 border-2 w-[210px] mb-3 border-primary rounded-xl font-semibold'

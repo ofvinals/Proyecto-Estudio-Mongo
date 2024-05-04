@@ -7,24 +7,19 @@ import { Header } from '../components/Header.jsx';
 import { Novedades } from '../components/Novedades.jsx';
 import { EditarUsu } from '../components/Modals/Edits/EditarUsu.jsx';
 import { useState } from 'react';
-import { Button } from 'react-bootstrap';
-import { Pagos } from '../components/Pagos.jsx';
 
 export const AdminUsu = () => {
 	const { currentUser, logout } = useAuth({});
 	const navigate = useNavigate();
 	const userId = currentUser.id;
 	const [openEditModal, setopenEditModal] = useState(false);
-	const [openPayModal, setopenPayModal] = useState(false);
-
-	const handleOpenPayModal = () => {
-		setopenPayModal(true);
-	};
 
 	const handleCloseModal = () => {
-		setopenPayModal(false);
 		setopenEditModal(false);
+	};
 
+	const handleOpenEditModal = () => {
+		setopenEditModal(true);
 	};
 
 	const handleLogOut = async () => {
@@ -36,10 +31,6 @@ export const AdminUsu = () => {
 			timer: 1500,
 		});
 		navigate('/home');
-	};
-
-	const handleOpenEditModal = () => {
-		setopenEditModal(true);
 	};
 
 	return (
@@ -87,16 +78,8 @@ export const AdminUsu = () => {
 							handleOpenEditModal(userId);
 						}}>
 						<i className='text-xl pe-2 bi bi-person-gear'></i>
-						Modificar Datos
+						Modificar tus Datos
 					</button>
-					<Button
-					type='button'
-						className='bg-white shadow-3xl btnAdmin mx-2 text-primary text-center p-2 border-2 w-[230px] mb-3 border-primary rounded-xl font-bold'
-						onClick={() => handleOpenPayModal()}>
-						<i className='text-xl pe-2 bi bi-cash-coin'></i>
-						Ver Medios de Pago
-					</Button>
-
 					<button
 						onClick={handleLogOut}
 						className='bg-background shadow-3xl btnLogout mx-2 text-white text-center p-2 border-2 w-[200px] mb-3 border-white rounded-xl font-bold'>
@@ -114,9 +97,6 @@ export const AdminUsu = () => {
 					showModal={openEditModal}
 					onClose={handleCloseModal}
 				/>
-			)}
-						{openPayModal && (
-				<Pagos showModal={openPayModal} onClose={handleCloseModal} />
 			)}
 		</>
 	);

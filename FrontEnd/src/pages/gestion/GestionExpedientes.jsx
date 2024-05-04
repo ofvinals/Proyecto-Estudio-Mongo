@@ -53,7 +53,7 @@ export const GestionExpedientes = () => {
 				const fetchedExptes = expedientes.map((doc) => {
 					return { ...doc, _id: doc._id };
 				});
-				const filteredExptes = admin
+				const filteredExptes = (admin || coadmin)
 					? fetchedExptes
 					: fetchedExptes.filter((expte) => expte.cliente === user);
 				setData(filteredExptes);
@@ -109,22 +109,22 @@ export const GestionExpedientes = () => {
 		},
 		{
 			text: 'Editar',
-			icon: (admin || coadmin) && (
+			icon: (admin || coadmin) ? (
 				<Tooltip title='Editar datos del expediente' arrow>
 					<EditIcon color='success' cursor='pointer' />
 				</Tooltip>
-			),
+			): null,
 			onClick: (row) => {
 				handleOpenEditModal(row.original._id);
 			},
 		},
 		{
 			text: 'Eliminar',
-			icon: admin && (
+			icon: admin ? (
 				<Tooltip title='Eliminar expediente' arrow>
 					<DeleteIcon color='error' cursor='pointer' />
 				</Tooltip>
-			),
+			): null,
 			onClick: (row) => borrarExpte(row.original._id),
 		},
 	];

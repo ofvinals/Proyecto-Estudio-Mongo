@@ -33,14 +33,13 @@ export const Login = () => {
 	const onSubmit = handleSubmit(async (values) => {
 		try {
 			const user = await login(values);
-			console.log(user);
 			Swal.fire({
 				icon: 'success',
 				title: 'Inicio de sesión exitoso!',
 				showConfirmButton: false,
 				timer: 2000,
 			});
-			if (user.admin) {
+			if (user.admin || user.coadmin) {
 				navigate('/admin');
 			} else {
 				navigate('/adminusu');
@@ -67,7 +66,7 @@ export const Login = () => {
 				showConfirmButton: false,
 				timer: 1500,
 			});
-			if (user.admin) {
+			if (user.admin || user.coadmin) {
 				navigate('/admin', { replace: true });
 			} else {
 				navigate('/adminusu', { replace: true });
