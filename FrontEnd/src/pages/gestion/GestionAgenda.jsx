@@ -25,6 +25,7 @@ export const GestionAgenda = () => {
 	const { currentUser } = useAuth();
 	const [data, setData] = useState([]);
 	const admin = currentUser.admin;
+	const coadmin = currentUser.coadmin;
 	const [openViewModal, setopenViewModal] = useState(false);
 	const [openEditModal, setopenEditModal] = useState(false);
 	const [openGoogleModal, setopenGoogleModal] = useState(false);
@@ -124,7 +125,7 @@ export const GestionAgenda = () => {
 		},
 		{
 			text: 'Editar',
-			icon: admin && (
+			icon: admin || coadmin && (
 				<Tooltip title='Editar evento' arrow>
 					<EditIcon color='success' cursor='pointer' />
 				</Tooltip>
@@ -184,7 +185,7 @@ export const GestionAgenda = () => {
 	}
 
 	return (
-		<div className='bg-gradient-to-tl from-[#1e1e1e] to-[#4077ad] pb-3'>
+		<div className='bg-gradient-to-tl from-[#1e1e1e] to-[#4077ad] pb-3 pt-32'>
 			<Header />
 			<div className=' rounded-xl container-lg mb-1 '>
 				<Detail modulo={'Agenda'} />

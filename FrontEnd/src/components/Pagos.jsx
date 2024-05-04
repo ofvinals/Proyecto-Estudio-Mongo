@@ -6,13 +6,13 @@ export const Pagos = ({ showModal, onClose }) => {
 		<>
 			<Modal show={showModal} onHide={onClose}>
 				<Modal.Header closeButton>
-					<Modal.Title className='text-white'>
+					<Modal.Title className='text-background'>
 						Consultar Medios de Pago
 					</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
 					<Form>
-						<Form.Group className='mb-3 text-white' controlId=''>
+						<Form.Group className='mb-3 text-background' controlId=''>
 							<Form.Label>Cuenta Banco Galicia : </Form.Label>
 							<ul>
 								<li>
@@ -29,7 +29,7 @@ export const Pagos = ({ showModal, onClose }) => {
 								</li>
 							</ul>
 						</Form.Group>
-						<Form.Group className='mb-3 text-white' controlId=''>
+						<Form.Group className='mb-3 text-background' controlId=''>
 							<Form.Label>Cuenta Banco Macro : </Form.Label>
 							<ul>
 								<li>
@@ -47,10 +47,11 @@ export const Pagos = ({ showModal, onClose }) => {
 							</ul>
 						</Form.Group>
 						<Form.Group
-							className='mb-3 text-white d-flex flex-column'
+							className='mb-3 text-background flex flex-col '
 							controlId=''>
-							<Form.Label>Mercado Pago :</Form.Label>
-							<button className='botonmp'>
+							<Form.Label className=''>Mercado Pago :</Form.Label>
+							<div className='flex flex-col items-center justify-center'>
+							<button className='bg-primary w-5/12 p-3 rounded-xl items-center justif'>
 								<a
 									className='text-white text-decoration-none'
 									href='https://link.mercadopago.com.ar/estudioposse'
@@ -58,7 +59,7 @@ export const Pagos = ({ showModal, onClose }) => {
 									<i className='pe-2 fa-solid fa-handshake-simple'></i>
 									Boton de Pago
 								</a>
-							</button>{' '}
+							</button>{' '}</div>
 							<img
 								className='mt-3 align-self-center'
 								src='/qr-mp.png'
@@ -67,7 +68,7 @@ export const Pagos = ({ showModal, onClose }) => {
 							/>
 						</Form.Group>
 						<Form.Group
-							className='mb-3 text-white d-flex flex-column'
+							className='mb-3 text-background flex flex-col'
 							controlId=''>
 							<Form.Label>Criptomonedas :</Form.Label>
 							<img

@@ -82,14 +82,7 @@ export const Header = () => {
 						placement='end'>
 						<Offcanvas.Header closeButton></Offcanvas.Header>
 						<Offcanvas.Body className='flex flex-row justify-start lg:justify-end items-start'>
-							<Nav className='flex flex-col flex-wrap justify-center'>
-								<Link
-									className='p-3 text-wrap hover:underline hover:decoration-2 lg:text-center hover:decoration-blue-600 hover:underline-offset-8 '
-									to='/home'
-									onClick={handleNavCollapse}>
-									<i className='lg:hidden pr-2 text-xl text-[#185574] bi bi-house-fill'></i>
-									Home
-								</Link>
+							<Nav className='flex flex-col flex-wrap items-center md:items-start justify-center'>
 								<Link
 									className='p-3 text-wrap hover:underline hover:decoration-2 lg:text-center hover:decoration-blue-600 hover:underline-offset-8'
 									to='/especialidad'
@@ -143,7 +136,7 @@ export const Header = () => {
 												handleNavCollapse();
 												handleLogOut();
 											}}
-											className='mx-3 lg:m-0 btnlogin md:mb-2 lg:mb-0 w-[142px] bg-transparent border-2 border-white p-2 lg:mr-3 rounded-lg'>
+											className='mx-3 lg:m-0 btnlogin md:mb-2 lg:mb-0 w-[162px] bg-transparent border-2 border-white p-2 lg:mr-3 rounded-lg'>
 											<i className='pr-2 text-xl bi bi-box-arrow-left'></i>
 											Cerrar Sesión
 										</button>

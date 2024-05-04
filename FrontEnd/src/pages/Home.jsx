@@ -5,6 +5,7 @@ import { Header } from '../components/Header';
 import { Count } from '../components/Home/Count';
 import { Whatsapp } from '../components/Whatsapp';
 import { Services } from '../components/Home/Services';
+import { News } from '../components/Home/News';
 
 export const Home = () => {
 	return (
@@ -160,6 +161,7 @@ export const Home = () => {
 			</div>
 
 			<Services />
+			<News />
 			<div className='flex items-center justify-center'>
 				<div className='imagensection4 md:w-[750px] xl:w-[1100px] rounded-xl mt-3 flex flex-col flex-around h-[450px] w-full mb-10'>
 					<p className=' titlecontac w-full flex justify-center font-bold text-4xl text-[#25b0f0] text-center items-center'>

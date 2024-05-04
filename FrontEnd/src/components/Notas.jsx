@@ -261,7 +261,7 @@ export const Notas = () => {
 					</Form.Group>
 					<Form.Group
 						id='inputrecord'
-						className='flex flex-row flex-wrap justify-between w-7/12'>
+						className='flex flex-row flex-wrap items-center justify-around w-full'>
 						<Button
 							className='bg-white shadow-3xl btnAdmin text-primary text-center p-1 py-2 border-2 w-[170px] mb-1 border-primary rounded-xl'
 							type='submit'>

@@ -137,7 +137,7 @@ export const GastosArchivados = () => {
 
 	return (
 		<>
-			<div className='bg-gradient-to-tl from-[#1e1e1e] to-[#4077ad] pb-3'>
+			<div className='bg-gradient-to-tl from-[#1e1e1e] to-[#4077ad] pb-3 pt-32'>
 				<Header />
 				<div className=' rounded-xl container-lg mb-1 '>
 					<Detail modulo={'Gastos Cancelados'} />
@@ -149,7 +149,7 @@ export const GastosArchivados = () => {
 					<div className='flex justify-around py-3'>
 						<Link
 							to={'/gestiongastos'}
-							className='bg-white shadow-3xl btnAdmin text-primary text-center p-2 border-2 w-[200px] mb-3 border-primary rounded-xl font-semibold'>
+							className='bg-background shadow-3xl btnAdmin text-white text-center p-2 border-2 w-[200px] mb-3 border-white rounded-xl font-semibold'>
 							<i className='text-xl pe-2 bi bi-box-arrow-left'></i>
 							Volver al Panel
 						</Link>

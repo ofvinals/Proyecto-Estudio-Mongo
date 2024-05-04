@@ -2,13 +2,13 @@ import Card from 'react-bootstrap/Card';
 import { Whatsapp } from '../components/Whatsapp';
 import { Header } from '../components/Header';
 
-import '../css/Nosotros.css';
+import '../css/Header.css';
 
 export const Nosotros = () => {
 	return (
 		<>
 			<Header />
-			<div className='container-lg flex flex-wrap justify-center flex-col about pt-24'>
+			<div className='container-lg flex flex-wrap justify-center flex-col about pt-28'>
 				<Whatsapp />
 				<h1 className=' text-3xl my-3 font-bold  bg-gradient-to-t from-primary to-blue-200 text-transparent bg-clip-text text-center'>
 					Sobre Nosotros
@@ -17,18 +17,29 @@ export const Nosotros = () => {
 					Historia
 				</h2>
 
-				<p className='lh-lg font-semibold text-white text-justify mx-14 my-6 py-3 px-8 '>
-					Fundado en ..... por ....., desde entonces nos hemos consolidado
-					como un destacado estudio jurídico en Tucumán y todo el Noroeste
-					Argentino. Con más de 35 años de experiencia y una trayectoria
-					sólida, nos hemos dedicado a brindar servicios legales de calidad
-					y a establecer relaciones solidas y duraderas con nuestros
-					clientes.- <br /> Nuestro compromiso es brindar un servicio legal
-					confiable, ético y orientado a obtener resultados positivos.
-					Basados en la excelencia, la integridad y la atención
-					personalizada. Trabajamos en estrecha colaboración con nuestros
-					clientes, comprendiendo sus necesidades y objetivos legales, para
-					ofrecerles un asesoramiento integral y adaptado a cada situación.
+				<p className='lh-lg font-semibold text-white text-justify sm:mx-14 my-6 py-3 px-8 '>
+					Los orígenes del Estudio Posse se remontan al año 1949, en San
+					Miguel de Tucumán, cuando los hermanos Daniel Oscar y Eduardo
+					Posse, en busca de cumplir su anhelo de justicia, decidieron
+					abrir su propio estudio jurídico.- <br /> Su actual integración
+					como Posse & Asociados nos retrotrae al año 1990, en donde la
+					segunda generación de abogados, conformada por los hermanos
+					Daniel Oscar Posse (h) y Jorge Esteban Posse, y su entrañable
+					amiga y compañera, Silvia M. Meneghello, se hicieron cargo del
+					estudio, continuando con el legado ético y jurídico de sus
+					fundadores, consolidando su perfil profesional, e incorporando
+					una amplia y heterogénea red de clientes. Todo esto llevó a
+					posicionarlo como uno de los estudios jurídicos más importantes
+					de la provincia.- <br /> En la actualidad, la firma es dirigida
+					por la tercera generación de letrados. Un staff de reconocidos
+					abogados preparados para brindar el mejor asesoramiento
+					especializado e integral, acompañados por un talentoso grupo de
+					paralegales, pasantes y personal administrativo. Con más de 70
+					años de experiencia, el crecimiento y la vigencia de Posse &
+					Asociados son frutos de la dedicación, el esfuerzo y la correcta
+					aplicación del derecho. Honestidad, lealtad, compromiso y
+					confidencialidad son las bases sobre las que se asienta nuestro
+					equipo de trabajo.-
 				</p>
 			</div>
 			<div className='flex row row-cols-12 justify-center p-3'>
@@ -36,7 +47,7 @@ export const Nosotros = () => {
 					<Card.Title className=' py-3 text-white text-center text-2xl'>
 						Mision
 					</Card.Title>
-					<Card.Text className='contcard text-white text-center'>
+					<Card.Text className='mx-3 pb-1 text-white text-center'>
 						Nuestra mision consiste en diagnosticar y evaluar
 						correctamente los problemas, conflictos y consultas de
 						nuestros clientes, alineando las alternativas de solución con
@@ -53,7 +64,7 @@ export const Nosotros = () => {
 					<Card.Title className=' py-3 text-white text-center text-2xl'>
 						Vision
 					</Card.Title>
-					<Card.Text className='contcard text-white text-center'>
+					<Card.Text className='mx-3 pb-1 text-white text-center'>
 						Nuestra visión se basa en el liderazgo respaldado por la
 						profesionalidad, el más estricto y cuidadoso análisis del
 						marco regulatorio, y la más calificada doctrina a la que
@@ -68,7 +79,7 @@ export const Nosotros = () => {
 					<Card.Title className='py-3 text-white text-center text-2xl'>
 						Valores
 					</Card.Title>
-					<Card.Text className='contcard text-white text-center'>
+					<Card.Text className='mx-3 pb-1 text-white text-center'>
 						Los valores son esenciales en cualquier organización. Es por
 						ello que ratificamos nuestro compromiso con el cumplimiento de
 						la legislación vigente, y con el mandato de las reglas éticas
@@ -78,72 +89,73 @@ export const Nosotros = () => {
 				</Card.Body>
 			</div>
 
-			<div className='team'>
+			<div className='flex justify-around flex-wrap flex-row items-center mb-5'>
 				<h1 className='text-black w-full text-3xl font-bold text-center py-3'>
 					Nuestro Equipo
 				</h1>
 
-				<div className='col-md-4 col-sm-6 cardnosotros bg-background'>
-					<div className='our-team'>
-						<div className='team-image'>
-							<img src='' />
-							<p className='description'>
+				<div className='col-md-4 col-sm-6 w-5/12 mx-1 bg-background mb-3'>
+					<div className='items-center text-center mt-1 relative'>
+						<div className='items-center text-center relative'>
+							<img className='bg-contain w-full min-h-[170px]' src='/01.jpg' />
+							<p className='description text-[12px] absolute text-center w-full h-full text-white bg-[#8f8e8b]  '>
 								Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 								Praesent urna diam, maximus ut ullamcorper quis
 							</p>
 						</div>
-						<div className='team-info'>
-							<h3 className='titlenosotros'>Oscar Frias Viñals</h3>
-							<span className='post'>Abogado</span>
+						<div className='p-3'>
+							<h3 className='text-base text-center text-white '>Oscar Frias Viñals</h3>
+							<span className='block text-white text-center text-[12px]'>Abogado</span>
 						</div>
 					</div>
 				</div>
 
-				<div className='col-md-4 col-sm-6 cardnosotros bg-background'>
-					<div className='our-team'>
-						<div className='team-image'>
-							<img src='' />
-							<p className='description'>
+				<div className='col-md-4 col-sm-6 w-5/12 mx-1 bg-background mb-3'>
+					<div className='items-center text-center mt-1 relative'>
+						<div className='items-center text-center relative'>
+							<img className='bg-contain w-full min-h-[170px]' src='/01.jpg' />
+							<p className='description text-[12px] absolute text-center w-full h-full text-white bg-[#8f8e8b]'>
 								Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 								Praesent urna diam, maximus ut ullamcorper quis
 							</p>
 						</div>
-						<div className='team-info'>
-							<h3 className='titlenosotros'>Jorge Posse Ponessa (h)</h3>
-							<span className='post'>Abogado</span>
+						<div className='p-3'>
+							<h3 className='text-base text-center text-white'>Jorge Posse Ponessa (h)</h3>
+							<span className='block text-white text-center text-[12px]'>Abogado</span>
 						</div>
 					</div>
 				</div>
 
-				<div className='col-md-4 col-sm-6 cardnosotros bg-background'>
-					<div className='our-team'>
-						<div className='team-image'>
-							<img src='' />
-							<p className='description'>
+				<div className='col-md-4 col-sm-6 w-5/12 mx-1 bg-background'>
+					<div className='items-center text-center mt-1 relative'>
+						<div className='items-center text-center relative'>
+							<img className='bg-contain w-full min-h-[170px]' src='/01.jpg' />
+							<p className='description text-[12px] absolute text-center w-full h-full text-white bg-[#8f8e8b] '>
 								Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 								Praesent urna diam, maximus ut ull
 							</p>
 						</div>
 
-						<div className='team-info'>
-							<h3 className='titlenosotros'>M. Soledad Lizarraga</h3>
-							<span className='post'>Abogado Junior</span>
+						<div className='p-3'>
+							<h3 className='text-base text-center text-white'>M. Soledad Lizarraga</h3>
+							<span className='block text-white text-center text-[12px]'>Abogado Junior</span>
 						</div>
 					</div>
 				</div>
-				<div className='col-md-4 col-sm-6 cardnosotros bg-background'>
-					<div className='our-team'>
-						<div className='team-image'>
-							<img src='' />
-							<p className='description'>
+
+				<div className='col-md-4 col-sm-6 w-5/12 mx-1 bg-background'>
+					<div className='items-center text-center mt-1 relative'>
+						<div className='items-center text-center relative'>
+							<img className='bg-contain w-full min-h-[170px]' src='/01.jpg' />
+							<p className='description text-[12px] absolute text-center w-full h-full text-white bg-[#8f8e8b]'>
 								Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 								Praesent urna diam, maximus ut ull
 							</p>
 						</div>
 
-						<div className='team-info'>
-							<h3 className='titlenosotros'>Martin A. Soto </h3>
-							<span className='post'>Abogado Junior</span>
+						<div className='p-3'>
+							<h3 className='text-base text-center text-white'>Martin A. Soto </h3>
+							<span className='block text-white text-center text-[12px]'>Abogado Junior</span>
 						</div>
 					</div>
 				</div>

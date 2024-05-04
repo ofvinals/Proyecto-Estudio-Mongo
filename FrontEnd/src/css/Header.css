@@ -45,6 +45,38 @@
 .textshadow {
 	text-shadow: 3px 5px 6px rgba(0, 0, 0, 0.6) !important;
 }
+.about{
+	background-image: linear-gradient(100deg, rgba(255,255, 240, 0.02), rgba(0, 0, 0, 1)),
+	url(/imagenfondo.jpg);
+	background-size: cover;
+	object-fit: none;
+	background-position: center;
+}
+.description {
+	top: 0;
+	left: 0;
+	padding: 30px 30px;
+	opacity:0;
+	transition: all 0.5s ease 0s;
+}
+.description:hover {
+	opacity: 0.7;
+}
+.interes{
+	background-image: linear-gradient(rgba(5, 7, 12, 0.50), rgba(5, 12, 7, 0.50)),
+	url(/imagenfondo.jpg);
+	background-size: cover;
+	object-fit:cover;
+	background-position: center;
+}
+.recuperar{
+	background-image: linear-gradient(rgba(5, 7, 12, 0.50), rgba(5, 12, 7, 0.50)),
+	url(/imagenfondo.jpg);
+	background-size: cover;
+	object-fit: cover;
+	background-position: center;  
+}
+
 
 .swal2-confirm {
 	background-color: red !important;

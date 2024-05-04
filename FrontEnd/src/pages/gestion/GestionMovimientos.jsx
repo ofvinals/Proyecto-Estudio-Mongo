@@ -33,6 +33,7 @@ export const GestionMovimientos = () => {
 	const [expte, setExpte] = useState([]);
 	const [diasCaducidad, setDiasCaducidad] = useState([]);
 	const admin = currentUser.admin;
+	const coadmin = currentUser.coadmin;
 	const [openViewModal, setopenViewModal] = useState(false);
 	const [openEditModal, setopenEditModal] = useState(false);
 	const [openNewModal, setopenNewModal] = useState(false);
@@ -127,7 +128,7 @@ export const GestionMovimientos = () => {
 		},
 		{
 			text: 'Editar',
-			icon: admin && (
+			icon: admin || coadmin && (
 				<Tooltip title='Editar movimiento' arrow>
 					<EditIcon color='success' cursor='pointer' />
 				</Tooltip>
@@ -183,7 +184,7 @@ export const GestionMovimientos = () => {
 
 	return (
 		<>
-			<div className='bg-gradient-to-tl from-[#1e1e1e] to-[#4077ad] pb-3'>
+			<div className='bg-gradient-to-tl from-[#1e1e1e] to-[#4077ad] pb-3 pt-32'>
 				<Header />
 				<div className=' rounded-xl container-lg mb-1 '>
 					<Detail modulo={'Movimientos de Expediente'} />
@@ -193,7 +194,7 @@ export const GestionMovimientos = () => {
 
 				<div className='container-lg'>
 					<div className='flex justify-around flex-wrap my-3'>
-						{admin ? (
+						{admin || coadmin ? (
 							<button
 								className='bg-white shadow-3xl btnAdmin text-primary text-center p-2 border-2 w-[220px] mb-3 border-primary rounded-xl font-semibold'
 								onClick={() => handleOpenNewModal()}>
