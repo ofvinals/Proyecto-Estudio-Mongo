@@ -10,7 +10,7 @@ import { uploadFile } from '../../../firebase/config.js';
 import { createMov } from '../../../hooks/UseExptes';
 
 export const CargaMov = ({ showModal, onClose, expteId }) => {
-	const navigate = useNavigate()
+	const navigate = useNavigate();
 	const {
 		register,
 		handleSubmit,
@@ -21,7 +21,9 @@ export const CargaMov = ({ showModal, onClose, expteId }) => {
 		try {
 			let fileDownloadUrl = null;
 			const selectedDate = new Date(values.fecha + 'T00:00:00');
-			const formattedDate = selectedDate.toLocaleDateString('es-AR', { timeZone: 'America/Argentina/Buenos_Aires' });
+			const formattedDate = selectedDate.toLocaleDateString('es-AR', {
+				timeZone: 'America/Argentina/Buenos_Aires',
+			});
 			if (values.file && values.file[0]) {
 				const file = values.file[0];
 				fileDownloadUrl = await uploadFile(file);
@@ -39,7 +41,7 @@ export const CargaMov = ({ showModal, onClose, expteId }) => {
 				showConfirmButton: false,
 				timer: 1500,
 			});
-			navigate(`/gestionmovimientos/${expteId}`)
+			navigate(`/gestionmovimientos/${expteId}`);
 			onClose();
 		} catch (error) {
 			console.error(error);
@@ -51,7 +53,9 @@ export const CargaMov = ({ showModal, onClose, expteId }) => {
 			<div className=''>
 				<Modal show={showModal} onHide={onClose}>
 					<Modal.Header closeButton>
-						<Modal.Title className='text-background font-bold'>Cargar Nuevo Movimiento</Modal.Title>
+						<Modal.Title className='text-background font-bold'>
+							Cargar Nuevo Movimiento
+						</Modal.Title>
 					</Modal.Header>
 					<Modal.Body>
 						<Form
@@ -61,9 +65,11 @@ export const CargaMov = ({ showModal, onClose, expteId }) => {
 							method='post'
 							encType='multipart/form-data'>
 							<Form.Group
-								className='formcargagroup'
+								className='flex flex-col w-6/12 mx-2 '
 								controlId='inputname'>
-								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-7/12 font-medium'>Fecha</Form.Label>
+								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-7/12 font-medium'>
+									Fecha
+								</Form.Label>
 								<Form.Control
 									type='date'
 									className='items-center shadow-2xl w-full rounded-md p-2 focus:outline-none border-2 border-black text-black'
@@ -83,7 +89,7 @@ export const CargaMov = ({ showModal, onClose, expteId }) => {
 							</Form.Group>
 
 							<Form.Group
-								className='formcargagroup'
+								className='flex flex-col w-full mx-2 mt-2'
 								controlId='inputname'>
 								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-7/12 font-medium'>
 									Descripcion
@@ -109,9 +115,11 @@ export const CargaMov = ({ showModal, onClose, expteId }) => {
 							</Form.Group>
 
 							<Form.Group
-								className='formcargagroup'
+								className='flex flex-col w-full mx-2 mt-2'
 								controlId='inputsubname'>
-								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-7/12 font-medium'>Adjunto</Form.Label>
+								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-7/12 font-medium'>
+									Archivo Adjunto (opcional)
+								</Form.Label>
 								<Form.Control
 									type='file'
 									className='items-center shadow-2xl w-full rounded-md p-2 focus:outline-none border-2 border-black text-black'
@@ -119,8 +127,10 @@ export const CargaMov = ({ showModal, onClose, expteId }) => {
 									{...register('file')}></Form.Control>
 							</Form.Group>
 
-							<Form.Group className='flex flex-wrap items-center w-full justify-around'>
-							<Button className='bg-background shadow-3xl btnLogout text-white text-center p-2 border-2 w-[230px] my-3  border-white rounded-xl font-semibold' type='submit'>
+							<Form.Group className='flex flex-wrap items-center w-full justify-around mt-3'>
+								<Button
+									className='bg-background shadow-3xl btnLogout text-white text-center p-2 border-2 w-[230px] my-3  border-white rounded-xl font-semibold'
+									type='submit'>
 									<i className='text-xl pe-2 bi bi-check2-square'></i>
 									Agregar Movimiento
 								</Button>

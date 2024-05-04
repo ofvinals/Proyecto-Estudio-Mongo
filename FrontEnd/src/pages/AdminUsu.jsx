@@ -5,7 +5,7 @@ import Swal from 'sweetalert2';
 import { Detail } from '../components/Gestion/Detail.jsx';
 import { Header } from '../components/Header.jsx';
 import { Novedades } from '../components/Novedades.jsx';
-import { VerUsu } from '../components/Modals/Views/VerUsu.jsx';
+import { EditarUsu } from '../components/Modals/Edits/EditarUsu.jsx';
 import { useState } from 'react';
 import { Button } from 'react-bootstrap';
 import { Pagos } from '../components/Pagos.jsx';
@@ -14,7 +14,7 @@ export const AdminUsu = () => {
 	const { currentUser, logout } = useAuth({});
 	const navigate = useNavigate();
 	const userId = currentUser.id;
-	const [openViewModal, setopenViewModal] = useState(false);
+	const [openEditModal, setopenEditModal] = useState(false);
 	const [openPayModal, setopenPayModal] = useState(false);
 
 	const handleOpenPayModal = () => {
@@ -23,7 +23,7 @@ export const AdminUsu = () => {
 
 	const handleCloseModal = () => {
 		setopenPayModal(false);
-		setopenViewModal(false);
+		setopenEditModal(false);
 
 	};
 
@@ -38,8 +38,8 @@ export const AdminUsu = () => {
 		navigate('/home');
 	};
 
-	const handleOpenViewModal = () => {
-		setopenViewModal(true);
+	const handleOpenEditModal = () => {
+		setopenEditModal(true);
 	};
 
 	return (
@@ -84,7 +84,7 @@ export const AdminUsu = () => {
 						className='bg-white shadow-3xl btnAdmin mx-2 text-primary text-center p-2 border-2 w-[230px] mb-3 border-primary rounded-xl font-bold'
 						type='button'
 						onClick={() => {
-							handleOpenViewModal(userId);
+							handleOpenEditModal(userId);
 						}}>
 						<i className='text-xl pe-2 bi bi-person-gear'></i>
 						Modificar Datos
@@ -108,10 +108,10 @@ export const AdminUsu = () => {
 				<hr className='linea text-white mx-3' />
 				<Novedades />
 			</div>
-			{openViewModal && (
-				<VerUsu
+			{openEditModal && (
+				<EditarUsu
 					rowId={userId}
-					showModal={openViewModal}
+					showModal={openEditModal}
 					onClose={handleCloseModal}
 				/>
 			)}

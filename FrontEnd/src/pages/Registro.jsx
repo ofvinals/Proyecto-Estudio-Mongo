@@ -60,11 +60,11 @@ export const Registro = () => {
 	return (
 		<section
 			className=' bg-gradient-to-tl from-[#1e1e1e] to-[#4077ad] pt-32
-		flex flex-wrap items-center justify-center flex-col container-lg pb-10'>
+		flex flex-wrap items-center justify-center flex-col  pb-10'>
 			<Header />
 			<Form
 				id='loginFormreg'
-				className='flex flex-wrap flex-row justify-around items-center w-9/12 roundex-xl bg-white my-3'
+				className='flex flex-wrap flex-row justify-around items-center w-9/12 rounded-xl bg-white my-3'
 				onSubmit={onSubmit}
 				ref={form}>
 				<h2 className='text-center textshadow w-full my-3 text-3xl font-bold text-background'>

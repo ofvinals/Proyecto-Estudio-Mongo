@@ -109,7 +109,7 @@ export const EditarExptes = ({ rowId, showModal, onClose }) => {
 							className='flex flex-wrap justify-around items-center'
 							onSubmit={onSubmit}>
 							<Form.Group
-								className='flex flex-col mb-3 items-center justify-around'
+								className='flex flex-col mb-3 items-center justify-around w-5/12 mt-2'
 								id='inputname'>
 								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>
 									Cliente
@@ -128,7 +128,7 @@ export const EditarExptes = ({ rowId, showModal, onClose }) => {
 							</Form.Group>
 
 							<Form.Group
-								className='flex flex-col mb-3 items-center justify-around'
+								className='flex flex-col mb-3 items-center justify-around w-5/12 mt-2'
 								id='inputname'>
 								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>
 									Nro Expediente
@@ -152,7 +152,7 @@ export const EditarExptes = ({ rowId, showModal, onClose }) => {
 							</Form.Group>
 
 							<Form.Group
-								className='mb-3 flex flex-col w-full'
+								className='mb-3 flex flex-col w-full '
 								id='inputcaratula'>
 								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>
 									Caratula
@@ -165,10 +165,10 @@ export const EditarExptes = ({ rowId, showModal, onClose }) => {
 							</Form.Group>
 
 							<Form.Group
-								className='flex flex-col mb-3 items-center justify-around'
+								className='flex flex-col mb-3 items-center justify-around w-5/12 mx-2'
 								id='inputradic'>
 								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>
-									Fuero de Radicacion
+									Fuero 
 								</Form.Label>
 								<select
 									className='items-center shadow-2xl w-full rounded-md p-2 focus:outline-none border-2 border-black text-black'
@@ -202,10 +202,10 @@ export const EditarExptes = ({ rowId, showModal, onClose }) => {
 							</Form.Group>
 
 							<Form.Group
-								className='flex flex-col mb-3 items-center justify-around'
+								className='flex flex-col mb-3 items-center justify-around w-5/12 mx-2'
 								id='inputradic'>
 								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>
-									Juzgado de Radicacion
+									Juzgado 
 								</Form.Label>
 								<select
 									className='items-center shadow-2xl w-full rounded-md p-2 focus:outline-none border-2 border-black text-black'
@@ -238,7 +238,7 @@ export const EditarExptes = ({ rowId, showModal, onClose }) => {
 							</Form.Group>
 
 							<Form.Group
-								className='flex flex-col mb-3 items-center justify-around'
+								className='flex flex-col mb-3 items-center justify-around w-full mx-2'
 								id='inputdomic'>
 								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>
 									Actor
@@ -261,7 +261,7 @@ export const EditarExptes = ({ rowId, showModal, onClose }) => {
 							</Form.Group>
 
 							<Form.Group
-								className='flex flex-col mb-3 items-center justify-around'
+								className='flex flex-col mb-3 items-center justify-around w-full mx-2'
 								id='inputcel'>
 								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>
 									Demandado
@@ -284,7 +284,7 @@ export const EditarExptes = ({ rowId, showModal, onClose }) => {
 							</Form.Group>
 
 							<Form.Group
-								className='flex flex-col mb-3 items-center justify-around'
+								className='flex flex-col mb-3 items-center justify-around w-5/12 mx-2'
 								id='inputemail'>
 								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>
 									Tipo de Proceso
@@ -323,7 +323,7 @@ export const EditarExptes = ({ rowId, showModal, onClose }) => {
 							</Form.Group>
 
 							<Form.Group
-								className='flex flex-col mb-3 items-center justify-around'
+								className='flex flex-col mb-3 items-center justify-around w-5/12 mx-2'
 								id='inputemail'>
 								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>
 									Estado
@@ -351,7 +351,7 @@ export const EditarExptes = ({ rowId, showModal, onClose }) => {
 								)}
 							</Form.Group>
 
-							<Form.Group className='flex flex-wrap items-center w-full justify-around'>
+							<Form.Group className='flex flex-wrap items-center w-full justify-around mt-3'>
 								<Button
 									className='bg-background shadow-3xl btnLogout text-white text-center p-2 border-2 w-[230px] my-3  border-white rounded-xl font-semibold'
 									type='submit'>

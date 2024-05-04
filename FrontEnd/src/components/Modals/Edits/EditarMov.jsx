@@ -92,7 +92,7 @@ export const EditarMov = ({ rowId, expteId, showModal, onClose }) => {
 							className='flex flex-wrap justify-around items-center'
 							onSubmit={onSubmit}>
 							<Form.Group
-								className='flex flex-col mb-3 items-center justify-around'
+								className='flex flex-col mb-3 items-center justify-around w-6/12 mx-2 mt-2'
 								controlId='inputcaratula'>
 								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>
 									Fecha
@@ -114,7 +114,7 @@ export const EditarMov = ({ rowId, expteId, showModal, onClose }) => {
 								)}
 							</Form.Group>
 							<Form.Group
-								className='flex flex-col mb-3 items-center justify-around'
+								className='flex flex-col mb-3 items-center justify-around w-full mx-2 mt-2'
 								controlId='inputcaratula'>
 								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>
 									Descripcion
@@ -139,7 +139,7 @@ export const EditarMov = ({ rowId, expteId, showModal, onClose }) => {
 							</Form.Group>
 
 							<Form.Group
-								className='flex flex-col mb-3 items-center justify-around'
+								className='flex flex-col mb-3 items-center justify-around w-full mx-2 mt-2'
 								id=''>
 								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>
 									Archivo Adjunto
@@ -151,7 +151,7 @@ export const EditarMov = ({ rowId, expteId, showModal, onClose }) => {
 								/>
 							</Form.Group>
 
-							<Form.Group className='flex flex-wrap items-center w-full justify-around'>
+							<Form.Group className='flex flex-wrap items-center w-full justify-around mt-3'>
 								<Button
 									className='bg-background shadow-3xl btnLogout text-white text-center p-2 border-2 w-[230px] my-3  border-white rounded-xl font-semibold'
 									type='submit'>

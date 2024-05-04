@@ -59,9 +59,11 @@ export const Header = () => {
 	const textClassName = scrolled
 		? 'text-background hover:decoration-background text-wrap hover:underline hover:decoration-2 lg:text-center  hover:underline-offset-8 p-3'
 		: 'text-background lg:text-white hover:decoration-background lg:hover:decoration-white text-wrap hover:underline hover:decoration-2 lg:text-center  hover:underline-offset-8 p-3';
-const loginbtnClassName = scrolled
-?"m-3 lg:m-0 btnlogin md:mb-2 lg:mb-0 w-[152px] bg-transparent border-2 border-[#185574] p-2 lg:mr-3 rounded-lg text-background"
-: "m-3 lg:m-0 btnlogin md:mb-2 lg:mb-0 w-[152px] bg-transparent border-2 border-[#185574] p-2 lg:mr-3 rounded-lg "
+	const loginbtnClassName = scrolled
+		? 'm-3 lg:m-0 btnlogin md:mb-2 lg:mb-0 w-[152px] bg-transparent border-2 border-[#185574] p-2 lg:mr-3 rounded-lg text-background'
+		: 'm-3 lg:m-0 btnlogin md:mb-2 lg:mb-0 w-[152px] bg-transparent border-2 border-[#185574] p-2 lg:mr-3 rounded-lg ';
+	const toggleClassName = scrolled ? 'bg-background' : '';
+
 	return (
 		<>
 			<Navbar
@@ -82,6 +84,7 @@ const loginbtnClassName = scrolled
 					<Navbar.Toggle
 						aria-controls={`offcanvasNavbar-expand-lg`}
 						onClick={handleNavCollapseToggle}
+						className={toggleClassName}
 					/>
 					<Navbar.Offcanvas
 						id={`offcanvasNavbar-expand-lg`}

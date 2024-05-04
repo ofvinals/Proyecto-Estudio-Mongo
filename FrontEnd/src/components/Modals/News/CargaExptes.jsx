@@ -64,9 +64,9 @@ export const CargaExptes = ({ showModal, onClose }) => {
 					</Modal.Header>
 					<Modal.Body>
 						<Form
-							className='flex flex-wrap flex-row justify-center items-center'
+							className='flex flex-wrap flex-row justify-around items-center'
 							onSubmit={onSubmit}>
-							<Form.Group className='flex flex-col justify-start' id='cliente'>
+							<Form.Group className='flex flex-col justify-start w-5/12' id='cliente'>
 								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-7/12 font-medium'>
 									Cliente
 								</Form.Label>
@@ -83,7 +83,7 @@ export const CargaExptes = ({ showModal, onClose }) => {
 								</select>
 							</Form.Group>
 
-							<Form.Group className='flex flex-col justify-end' id='nroexpte'>
+							<Form.Group className='flex flex-col justify-end w-5/12' id='nroexpte'>
 								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>
 									Nro Expediente
 								</Form.Label>
@@ -105,9 +105,9 @@ export const CargaExptes = ({ showModal, onClose }) => {
 								)}
 							</Form.Group>
 
-							<Form.Group className='flex flex-col' id='radicacion'>
+							<Form.Group className='flex flex-col w-5/12 mt-2' id='radicacion'>
 								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>
-									Fuero de Radicacion
+									Fuero 
 								</Form.Label>
 								<select
 									className='items-center shadow-2xl w-full rounded-md p-2 focus:outline-none border-2 border-black text-black'
@@ -140,9 +140,9 @@ export const CargaExptes = ({ showModal, onClose }) => {
 								)}{' '}
 							</Form.Group>
 
-							<Form.Group className='flex flex-col' id='juzgado'>
+							<Form.Group className='flex flex-col w-5/12 mt-2' id='juzgado'>
 								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>
-									Juzgado de Radicacion
+									Juzgado 
 								</Form.Label>
 								<select
 									className='items-center shadow-2xl w-full rounded-md p-2 focus:outline-none border-2 border-black text-black'
@@ -175,7 +175,7 @@ export const CargaExptes = ({ showModal, onClose }) => {
 								)}
 							</Form.Group>
 
-							<Form.Group className='flex flex-col items-start' id='actor'>
+							<Form.Group className='flex flex-col items-start w-full mt-2 mx-2' id='actor'>
 								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-7/12 font-medium'>
 									Actor
 								</Form.Label>
@@ -196,7 +196,7 @@ export const CargaExptes = ({ showModal, onClose }) => {
 								)}{' '}
 							</Form.Group>
 
-							<Form.Group className='flex flex-col' id='demandado'>
+							<Form.Group className='flex flex-col w-full mt-2 mx-2' id='demandado'>
 								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-7/12 font-medium'>
 									Demandado
 								</Form.Label>
@@ -217,7 +217,7 @@ export const CargaExptes = ({ showModal, onClose }) => {
 								)}{' '}
 							</Form.Group>
 
-							<Form.Group className='flex flex-col' id='proceso'>
+							<Form.Group className='flex flex-col w-5/12 mt-2 mx-2' id='proceso'>
 								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>
 									Tipo de Proceso
 								</Form.Label>
@@ -257,7 +257,7 @@ export const CargaExptes = ({ showModal, onClose }) => {
 								)}{' '}
 							</Form.Group>
 
-							<Form.Group className='flex flex-col' id='estado'>
+							<Form.Group className='flex flex-col w-5/12 mx-2' id='estado'>
 								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-7/12 font-medium'>
 									Estado
 								</Form.Label>
@@ -286,7 +286,7 @@ export const CargaExptes = ({ showModal, onClose }) => {
 							</Form.Group>
 
 							<Form.Group
-								className='flex flex-wrap items-center w-full justify-around'
+								className='flex flex-wrap items-center w-full justify-around mt-3 mx-2'
 								id='inputpassword'>
 								<Button
 									className='bg-background shadow-3xl btnLogout text-white text-center p-2 border-2 w-[230px] my-3  border-white rounded-xl font-semibold'
