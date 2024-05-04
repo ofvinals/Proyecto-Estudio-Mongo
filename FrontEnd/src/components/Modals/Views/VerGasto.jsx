@@ -47,7 +47,7 @@ export const VerGasto = ({ rowId, showModal, onClose }) => {
 									<a
 										href={gasto.fileUrl}
 										target='_blank'
-										className='text-white'
+										className='text-black decoration-black underline underline-offset-3'
 										rel='noopener noreferrer'>
 										Ver Comprobante
 									</a>

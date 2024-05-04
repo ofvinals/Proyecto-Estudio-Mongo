@@ -72,7 +72,7 @@ export const EditarTurnos = ({ rowId, showModal, onClose }) => {
 							onSubmit={onSubmit}
 							className='flex flex-wrap justify-around items-center'>
 							<Form.Group
-								className='flex flex-col mb-3 items-center justify-around'
+								className='flex flex-col mb-3 items-center justify-around w-5/12 mx-2'
 								Id='turnoEditarTurno'>
 								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>
 									Cliente
@@ -86,7 +86,7 @@ export const EditarTurnos = ({ rowId, showModal, onClose }) => {
 							</Form.Group>
 
 							<Form.Group
-								className='flex flex-col mb-3 items-center justify-around'
+								className='flex flex-col mb-3 items-center justify-around w-5/12 mx-2'
 								Id='turnoEditarTurno'>
 								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>
 									Turno
@@ -109,7 +109,7 @@ export const EditarTurnos = ({ rowId, showModal, onClose }) => {
 							</Form.Group>
 
 							<Form.Group
-								className='flex flex-col mb-3 items-center justify-around'
+								className='flex flex-col mb-3 items-center justify-around w-full mx-2'
 								Id='motivoEditarTurno'>
 								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>
 									Motivo
@@ -133,7 +133,7 @@ export const EditarTurnos = ({ rowId, showModal, onClose }) => {
 								)}
 							</Form.Group>
 
-							<Form.Group className='flex flex-wrap items-center w-full justify-around'>
+							<Form.Group className='flex flex-wrap items-center w-full justify-around mt-3'>
 								<Button
 									className='bg-background shadow-3xl btnLogout text-white text-center p-2 border-2 w-[230px] my-3  border-white rounded-xl font-semibold'
 									type='submit'>

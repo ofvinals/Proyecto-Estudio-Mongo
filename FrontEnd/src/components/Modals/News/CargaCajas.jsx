@@ -69,7 +69,7 @@ export const CargaCajas = ({ showModal, onClose }) => {
 							onSubmit={onSubmit}
 							method='post'
 							encType='multipart/form-data'>
-							<Form.Group id='inputname'>
+							<Form.Group className='flex flex-col w-6/12 mx-2' id='inputname'>
 								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-7/12 font-medium'>Fecha</Form.Label>
 								<Form.Control
 									type='date'
@@ -89,7 +89,7 @@ export const CargaCajas = ({ showModal, onClose }) => {
 								)}{' '}
 							</Form.Group>
 
-							<Form.Group id='inputconcepto'>
+							<Form.Group className='flex flex-col w-full mx-2 mt-2' id='inputconcepto'>
 								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-7/12 font-medium'>Concepto</Form.Label>
 								<Form.Control
 									type='text'
@@ -108,7 +108,7 @@ export const CargaCajas = ({ showModal, onClose }) => {
 								)}{' '}
 							</Form.Group>
 
-							<Form.Group id='inputtipo'>
+							<Form.Group className='flex flex-col w-5/12 mx-2 mt-2' id='inputtipo'>
 								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-7/12 font-mediuma'>Tipo</Form.Label>
 								<select
 									className='items-center shadow-2xl w-full rounded-md p-2 focus:outline-none border-2 border-black text-black'
@@ -130,7 +130,7 @@ export const CargaCajas = ({ showModal, onClose }) => {
 								)}{' '}
 							</Form.Group>
 
-							<Form.Group id='inputmonto'>
+							<Form.Group className='flex flex-col mx-2 mt-2 w-5/12' id='inputmonto'>
 								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-7/12 font-medium'>Monto</Form.Label>
 								<Form.Control
 									className='items-center shadow-2xl w-full rounded-md p-2 focus:outline-none border-2 border-black text-black'
@@ -149,9 +149,9 @@ export const CargaCajas = ({ showModal, onClose }) => {
 								)}{' '}
 							</Form.Group>
 
-							<Form.Group id='inputcel'>
+							<Form.Group className='flex flex-col mx-2 mt-2 w-full' id='inputcel'>
 								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>
-									Comprobante de caja
+									Comprobante de caja (opcional)
 								</Form.Label>
 								<Form.Control
 									className='items-center shadow-2xl w-full rounded-md p-2 focus:outline-none border-2 border-black text-black'
@@ -160,7 +160,7 @@ export const CargaCajas = ({ showModal, onClose }) => {
 								/>
 							</Form.Group>
 
-							<Form.Group id='inputsubname'>
+							<Form.Group className='flex flex-col w-6/12 mx-2 mt-2' id='inputsubname'>
 								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-7/12 font-medium'>Estado</Form.Label>
 								<select
 									className='items-center shadow-2xl w-full rounded-md p-2 focus:outline-none border-2 border-black text-black'
@@ -184,7 +184,7 @@ export const CargaCajas = ({ showModal, onClose }) => {
 								)}{' '}
 							</Form.Group>
 
-							<Form.Group className='flex flex-wrap items-center w-full justify-around' id='inputpassword'>
+							<Form.Group className='flex flex-wrap items-center w-full justify-around mt-3' id='inputpassword'>
 								<Button className='bg-background shadow-3xl btnLogout text-white text-center p-2 border-2 w-[230px] my-3  border-white rounded-xl font-semibold' type='submit'>
 									<i className='text-xl pe-2 bi bi-check2-square'></i>
 									Guardar Movimiento

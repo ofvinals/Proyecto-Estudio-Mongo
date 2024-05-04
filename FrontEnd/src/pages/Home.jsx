@@ -11,7 +11,7 @@ export const Home = () => {
 	return (
 		<>
 			<Header />
-			<div className='bg-white xl:mx-10'>
+			<div className='bg-white'>
 				<Whatsapp />
 				<div className='imagennav rounded-b-lg flex flex-col h-[450px]'>
 					<div className='flex flex-col absolute top-1/4 sm:top-1/3 left-0 right-0 items-center text-center text-3xl text-white font-bold'>

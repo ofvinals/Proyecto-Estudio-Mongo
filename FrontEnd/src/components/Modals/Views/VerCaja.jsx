@@ -61,7 +61,7 @@ export const VerCaja = ({ rowId, showModal, onClose }) => {
 									<a
 										href={caja.fileUrl}
 										target='_blank'
-										className='text-black'
+										className='text-black decoration-black underline underline-offset-3'
 										rel='noopener noreferrer'>
 										Ver Comprobante
 									</a>

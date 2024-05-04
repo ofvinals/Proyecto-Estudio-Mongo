@@ -46,7 +46,7 @@ export const VerMov = ({ rowId, expteId, showModal, onClose }) => {
 									<a
 										href={selectedMov.fileUrl}
 										target='_blank'
-										className='text-white'
+										className='text-black decoration-black underline underline-offset-3'
 										rel='noopener noreferrer'>
 										Ver Archivo Adjunto
 									</a>

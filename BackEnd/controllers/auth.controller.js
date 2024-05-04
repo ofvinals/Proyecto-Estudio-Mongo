@@ -36,6 +36,7 @@ const register = async (req, res) => {
 			displayName: `${userSaved.nombre} ${userSaved.apellido}`,
 			email: userSaved.email,
 			admin: userSaved.admin,
+			coadmin:userSaved.coadmin
 		});
 
 		res.cookie('token', token);
@@ -76,6 +77,7 @@ const login = async (req, res) => {
 			displayName: `${userFound.nombre} ${userFound.apellido}`,
 			email: userFound.email,
 			admin: userFound.admin,
+			coadmin:userFound.coadmin
 		});
 
 		res.cookie('token', token);
@@ -87,6 +89,7 @@ const login = async (req, res) => {
 			displayName: `${userFound.nombre} ${userFound.apellido}`,
 			accessToken: token,
 			admin: userFound.admin,
+			coadmin:userFound.coadmin
 		});
 	} catch (error) {
 		console.log(error);
@@ -126,7 +129,8 @@ const verifyToken = async (req, res) => {
 			email: userFound.email,
 			displayName: `${userFound.nombre} ${userFound.apellido}`,
 			token: token,
-			admin: userFound.admin
+			admin: userFound.admin,
+			coadmin: userFound.coadmin
 		});
 	});
 };

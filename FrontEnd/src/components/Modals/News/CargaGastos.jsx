@@ -112,7 +112,7 @@ export const CargaGastos = ({ showModal, onClose }) => {
 						<Form
 							className='flex flex-wrap justify-around items-center'
 							onSubmit={onSubmit}>
-							<Form.Group className='flex flex-col' id='nroexpte'>
+							<Form.Group className='flex flex-col w-6/12 mx-2' id='nroexpte'>
 								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-7/12 font-medium'>
 									Expediente
 								</Form.Label>
@@ -136,7 +136,7 @@ export const CargaGastos = ({ showModal, onClose }) => {
 							</Form.Group>
 
 							<Form.Group
-								className='mb-3 flex flex-col w-full'
+								className='mb-3 flex flex-col w-full mx-2'
 								id='inputcaratula'>
 								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-7/12 font-medium'>
 									Caratula
@@ -149,7 +149,7 @@ export const CargaGastos = ({ showModal, onClose }) => {
 								/>
 							</Form.Group>
 
-							<Form.Group className='flex flex-col' id='inputname'>
+							<Form.Group className='flex flex-col w-5/12 mx-2' id='inputname'>
 								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-7/12 font-medium'>
 									Cliente
 								</Form.Label>
@@ -166,7 +166,7 @@ export const CargaGastos = ({ showModal, onClose }) => {
 								</select>
 							</Form.Group>
 
-							<Form.Group className='flex flex-col' id='inputconcepto'>
+							<Form.Group className='flex flex-col w-5/12 mx-2' id='inputconcepto'>
 								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-7/12 font-medium'>
 									Concepto
 								</Form.Label>
@@ -206,7 +206,7 @@ export const CargaGastos = ({ showModal, onClose }) => {
 								)}
 							</Form.Group>
 
-							<Form.Group className='flex flex-col' id='inputmonto'>
+							<Form.Group className='flex flex-col w-6/12 mx-2' id='inputmonto'>
 								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-7/12 font-medium'>
 									Monto
 								</Form.Label>
@@ -227,7 +227,7 @@ export const CargaGastos = ({ showModal, onClose }) => {
 								)}
 							</Form.Group>
 
-							<Form.Group className='flex flex-col' id='file'>
+							<Form.Group className='flex flex-col w-full mx-2' id='file'>
 								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>
 									Comprobante de gasto
 								</Form.Label>
@@ -238,7 +238,7 @@ export const CargaGastos = ({ showModal, onClose }) => {
 								/>
 							</Form.Group>
 
-							<Form.Group className='flex flex-col' id='inputestado'>
+							<Form.Group className='flex flex-col w-6/12 mx-2' id='inputestado'>
 								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-7/12 font-medium'>
 									Estado
 								</Form.Label>
@@ -264,7 +264,7 @@ export const CargaGastos = ({ showModal, onClose }) => {
 							</Form.Group>
 
 							<Form.Group
-								className='flex flex-wrap items-center w-full justify-around'
+								className='flex flex-wrap items-center w-full justify-around mt-3'
 								controlId='inputpassword'>
 								<Button
 									className='bg-background shadow-3xl btnLogout text-white text-center p-2 border-2 w-[230px] my-3  border-white rounded-xl font-semibold'
