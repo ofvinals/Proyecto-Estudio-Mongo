@@ -110,7 +110,7 @@ export const GestionUsuarios = () => {
 		},
 		{
 			text: 'Editar',
-			icon: admin ||coadmin  && (
+			icon: (admin ||coadmin)  && (
 				<Tooltip title='Editar datos del usuario' arrow>
 					<EditIcon color='success' cursor='pointer' />
 				</Tooltip>

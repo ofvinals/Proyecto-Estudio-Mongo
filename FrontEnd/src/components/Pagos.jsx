@@ -82,7 +82,7 @@ export const Pagos = ({ showModal, onClose }) => {
 				</Modal.Body>
 				<Modal.Footer>
 					<button
-						className='btneditgestion px-2'
+						className='bg-background shadow-3xl btnLogout text-white text-center p-2 border-2 w-[150px] my-3  border-white rounded-xl font-semibold'
 						onClick={() => {
 							onClose();
 						}}>

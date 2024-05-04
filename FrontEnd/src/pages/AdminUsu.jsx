@@ -7,12 +7,25 @@ import { Header } from '../components/Header.jsx';
 import { Novedades } from '../components/Novedades.jsx';
 import { VerUsu } from '../components/Modals/Views/VerUsu.jsx';
 import { useState } from 'react';
+import { Button } from 'react-bootstrap';
+import { Pagos } from '../components/Pagos.jsx';
 
 export const AdminUsu = () => {
 	const { currentUser, logout } = useAuth({});
 	const navigate = useNavigate();
 	const userId = currentUser.id;
 	const [openViewModal, setopenViewModal] = useState(false);
+	const [openPayModal, setopenPayModal] = useState(false);
+
+	const handleOpenPayModal = () => {
+		setopenPayModal(true);
+	};
+
+	const handleCloseModal = () => {
+		setopenPayModal(false);
+		setopenViewModal(false);
+
+	};
 
 	const handleLogOut = async () => {
 		await logout();
@@ -27,10 +40,6 @@ export const AdminUsu = () => {
 
 	const handleOpenViewModal = () => {
 		setopenViewModal(true);
-	};
-
-	const handleCloseModal = () => {
-		setopenViewModal(false);
 	};
 
 	return (
@@ -80,12 +89,13 @@ export const AdminUsu = () => {
 						<i className='text-xl pe-2 bi bi-person-gear'></i>
 						Modificar Datos
 					</button>
-					<Link
+					<Button
+					type='button'
 						className='bg-white shadow-3xl btnAdmin mx-2 text-primary text-center p-2 border-2 w-[230px] mb-3 border-primary rounded-xl font-bold'
-						to='/pagos'>
+						onClick={() => handleOpenPayModal()}>
 						<i className='text-xl pe-2 bi bi-cash-coin'></i>
 						Ver Medios de Pago
-					</Link>
+					</Button>
 
 					<button
 						onClick={handleLogOut}
@@ -104,6 +114,9 @@ export const AdminUsu = () => {
 					showModal={openViewModal}
 					onClose={handleCloseModal}
 				/>
+			)}
+						{openPayModal && (
+				<Pagos showModal={openPayModal} onClose={handleCloseModal} />
 			)}
 		</>
 	);

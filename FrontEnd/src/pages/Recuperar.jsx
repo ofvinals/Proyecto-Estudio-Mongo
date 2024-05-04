@@ -20,7 +20,7 @@ export const Recuperar = () => {
 	}
 
 	return (
-		<section className='container-lg recuperar'>
+		<section className='backgroundimage'>
 			<Form className='Formrec bg-dark'>
 				<h2 className='titulorec'>Recuperar contraseña</h2>
 				<p className='subtitulorec'>

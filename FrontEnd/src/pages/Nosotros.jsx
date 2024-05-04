@@ -8,7 +8,7 @@ export const Nosotros = () => {
 	return (
 		<>
 			<Header />
-			<div className='container-lg flex flex-wrap justify-center flex-col about pt-28'>
+			<div className='flex flex-wrap justify-center flex-col backgroundimage pt-48'>
 				<Whatsapp />
 				<h1 className=' text-3xl my-3 font-bold  bg-gradient-to-t from-primary to-blue-200 text-transparent bg-clip-text text-center'>
 					Sobre Nosotros
@@ -17,7 +17,7 @@ export const Nosotros = () => {
 					Historia
 				</h2>
 
-				<p className='lh-lg font-semibold text-white text-justify sm:mx-14 my-6 py-3 px-8 '>
+				<p className='lh-lg font-semibold text-white text-justify sm:mx-14 my-6 py-3 px-10 '>
 					Los orígenes del Estudio Posse se remontan al año 1949, en San
 					Miguel de Tucumán, cuando los hermanos Daniel Oscar y Eduardo
 					Posse, en busca de cumplir su anhelo de justicia, decidieron
@@ -47,7 +47,7 @@ export const Nosotros = () => {
 					<Card.Title className=' py-3 text-white text-center text-2xl'>
 						Mision
 					</Card.Title>
-					<Card.Text className='mx-3 pb-1 text-white text-center'>
+					<Card.Text className='mx-5 pb-3 text-white text-center'>
 						Nuestra mision consiste en diagnosticar y evaluar
 						correctamente los problemas, conflictos y consultas de
 						nuestros clientes, alineando las alternativas de solución con
@@ -64,7 +64,7 @@ export const Nosotros = () => {
 					<Card.Title className=' py-3 text-white text-center text-2xl'>
 						Vision
 					</Card.Title>
-					<Card.Text className='mx-3 pb-1 text-white text-center'>
+					<Card.Text className='mx-5 pb-3 text-white text-center'>
 						Nuestra visión se basa en el liderazgo respaldado por la
 						profesionalidad, el más estricto y cuidadoso análisis del
 						marco regulatorio, y la más calificada doctrina a la que
@@ -79,7 +79,7 @@ export const Nosotros = () => {
 					<Card.Title className='py-3 text-white text-center text-2xl'>
 						Valores
 					</Card.Title>
-					<Card.Text className='mx-3 pb-1 text-white text-center'>
+					<Card.Text className='mx-5 pb-3 text-white text-center'>
 						Los valores son esenciales en cualquier organización. Es por
 						ello que ratificamos nuestro compromiso con el cumplimiento de
 						la legislación vigente, y con el mandato de las reglas éticas

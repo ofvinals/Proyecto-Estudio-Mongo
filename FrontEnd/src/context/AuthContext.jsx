@@ -92,6 +92,7 @@ export const AuthProvider = ({ children }) => {
 	const logout = async () => {
 		Cookies.remove('token');
 		localStorage.removeItem('token');
+		localStorage.removeItem('googleToken');
 		setCurrentUser(null);
 		setIsAuthenticated(false);
 	};

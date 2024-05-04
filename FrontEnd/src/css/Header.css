@@ -46,11 +46,10 @@
 .textshadow {
 	text-shadow: 3px 5px 6px rgba(0, 0, 0, 0.6) !important;
 }
-.about{
+.backgroundimage{
 	background-image: linear-gradient(100deg, rgba(255,255, 240, 0.02), rgba(0, 0, 0, 1)),
 	url(/imagenfondo.jpg);
 	background-size: cover;
-	object-fit: none;
 	background-position: center;
 }
 .description {
@@ -63,22 +62,6 @@
 .description:hover {
 	opacity: 0.7;
 }
-.interes{
-	background-image: linear-gradient(rgba(5, 7, 12, 0.50), rgba(5, 12, 7, 0.50)),
-	url(/imagenfondo.jpg);
-	background-size: cover;
-	object-fit:cover;
-	background-position: center;
-}
-.recuperar{
-	background-image: linear-gradient(rgba(5, 7, 12, 0.50), rgba(5, 12, 7, 0.50)),
-	url(/imagenfondo.jpg);
-	background-size: cover;
-	object-fit: cover;
-	background-position: center;  
-}
-
-
 .swal2-confirm {
 	background-color: red !important;
 	border-width: 2px;
@@ -93,13 +76,7 @@
 	font-weight: 600;
 	box-shadow: 7px 5px 10px 0px rgba(0, 0, 0, 0.62) !important;
 }
-.bodycontact {
-	background-image: linear-gradient(100deg, rgba(255,255, 240, 0.02), rgba(0, 0, 0, 1)),
-		url(/imagenfondo.jpg);
-	background-size: cover;
-	object-fit: cover;
-	background-position: center;
-}
+
 .about{
 	background-image: linear-gradient(100deg, rgba(255,255, 240, 0.02), rgba(0, 0, 0, 1)),
 	url(/imagenfondo.jpg);

@@ -42,6 +42,10 @@ const userSchema = new mongoose.Schema(
 			type:Boolean,
 			defaultValue: false
 		},
+		coadmin:{
+			type:Boolean,
+			defaultValue: false
+		},
 		active:{
 			type:Boolean,
 			defaultValue: true

@@ -11,7 +11,7 @@ import Swal from 'sweetalert2';
 export const Header = () => {
 	const [expand, setExpand] = useState(false);
 	const [scrolled, setScrolled] = useState(false);
-	const [logoSrc, setLogoSrc] = useState(false);
+	const [logoSrc, setLogoSrc] = useState('/logo 2.png');
 	const { currentUser, logout } = useAuth();
 	const navigate = useNavigate();
 	const user = currentUser ? currentUser.email : null;
@@ -58,7 +58,7 @@ export const Header = () => {
 		: 'w-full bg-transparent sticky-top navbar text-white';
 	const textClassName = scrolled
 		? 'text-background hover:decoration-background text-wrap hover:underline hover:decoration-2 lg:text-center  hover:underline-offset-8 p-3'
-		: 'text-white hover:decoration-white text-wrap hover:underline hover:decoration-2 lg:text-center  hover:underline-offset-8 p-3';
+		: 'text-background lg:text-white hover:decoration-background lg:hover:decoration-white text-wrap hover:underline hover:decoration-2 lg:text-center  hover:underline-offset-8 p-3';
 const loginbtnClassName = scrolled
 ?"m-3 lg:m-0 btnlogin md:mb-2 lg:mb-0 w-[152px] bg-transparent border-2 border-[#185574] p-2 lg:mr-3 rounded-lg text-background"
 : "m-3 lg:m-0 btnlogin md:mb-2 lg:mb-0 w-[152px] bg-transparent border-2 border-[#185574] p-2 lg:mr-3 rounded-lg "

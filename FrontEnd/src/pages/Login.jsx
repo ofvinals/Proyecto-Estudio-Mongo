@@ -85,7 +85,7 @@ export const Login = () => {
 	};
 
 	return (
-		<section className=' bg-gradient-to-tl from-[#1e1e1e] to-[#4077ad] pt-32 flex flex-wrap items-center justify-center flex-col container-lg pb-10'>
+		<section className=' bg-gradient-to-tl from-[#1e1e1e] to-[#4077ad] pt-32 flex flex-wrap items-center justify-center flex-col pb-10'>
 			<Header />
 			<Form
 				id='loginForm'
