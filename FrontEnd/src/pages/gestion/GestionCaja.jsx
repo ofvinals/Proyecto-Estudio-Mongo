@@ -200,7 +200,7 @@ export const GestionCaja = () => {
 		},
 		{
 			text: 'Editar',
-			icon: admin || coadmin && (
+			icon: (admin || coadmin) && (
 				<Tooltip title='Tarea realizada' arrow>
 					<EditIcon color='success' cursor='pointer' />
 				</Tooltip>
@@ -266,8 +266,8 @@ export const GestionCaja = () => {
 			<hr className='linea text-white mx-3' />
 
 			<div className='container-lg'>
-				<div className='flex justify-around my-3'>
-					{admin || coadmin ? (
+				<div className='flex flex-wrap justify-around my-3'>
+					{(admin || coadmin) ? (
 						<button
 							type='button'
 							className='bg-white shadow-3xl btnAdmin text-primary text-center p-2 border-2 w-[210px] mb-3 border-primary rounded-xl font-semibold'

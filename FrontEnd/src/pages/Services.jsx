@@ -5,9 +5,9 @@ export const Services = () => {
 	return (
 		<>
 			<Header />
-			<section className='interes pt-28 flex flex-wrap h-auto items-center justify-center flex-col pb-10'>
+			<section className='bg-gradient-to-tl from-[#1e1e1e] to-[#4077ad] pt-28 flex flex-wrap h-auto items-center justify-center flex-col pb-10'>
 				<Whatsapp />
-				<h2 className='text-center text-white text-3xl font-bold mt-5 pb-10'>
+				<h2 className='text-center bg-gradient-to-t from-primary to-blue-200 text-transparent bg-clip-text text-3xl font-bold mt-5 pb-10'>
 					Servicios
 				</h2>
 

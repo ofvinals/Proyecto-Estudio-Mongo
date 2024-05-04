@@ -56,7 +56,7 @@ export const Footer = () => {
 							to='/home'>
 							<img
 								className='mt-5 justify-center  '
-								src='/logo estudio.png'
+								src='/logo 2.png'
 								width={100}
 								alt='logoestudio'
 							/>

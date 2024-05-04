@@ -1,9 +1,7 @@
 .stickytop {
 	position: sticky;
 	top: 0;
-	z-index: 1000; /* Asegura que el Navbar esté por encima de otros elementos */
-	background-color: #fff; /* O el color que desees */
-	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra opcional para resaltar */
+	z-index: 1000; 
 }
 .btnlogin:hover {
 	background-color: #185574 !important;
@@ -14,6 +12,9 @@
 	background-color: transparent !important;
 	border-color: #185574 !important;
 	color: #185574 !important;
+}
+.stickytop .nav-link {
+	color: red!important; /* Cambia el color de los enlaces cuando el navbar está pegajoso */
 }
 /* bg-gradient-to-tl from-[#1e1e1e] to-[#4077ad] */
 .error-message {
@@ -45,7 +46,6 @@
 .textshadow {
 	text-shadow: 3px 5px 6px rgba(0, 0, 0, 0.6) !important;
 }
-<<<<<<< HEAD
 .about{
 	background-image: linear-gradient(100deg, rgba(255,255, 240, 0.02), rgba(0, 0, 0, 1)),
 	url(/imagenfondo.jpg);
@@ -78,8 +78,6 @@
 	background-position: center;  
 }
 
-=======
->>>>>>> main
 
 .swal2-confirm {
 	background-color: red !important;
@@ -119,9 +117,6 @@ input[type='number']::-webkit-outer-spin-button {
 	transition: background-color 0.3s ease-in-out;
 }
 
-#navbar.scrolled {
-	background-color: white;
-}
 #navbar {
 	position: fixed;
 	top: 0;

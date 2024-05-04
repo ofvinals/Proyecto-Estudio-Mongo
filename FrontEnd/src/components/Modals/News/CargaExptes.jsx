@@ -64,10 +64,10 @@ export const CargaExptes = ({ showModal, onClose }) => {
 					</Modal.Header>
 					<Modal.Body>
 						<Form
-							className='flex flex-wrap flex-row justify-around items-center'
+							className='flex flex-wrap flex-row justify-center items-center'
 							onSubmit={onSubmit}>
-							<Form.Group className='flex flex-col' id='cliente'>
-								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-primary w-7/12 font-medium'>
+							<Form.Group className='flex flex-col justify-start' id='cliente'>
+								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-7/12 font-medium'>
 									Cliente
 								</Form.Label>
 								<select
@@ -83,8 +83,8 @@ export const CargaExptes = ({ showModal, onClose }) => {
 								</select>
 							</Form.Group>
 
-							<Form.Group className='flex flex-col' id='nroexpte'>
-								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-primary w-full font-medium'>
+							<Form.Group className='flex flex-col justify-end' id='nroexpte'>
+								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>
 									Nro Expediente
 								</Form.Label>
 								<Form.Control
@@ -106,7 +106,7 @@ export const CargaExptes = ({ showModal, onClose }) => {
 							</Form.Group>
 
 							<Form.Group className='flex flex-col' id='radicacion'>
-								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-primary w-full font-medium'>
+								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>
 									Fuero de Radicacion
 								</Form.Label>
 								<select
@@ -141,7 +141,7 @@ export const CargaExptes = ({ showModal, onClose }) => {
 							</Form.Group>
 
 							<Form.Group className='flex flex-col' id='juzgado'>
-								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-primary w-full font-medium'>
+								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>
 									Juzgado de Radicacion
 								</Form.Label>
 								<select
@@ -175,8 +175,8 @@ export const CargaExptes = ({ showModal, onClose }) => {
 								)}
 							</Form.Group>
 
-							<Form.Group className='flex flex-col' id='actor'>
-								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-primary w-7/12 font-medium'>
+							<Form.Group className='flex flex-col items-start' id='actor'>
+								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-7/12 font-medium'>
 									Actor
 								</Form.Label>
 								<Form.Control
@@ -197,7 +197,7 @@ export const CargaExptes = ({ showModal, onClose }) => {
 							</Form.Group>
 
 							<Form.Group className='flex flex-col' id='demandado'>
-								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-primary w-7/12 font-medium'>
+								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-7/12 font-medium'>
 									Demandado
 								</Form.Label>
 								<Form.Control
@@ -218,7 +218,7 @@ export const CargaExptes = ({ showModal, onClose }) => {
 							</Form.Group>
 
 							<Form.Group className='flex flex-col' id='proceso'>
-								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-primary w-full font-medium'>
+								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>
 									Tipo de Proceso
 								</Form.Label>
 								<select
@@ -258,7 +258,7 @@ export const CargaExptes = ({ showModal, onClose }) => {
 							</Form.Group>
 
 							<Form.Group className='flex flex-col' id='estado'>
-								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-primary w-7/12 font-medium'>
+								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-7/12 font-medium'>
 									Estado
 								</Form.Label>
 								<select

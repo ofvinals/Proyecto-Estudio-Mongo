@@ -125,7 +125,7 @@ export const GestionAgenda = () => {
 		},
 		{
 			text: 'Editar',
-			icon: admin || coadmin && (
+			icon: (admin || coadmin) && (
 				<Tooltip title='Editar evento' arrow>
 					<EditIcon color='success' cursor='pointer' />
 				</Tooltip>

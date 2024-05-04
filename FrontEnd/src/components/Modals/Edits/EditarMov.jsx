@@ -94,7 +94,7 @@ export const EditarMov = ({ rowId, expteId, showModal, onClose }) => {
 							<Form.Group
 								className='flex flex-col mb-3 items-center justify-around'
 								controlId='inputcaratula'>
-								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-primary w-full font-medium'>
+								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>
 									Fecha
 								</Form.Label>
 								<Form.Control
@@ -116,7 +116,7 @@ export const EditarMov = ({ rowId, expteId, showModal, onClose }) => {
 							<Form.Group
 								className='flex flex-col mb-3 items-center justify-around'
 								controlId='inputcaratula'>
-								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-primary w-full font-medium'>
+								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>
 									Descripcion
 								</Form.Label>
 								<Form.Control
@@ -141,7 +141,7 @@ export const EditarMov = ({ rowId, expteId, showModal, onClose }) => {
 							<Form.Group
 								className='flex flex-col mb-3 items-center justify-around'
 								id=''>
-								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-primary w-full font-medium'>
+								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>
 									Archivo Adjunto
 								</Form.Label>
 								<Form.Control

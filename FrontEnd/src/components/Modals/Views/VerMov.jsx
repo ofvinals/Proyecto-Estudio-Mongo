@@ -32,15 +32,15 @@ export const VerMov = ({ rowId, expteId, showModal, onClose }) => {
 				<Modal.Body>
 					<Form className='flex flex-wrap flex-col justify-around items-start'>
 						<Form.Group className='flex flex-row mb-3 items-center justify-around' id='datemov'>
-							<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-primary w-full font-medium'>Fecha <span className='text-black'>{selectedMov.fecha}</span></Form.Label>
+							<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>Fecha <span className='text-black'>{selectedMov.fecha}</span></Form.Label>
 						</Form.Group>
 						<Form.Group className='flex flex-row mb-3 items-center justify-around' id='descripmov'>
-							<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-primary w-full font-medium'>
+							<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>
 								Movimiento <span className='text-black'>{selectedMov.descripcion}</span>
 							</Form.Label>
 						</Form.Group>
 						<Form.Group className='flex flex-row mb-3 items-center justify-around' id='filemov'>
-							<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-primary w-full font-medium'>
+							<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>
 								Archivo Adjunto{' '}
 								{selectedMov.fileUrl ? (
 									<a

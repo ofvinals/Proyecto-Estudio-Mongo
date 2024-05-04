@@ -70,7 +70,7 @@ export const CargaCajas = ({ showModal, onClose }) => {
 							method='post'
 							encType='multipart/form-data'>
 							<Form.Group id='inputname'>
-								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-primary w-7/12 font-medium'>Fecha</Form.Label>
+								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-7/12 font-medium'>Fecha</Form.Label>
 								<Form.Control
 									type='date'
 									className='items-center shadow-2xl w-full rounded-md p-2 focus:outline-none border-2 border-black text-black'
@@ -90,7 +90,7 @@ export const CargaCajas = ({ showModal, onClose }) => {
 							</Form.Group>
 
 							<Form.Group id='inputconcepto'>
-								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-primary w-7/12 font-medium'>Concepto</Form.Label>
+								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-7/12 font-medium'>Concepto</Form.Label>
 								<Form.Control
 									type='text'
 									className='items-center shadow-2xl w-full rounded-md p-2 focus:outline-none border-2 border-black text-black'
@@ -109,7 +109,7 @@ export const CargaCajas = ({ showModal, onClose }) => {
 							</Form.Group>
 
 							<Form.Group id='inputtipo'>
-								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-primary w-7/12 font-mediuma'>Tipo</Form.Label>
+								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-7/12 font-mediuma'>Tipo</Form.Label>
 								<select
 									className='items-center shadow-2xl w-full rounded-md p-2 focus:outline-none border-2 border-black text-black'
 									aria-label='Default select'
@@ -131,7 +131,7 @@ export const CargaCajas = ({ showModal, onClose }) => {
 							</Form.Group>
 
 							<Form.Group id='inputmonto'>
-								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-primary w-7/12 font-medium'>Monto</Form.Label>
+								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-7/12 font-medium'>Monto</Form.Label>
 								<Form.Control
 									className='items-center shadow-2xl w-full rounded-md p-2 focus:outline-none border-2 border-black text-black'
 									type='number'
@@ -150,7 +150,7 @@ export const CargaCajas = ({ showModal, onClose }) => {
 							</Form.Group>
 
 							<Form.Group id='inputcel'>
-								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-primary w-full font-medium'>
+								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>
 									Comprobante de caja
 								</Form.Label>
 								<Form.Control
@@ -161,7 +161,7 @@ export const CargaCajas = ({ showModal, onClose }) => {
 							</Form.Group>
 
 							<Form.Group id='inputsubname'>
-								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-primary w-7/12 font-medium'>Estado</Form.Label>
+								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-7/12 font-medium'>Estado</Form.Label>
 								<select
 									className='items-center shadow-2xl w-full rounded-md p-2 focus:outline-none border-2 border-black text-black'
 									aria-label='Default select'

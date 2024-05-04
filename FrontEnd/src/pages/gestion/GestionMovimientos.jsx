@@ -128,7 +128,7 @@ export const GestionMovimientos = () => {
 		},
 		{
 			text: 'Editar',
-			icon: admin || coadmin && (
+			icon: (admin || coadmin) && (
 				<Tooltip title='Editar movimiento' arrow>
 					<EditIcon color='success' cursor='pointer' />
 				</Tooltip>
@@ -194,7 +194,7 @@ export const GestionMovimientos = () => {
 
 				<div className='container-lg'>
 					<div className='flex justify-around flex-wrap my-3'>
-						{admin || coadmin ? (
+						{(admin || coadmin) ? (
 							<button
 								className='bg-white shadow-3xl btnAdmin text-primary text-center p-2 border-2 w-[220px] mb-3 border-primary rounded-xl font-semibold'
 								onClick={() => handleOpenNewModal()}>

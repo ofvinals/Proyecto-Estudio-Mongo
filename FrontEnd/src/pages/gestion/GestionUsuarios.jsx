@@ -193,7 +193,7 @@ export const GestionUsuarios = () => {
 				<div className='container-lg my-3'>
 					<div className='flex justify-around flex-wrap'>
 						<Link
-							to={admin || coadmin ? '/Admin' : '/AdminUsu'}
+							to={(admin || coadmin) ? '/Admin' : '/AdminUsu'}
 							className='bg-background shadow-3xl btnLogout text-white text-center p-2 border-2 w-[200px] mb-3 border-white rounded-xl font-semibold'>
 							<i className='text-xl pe-2 bi bi-box-arrow-left'></i>
 							Volver al Panel

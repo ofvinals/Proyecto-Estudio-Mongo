@@ -93,7 +93,7 @@ export const GoogleCalendar = ({ showModal, onClose }) => {
 			<Modal.Body className='flex flex-col flex-wrap justify-around items-start'>
 				{googleToken ? (
 					<>
-						<p className='text-start bg-transparent text-xl mb-0 mt-2 text-primary w-full font-medium'>
+						<p className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>
 							Fecha del Evento
 						</p>
 						<LocalizationProvider
@@ -140,7 +140,7 @@ export const GoogleCalendar = ({ showModal, onClose }) => {
 						</LocalizationProvider>
 
 						<div className='flex flex-wrap justify-around items-center'>
-							<p className='text-start bg-transparent text-xl mb-0 mt-2 text-primary w-full font-medium'>
+							<p className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>
 								{' '}
 								Tipo de evento
 							</p>
@@ -155,7 +155,7 @@ export const GoogleCalendar = ({ showModal, onClose }) => {
 						</div>
 
 						<div className='flex flex-wrap justify-around items-center'>
-							<p className='text-start bg-transparent text-xl mb-0 mt-2 text-primary w-full font-medium'>
+							<p className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>
 								Descripcion
 							</p>
 							<textarea

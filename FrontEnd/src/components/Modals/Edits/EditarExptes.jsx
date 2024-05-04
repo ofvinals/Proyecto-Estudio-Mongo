@@ -111,7 +111,7 @@ export const EditarExptes = ({ rowId, showModal, onClose }) => {
 							<Form.Group
 								className='flex flex-col mb-3 items-center justify-around'
 								id='inputname'>
-								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-primary w-full font-medium'>
+								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>
 									Cliente
 								</Form.Label>
 								<select
@@ -130,7 +130,7 @@ export const EditarExptes = ({ rowId, showModal, onClose }) => {
 							<Form.Group
 								className='flex flex-col mb-3 items-center justify-around'
 								id='inputname'>
-								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-primary w-full font-medium'>
+								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>
 									Nro Expediente
 								</Form.Label>
 								<Form.Control
@@ -154,7 +154,7 @@ export const EditarExptes = ({ rowId, showModal, onClose }) => {
 							<Form.Group
 								className='mb-3 flex flex-col w-full'
 								id='inputcaratula'>
-								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-primary w-full font-medium'>
+								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>
 									Caratula
 								</Form.Label>
 								<Form.Control
@@ -167,7 +167,7 @@ export const EditarExptes = ({ rowId, showModal, onClose }) => {
 							<Form.Group
 								className='flex flex-col mb-3 items-center justify-around'
 								id='inputradic'>
-								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-primary w-full font-medium'>
+								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>
 									Fuero de Radicacion
 								</Form.Label>
 								<select
@@ -204,7 +204,7 @@ export const EditarExptes = ({ rowId, showModal, onClose }) => {
 							<Form.Group
 								className='flex flex-col mb-3 items-center justify-around'
 								id='inputradic'>
-								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-primary w-full font-medium'>
+								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>
 									Juzgado de Radicacion
 								</Form.Label>
 								<select
@@ -240,7 +240,7 @@ export const EditarExptes = ({ rowId, showModal, onClose }) => {
 							<Form.Group
 								className='flex flex-col mb-3 items-center justify-around'
 								id='inputdomic'>
-								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-primary w-full font-medium'>
+								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>
 									Actor
 								</Form.Label>
 								<Form.Control
@@ -263,7 +263,7 @@ export const EditarExptes = ({ rowId, showModal, onClose }) => {
 							<Form.Group
 								className='flex flex-col mb-3 items-center justify-around'
 								id='inputcel'>
-								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-primary w-full font-medium'>
+								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>
 									Demandado
 								</Form.Label>
 								<Form.Control
@@ -286,7 +286,7 @@ export const EditarExptes = ({ rowId, showModal, onClose }) => {
 							<Form.Group
 								className='flex flex-col mb-3 items-center justify-around'
 								id='inputemail'>
-								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-primary w-full font-medium'>
+								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>
 									Tipo de Proceso
 								</Form.Label>
 								<select
@@ -325,7 +325,7 @@ export const EditarExptes = ({ rowId, showModal, onClose }) => {
 							<Form.Group
 								className='flex flex-col mb-3 items-center justify-around'
 								id='inputemail'>
-								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-primary w-full font-medium'>
+								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>
 									Estado
 								</Form.Label>
 								<select

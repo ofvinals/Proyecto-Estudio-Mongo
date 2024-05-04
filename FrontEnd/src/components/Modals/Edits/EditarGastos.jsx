@@ -129,7 +129,7 @@ export const EditarGastos = ({ rowId, showModal, onClose }) => {
 					<Modal.Body>
 						<Form className='flex flex-wrap justify-around items-center' onSubmit={onSubmit}>
 							<Form.Group className='flex flex-col mb-3 items-center justify-around' id='inputname'>
-								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-primary w-full font-medium'>
+								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>
 									Expediente
 								</Form.Label>
 								<select
@@ -150,7 +150,7 @@ export const EditarGastos = ({ rowId, showModal, onClose }) => {
 							<Form.Group
 								className='mb-3 flex flex-col w-full'
 								id='inputcaratula'>
-								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-primary w-full font-medium'>Caratula</Form.Label>
+								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>Caratula</Form.Label>
 								<Form.Control
 									className='items-center shadow-2xl w-full rounded-md p-2 focus:outline-none border-2 border-black text-black'
 									type='text'
@@ -160,7 +160,7 @@ export const EditarGastos = ({ rowId, showModal, onClose }) => {
 							</Form.Group>
 
 							<Form.Group className='flex flex-col mb-3 items-center justify-around' id='inputconcepto'>
-								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-primary w-full font-medium'>Concepto</Form.Label>
+								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>Concepto</Form.Label>
 								<select
 									className='items-center shadow-2xl w-full rounded-md p-2 focus:outline-none border-2 border-black text-black'
 									aria-label='Default select'
@@ -201,7 +201,7 @@ export const EditarGastos = ({ rowId, showModal, onClose }) => {
 							</Form.Group>
 
 							<Form.Group className='flex flex-col mb-3 items-center justify-around' id='inputmonto'>
-								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-primary w-full font-medium'>Monto</Form.Label>
+								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>Monto</Form.Label>
 								<Form.Control
 									className='items-center shadow-2xl w-full rounded-md p-2 focus:outline-none border-2 border-black text-black'
 									type='number'
@@ -223,7 +223,7 @@ export const EditarGastos = ({ rowId, showModal, onClose }) => {
 							</Form.Group>
 
 							<Form.Group className='flex flex-col mb-3 items-center justify-around' id='inputsubname'>
-								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-primary w-full font-medium'>Estado</Form.Label>
+								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>Estado</Form.Label>
 								<select
 									className='items-center shadow-2xl w-full rounded-md p-2 focus:outline-none border-2 border-black text-black'
 									aria-label='Default select'
@@ -249,7 +249,7 @@ export const EditarGastos = ({ rowId, showModal, onClose }) => {
 							</Form.Group>
 
 							<Form.Group className='flex flex-col mb-3 items-center justify-around' id='fileUrl'>
-								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-primary w-full font-medium'>
+								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>
 									Comprobante de gasto
 								</Form.Label>
 								<Form.Control
