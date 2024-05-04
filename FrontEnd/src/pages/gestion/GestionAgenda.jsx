@@ -125,22 +125,22 @@ export const GestionAgenda = () => {
 		},
 		{
 			text: 'Editar',
-			icon: (admin || coadmin) && (
+			icon: (admin || coadmin) ? (
 				<Tooltip title='Editar evento' arrow>
 					<EditIcon color='success' cursor='pointer' />
 				</Tooltip>
-			),
+			): null,
 			onClick: (row) => {
 				handleOpenEditModal(row.original._id);
 			},
 		},
 		{
 			text: 'Eliminar',
-			icon: admin && (
+			icon: admin ? (
 				<Tooltip title='Borrar evento' arrow>
 					<DeleteIcon color='error' cursor='pointer'/>
 				</Tooltip>
-			),
+			): null,
 			onClick: (row) => borrarTurno(row.original._id),
 		},
 	];
@@ -175,7 +175,6 @@ export const GestionAgenda = () => {
 					showConfirmButton: false,
 					timer: 2500,
 				});
-				Swal.close();
 				setData((prevData) => prevData.filter((turno) => turno._id !== id));
 			}
 		} catch (error) {

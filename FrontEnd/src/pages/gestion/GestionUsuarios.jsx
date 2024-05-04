@@ -110,29 +110,31 @@ export const GestionUsuarios = () => {
 		},
 		{
 			text: 'Editar',
-			icon: (admin ||coadmin)  && (
-				<Tooltip title='Editar datos del usuario' arrow>
-					<EditIcon color='success' cursor='pointer' />
-				</Tooltip>
-			),
+			icon:
+				(admin || coadmin )? (
+					<Tooltip title='Editar datos del usuario' arrow>
+						<EditIcon color='success' cursor='pointer' />
+					</Tooltip>
+				) : null,
 			onClick: (row) => {
 				if (!row.original.admin) {
-				handleOpenEditModal(row.original._id);
-			} else {
-				Swal.fire({
-					icon: 'error',
-					title: 'No puedes editar los datos este usuario',
-					text: 'Este usuario no puede ser editado.',
-				});
-			}}
+					handleOpenEditModal(row.original._id);
+				} else {
+					Swal.fire({
+						icon: 'error',
+						title: 'No puedes editar los datos este usuario',
+						text: 'Este usuario no puede ser editado.',
+					});
+				}
+			},
 		},
 		{
 			text: 'Eliminar',
-			icon: admin && (
+			icon: admin ? (
 				<Tooltip title='Suspender usuario' arrow>
 					<DeleteIcon color='error' cursor='pointer' />
 				</Tooltip>
-			),
+			) : null,
 			onClick: (row) => {
 				if (!row.original.admin) {
 					borrarUsuario(row.original._id);
@@ -193,7 +195,7 @@ export const GestionUsuarios = () => {
 				<div className='container-lg my-3'>
 					<div className='flex justify-around flex-wrap'>
 						<Link
-							to={(admin || coadmin) ? '/Admin' : '/AdminUsu'}
+							to={admin || coadmin ? '/Admin' : '/AdminUsu'}
 							className='bg-background shadow-3xl btnLogout text-white text-center p-2 border-2 w-[200px] mb-3 border-white rounded-xl font-semibold'>
 							<i className='text-xl pe-2 bi bi-box-arrow-left'></i>
 							Volver al Panel

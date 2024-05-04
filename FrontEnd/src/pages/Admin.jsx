@@ -15,7 +15,7 @@ export const Admin = () => {
 	const coadmin = currentUser.coadmin;
 
 	useEffect(() => {
-		if (!admin || coadmin) {
+		if (!admin && !coadmin) {
 			navigate('/adminusu');
 		}
 	}, []);

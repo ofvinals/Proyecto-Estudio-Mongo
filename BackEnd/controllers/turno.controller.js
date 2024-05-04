@@ -11,12 +11,12 @@ const getTurnos = async (req, res) => {
 
 const createTurno = async (req, res) => {
 	// Extraer los campos del cuerpo de la solicitud (request body)
-	const { turno, email, motivo } = req.body;
-
+	const { turno, email, tipo, motivo } = req.body;
 	try {
 		// Crear una nueva instancia del modelo Turno utilizando los datos de la solicitud
 		const newTurno = new Turno({
 			turno,
+			tipo,
 			email,
 			motivo,
 		});
@@ -46,7 +46,7 @@ const getTurno = async (req, res) => {
 
 const updateTurno = async (req, res) => {
 	try {
-		const { turno, email, motivo } = req.body;
+		const { turno, email, tipo, motivo } = req.body;
 		const updateTurno = await Turno.findByIdAndUpdate(
 			req.params.id,
 			req.body,

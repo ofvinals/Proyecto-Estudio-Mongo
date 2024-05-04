@@ -128,22 +128,22 @@ export const GestionMovimientos = () => {
 		},
 		{
 			text: 'Editar',
-			icon: (admin || coadmin) && (
+			icon: (admin || coadmin) ? (
 				<Tooltip title='Editar movimiento' arrow>
 					<EditIcon color='success' cursor='pointer' />
 				</Tooltip>
-			),
+			): null,
 			onClick: (row) => {
 				handleOpenEditModal(row.original._id);
 			},
 		},
 		{
 			text: 'Eliminar',
-			icon: admin && (
+			icon: admin ? (
 				<Tooltip title='Eliminar movimiento' arrow>
 					<DeleteIcon color='error' cursor='pointer' />
 				</Tooltip>
-			),
+			): null,
 			onClick: (row) => borrarMov(row.original._id, expteId),
 		},
 	];
