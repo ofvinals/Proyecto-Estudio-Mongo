@@ -74,7 +74,7 @@ export const EditarTurnos = ({ rowId, showModal, onClose }) => {
 							<Form.Group
 								className='flex flex-col mb-3 items-center justify-around'
 								Id='turnoEditarTurno'>
-								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-primary w-full font-medium'>
+								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>
 									Cliente
 								</Form.Label>
 								<Form.Control
@@ -88,7 +88,7 @@ export const EditarTurnos = ({ rowId, showModal, onClose }) => {
 							<Form.Group
 								className='flex flex-col mb-3 items-center justify-around'
 								Id='turnoEditarTurno'>
-								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-primary w-full font-medium'>
+								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>
 									Turno
 								</Form.Label>
 								<Form.Control
@@ -111,7 +111,7 @@ export const EditarTurnos = ({ rowId, showModal, onClose }) => {
 							<Form.Group
 								className='flex flex-col mb-3 items-center justify-around'
 								Id='motivoEditarTurno'>
-								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-primary w-full font-medium'>
+								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>
 									Motivo
 								</Form.Label>
 								<Form.Control

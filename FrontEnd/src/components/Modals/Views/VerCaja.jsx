@@ -33,14 +33,14 @@ export const VerCaja = ({ rowId, showModal, onClose }) => {
 						<Form.Group
 							className='flex flex-row mb-3 items-center justify-around'
 							id='fecha'>
-							<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-primary w-full font-medium'>
+							<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>
 								Fecha <span className='text-black'> {caja.fecha}</span>
 							</Form.Label>
 						</Form.Group>
 						<Form.Group
 							className='flex flex-row mb-3 items-center justify-around'
 							id='concepto'>
-							<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-primary w-full font-medium'>
+							<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>
 								Concepto{' '}
 								<span className='text-black'>{caja.concepto}</span>
 							</Form.Label>
@@ -48,14 +48,14 @@ export const VerCaja = ({ rowId, showModal, onClose }) => {
 						<Form.Group
 							className='flex flex-row mb-3 items-center justify-around'
 							id='monto'>
-							<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-primary w-full font-medium'>
+							<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>
 								Monto <span className='text-black'>$ {caja.monto}</span>
 							</Form.Label>
 						</Form.Group>
 						<Form.Group
 							className='flex flex-row mb-3 items-start justify-start'
 							id='comprobante'>
-							<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-primary w-full font-medium'>
+							<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>
 								Comprobante Adjunto:{' '}
 								{caja.fileUrl ? (
 									<a
@@ -73,7 +73,7 @@ export const VerCaja = ({ rowId, showModal, onClose }) => {
 						<Form.Group
 							className='flex flex-row mb-3 items-start justify-start'
 							id='estado'>
-							<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-primary w-full font-medium'>
+							<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>
 								Estado <span className='text-black'>{caja.estado}</span>{' '}
 							</Form.Label>
 						</Form.Group>

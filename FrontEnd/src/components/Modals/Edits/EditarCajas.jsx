@@ -96,7 +96,7 @@ export const EditarCajas = ({ rowId, showModal, onClose }) => {
 							<Form.Group
 								className='flex flex-col mb-3 items-center justify-around'
 								Id='inputname'>
-								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-primary w-full font-medium'>
+								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>
 									Fecha
 								</Form.Label>
 								<Form.Control
@@ -120,7 +120,7 @@ export const EditarCajas = ({ rowId, showModal, onClose }) => {
 							<Form.Group
 								className='flex flex-col mb-3 items-center justify-around'
 								Id='inputconcepto'>
-								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-primary w-full font-medium'>
+								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>
 									Concepto
 								</Form.Label>
 								<Form.Control
@@ -143,7 +143,7 @@ export const EditarCajas = ({ rowId, showModal, onClose }) => {
 							<Form.Group
 								className='flex flex-col mb-3 items-center justify-around'
 								id='inputtipo'>
-								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-primary w-full font-medium'>
+								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>
 									Tipo
 								</Form.Label>
 								<select
@@ -169,7 +169,7 @@ export const EditarCajas = ({ rowId, showModal, onClose }) => {
 							<Form.Group
 								className='flex flex-col mb-3 items-center justify-around'
 								Id='inputmonto'>
-								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-primary w-full font-medium'>
+								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>
 									Monto
 								</Form.Label>
 								<Form.Control
@@ -192,7 +192,7 @@ export const EditarCajas = ({ rowId, showModal, onClose }) => {
 							<Form.Group
 								className='flex flex-col mb-3 items-center justify-around'
 								Id='inputcel'>
-								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-primary w-full font-medium'>
+								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>
 									Comprobante de caja
 								</Form.Label>
 								<Form.Control
@@ -205,7 +205,7 @@ export const EditarCajas = ({ rowId, showModal, onClose }) => {
 							<Form.Group
 								className='flex flex-col mb-3 items-center justify-around'
 								Id='inputsubname'>
-								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-primary w-full font-medium'>
+								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>
 									Estado
 								</Form.Label>
 								<select

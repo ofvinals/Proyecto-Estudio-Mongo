@@ -77,7 +77,7 @@ export const EditarUsu = ({ rowId, showModal, onClose }) => {
 							<Form.Group
 								className='flex flex-col mb-3 items-center justify-around'
 								id='nombreEditarUsuario'>
-								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-primary w-full font-medium'>
+								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>
 									Nombre
 								</Form.Label>
 								<Form.Control
@@ -102,7 +102,7 @@ export const EditarUsu = ({ rowId, showModal, onClose }) => {
 							<Form.Group
 								className='flex flex-col mb-3 items-center justify-around'
 								id='apellidoEditarUsuario'>
-								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-primary w-full font-medium'>
+								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>
 									Apellido
 								</Form.Label>
 								<Form.Control
@@ -120,7 +120,7 @@ export const EditarUsu = ({ rowId, showModal, onClose }) => {
 							<Form.Group
 								className='flex flex-col mb-3 items-center justify-around'
 								id='dniEditarUsuario'>
-								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-primary w-full font-medium'>
+								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>
 									DNI/CUIT
 								</Form.Label>
 								<Form.Control
@@ -153,7 +153,7 @@ export const EditarUsu = ({ rowId, showModal, onClose }) => {
 							<Form.Group
 								className='flex flex-col mb-3 items-center justify-around'
 								id='domicilioEditarUsuario'>
-								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-primary w-full font-medium'>
+								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>
 									Domicilio
 								</Form.Label>
 								<Form.Control
@@ -176,7 +176,7 @@ export const EditarUsu = ({ rowId, showModal, onClose }) => {
 							<Form.Group
 								className='flex flex-col mb-3 items-center justify-around'
 								id='celularEditarUsuario'>
-								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-primary w-full font-medium'>
+								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>
 									Celular
 								</Form.Label>
 								<Form.Control

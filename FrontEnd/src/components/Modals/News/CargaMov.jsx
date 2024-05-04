@@ -63,7 +63,7 @@ export const CargaMov = ({ showModal, onClose, expteId }) => {
 							<Form.Group
 								className='formcargagroup'
 								controlId='inputname'>
-								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-primary w-7/12 font-medium'>Fecha</Form.Label>
+								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-7/12 font-medium'>Fecha</Form.Label>
 								<Form.Control
 									type='date'
 									className='items-center shadow-2xl w-full rounded-md p-2 focus:outline-none border-2 border-black text-black'
@@ -85,7 +85,7 @@ export const CargaMov = ({ showModal, onClose, expteId }) => {
 							<Form.Group
 								className='formcargagroup'
 								controlId='inputname'>
-								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-primary w-7/12 font-medium'>
+								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-7/12 font-medium'>
 									Descripcion
 								</Form.Label>
 								<Form.Control
@@ -111,7 +111,7 @@ export const CargaMov = ({ showModal, onClose, expteId }) => {
 							<Form.Group
 								className='formcargagroup'
 								controlId='inputsubname'>
-								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-primary w-7/12 font-medium'>Adjunto</Form.Label>
+								<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-7/12 font-medium'>Adjunto</Form.Label>
 								<Form.Control
 									type='file'
 									className='items-center shadow-2xl w-full rounded-md p-2 focus:outline-none border-2 border-black text-black'

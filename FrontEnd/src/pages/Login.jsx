@@ -7,8 +7,9 @@ import { useAuth } from '../context/AuthContext.jsx';
 import '../css/Header.css';
 import { Button } from 'react-bootstrap';
 import Swal from 'sweetalert2';
-// import { jwtDecode as jwt_decode } from 'jwt-decode';
 import { Header } from '../components/Header.jsx';
+import { Recuperar } from '../components/Recuperar.jsx';
+
 export const Login = () => {
 	const navigate = useNavigate();
 	const {
@@ -17,27 +18,32 @@ export const Login = () => {
 		formState: { errors },
 	} = useForm();
 	const [showPassword, setShowPassword] = useState(false);
+	const [openRecModal, setopenRecModal] = useState(false);
+
 	const { login, loginWithGoogle } = useAuth();
-	// const admin =currentUser? currentUser.admin;
 	const toggleShowPassword = () => setShowPassword(!showPassword);
 
-
+	const handleRecModal = () => {
+		setopenRecModal(true);
+	};
+	const handleCloseModal = () => {
+		setopenRecModal(false);
+	};
 
 	const onSubmit = handleSubmit(async (values) => {
 		try {
 			const user = await login(values);
-			if (user.status === 200) {
-				Swal.fire({
-					icon: 'success',
-					title: 'Inicio de sesión exitoso!',
-					showConfirmButton: false,
-					timer: 2000,
-				});
-				if (user.admin) {
-					navigate('/admin', { replace: true });
-				} else {
-					navigate('/adminusu', { replace: true });
-				}
+			console.log(user);
+			Swal.fire({
+				icon: 'success',
+				title: 'Inicio de sesión exitoso!',
+				showConfirmButton: false,
+				timer: 2000,
+			});
+			if (user.admin) {
+				navigate('/admin');
+			} else {
+				navigate('/adminusu');
 			}
 		} catch (error) {
 			console.log(error);
@@ -54,7 +60,7 @@ export const Login = () => {
 	const handleGoogle = async (e) => {
 		e.preventDefault();
 		try {
-			const user= await loginWithGoogle();
+			const user = await loginWithGoogle();
 			Swal.fire({
 				icon: 'success',
 				title: 'Inicio de sesión Google exitoso!',
@@ -78,12 +84,8 @@ export const Login = () => {
 		}
 	};
 
-
-
 	return (
-		<section
-			className=' bg-gradient-to-tl from-[#1e1e1e] to-[#4077ad] 
-		flex flex-wrap items-center justify-center flex-col container-lg pb-10'>
+		<section className=' bg-gradient-to-tl from-[#1e1e1e] to-[#4077ad] pt-32 flex flex-wrap items-center justify-center flex-col pb-10'>
 			<Header />
 			<Form
 				id='loginForm'
@@ -163,11 +165,11 @@ export const Login = () => {
 				</Form.Group>
 
 				<Form.Group className='mt-2'>
-					<Link
-						className='link text-primary mt-2 text-sm font-semibold text-decoration-underline'
-						to='/recuperar'>
+					<Button
+						className='link bg-transparent border-none text-primary mt-2 text-sm font-semibold text-decoration-underline'
+						onClick={handleRecModal}>
 						¿ Olvidaste tu contraseña ?
-					</Link>
+					</Button>
 				</Form.Group>
 
 				<Form.Group
@@ -198,6 +200,9 @@ export const Login = () => {
 					</Link>
 				</p>
 			</Form>
+			{openRecModal && (
+				<Recuperar showModal={openRecModal} onClose={handleCloseModal} />
+			)}
 		</section>
 	);
 };

@@ -16,6 +16,7 @@ export const Novedades = () => {
 	const [data, setData] = useState([]);
 	const navigate = useNavigate();
 	const admin = currentUser.admin;
+	const coadmin = currentUser.coadmin;
 	const user = currentUser.email;
 
 	useEffect(() => {
@@ -25,7 +26,7 @@ export const Novedades = () => {
 				const fetchedExptes = expedientes.map((doc) => {
 					return { ...doc, _id: doc._id };
 				});
-				const filteredByClientExptes = admin
+				const filteredByClientExptes = admin || coadmin
 					? fetchedExptes
 					: fetchedExptes.filter((expte) => expte.cliente === user);
 				const filteredExpedientes = novedadesExpedientes(

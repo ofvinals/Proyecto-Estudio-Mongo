@@ -34,7 +34,7 @@ export const VerUsu = ({ rowId, showModal, onClose }) => {
 						<Form.Group
 							className='flex flex-row mb-3 items-center justify-around'
 							id='nombre'>
-							<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-primary w-full font-medium'>
+							<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>
 								Nombre o Razon Social{' '}
 								<span className='text-black'> {users.nombre}</span>
 							</Form.Label>
@@ -42,7 +42,7 @@ export const VerUsu = ({ rowId, showModal, onClose }) => {
 						<Form.Group
 							className='flex flex-row mb-3 items-center justify-around'
 							id='apellido'>
-							<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-primary w-full font-medium'>
+							<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>
 								Apellido{' '}
 								<span className='text-black'> {users.apellido}</span>
 							</Form.Label>
@@ -50,7 +50,7 @@ export const VerUsu = ({ rowId, showModal, onClose }) => {
 						<Form.Group
 							className='flex flex-row mb-3 items-center justify-around'
 							id='dni'>
-							<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-primary w-full font-medium'>
+							<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>
 								DNI/CUIT{' '}
 								<span className='text-black'>{users.dni} </span>
 							</Form.Label>
@@ -58,7 +58,7 @@ export const VerUsu = ({ rowId, showModal, onClose }) => {
 						<Form.Group
 							className='flex flex-row mb-3 items-center justify-around'
 							id='celular'>
-							<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-primary w-full font-medium'>
+							<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>
 								Celular{' '}
 								<span className='text-black'>{users.celular}</span>
 							</Form.Label>
@@ -66,14 +66,14 @@ export const VerUsu = ({ rowId, showModal, onClose }) => {
 						<Form.Group
 							className='flex flex-row mb-3 items-center justify-around'
 							id='email'>
-							<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-primary w-full font-medium'>
+							<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>
 								Email <span className='text-black'>{users.email}</span>
 							</Form.Label>
 						</Form.Group>
 						<Form.Group
 							className='flex flex-row mb-3 items-center justify-around'
 							id='domicilio'>
-							<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-primary w-full font-medium'>
+							<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>
 								Domicilio{' '}
 								<span className='text-black'>{users.domicilio}</span>
 							</Form.Label>

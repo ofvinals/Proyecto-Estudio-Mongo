@@ -18,6 +18,19 @@ const app = express();
 app.use(cookieParser());
 app.use(
 	cors({
+<<<<<<< HEAD
+		origin: [
+			'http://localhost:5173',
+			'https://flourishing-tanuki-55bdc2.netlify.app',
+			'http://localhost:5174',
+		],
+		credentials: true,
+		optionsSuccessStatus: 200,
+		methods: ['GET', 'POST', 'PUT', 'DELETE'],
+		allowedHeaders: ['Content-Type', 'Authorization'],
+	})
+);
+=======
 		 origin: [
 			  'http://localhost:5173',
 			  'https://flourishing-tanuki-55bdc2.netlify.app',
@@ -43,6 +56,7 @@ app.use(
 // 	next();
 // });
 
+>>>>>>> main
 app.use(express.json());
 
 app.use('/api', authRoutes);

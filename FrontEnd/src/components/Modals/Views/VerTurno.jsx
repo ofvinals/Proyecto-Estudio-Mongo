@@ -31,13 +31,13 @@ export const VerTurno = ({ rowId, showModal, onClose }) => {
 				<Modal.Body>
 					<Form className='flex flex-wrap flex-col justify-around items-start'>
 						<Form.Group className='flex flex-row mb-3 items-center justify-around' Id='turno'>
-							<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-primary w-full font-medium'>Turno <span className='text-black'>{turno.turno}</span></Form.Label>
+							<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>Turno <span className='text-black'>{turno.turno}</span></Form.Label>
 						</Form.Group>
 						<Form.Group className='flex flex-row mb-3 items-center justify-around' Id='email'>
-							<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-primary w-full font-medium'>Cliente <span className='text-black'>{turno.email}</span> </Form.Label>
+							<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>Cliente <span className='text-black'>{turno.email}</span> </Form.Label>
 						</Form.Group>
 						<Form.Group className='flex flex-row mb-3 items-center justify-around' Id='motivo'>
-							<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-primary w-full font-medium'>Motivo <span className='text-black'>{turno.motivo}</span> </Form.Label>
+							<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>Motivo <span className='text-black'>{turno.motivo}</span> </Form.Label>
 						</Form.Group>
 					</Form>
 				</Modal.Body>

@@ -203,7 +203,7 @@ export const AgendaUsu = () => {
 
 	return (
 		<>
-			<div className='bg-gradient-to-tl from-[#1e1e1e] to-[#4077ad] py-3'>
+			<div className='bg-gradient-to-tl from-[#1e1e1e] to-[#4077ad] pb-3 pt-32'>
 				<Header />
 				<div className='rounded-xl container-lg mb-1 '>
 					<Detail modulo={'Turnos'} />

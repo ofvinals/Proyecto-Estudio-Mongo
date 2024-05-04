@@ -22,6 +22,7 @@ export const GestionUsuarios = () => {
 	const { currentUser } = useAuth();
 	const [data, setData] = useState([]);
 	const admin = currentUser.admin;
+	const coadmin = currentUser.coadmin;
 	const [openViewModal, setopenViewModal] = useState(false);
 	const [openEditModal, setopenEditModal] = useState(false);
 	const [rowId, setRowId] = useState(null);
@@ -109,7 +110,7 @@ export const GestionUsuarios = () => {
 		},
 		{
 			text: 'Editar',
-			icon: admin && (
+			icon: (admin ||coadmin)  && (
 				<Tooltip title='Editar datos del usuario' arrow>
 					<EditIcon color='success' cursor='pointer' />
 				</Tooltip>
@@ -182,7 +183,7 @@ export const GestionUsuarios = () => {
 
 	return (
 		<>
-			<div className='bg-gradient-to-tl from-[#1e1e1e] to-[#4077ad] pb-3'>
+			<div className='bg-gradient-to-tl from-[#1e1e1e] to-[#4077ad] pb-3 pt-32'>
 				<Header />
 				<div className=' rounded-xl container-lg mb-1 '>
 					<Detail modulo={'Usuarios'} />
@@ -192,7 +193,7 @@ export const GestionUsuarios = () => {
 				<div className='container-lg my-3'>
 					<div className='flex justify-around flex-wrap'>
 						<Link
-							to={admin ? '/Admin' : '/AdminUsu'}
+							to={(admin || coadmin) ? '/Admin' : '/AdminUsu'}
 							className='bg-background shadow-3xl btnLogout text-white text-center p-2 border-2 w-[200px] mb-3 border-white rounded-xl font-semibold'>
 							<i className='text-xl pe-2 bi bi-box-arrow-left'></i>
 							Volver al Panel

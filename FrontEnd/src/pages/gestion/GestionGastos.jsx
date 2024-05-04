@@ -28,6 +28,7 @@ export const GestionGastos = () => {
 	const [data, setData] = useState([]);
 	const user = currentUser.email;
 	const admin = currentUser.admin;
+	const coadmin = currentUser.coadmin;
 	const [openViewModal, setopenViewModal] = useState(false);
 	const [openEditModal, setopenEditModal] = useState(false);
 	const [openPayModal, setopenPayModal] = useState(false);
@@ -157,7 +158,7 @@ export const GestionGastos = () => {
 		},
 		{
 			text: 'Editar',
-			icon: admin && (
+			icon: (admin || coadmin) && (
 				<Tooltip title='Colocar como tarea pendiente' arrow>
 					<EditIcon color='success' cursor='pointer' />
 				</Tooltip>
@@ -212,7 +213,7 @@ export const GestionGastos = () => {
 	}
 
 	return (
-		<div className='bg-gradient-to-tl from-[#1e1e1e] to-[#4077ad] pb-3'>
+		<div className='bg-gradient-to-tl from-[#1e1e1e] to-[#4077ad] pb-3 pt-32'>
 			<Header />
 			<div className=' rounded-xl container-lg mb-1 '>
 				<Detail modulo={'Gastos'} />
@@ -223,7 +224,7 @@ export const GestionGastos = () => {
 			<div className='container-lg '>
 				<div>
 					<div className='flex justify-around flex-row  items-center flex-wrap my-3'>
-						{admin ? (
+						{admin || coadmin ? (
 							<button
 								type='button'
 								className='bg-white shadow-3xl btnAdmin text-primary text-center p-2 border-2 w-[210px] mb-3 border-primary rounded-xl font-semibold'
@@ -241,7 +242,7 @@ export const GestionGastos = () => {
 							Medios de pago
 						</button>
 
-						{admin && (
+						{(admin || coadmin) && (
 							<Link
 								to='/gastosarchivados'
 								className='bg-white shadow-3xl btnAdmin text-primary text-center p-2 border-2 w-[210px] mb-3 border-primary rounded-xl font-semibold'>

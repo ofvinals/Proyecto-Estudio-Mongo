@@ -31,6 +31,7 @@ export const GestionCaja = () => {
 	const [reloadTable, setReloadTable] = useState(false);
 	const [rowId, setRowId] = useState(null);
 	const admin = currentUser.admin;
+	const coadmin = currentUser.coadmin;
 	const meses = [
 		'Enero',
 		'Febrero',
@@ -199,7 +200,7 @@ export const GestionCaja = () => {
 		},
 		{
 			text: 'Editar',
-			icon: admin && (
+			icon: (admin || coadmin) && (
 				<Tooltip title='Tarea realizada' arrow>
 					<EditIcon color='success' cursor='pointer' />
 				</Tooltip>
@@ -256,7 +257,7 @@ export const GestionCaja = () => {
 	}
 
 	return (
-		<div className='bg-gradient-to-tl from-[#1e1e1e] to-[#4077ad] pb-3'>
+		<div className='bg-gradient-to-tl from-[#1e1e1e] to-[#4077ad] pb-3 pt-32'>
 			<Header />
 			<div className=' rounded-xl container-lg mb-1 '>
 				<Detail modulo={'Caja'} />
@@ -265,8 +266,8 @@ export const GestionCaja = () => {
 			<hr className='linea text-white mx-3' />
 
 			<div className='container-lg'>
-				<div className='flex justify-around my-3'>
-					{admin ? (
+				<div className='flex flex-wrap justify-around my-3'>
+					{(admin || coadmin) ? (
 						<button
 							type='button'
 							className='bg-white shadow-3xl btnAdmin text-primary text-center p-2 border-2 w-[210px] mb-3 border-primary rounded-xl font-semibold'

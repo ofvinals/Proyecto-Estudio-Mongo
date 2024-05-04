@@ -11,10 +11,12 @@ import Swal from 'sweetalert2';
 export const Header = () => {
 	const [expand, setExpand] = useState(false);
 	const [scrolled, setScrolled] = useState(false);
+	const [logoSrc, setLogoSrc] = useState('/logo 2.png');
 	const { currentUser, logout } = useAuth();
 	const navigate = useNavigate();
 	const user = currentUser ? currentUser.email : null;
 	const admin = currentUser ? currentUser.admin : null;
+	const coadmin = currentUser ? currentUser.coadmin : null;
 
 	const handleNavCollapseToggle = () => {
 		setExpand(true);
@@ -39,8 +41,10 @@ export const Header = () => {
 		const handleScroll = () => {
 			if (window.scrollY > 0) {
 				setScrolled(true);
+				setLogoSrc('/logo 1.png');
 			} else {
 				setScrolled(false);
+				setLogoSrc('/logo 2.png');
 			}
 		};
 
@@ -50,9 +54,14 @@ export const Header = () => {
 		};
 	}, []);
 	const navbarClassName = scrolled
-		? 'w-full bg-background sticky-top navbar text-black'
-		: 'w-full bg-transparent sticky-top navbar';
-
+		? 'w-full bg-white sticky-top navbar'
+		: 'w-full bg-transparent sticky-top navbar text-white';
+	const textClassName = scrolled
+		? 'text-background hover:decoration-background text-wrap hover:underline hover:decoration-2 lg:text-center  hover:underline-offset-8 p-3'
+		: 'text-background lg:text-white hover:decoration-background lg:hover:decoration-white text-wrap hover:underline hover:decoration-2 lg:text-center  hover:underline-offset-8 p-3';
+const loginbtnClassName = scrolled
+?"m-3 lg:m-0 btnlogin md:mb-2 lg:mb-0 w-[152px] bg-transparent border-2 border-[#185574] p-2 lg:mr-3 rounded-lg text-background"
+: "m-3 lg:m-0 btnlogin md:mb-2 lg:mb-0 w-[152px] bg-transparent border-2 border-[#185574] p-2 lg:mr-3 rounded-lg "
 	return (
 		<>
 			<Navbar
@@ -64,7 +73,7 @@ export const Header = () => {
 					<Navbar.Brand href='/home'>
 						<img
 							className='ms-3'
-							src='/logo estudio.png'
+							src={logoSrc}
 							width={60}
 							alt='logoestudio'
 						/>
@@ -82,37 +91,30 @@ export const Header = () => {
 						placement='end'>
 						<Offcanvas.Header closeButton></Offcanvas.Header>
 						<Offcanvas.Body className='flex flex-row justify-start lg:justify-end items-start'>
-							<Nav className='flex flex-col flex-wrap justify-center'>
+							<Nav className='flex flex-col flex-wrap items-start lg:items-center justify-center'>
 								<Link
-									className='p-3 text-wrap hover:underline hover:decoration-2 lg:text-center hover:decoration-blue-600 hover:underline-offset-8 '
-									to='/home'
-									onClick={handleNavCollapse}>
-									<i className='lg:hidden pr-2 text-xl text-[#185574] bi bi-house-fill'></i>
-									Home
-								</Link>
-								<Link
-									className='p-3 text-wrap hover:underline hover:decoration-2 lg:text-center hover:decoration-blue-600 hover:underline-offset-8'
-									to='/especialidad'
+									className={textClassName}
+									to='/services'
 									onClick={handleNavCollapse}>
 									<i className='pr-2 text-xl text-[#185574] lg:hidden bi bi-server'></i>
 									Servicios
 								</Link>
 								<Link
-									className='p-3 text-wrap hover:underline hover:decoration-2 lg:text-center hover:decoration-blue-600 hover:underline-offset-8'
+									className={textClassName}
 									to='/nosotros'
 									onClick={handleNavCollapse}>
 									<i className='pr-2 text-xl text-[#185574] lg:hidden bi bi-file-person-fill'></i>
 									Quienes Somos
 								</Link>
 								<Link
-									className='p-3 text-wrap  hover:underline hover:decoration-2 lg:text-center hover:decoration-blue-600 hover:underline-offset-8'
+									className={textClassName}
 									to='/contact'
 									onClick={handleNavCollapse}>
 									<i className='pr-2 text-xl text-[#185574] lg:hidden bi bi-chat-square-text-fill'></i>
 									Contacto
 								</Link>
 								<Link
-									className='p-3 text-wrap hover:underline hover:decoration-2 lg:text-center hover:decoration-blue-600 hover:underline-offset-8'
+									className={textClassName}
 									to='/interes'
 									onClick={handleNavCollapse}>
 									<i className='pr-2 text-xl text-[#185574] lg:hidden bi bi-browser-safari'></i>
@@ -120,16 +122,16 @@ export const Header = () => {
 								</Link>
 								{user ? (
 									<Link
-										className='p-3 text-wrap hover:underline  hover:decoration-2 lg:text-center hover:decoration-blue-600 hover:underline-offset-8'
+										className={textClassName}
 										to='/adminusu'
 										onClick={handleNavCollapse}>
 										<i className='pr-2 text-xl text-[#185574] lg:hidden bi bi-person-fill-check'></i>
 										Panel de Usuarios
 									</Link>
 								) : null}
-								{admin ? (
+								{admin || coadmin ? (
 									<Link
-										className='p-3 text-wrap hover:underline hover:decoration-2 lg:text-center hover:decoration-blue-600 hover:underline-offset-8'
+										className={textClassName}
 										to='/admin'
 										onClick={handleNavCollapse}>
 										<i className='pr-2 text-xl text-[#185574] lg:hidden bi bi-person-fill-gear'></i>
@@ -143,7 +145,7 @@ export const Header = () => {
 												handleNavCollapse();
 												handleLogOut();
 											}}
-											className='mx-3 lg:m-0 btnlogin md:mb-2 lg:mb-0 w-[142px] bg-transparent border-2 border-white p-2 lg:mr-3 rounded-lg'>
+											className='mx-3 lg:m-0 btnlogin md:mb-2 lg:mb-0 w-[162px] bg-transparent border-2 border-white p-2 lg:mr-3 rounded-lg'>
 											<i className='pr-2 text-xl bi bi-box-arrow-left'></i>
 											Cerrar Sesión
 										</button>
@@ -151,7 +153,7 @@ export const Header = () => {
 										<Link
 											to='/login'
 											onClick={handleNavCollapse}
-											className='m-3 lg:m-0 btnlogin md:mb-2 lg:mb-0 w-[142px] bg-transparent border-2 border-[#185574] p-2 lg:mr-3 rounded-lg'>
+											className={loginbtnClassName}>
 											<i className='pr-2 text-xl bi bi-box-arrow-in-right'></i>
 											Iniciar Sesión
 										</Link>

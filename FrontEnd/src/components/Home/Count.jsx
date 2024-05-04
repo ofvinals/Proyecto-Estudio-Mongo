@@ -48,7 +48,7 @@ export const Count = () => {
 		}
 
 		startCountAnimation('promo1-value', 250);
-		startCountAnimation('promo3-value', 35);
+		startCountAnimation('promo3-value', 70);
 		startCountAnimation('promo4-value', 700);
 		// Función para agregar animación cuando los elementos entran en el viewport
 		function animateOnScroll() {

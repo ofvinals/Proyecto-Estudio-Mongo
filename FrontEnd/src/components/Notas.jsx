@@ -210,7 +210,7 @@ export const Notas = () => {
 					Tablero de Notas y Recordatorios
 				</h2>
 				<Form
-					className=' flex flex-row flex-wrap justify-evenly items-center'
+					className=' flex flex-col sm:flex-row flex-wrap justify-evenly items-center'
 					onSubmit={onSubmit}>
 					<Form.Group className='w-25 mb-3' controlId='resp'>
 						<Form.Label className='text-white font-medium'>
@@ -261,9 +261,9 @@ export const Notas = () => {
 					</Form.Group>
 					<Form.Group
 						id='inputrecord'
-						className='flex flex-row flex-wrap justify-between w-7/12'>
+						className='flex flex-col sm:flex-row	 flex-wrap items-center justify-around w-full'>
 						<Button
-							className='bg-white shadow-3xl btnAdmin text-primary text-center p-1 py-2 border-2 w-[170px] mb-1 border-primary rounded-xl'
+							className='bg-white shadow-3xl btnAdmin text-primary text-center p-1 py-2 border-2 w-[170px] mb-4 sm:mb-1 border-primary rounded-xl'
 							type='submit'>
 							<i className='text-xl pe-2 bi bi-check2-square'></i>
 							Registrar Nota

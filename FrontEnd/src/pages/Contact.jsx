@@ -36,13 +36,13 @@ export const Contact = () => {
 	return (
 		<>
 			<Header />
-			<div className='container-lg pb-5 flex flex-col justify-center items-center bodycontact'>
+			<div className='pb-5 flex flex-col justify-center items-center backgroundimage'>
 				<Whatsapp />
 				<div className=''>
-					<h1 className='text-3xl font-bold mt-20 bg-gradient-to-t from-primary to-blue-200 text-transparent bg-clip-text text-center'>
+					<h1 className='text-3xl font-bold mt-48 bg-gradient-to-t from-primary to-blue-200 text-transparent bg-clip-text text-center'>
 						¡Contactanos!
 					</h1>
-					<p className='text-center text-white p-2'>
+					<p className='text-center text-white p-2 md:mx-24'>
 						Por cualquier duda, comentario o sugerencia puedes
 						contactarnos y nos comunicaremos a la brevedad posible.
 					</p>
@@ -51,7 +51,7 @@ export const Contact = () => {
 					className=' bg-white p-4 rounded-xl flex flex-wrap w-full sm:w-2/3 max-w-[335px] flex-col justify-center items-center mt-10'
 					ref={form}
 					onSubmit={sendEmail}>
-					<label className='text-start bg-transparent text-xl mb-0 mt-2 text-primary w-full font-medium'>
+					<label className='text-start bg-transparent text-xl mb-0 mt-2 text-background font-bold w-full '>
 						Tu Nombre
 					</label>
 					<input
@@ -61,7 +61,7 @@ export const Contact = () => {
 						required
 					/>
 					<label
-						className='text-start bg-transparent text-xl mb-0 mt-2 text-primary w-full font-medium'
+						className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-bold'
 						placeholder='Ingrese su email..'>
 						Email
 					</label>
@@ -72,7 +72,7 @@ export const Contact = () => {
 						required
 					/>
 					<label
-						className='text-start bg-transparent text-xl mb-0 mt-2 text-primary w-full font-medium'
+						className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-bold'
 						placeholder='Ingrese su mensaje..'>
 						Mensaje
 					</label>
