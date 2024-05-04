@@ -1,0 +1,95 @@
+.recuperar{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-image: linear-gradient(rgba(5, 7, 12, 0.50), rgba(5, 12, 7, 0.50)),
+    url(/01.jpg);
+    background-size: cover;
+    object-fit: cover;
+    background-position: center;  
+}
+.titulorec{
+    text-align: center;
+    font-size: 4vw;
+    margin-top:4vw;
+    color: rgb(143, 142, 139);
+}
+.subtitulorec{
+    text-align: center;
+    font-size: 2.5vw;
+    margin-top:4vw;
+    width: 80%;
+    color: rgb(143, 142, 139);
+}
+.Formrec{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+    border-radius: 5px;
+    border: 0.3vw outset rgb(143, 142, 139);
+    opacity: 0.85;
+    margin-top: 15vw;
+    margin-bottom: 15vw;
+ }
+.inputrec{
+    align-items: center;
+    font-size: 2.5vw;
+    align-self: center;
+    width: 40vw;
+    margin-bottom: 1vw;
+    border-radius: 5px;
+    outline-color: rgb(143, 142, 139);
+    background: linear-gradient(rgb(143, 142, 139)), rgba(77, 77, 78, 0.60);
+}
+.input-submitrec{
+    text-align: center;
+    font-size: 2.5vw!important;
+    font-weight: 700;
+    margin-top: 3vw;
+    padding: 1vw;
+    text-decoration: none;
+    transition: var(--transition);
+	background-color: rgb(27, 27, 27);
+    color: rgb(143, 142, 139);
+    width: 120%;
+    border-radius: 5px;
+    border: 0.3vw outset rgb(143, 142, 139)!important;
+    cursor: pointer;
+}
+.input-submitrec:hover{
+    opacity:0.8;
+    color: white;
+    background-color: transparent;
+}
+@media(max-width: 300px){
+    .parrafo {
+
+   
+    font-size: 14px;
+    text-align: center;
+
+    }
+}
+@media (max-width: 280px){
+    .login-titulo{
+			 font-size:1.5rem !important;
+			 }
+
+	  .login{
+			padding: 0px !important;
+		}
+        
+		.login-input{
+			padding: 0.4em !important;
+		}
+
+		.login-input-submit{
+			padding: 0.3em !important;
+		}
+
+}
+

@@ -6,7 +6,12 @@ import { Footer } from '../src/components/Footer';
 import { Nosotros } from '../src/pages/Nosotros';
 import { Contact } from '../src/pages/Contact';
 import { Registro } from '../src/pages/Registro';
+<<<<<<< HEAD
 import { Services } from '../src/pages/Services';
+=======
+import { Especialidad } from '../src/pages/Especialidad';
+import { Recuperar } from '../src/pages/Recuperar';
+>>>>>>> main
 import { Home } from '../src/pages/Home';
 import { Interes } from '../src/pages/Interes';
 
@@ -41,9 +46,16 @@ export const AppRouter = () => {
 						<Route path='/registro' element={<Registro />}></Route>
 						<Route path='/nosotros' element={<Nosotros />}></Route>
 						<Route path='/contact' element={<Contact />}></Route>
+<<<<<<< HEAD
 						<Route
 							path='/services'
 							element={<Services />}></Route>
+=======
+						<Route path='/recuperar' element={<Recuperar />}></Route>
+						<Route
+							path='/especialidad'
+							element={<Especialidad />}></Route>
+>>>>>>> main
 						<Route path='/interes' element={<Interes />}></Route>
 						<Route element={<PrivateRoute />}>
 							<Route

@@ -45,6 +45,7 @@
 .textshadow {
 	text-shadow: 3px 5px 6px rgba(0, 0, 0, 0.6) !important;
 }
+<<<<<<< HEAD
 .about{
 	background-image: linear-gradient(100deg, rgba(255,255, 240, 0.02), rgba(0, 0, 0, 1)),
 	url(/imagenfondo.jpg);
@@ -77,6 +78,8 @@
 	background-position: center;  
 }
 
+=======
+>>>>>>> main
 
 .swal2-confirm {
 	background-color: red !important;
