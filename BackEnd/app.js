@@ -21,12 +21,15 @@ app.use(
 		origin: [
 			'http://localhost:5173',
 			'https://proyecto-estudio-mongo.onrender.com',
-			'http://localhost:5174',
+			'*',
 		],
 		credentials: true,
 		optionsSuccessStatus: 200,
 		methods: ['GET', 'POST', 'PUT', 'DELETE'],
-		allowedHeaders: ['Content-Type', 'Authorization'],
+		allowedHeaders: [
+			'Access-Control-Allow-Headers',
+			'Origin, X-Requested-With, Content-Type, Accept',
+		],
 	})
 );
 app.use(express.json());
