@@ -51,7 +51,7 @@ export const VerMov = ({ rowId, expteId, showModal, onClose }) => {
 										Ver Archivo Adjunto
 									</a>
 								) : (
-									<span className='text-black'>Sin comprobante </span>
+									<span className='text-black'>Sin archivo adjunto </span>
 								)}
 							</Form.Label>
 						</Form.Group>

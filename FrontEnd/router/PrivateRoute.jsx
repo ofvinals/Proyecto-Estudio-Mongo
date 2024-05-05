@@ -5,7 +5,13 @@ const PrivateRoute = () => {
 	const { isLoading, isAuthenticated } = useAuth();
 
 	if (isLoading) {
-		return <div>Cargando...</div>;
+		return (
+			<div>
+				<p className='bg-gradient-to-t from-primary to-blue-200 text-transparent bg-clip-text text-3xl text-center my-48'>
+					Cargando...
+				</p>
+			</div>
+		);
 	}
 
 	if (!isAuthenticated) return <Navigate to='/login' />;
