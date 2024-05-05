@@ -20,7 +20,7 @@ app.use(
 	cors({
 		origin: [
 			'http://localhost:5173',
-			'https://proyecto-estudio-mongo.onrender.com',
+			'https://proyecto-estudio-mongo.vercel.app/',
 			'*',
 		],
 		credentials: true,

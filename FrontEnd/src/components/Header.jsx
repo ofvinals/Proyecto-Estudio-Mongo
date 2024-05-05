@@ -72,7 +72,7 @@ export const Header = () => {
 				id='navbar'
 				className={navbarClassName}>
 				<Container className='flex flex-row justify-between'>
-					<Navbar.Brand to='/'>
+					<Navbar.Brand href='/'>
 						<img
 							className='ms-3'
 							src={logoSrc}
