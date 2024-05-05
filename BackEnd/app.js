@@ -20,7 +20,7 @@ app.use(
 	cors({
 		origin: [
 			'http://localhost:5173',
-			'https://flourishing-tanuki-55bdc2.netlify.app',
+			'https://proyecto-estudio-mongo.onrender.com',
 			'http://localhost:5174',
 		],
 		credentials: true,
