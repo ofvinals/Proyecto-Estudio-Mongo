@@ -16,20 +16,18 @@ require('dotenv').config();
 const app = express();
 
 app.use(cookieParser());
+
 app.use(
 	cors({
 		origin: [
 			'http://localhost:5173',
 			'https://proyecto-estudio-mongo.vercel.app/',
+			'https://proyecto-estudio-mongo.onrender.com',
 			'*',
 		],
 		credentials: true,
 		optionsSuccessStatus: 200,
-		methods: ['GET', 'POST', 'PUT', 'DELETE'],
-		allowedHeaders: [
-			'Access-Control-Allow-Headers',
-			'Origin, X-Requested-With, Content-Type, Accept',
-		],
+
 	})
 );
 app.use(express.json());
