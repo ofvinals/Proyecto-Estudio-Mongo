@@ -47,9 +47,9 @@ export const Count = () => {
 			restartAnimation(); // Llama a la función al inicio para verificar si el elemento está en el viewport
 		}
 
-		startCountAnimation('promo1-value', 250);
+		startCountAnimation('promo1-value', 750);
 		startCountAnimation('promo3-value', 70);
-		startCountAnimation('promo4-value', 700);
+		startCountAnimation('promo4-value', 900);
 		// Función para agregar animación cuando los elementos entran en el viewport
 		function animateOnScroll() {
 			const elements = document.querySelectorAll('.animate-on-scroll');

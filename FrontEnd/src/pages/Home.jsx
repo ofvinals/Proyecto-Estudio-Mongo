@@ -15,7 +15,7 @@ export const Home = () => {
 				<Whatsapp />
 				<div className='imagennav rounded-b-lg flex flex-col h-[450px]'>
 					<div className='flex flex-col absolute top-1/4 sm:top-1/3 left-0 right-0 items-center text-center text-3xl text-white font-bold'>
-						<p>Experiencia, Etica y profesionalismo</p>
+						<p>Experiencia, Etica y Profesionalismo</p>
 						<p className='bg-gradient-to-t from-primary to-blue-200 text-transparent bg-clip-text flex mt-2 justify-center text-3xl text-[#25aff0] font-bold '>
 							Evolucionamos el concepto de estudio juridico
 						</p>
