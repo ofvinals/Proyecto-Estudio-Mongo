@@ -103,7 +103,7 @@ export const GestionCaducidad = () => {
 					<hr className='linea mx-3' />
 
 					<h2 className='my-4 text-3xl font-extrabold text-center bg-gradient-to-t from-primary to-blue-200 text-transparent bg-clip-text'>
-						Expedientes proximos a caducar
+						Expedientes con mas de 60 dias sin movimientos
 					</h2>
 					<div className='table-responsive'>
 						<ThemeProvider theme={darkTheme}>
