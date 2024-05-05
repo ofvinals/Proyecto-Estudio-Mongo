@@ -1,4 +1,7 @@
 const express = require('express');
+const connectDB = require('./db/db.js');
+const cors = require('cors');
+const cookieParser = require('cookie-parser');
 const authRoutes = require('./routes/auth.routes.js');
 const usersRoutes = require('./routes/users.routes.js');
 const cajasRoutes = require('./routes/cajas.routes.js');
@@ -8,9 +11,7 @@ const exptesRoutes = require('./routes/exptes.routes.js');
 const uploadRoutes = require('./routes/upload.routes.js');
 const notasRoutes = require('./routes/notas.routes.js');
 
-const connectDB = require('./db/db.js');
-const cors = require('cors');
-const cookieParser = require('cookie-parser');
+
 require('dotenv').config();
 
 const app = express();
@@ -26,8 +27,12 @@ app.use(
 		],
 		credentials: true,
 		optionsSuccessStatus: 200,
+		methods: ['GET', 'POST', 'PUT', 'DELETE'],
+		allowedHeaders: ['Content-Type', 'Authorization']
+		
 	})
 );
+
 app.use(express.json());
 
 app.use('/api', authRoutes);
