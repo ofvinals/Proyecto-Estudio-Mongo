@@ -56,20 +56,24 @@ app.use('/api', notasRoutes);
 app.get('/scrape', async (req, res) => {
 	try {
 		const { data } = await axios.get('https://www.diariojudicial.com/');
-		console.log(data);
 		const $ = cheerio.load(data);
 		let articles = [];
 
-		$('article').each((index, element) => {
-			const titleElement = $(element).find('a.headline');
-			const title = titleElement.text().trim();
-			const link = titleElement.attr('href');
+		// Ajustar selectores según la estructura actual de la página
+		$('div.noticia-principal').each((index, element) => {
+			const title = $(element).find('h2 a').text().trim();
+			const link = $(element).find('h2 a').attr('href');
 
 			if (title && link) {
-				articles.push({ title, link });
+				articles.push({
+					title,
+					link: `https://www.diariojudicial.com${link}`,
+				});
 			}
 		});
-		console.log(articles);
+
+		// Si hay otros tipos de artículos en la página, puedes agregar más selectores aquí
+
 		res.json(articles);
 	} catch (error) {
 		console.error(error);
