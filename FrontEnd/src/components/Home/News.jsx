@@ -1,34 +1,50 @@
 import { useState, useEffect } from 'react';
 import { Carousel } from 'react-bootstrap';
+import axios from 'axios';
 
 export const News = () => {
-	const [news, setNews] = useState(null);
-	const apiKey = 'fc0b87f78d6f4b45b5644bb80b89e20d';
+	// const [news, setNews] = useState(null);
+	const [articles, setArticles] = useState([]);
+
+	// const apiKey = 'fc0b87f78d6f4b45b5644bb80b89e20d';
 
 	useEffect(() => {
-		const loadData = async () => {
+		const fetchArticles = async () => {
 			try {
-				const url = `https://newsapi.org/v2/top-headlines?sources=google-news-ar&apiKey=${apiKey}`;
-				const response = await fetch(url);
-				const data = await response.json();
-				console.log(data);
-				setNews(data.articles);
+				const response = await axios.get('http://localhost:4000/scrape');
+				console.log(response)
+				setArticles(response.data);
 			} catch (error) {
-				console.error('Error fetching data:', error);
+				console.error('Error fetching articles', error);
 			}
 		};
-
-		loadData();
+		fetchArticles();
 	}, []);
+	
+	// useEffect(() => {
+	// 	const loadData = async () => {
+	// 		try {
+	// 			const url = `https://newsapi.org/v2/top-headlines?sources=google-news-ar&apiKey=${apiKey}`;
+	// 			const response = await fetch(url);
+	// 			const data = await response.json();
+	// 			console.log(data);
+	// 			setNews(data.articles);
+	// 		} catch (error) {
+	// 			console.error('Error fetching data:', error);
+	// 		}
+	// 	};
+
+	// 	loadData();
+	// }, []);
 
 	return (
 		<div>
 			<h2 className='text-primary text-3xl font-bold text-center py-5'>
 				Noticias de Interés
 			</h2>
-			{news ? (
+			{articles ? (
 				<Carousel className='h-[370px] mx-6 sm:mx-24'>
-					{news.map((article, index) => (
+					{articles.map((article, index) => (
 						<Carousel.Item key={index}>
 							<a
 								href={article.url}

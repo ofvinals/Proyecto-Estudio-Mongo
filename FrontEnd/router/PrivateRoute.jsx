@@ -1,5 +1,6 @@
 import { Navigate, Outlet } from 'react-router-dom';
-import { useAuth } from '../src/context/AuthContext';
+import { useAuth } from '../src/context/UseContext';
+import Loader from '../src/components/Loader';
 
 const PrivateRoute = () => {
 	const { isLoading, isAuthenticated } = useAuth();
@@ -7,9 +8,7 @@ const PrivateRoute = () => {
 	if (isLoading) {
 		return (
 			<div>
-				<p className='bg-gradient-to-t from-primary to-blue-200 text-transparent bg-clip-text text-3xl text-center my-48'>
-					Cargando...
-				</p>
+				<Loader />
 			</div>
 		);
 	}

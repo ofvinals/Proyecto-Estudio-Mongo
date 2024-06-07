@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
-import { useAuth } from '../../context/AuthContext.jsx';
+import { useAuth } from '../../context/UseContext.jsx';
 import { Link } from 'react-router-dom';
 import { Box } from '@mui/material';
 import {
@@ -16,11 +16,11 @@ import '../../css/Header.css';
 import { getCajas, deleteCaja } from '../../hooks/UseCajas.js';
 import { Detail } from '../../components/Gestion/Detail.jsx';
 import { Table } from '../../components/Gestion/Table';
-import { VerCaja } from '../../components/Modals/Views/VerCaja';
-import { EditarCajas } from '../../components/Modals/Edits/EditarCajas';
-import { CargaCajas } from '../../components/Modals/News/CargaCajas';
 import { Header } from '../../components/Header.jsx';
 import Tooltip from '@mui/material/Tooltip';
+import Loader from '../../components/Loader.jsx';
+import Modals from '../../components/Modals.jsx';
+import CajaForm from '../../components/Forms/CajaForm.jsx';
 
 export const GestionCaja = () => {
 	const { currentUser } = useAuth();
@@ -29,6 +29,7 @@ export const GestionCaja = () => {
 	const [openEditModal, setopenEditModal] = useState(false);
 	const [openNewModal, setopenNewModal] = useState(false);
 	const [reloadTable, setReloadTable] = useState(false);
+	const [loading, setLoading] = useState(true);
 	const [rowId, setRowId] = useState(null);
 	const admin = currentUser.admin;
 	const coadmin = currentUser.coadmin;
@@ -82,6 +83,7 @@ export const GestionCaja = () => {
 					return mesCaja === mesActual;
 				});
 				setData(cajasMesActual);
+				setLoading(false);
 			} catch (error) {
 				console.error('Error al obtener caja', error);
 			}
@@ -191,7 +193,7 @@ export const GestionCaja = () => {
 			text: 'Ver',
 			icon: (
 				<Tooltip title='Tarea realizada' arrow>
-					<VisibilityIcon color='primary' cursor='pointer'/>
+					<VisibilityIcon color='primary' cursor='pointer' />
 				</Tooltip>
 			),
 			onClick: (row) => {
@@ -200,11 +202,12 @@ export const GestionCaja = () => {
 		},
 		{
 			text: 'Editar',
-			icon: (admin || coadmin)? (
-				<Tooltip title='Tarea realizada' arrow>
-					<EditIcon color='success' cursor='pointer' />
-				</Tooltip>
-			): null,
+			icon:
+				admin || coadmin ? (
+					<Tooltip title='Tarea realizada' arrow>
+						<EditIcon color='success' cursor='pointer' />
+					</Tooltip>
+				) : null,
 			onClick: (row) => {
 				handleOpenEditModal(row.original._id);
 			},
@@ -213,9 +216,9 @@ export const GestionCaja = () => {
 			text: 'Eliminar',
 			icon: admin ? (
 				<Tooltip title='Tarea realizada' arrow>
-					<DeleteIcon color='error' cursor='pointer'/>
+					<DeleteIcon color='error' cursor='pointer' />
 				</Tooltip>
-			): null,
+			) : null,
 			onClick: (row) => borrarCaja(row.original._id),
 		},
 	];
@@ -240,34 +243,34 @@ export const GestionCaja = () => {
 				cancelButtonText: 'Cancelar',
 			});
 			if (result.isConfirmed) {
+				setLoading(true);
 				await deleteCaja(id);
-				Swal.close();
+				setLoading(false);
+
 				Swal.fire({
 					icon: 'success',
 					title: 'Movimiento de caja eliminado correctamente',
 					showConfirmButton: false,
 					timer: 1500,
 				});
-
 				setData((prevData) => prevData.filter((caja) => caja._id !== id));
 			}
 		} catch (error) {
 			console.error('Error al eliminar el movimiento:', error);
+			setLoading(false);
 		}
 	}
 
 	return (
-		<div className='bg-gradient-to-tl from-[#1e1e1e] to-[#4077ad] pb-3 pt-32'>
+		<div className='bg-gradient-to-tl from-[#1e1e1e] to-[#4077ad] pb-3 pt-24'>
 			<Header />
 			<div className=' rounded-xl container-lg mb-1 '>
 				<Detail modulo={'Caja'} />
 			</div>
-
 			<hr className='linea text-white mx-3' />
-
 			<div className='container-lg'>
 				<div className='flex flex-wrap justify-around my-3'>
-					{(admin || coadmin) ? (
+					{admin || coadmin ? (
 						<button
 							type='button'
 							className='bg-white shadow-3xl btnAdmin text-primary text-center p-2 border-2 w-[210px] mb-3 border-primary rounded-xl font-semibold'
@@ -291,45 +294,54 @@ export const GestionCaja = () => {
 						Volver al Panel
 					</Link>
 				</div>
-
 				<hr className='linea mx-3 text-white' />
-
 				<div>
 					<p className='my-4 text-3xl font-extrabold text-center bg-gradient-to-t from-primary to-blue-200 text-transparent bg-clip-text'>
 						Movimientos de Caja del mes
 					</p>
 				</div>
-				<div className='table-responsive'>
-					<ThemeProvider theme={darkTheme}>
-						<CssBaseline />
-						<Table
-							columns={columns}
-							data={data}
-							actions={actions}
-							borrarCaja={borrarCaja}
-							handleOpenViewModal={handleOpenViewModal}
-						/>
-					</ThemeProvider>
-				</div>
+				{loading ? (
+					<Loader />
+				) : (
+					<div className='table-responsive'>
+						<ThemeProvider theme={darkTheme}>
+							<CssBaseline />
+							<Table
+								columns={columns}
+								data={data}
+								actions={actions}
+								borrarCaja={borrarCaja}
+								handleOpenViewModal={handleOpenViewModal}
+							/>
+						</ThemeProvider>
+					</div>
+				)}
 			</div>
 
-			{openNewModal && (
-				<CargaCajas showModal={openNewModal} onClose={handleCloseModal} />
-			)}
-			{openViewModal && (
-				<VerCaja
-					rowId={rowId}
-					showModal={openViewModal}
+			<div>
+				<Modals
+					isOpen={openEditModal}
 					onClose={handleCloseModal}
-				/>
-			)}
-			{openEditModal && (
-				<EditarCajas
-					rowId={rowId}
-					showModal={openEditModal}
+					title='Editar Caja'>
+					<CajaForm rowId={rowId} onClose={handleCloseModal} mode='edit' />
+				</Modals>
+				<Modals
+					isOpen={openViewModal}
 					onClose={handleCloseModal}
-				/>
-			)}
+					title='Ver Caja'>
+					<CajaForm rowId={rowId} onClose={handleCloseModal} mode='view' />
+				</Modals>
+				<Modals
+					isOpen={openNewModal}
+					onClose={handleCloseModal}
+					title='Cargar Caja'>
+					<CajaForm
+						rowId={rowId}
+						onClose={handleCloseModal}
+						mode='create'
+					/>
+				</Modals>
+			</div>
 		</div>
 	);
 };

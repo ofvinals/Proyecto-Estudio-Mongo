@@ -1,21 +1,11 @@
-import { useState, useEffect, createContext, useContext } from 'react';
+/* eslint-disable react/prop-types */
+import { useState, useEffect } from 'react';
 import Cookies from 'js-cookie';
 import { apiURL } from '/api/apiURL.js';
 import { auth } from '../firebase/config.js';
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { getUserbyGoogle } from '../hooks/UseUsers.js';
-
-// crea contexto
-const AuthContext = createContext();
-
-// funcion que retorna el contexto del objeto creado por useContext
-export const useAuth = () => {
-	const context = useContext(AuthContext);
-	if (!context) {
-		throw new Error('Error, no se creo el contexto!');
-	}
-	return context;
-};
+import { AuthContext } from './Context.jsx';
 
 export const AuthProvider = ({ children }) => {
 	const [currentUser, setCurrentUser] = useState();
@@ -123,7 +113,6 @@ export const AuthProvider = ({ children }) => {
 				setIsAuthenticated(true);
 				setCurrentUser(res.data);
 				setGoogleToken();
-
 				setIsLoading(false);
 			} catch (error) {
 				setIsAuthenticated(false);
@@ -141,6 +130,7 @@ export const AuthProvider = ({ children }) => {
 				googleToken,
 				isAuthenticated,
 				registro,
+				errors,
 				login,
 				loginWithGoogle,
 				logout,

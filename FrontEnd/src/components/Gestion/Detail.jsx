@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { useAuth } from '../../context/AuthContext';
+import { useAuth } from '../../context/UseContext';
 
 export const Detail = ({ modulo }) => {
 	const nombreModulo = modulo;

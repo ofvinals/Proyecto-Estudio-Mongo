@@ -10,12 +10,15 @@ import '../../css/Header.css';
 import { getCajas } from '../../hooks/UseCajas.js';
 import { Detail } from '../../components/Gestion/Detail';
 import { Table } from '../../components/Gestion/Table';
-import { VerCaja } from '../../components/Modals/Views/VerCaja';
 import { Header } from '../../components/Header.jsx';
 import Tooltip from '@mui/material/Tooltip';
+import Loader from '../../components/Loader.jsx';
+import Modals from '../../components/Modals.jsx';
+import CajaForm from '../../components/Forms/CajaForm.jsx';
 
 export const CajasArchivadas = () => {
 	const [openViewModal, setopenViewModal] = useState(false);
+	const [loading, setLoading] = useState(true);
 	const [rowId, setRowId] = useState(null);
 	const [data, setData] = useState([]);
 	const meses = [
@@ -55,13 +58,14 @@ export const CajasArchivadas = () => {
 					return mesCaja < mesActual;
 				});
 				setData(cajasPasadas);
-		
+				setLoading(false);
 			} catch (error) {
 				console.error('Error al obtener caja', error);
 			}
 		};
 		fetchCajas();
 	}, []);
+
 	const formatValue = (value) => {
 		if (value instanceof Date) {
 			return value.toLocaleDateString('es-ES');
@@ -181,53 +185,55 @@ export const CajasArchivadas = () => {
 	});
 
 	return (
-		<>
-			<div className='bg-gradient-to-tl from-[#1e1e1e] to-[#4077ad] pb-3 pt-32'>
-				<Header />
-				<div className=' rounded-xl container-lg mb-1 '>
-					<Detail modulo={'Cajas Archivadas'} />
-				</div>
-				<div className='container-lg'>
-					<hr className='linea text-white mx-3' />
-
-					<div>
-						<div className='flex justify-around my-3'>
-							<Link
-								to={'/gestioncaja'}
-								className='bg-background shadow-3xl btnAdmin text-white text-center p-2 border-2 w-[190px] mb-3 border-white rounded-xl font-semibold'>
-								<i className='text-xl pe-2 bi bi-box-arrow-left'></i>
-								Volver al Panel
-							</Link>
-						</div>
-
-						<hr className='linea mx-3' />
-
-						<div>
-							<p className='text-center font-semibold py-3 text-3xl bg-gradient-to-t from-primary to-blue-200 text-transparent bg-clip-text'>
-								{' '}
-								Movimientos de Cajas Archivadas
-							</p>
-						</div>
-						<div className='table-responsive'>
-							<ThemeProvider theme={darkTheme}>
-								<CssBaseline />
-								<Table
-									columns={columns}
-									data={data}
-									actions={actions}
-								/>
-							</ThemeProvider>
-						</div>
-					</div>
-				</div>
-				{openViewModal && (
-					<VerCaja
-						rowId={rowId}
-						showModal={openViewModal}
-						onClose={handleCloseModal}
-					/>
-				)}
+		<div className='bg-gradient-to-tl from-[#1e1e1e] to-[#4077ad] pb-3 pt-24'>
+			<Header />
+			<div className=' rounded-xl container-lg mb-1 '>
+				<Detail modulo={'Cajas Archivadas'} />
 			</div>
-		</>
+			<div className='container-lg'>
+				<hr className='linea text-white mx-3' />
+				<div>
+					<div className='flex justify-around my-3'>
+						<Link
+							to={'/gestioncaja'}
+							className='bg-background shadow-3xl btnAdmin text-white text-center p-2 border-2 w-[190px] mb-3 border-white rounded-xl font-semibold'>
+							<i className='text-xl pe-2 bi bi-box-arrow-left'></i>
+							Volver al Panel
+						</Link>
+					</div>
+					<hr className='linea mx-3' />
+					<div>
+						<p className='text-center font-semibold py-3 text-3xl bg-gradient-to-t from-primary to-blue-200 text-transparent bg-clip-text'>
+							{' '}
+							Movimientos de Cajas Archivadas
+						</p>
+					</div>
+					{loading ? (
+						<Loader />
+					) : (
+						<>
+							<div className='table-responsive'>
+								<ThemeProvider theme={darkTheme}>
+									<CssBaseline />
+									<Table
+										columns={columns}
+										data={data}
+										actions={actions}
+									/>
+								</ThemeProvider>
+							</div>
+						</>
+					)}
+				</div>
+			</div>
+
+			<Modals
+				isOpen={openViewModal}
+				onClose={handleCloseModal}
+				title='Ver Caja'
+				showSaveButton={false}>
+				<CajaForm rowId={rowId} onClose={handleCloseModal} mode='view' />
+			</Modals>
+		</div>
 	);
 };

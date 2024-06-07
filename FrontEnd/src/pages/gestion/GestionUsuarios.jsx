@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import Loader from '../../components/Loader.jsx';
 import Swal from 'sweetalert2';
 import '../../css/Header.css';
 import { Link } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext.jsx';
+import { useAuth } from '../../context/UseContext.jsx';
 import {
 	Edit as EditIcon,
 	Delete as DeleteIcon,
@@ -13,10 +14,10 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { getUsers, deleteUser } from '../../hooks/UseUsers.js';
 import { Table } from '../../components/Gestion/Table';
 import { Detail } from '../../components/Gestion/Detail';
-import { VerUsu } from '../../components/Modals/Views/VerUsu';
-import { EditarUsu } from '../../components/Modals/Edits/EditarUsu';
 import { Header } from '../../components/Header.jsx';
 import Tooltip from '@mui/material/Tooltip';
+import { UserForm } from '../../components/Forms/UserForm.jsx';
+import Modals from '../../components/Modals.jsx';
 
 export const GestionUsuarios = () => {
 	const { currentUser } = useAuth();
@@ -27,6 +28,7 @@ export const GestionUsuarios = () => {
 	const [openEditModal, setopenEditModal] = useState(false);
 	const [rowId, setRowId] = useState(null);
 	const [reloadTable, setReloadTable] = useState(false);
+	const [loading, setLoading] = useState(true);
 
 	const handleOpenViewModal = (rowId) => {
 		setopenViewModal(true);
@@ -52,8 +54,10 @@ export const GestionUsuarios = () => {
 					return { ...doc, _id: doc._id };
 				});
 				setData(fetchedUsuarios);
+				setLoading(false);
 			} catch (error) {
 				console.error('Error al obtener usuarios:', error);
+				setLoading(false);
 			}
 		};
 		fetchUsuarios();
@@ -111,7 +115,7 @@ export const GestionUsuarios = () => {
 		{
 			text: 'Editar',
 			icon:
-				(admin || coadmin )? (
+				admin || coadmin ? (
 					<Tooltip title='Editar datos del usuario' arrow>
 						<EditIcon color='success' cursor='pointer' />
 					</Tooltip>
@@ -168,14 +172,15 @@ export const GestionUsuarios = () => {
 				cancelButtonText: 'Cancelar',
 			});
 			if (result.isConfirmed) {
+				setLoading(true);
 				await deleteUser(id);
+				setLoading(false);
 				Swal.fire({
 					icon: 'success',
 					title: 'Usuario eliminado correctamente',
 					showConfirmButton: false,
 					timer: 1500,
 				});
-
 				setData((prevData) => prevData.filter((users) => users._id !== id));
 			}
 		} catch (error) {
@@ -185,13 +190,12 @@ export const GestionUsuarios = () => {
 
 	return (
 		<>
-			<div className='bg-gradient-to-tl from-[#1e1e1e] to-[#4077ad] pb-3 pt-32'>
+			<div className='bg-gradient-to-tl from-[#1e1e1e] to-[#4077ad] pb-3 pt-24'>
 				<Header />
 				<div className=' rounded-xl container-lg mb-1 '>
 					<Detail modulo={'Usuarios'} />
 				</div>
 				<hr className='linea text-white mx-3' />
-
 				<div className='container-lg my-3'>
 					<div className='flex justify-around flex-wrap'>
 						<Link
@@ -202,38 +206,50 @@ export const GestionUsuarios = () => {
 						</Link>
 					</div>
 					<hr className='linea mx-3' />
-
 					<div>
 						<p className='mt-3 text-center text-3xl font-semibold my-3 bg-gradient-to-t from-primary to-blue-200 text-transparent bg-clip-text'>
 							Usuarios registrados
 						</p>
 					</div>
-					<div className='table-responsive'>
-						<ThemeProvider theme={darkTheme}>
-							<CssBaseline />
-							<Table
-								columns={columns}
-								data={data}
-								actions={actions}
-								borrarUsuario={borrarUsuario}
-							/>
-						</ThemeProvider>
-					</div>
+					{loading ? (
+						<Loader />
+					) : (
+						<div className='table-responsive'>
+							<ThemeProvider theme={darkTheme}>
+								<CssBaseline />
+								<Table
+									columns={columns}
+									data={data}
+									actions={actions}
+									borrarUsuario={borrarUsuario}
+								/>
+							</ThemeProvider>
+						</div>
+					)}
 				</div>
-				{openViewModal && (
-					<VerUsu
-						rowId={rowId}
-						showModal={openViewModal}
+
+				<div>
+					<Modals
+						isOpen={openEditModal}
 						onClose={handleCloseModal}
-					/>
-				)}
-				{openEditModal && (
-					<EditarUsu
-						rowId={rowId}
-						showModal={openEditModal}
+						title='Editar Caja'>
+						<UserForm
+							rowId={rowId}
+							onClose={handleCloseModal}
+							mode='edit'
+						/>
+					</Modals>
+					<Modals
+						isOpen={openViewModal}
 						onClose={handleCloseModal}
-					/>
-				)}
+						title='Ver Caja'>
+						<UserForm
+							rowId={rowId}
+							onClose={handleCloseModal}
+							mode='view'
+						/>
+					</Modals>
+				</div>
 			</div>
 		</>
 	);

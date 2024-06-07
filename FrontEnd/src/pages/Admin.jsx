@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext.jsx';
+import { useAuth } from '../context/UseContext.jsx';
 import '../css/Header.css';
 import { Notas } from '../components/Notas.jsx';
 import Swal from 'sweetalert2';
@@ -35,7 +35,7 @@ export const Admin = () => {
 		<>
 			<div className='bg-gradient-to-tl from-[#1e1e1e] to-[#4077ad]'>
 				<Header />
-				<div className=' rounded-xl container-lg mb-1 pt-32'>
+				<div className=' rounded-xl container-lg mb-1 pt-24'>
 					<Detail modulo={'estudio'} />
 				</div>
 

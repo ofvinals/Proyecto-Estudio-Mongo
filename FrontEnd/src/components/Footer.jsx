@@ -17,7 +17,7 @@ export const Footer = () => {
 							<Link
 								to='/nosotros'
 								className='nav-link link text-center font-bold text-white text-base'>
-								Nosotros
+								Quienes Somos
 							</Link>
 						</li>
 						<li className='nav-link link text-center font-bold text-white text-base'>

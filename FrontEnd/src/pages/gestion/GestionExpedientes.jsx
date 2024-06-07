@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useAuth } from '../../context/AuthContext.jsx';
+import { useAuth } from '../../context/UseContext.jsx';
 import { Link, useNavigate } from 'react-router-dom';
 import { useState, useEffect, useMemo } from 'react';
 import {
@@ -14,10 +14,11 @@ import '../../css/Header.css';
 import { getExptes, deleteExpte } from '../../hooks/UseExptes.js';
 import { Table } from '../../components/Gestion/Table';
 import { Detail } from '../../components/Gestion/Detail';
-import { EditarExptes } from '../../components/Modals/Edits/EditarExptes';
-import { CargaExptes } from '../../components/Modals/News/CargaExptes';
 import { Header } from '../../components/Header.jsx';
 import Tooltip from '@mui/material/Tooltip';
+import Loader from '../../components/Loader.jsx';
+import Modals from '../../components/Modals.jsx';
+import { ExpteForm } from '../../components/Forms/ExpteForm.jsx';
 
 export const GestionExpedientes = () => {
 	const { currentUser } = useAuth();
@@ -30,6 +31,7 @@ export const GestionExpedientes = () => {
 	const [openEditModal, setopenEditModal] = useState(false);
 	const [rowId, setRowId] = useState(null);
 	const [reloadTable, setReloadTable] = useState(false);
+	const [loading, setLoading] = useState(true);
 
 	const handleOpenNewModal = () => {
 		setopenNewModal(true);
@@ -43,7 +45,7 @@ export const GestionExpedientes = () => {
 	const handleCloseModal = () => {
 		setopenNewModal(false);
 		setopenEditModal(false);
-		setReloadTable(prevState => !prevState);
+		setReloadTable((prevState) => !prevState);
 	};
 
 	useEffect(() => {
@@ -53,12 +55,15 @@ export const GestionExpedientes = () => {
 				const fetchedExptes = expedientes.map((doc) => {
 					return { ...doc, _id: doc._id };
 				});
-				const filteredExptes = (admin || coadmin)
-					? fetchedExptes
-					: fetchedExptes.filter((expte) => expte.cliente === user);
+				const filteredExptes =
+					admin || coadmin
+						? fetchedExptes
+						: fetchedExptes.filter((expte) => expte.cliente === user);
 				setData(filteredExptes);
+				setLoading(false);
 			} catch (error) {
 				console.error('Error al obtener expedientes', error);
+				setLoading(false);
 			}
 		};
 
@@ -109,11 +114,12 @@ export const GestionExpedientes = () => {
 		},
 		{
 			text: 'Editar',
-			icon: (admin || coadmin) ? (
-				<Tooltip title='Editar datos del expediente' arrow>
-					<EditIcon color='success' cursor='pointer' />
-				</Tooltip>
-			): null,
+			icon:
+				admin || coadmin ? (
+					<Tooltip title='Editar datos del expediente' arrow>
+						<EditIcon color='success' cursor='pointer' />
+					</Tooltip>
+				) : null,
 			onClick: (row) => {
 				handleOpenEditModal(row.original._id);
 			},
@@ -124,7 +130,7 @@ export const GestionExpedientes = () => {
 				<Tooltip title='Eliminar expediente' arrow>
 					<DeleteIcon color='error' cursor='pointer' />
 				</Tooltip>
-			): null,
+			) : null,
 			onClick: (row) => borrarExpte(row.original._id),
 		},
 	];
@@ -149,7 +155,9 @@ export const GestionExpedientes = () => {
 				cancelButtonText: 'Cancelar',
 			});
 			if (result.isConfirmed) {
+				setLoading(true)
 				await deleteExpte(id);
+				setLoading(false);
 				Swal.fire({
 					icon: 'success',
 					title: 'Expediente eliminado correctamente',
@@ -164,14 +172,12 @@ export const GestionExpedientes = () => {
 	}
 
 	return (
-		<div className='bg-gradient-to-tl from-[#1e1e1e] to-[#4077ad] pb-3 pt-32'>
+		<div className='bg-gradient-to-tl from-[#1e1e1e] to-[#4077ad] pb-3 pt-24'>
 			<Header />
 			<div className=' rounded-xl container-lg mb-1 '>
 				<Detail modulo={'Expedientes'} />
 			</div>
-
 			<hr className='linea text-white mx-3' />
-
 			<div className='container-lg '>
 				<div>
 					<div className='flex flex-wrap justify-around my-3'>
@@ -201,42 +207,55 @@ export const GestionExpedientes = () => {
 							</Link>
 						)}
 						<Link
-							to={(admin ||coadmin) ? '/Admin' : '/AdminUsu'}
+							to={admin || coadmin ? '/Admin' : '/AdminUsu'}
 							className='bg-background shadow-3xl btnLogout text-white text-center p-2 border-2 w-[200px] mb-3 border-white rounded-xl font-semibold'>
 							<i className='text-xl pe-2 bi bi-box-arrow-left'></i>
 							Volver al Panel
 						</Link>
 					</div>
 					<hr className='linea mx-3' />
-
 					<div>
 						<p className='my-4 text-3xl font-extrabold text-center  bg-gradient-to-t from-primary to-blue-200 text-transparent bg-clip-text'>
 							Expedientes en Tramite
 						</p>
 					</div>
-					<div className='table-responsive'>
-						<ThemeProvider theme={darkTheme}>
-							<CssBaseline />
-							<Table
-								columns={columns}
-								data={data}
-								actions={actions}
-								borrarExpte={borrarExpte}
-							/>
-						</ThemeProvider>
-					</div>
+					{loading ? (
+						<Loader />
+					) : (
+						<div className='table-responsive'>
+							<ThemeProvider theme={darkTheme}>
+								<CssBaseline />
+								<Table
+									columns={columns}
+									data={data}
+									actions={actions}
+									borrarExpte={borrarExpte}
+								/>
+							</ThemeProvider>
+						</div>
+					)}
 				</div>
 			</div>
-			{openNewModal && (
-				<CargaExptes showModal={openNewModal} onClose={handleCloseModal} />
-			)}
-			{openEditModal && (
-				<EditarExptes
-					rowId={rowId}
-					showModal={openEditModal}
+
+			<div>
+				<Modals
+					isOpen={openEditModal}
 					onClose={handleCloseModal}
-				/>
-			)}
+					title='Editar Expediente'>
+					<ExpteForm rowId={rowId} onClose={handleCloseModal} mode='edit' />
+				</Modals>
+				<Modals
+					isOpen={openNewModal}
+					onClose={handleCloseModal}
+					title='Cargar Expediente'
+					showSaveButton={false}>
+					<ExpteForm
+						rowId={rowId}
+						onClose={handleCloseModal}
+						mode='create'
+					/>
+				</Modals>
+			</div>
 		</div>
 	);
 };

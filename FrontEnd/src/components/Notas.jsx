@@ -212,7 +212,7 @@ export const Notas = () => {
 				<Form
 					className=' flex flex-col sm:flex-row flex-wrap justify-evenly items-center'
 					onSubmit={onSubmit}>
-					<Form.Group className='w-full mb-3' controlId='resp'>
+					<Form.Group className='w-50% mb-3' controlId='resp'>
 						<Form.Label className='text-white font-medium'>
 							Responsable
 						</Form.Label>
