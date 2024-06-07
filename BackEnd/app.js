@@ -1,6 +1,8 @@
 const express = require('express');
 const connectDB = require('./db/db.js');
 const cors = require('cors');
+const axios = require('axios');
+const cheerio = require('cheerio');
 const cookieParser = require('cookie-parser');
 const authRoutes = require('./routes/auth.routes.js');
 const usersRoutes = require('./routes/users.routes.js');
@@ -54,6 +56,7 @@ app.use('/api', notasRoutes);
 app.get('/scrape', async (req, res) => {
 	try {
 		const { data } = await axios.get('https://www.diariojudicial.com/');
+		console.log(data);
 		const $ = cheerio.load(data);
 		let articles = [];
 
@@ -62,7 +65,7 @@ app.get('/scrape', async (req, res) => {
 			const link = $(element).attr('href');
 			articles.push({ title, link });
 		});
-
+		console.log(articles);
 		res.json(articles);
 	} catch (error) {
 		console.error(error);
