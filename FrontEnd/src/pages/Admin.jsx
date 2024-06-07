@@ -76,7 +76,7 @@ export const Admin = () => {
 					) : null}
 
 					<Link
-						className='bg-background shadow-3xl btnLogout mx-2 text-white text-center p-2 border-2 w-[200px] mb-3 border-white rounded-xl font-bold'
+						className='bg-background shadow-3xl btnLogout mx-2 text-white text-center p-2 border-2 w-[240px] mb-3 border-white rounded-xl font-bold'
 						onClick={handleLogOut}
 						to='/home'>
 						<i className='text-xl pe-2 bi bi-x-circle'></i>

@@ -8,7 +8,7 @@ export const Nosotros = () => {
 	return (
 		<>
 			<Header />
-			<div className='flex flex-wrap justify-center flex-col backgroundimage pt-48'>
+			<div className='flex flex-wrap justify-center flex-col backgroundimage pt-28'>
 				<Whatsapp />
 				<h1 className=' text-3xl my-3 font-bold  bg-gradient-to-t from-primary to-blue-200 text-transparent bg-clip-text text-center'>
 					Sobre Nosotros
@@ -89,10 +89,7 @@ export const Nosotros = () => {
 				</Card.Body>
 			</div>
 
-			<div className='flex justify-around flex-wrap flex-row items-center mb-5'>
-				<h1 className='text-black w-full text-3xl font-bold text-center py-3'>
-					Nuestro Equipo
-				</h1>
+			{/* <div className='flex justify-around flex-wrap flex-row items-center mb-5'>
 
 				<div className='col-md-4 col-sm-6 w-5/12 mx-1 bg-background mb-3'>
 					<div className='items-center text-center mt-1 relative'>
@@ -159,7 +156,7 @@ export const Nosotros = () => {
 						</div>
 					</div>
 				</div>
-			</div>
+			</div> */}
 		</>
 	);
 };

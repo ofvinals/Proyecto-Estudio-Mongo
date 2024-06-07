@@ -45,7 +45,7 @@ export const Interes = () => {
 		<>
 			<Header />
 
-			<section className='backgroundimage pt-48 flex flex-wrap h-auto items-center justify-center flex-col pb-3'>
+			<section className='backgroundimage pt-28 flex flex-wrap h-auto items-center justify-center flex-col pb-3'>
 				<Whatsapp />
 				<h1 className='text-3xl font-bold bg-gradient-to-t from-primary to-blue-200 text-transparent bg-clip-text mb-5'>
 					Webs de Interes

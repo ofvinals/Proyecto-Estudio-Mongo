@@ -16,16 +16,6 @@ const Modals = ({
 				</Modal.Title>
 			</Modal.Header>
 			<Modal.Body>{children}</Modal.Body>
-			{/* <Modal.Footer>
-        {showSaveButton && (
-          <Button variant="primary" onClick={onSave}>
-            Guardar Cambios
-          </Button>
-        )}
-        <Button variant="secondary" onClick={onClose}>
-          Cancelar
-        </Button>
-      </Modal.Footer> */}
 		</Modal>
 	);
 };

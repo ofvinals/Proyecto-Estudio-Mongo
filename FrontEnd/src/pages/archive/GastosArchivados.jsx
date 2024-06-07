@@ -165,18 +165,16 @@ export const GastosArchivados = () => {
 					{loading ? (
 						<Loader />
 					) : (
-						<>
-							<div className='table-responsive'>
-								<ThemeProvider theme={darkTheme}>
-									<CssBaseline />
-									<Table
-										columns={columns}
-										data={data}
-										actions={actions}
-									/>
-								</ThemeProvider>
-							</div>
-						</>
+						<div className='table-responsive'>
+							<ThemeProvider theme={darkTheme}>
+								<CssBaseline />
+								<Table
+									columns={columns}
+									data={data}
+									actions={actions}
+								/>
+							</ThemeProvider>
+						</div>
 					)}
 				</div>
 			</div>
