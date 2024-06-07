@@ -59,11 +59,15 @@ app.get('/scrape', async (req, res) => {
 		console.log(data)
 		const $ = cheerio.load(data);
 		let articles = [];
-
 		// Ajustar selectores según la estructura actual de la página
-		$('div.noticia-principal').each((index, element) => {
-			const title = $(element).find('h2 a').text().trim();
-			const link = $(element).find('h2 a').attr('href');
+		$('div.col-12.col-lg-3.mb-4').each((index, element) => {
+			const title = $(element)
+				.find('h5 a.d-block.ff2.fw-bold.text-dark.mb-3')
+				.text()
+				.trim();
+			const link = $(element)
+				.find('h5 a.d-block.ff2.fw-bold.text-dark.mb-3')
+				.attr('href');
 
 			if (title && link) {
 				articles.push({
@@ -72,9 +76,6 @@ app.get('/scrape', async (req, res) => {
 				});
 			}
 		});
-
-		// Si hay otros tipos de artículos en la página, puedes agregar más selectores aquí
-
 		res.json(articles);
 	} catch (error) {
 		console.error(error);
