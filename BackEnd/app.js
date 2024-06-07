@@ -11,7 +11,6 @@ const exptesRoutes = require('./routes/exptes.routes.js');
 const uploadRoutes = require('./routes/upload.routes.js');
 const notasRoutes = require('./routes/notas.routes.js');
 
-
 require('dotenv').config();
 
 const app = express();
@@ -19,24 +18,25 @@ const app = express();
 app.use(cookieParser());
 
 app.use((req, res, next) => {
-	res.setHeader('Access-Control-Allow-Origin', 'https://proyecto-estudio-mongo.vercel.app');
+	res.setHeader(
+		'Access-Control-Allow-Origin',
+		'https://proyecto-estudio-mongo.vercel.app'
+	);
 	res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
 	res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
 	next();
- });
+});
 app.use(
 	cors({
 		origin: [
 			'http://localhost:5173',
 			'https://proyecto-estudio-mongo.vercel.app',
 			'https://proyecto-estudio-mongo.onrender.com',
-			
 		],
 		credentials: true,
 		optionsSuccessStatus: 200,
 		methods: ['GET', 'POST', 'PUT', 'DELETE'],
-		allowedHeaders: ['Content-Type', 'Authorization']
-		
+		allowedHeaders: ['Content-Type', 'Authorization'],
 	})
 );
 
@@ -50,6 +50,25 @@ app.use('/api', exptesRoutes);
 app.use('/api', turnosRoutes);
 app.use('/api', uploadRoutes);
 app.use('/api', notasRoutes);
+
+app.get('/scrape', async (req, res) => {
+	try {
+		const { data } = await axios.get('https://www.diariojudicial.com/');
+		const $ = cheerio.load(data);
+		let articles = [];
+
+		$('a.headline').each((index, element) => {
+			const title = $(element).text();
+			const link = $(element).attr('href');
+			articles.push({ title, link });
+		});
+
+		res.json(articles);
+	} catch (error) {
+		console.error(error);
+		res.status(500).send('Error al realizar el scraping');
+	}
+});
 
 async function main() {
 	try {
