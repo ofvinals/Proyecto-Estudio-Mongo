@@ -56,6 +56,7 @@ app.use('/api', notasRoutes);
 app.get('/scrape', async (req, res) => {
 	try {
 		const { data } = await axios.get('https://www.diariojudicial.com/');
+		console.log(data)
 		const $ = cheerio.load(data);
 		let articles = [];
 
