@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Swal from 'sweetalert2';
 import '../../css/Header.css';
 import { Link } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext.jsx';
+import { useAuth } from '../../context/UseContext.jsx';
 import {
 	Edit as EditIcon,
 	Delete as DeleteIcon,
@@ -14,12 +14,13 @@ import dayjs from 'dayjs';
 import { getTurnos, deleteTurno } from '../../hooks/UseTurns.js';
 import { Table } from '../../components/Gestion/Table';
 import { Detail } from '../../components/Gestion/Detail';
-import { VerTurno } from '../../components/Modals/Views/VerTurno';
-import { EditarTurnos } from '../../components/Modals/Edits/EditarTurnos';
 import { Header } from '../../components/Header.jsx';
 import Tooltip from '@mui/material/Tooltip';
 import { Button } from 'react-bootstrap';
 import { GoogleCalendar } from '../../components/GoogleCalendar.jsx';
+import Loader from '../../components/Loader.jsx';
+import Modals from '../../components/Modals.jsx';
+import  {TurnoForm } from '../../components/Forms/TurnoForm.jsx';
 
 export const GestionAgenda = () => {
 	const { currentUser } = useAuth();
@@ -31,6 +32,7 @@ export const GestionAgenda = () => {
 	const [openGoogleModal, setopenGoogleModal] = useState(false);
 	const [reloadTable, setReloadTable] = useState(false);
 	const [rowId, setRowId] = useState(null);
+	const [loading, setLoading] = useState(true);
 
 	const handleOpenViewModal = (rowId) => {
 		setopenViewModal(true);
@@ -77,6 +79,7 @@ export const GestionAgenda = () => {
 				// 	);
 				// });
 				setData(turnosPendientes);
+				setLoading(false);
 			} catch (error) {
 				console.error('Error al obtener turnos', error);
 			}
@@ -125,11 +128,12 @@ export const GestionAgenda = () => {
 		},
 		{
 			text: 'Editar',
-			icon: (admin || coadmin) ? (
-				<Tooltip title='Editar evento' arrow>
-					<EditIcon color='success' cursor='pointer' />
-				</Tooltip>
-			): null,
+			icon:
+				admin || coadmin ? (
+					<Tooltip title='Editar evento' arrow>
+						<EditIcon color='success' cursor='pointer' />
+					</Tooltip>
+				) : null,
 			onClick: (row) => {
 				handleOpenEditModal(row.original._id);
 			},
@@ -138,9 +142,9 @@ export const GestionAgenda = () => {
 			text: 'Eliminar',
 			icon: admin ? (
 				<Tooltip title='Borrar evento' arrow>
-					<DeleteIcon color='error' cursor='pointer'/>
+					<DeleteIcon color='error' cursor='pointer' />
 				</Tooltip>
-			): null,
+			) : null,
 			onClick: (row) => borrarTurno(row.original._id),
 		},
 	];
@@ -165,10 +169,9 @@ export const GestionAgenda = () => {
 				cancelButtonText: 'Cancelar',
 			});
 			if (result.isConfirmed) {
-				Swal.showLoading();
-
+				setLoading(true);
 				await deleteTurno(id);
-
+				setLoading(false);
 				Swal.fire({
 					icon: 'success',
 					title: 'El turno fue eliminado!',
@@ -180,17 +183,17 @@ export const GestionAgenda = () => {
 		} catch (error) {
 			console.error('Error al eliminar el turno:', error);
 			Swal.fire('Error', 'Hubo un problema al eliminar el turno', 'error');
+			setLoading(false);
 		}
 	}
 
 	return (
-		<div className='bg-gradient-to-tl from-[#1e1e1e] to-[#4077ad] pb-3 pt-32'>
+		<div className='bg-gradient-to-tl from-[#1e1e1e] to-[#4077ad] pb-3 pt-24'>
 			<Header />
 			<div className=' rounded-xl container-lg mb-1 '>
 				<Detail modulo={'Agenda'} />
 			</div>
 			<hr className='linea text-white mx-3' />
-
 			<div className='container-lg'>
 				<div className='flex justify-around flex-wrap my-2'>
 					<button
@@ -218,45 +221,60 @@ export const GestionAgenda = () => {
 					</Link>
 				</div>
 				<hr className='linea mx-3' />
-
 				<div>
 					<p className='my-3 text-center text-3xl font-bold bg-gradient-to-t from-primary to-blue-200 text-transparent bg-clip-text'>
 						Turnos y Vencimientos Pendientes
 					</p>
 				</div>
-				<div className='table-responsive'>
-					<ThemeProvider theme={darkTheme}>
-						<CssBaseline />
-						<Table
-							columns={columns}
-							data={data}
-							actions={actions}
-							borrarTurno={borrarTurno}
-							handleOpenViewModal={handleOpenViewModal}
-						/>
-					</ThemeProvider>
-				</div>
+				{loading ? (
+					<Loader />
+				) : (
+					<div className='table-responsive'>
+						<ThemeProvider theme={darkTheme}>
+							<CssBaseline />
+							<Table
+								columns={columns}
+								data={data}
+								actions={actions}
+								borrarTurno={borrarTurno}
+								handleOpenViewModal={handleOpenViewModal}
+							/>
+						</ThemeProvider>
+					</div>
+				)}
 			</div>
-			{openViewModal && (
-				<VerTurno
-					rowId={rowId}
-					showModal={openViewModal}
+
+			<div>
+				<Modals
+					isOpen={openEditModal}
 					onClose={handleCloseModal}
-				/>
-			)}
-			{openEditModal && (
-				<EditarTurnos
-					rowId={rowId}
-					showModal={openEditModal}
+					title='Editar Turno'>
+					<TurnoForm
+						rowId={rowId}
+						onClose={handleCloseModal}
+						mode='edit'
+					/>
+				</Modals>
+				<Modals
+					isOpen={openViewModal}
 					onClose={handleCloseModal}
-				/>
-			)}
-			{openGoogleModal && (
-				<GoogleCalendar
-					showModal={openGoogleModal}
+					title='Ver Turno'>
+					<TurnoForm
+						rowId={rowId}
+						onClose={handleCloseModal}
+						mode='view'
+					/>
+				</Modals>
+				<Modals
+					isOpen={openGoogleModal}
 					onClose={handleCloseModal}
-				/>
-			)}
+					title='Ingresar con Google'>
+					<GoogleCalendar
+						showModal={openGoogleModal}
+						onClose={handleCloseModal}
+					/>
+				</Modals>
+			</div>
 		</div>
 	);
 };

@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
-import { useAuth } from '../../context/AuthContext.jsx';
+import { useAuth } from '../../context/UseContext.jsx';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import '../../css/Header.css';
@@ -15,13 +15,13 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { getGastos, deleteGasto } from '../../hooks/UseBills.js';
 import { Table } from '../../components/Gestion/Table';
 import { Detail } from '../../components/Gestion/Detail';
-import { VerGasto } from '../../components/Modals/Views/VerGasto';
-import { EditarGastos } from '../../components/Modals/Edits/EditarGastos';
-import { CargaGastos } from '../../components/Modals/News/CargaGastos';
 import { Pagos } from '../../components/Pagos';
 import { Box } from '@mui/material';
 import { Header } from '../../components/Header.jsx';
 import Tooltip from '@mui/material/Tooltip';
+import Loader from '../../components/Loader.jsx';
+import Modals from '../../components/Modals.jsx';
+import { GastoForm } from '../../components/Forms/GastoForm.jsx';
 
 export const GestionGastos = () => {
 	const { currentUser } = useAuth();
@@ -34,6 +34,7 @@ export const GestionGastos = () => {
 	const [openPayModal, setopenPayModal] = useState(false);
 	const [openNewModal, setopenNewModal] = useState(false);
 	const [rowId, setRowId] = useState(null);
+	const [loading, setLoading] = useState(true);
 	const [reloadTable, setReloadTable] = useState(false);
 
 	const handleOpenNewModal = () => {
@@ -76,8 +77,10 @@ export const GestionGastos = () => {
 					? filteredByEstado
 					: filteredByEstado.filter((gasto) => gasto.cliente === user);
 				setData(filteredGastos);
+				setLoading(false);
 			} catch (error) {
 				console.error('Error al obtener gastos', error);
+				setLoading(false);
 			}
 		};
 		loadGastos();
@@ -158,11 +161,12 @@ export const GestionGastos = () => {
 		},
 		{
 			text: 'Editar',
-			icon: (admin || coadmin) ? (
-				<Tooltip title='Colocar como tarea pendiente' arrow>
-					<EditIcon color='success' cursor='pointer' />
-				</Tooltip>
-			): null,
+			icon:
+				admin || coadmin ? (
+					<Tooltip title='Colocar como tarea pendiente' arrow>
+						<EditIcon color='success' cursor='pointer' />
+					</Tooltip>
+				) : null,
 			onClick: (row) => {
 				handleOpenEditModal(row.original._id);
 			},
@@ -173,7 +177,7 @@ export const GestionGastos = () => {
 				<Tooltip title='Colocar como tarea pendiente' arrow>
 					<DeleteIcon color='error' cursor='pointer' />
 				</Tooltip>
-			): null,
+			) : null,
 			onClick: (row) => borrarGasto(row.original._id),
 		},
 	];
@@ -198,7 +202,9 @@ export const GestionGastos = () => {
 				cancelButtonText: 'Cancelar',
 			});
 			if (result.isConfirmed) {
+				setLoading(true);
 				await deleteGasto(id);
+				setLoading(false);
 				Swal.fire({
 					icon: 'success',
 					title: 'Gasto eliminado correctamente',
@@ -209,22 +215,21 @@ export const GestionGastos = () => {
 			}
 		} catch (error) {
 			console.error('Error al eliminar el gasto:', error);
+			setLoading(false);
 		}
 	}
 
 	return (
-		<div className='bg-gradient-to-tl from-[#1e1e1e] to-[#4077ad] pb-3 pt-32'>
+		<div className='bg-gradient-to-tl from-[#1e1e1e] to-[#4077ad] pb-3 pt-24'>
 			<Header />
 			<div className=' rounded-xl container-lg mb-1 '>
 				<Detail modulo={'Gastos'} />
 			</div>
-
 			<hr className='linea text-white mx-3' />
-
 			<div className='container-lg '>
 				<div>
 					<div className='flex justify-around flex-row  items-center flex-wrap my-3'>
-						{(admin || coadmin) ? (
+						{admin || coadmin ? (
 							<button
 								type='button'
 								className='bg-white shadow-3xl btnAdmin text-primary text-center p-2 border-2 w-[210px] mb-3 border-primary rounded-xl font-semibold'
@@ -233,7 +238,6 @@ export const GestionGastos = () => {
 								Agregar gastos
 							</button>
 						) : null}
-
 						<button
 							type='button'
 							className='bg-white shadow-3xl btnAdmin text-primary text-center p-2 border-2 w-[210px] mb-3 border-primary rounded-xl font-semibold'
@@ -241,7 +245,6 @@ export const GestionGastos = () => {
 							<i className='text-xl pe-2 bi bi-cash-coin'></i>
 							Medios de pago
 						</button>
-
 						{(admin || coadmin) && (
 							<Link
 								to='/gastosarchivados'
@@ -258,46 +261,64 @@ export const GestionGastos = () => {
 						</Link>
 					</div>
 					<hr className='linea mx-3' />
-
 					<div>
 						<p className='my-4 text-3xl font-extrabold text-center bg-gradient-to-t from-primary to-blue-200 text-transparent bg-clip-text'>
 							Gastos Pendientes de Cobro
 						</p>
 					</div>
-
-					<div className='table-responsive'>
-						<ThemeProvider theme={darkTheme}>
-							<CssBaseline />
-							<Table
-								columns={columns}
-								data={data}
-								actions={actions}
-								borrarGasto={borrarGasto}
-							/>
-						</ThemeProvider>
-					</div>
+					{loading ? (
+						<Loader />
+					) : (
+						<div className='table-responsive'>
+							<ThemeProvider theme={darkTheme}>
+								<CssBaseline />
+								<Table
+									columns={columns}
+									data={data}
+									actions={actions}
+									borrarGasto={borrarGasto}
+								/>
+							</ThemeProvider>
+						</div>
+					)}
 				</div>
 			</div>
 			{openPayModal && (
 				<Pagos showModal={openPayModal} onClose={handleCloseModal} />
 			)}
-			{openNewModal && (
-				<CargaGastos showModal={openNewModal} onClose={handleCloseModal} />
-			)}
-			{openViewModal && (
-				<VerGasto
-					rowId={rowId}
-					showModal={openViewModal}
+
+			<div>
+				<Modals
+					isOpen={openEditModal}
 					onClose={handleCloseModal}
-				/>
-			)}
-			{openEditModal && (
-				<EditarGastos
-					rowId={rowId}
-					showModal={openEditModal}
+					title='Editar Gastos'>
+					<GastoForm
+						rowId={rowId}
+						onClose={handleCloseModal}
+						mode='edit'
+					/>
+				</Modals>
+				<Modals
+					isOpen={openViewModal}
 					onClose={handleCloseModal}
-				/>
-			)}
+					title='Ver Gastos'>
+					<GastoForm
+						rowId={rowId}
+						onClose={handleCloseModal}
+						mode='view'
+					/>
+				</Modals>
+				<Modals
+					isOpen={openNewModal}
+					onClose={handleCloseModal}
+					title='Cargar Gastos'>
+					<GastoForm
+						rowId={rowId}
+						onClose={handleCloseModal}
+						mode='create'
+					/>
+				</Modals>
+			</div>
 		</div>
 	);
 };

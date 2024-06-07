@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-mixed-spaces-and-tabs */
 import { useEffect, useState, useMemo } from 'react';
-import { useAuth } from '../context/AuthContext.jsx';
+import { useAuth } from '../context/UseContext.jsx';
 import '../css/Header.css';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';

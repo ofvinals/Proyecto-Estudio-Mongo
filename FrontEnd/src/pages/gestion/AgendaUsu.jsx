@@ -5,7 +5,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { MobileDateTimePicker } from '@mui/x-date-pickers/MobileDateTimePicker';
-import { useAuth } from '../../context/AuthContext.jsx';
+import { useAuth } from '../../context/UseContext.jsx';
 import { getTurnos, createTurno, deleteTurno } from '../../hooks/UseTurns.js';
 import { Button } from 'react-bootstrap';
 import Swal from 'sweetalert2';
@@ -21,6 +21,7 @@ import { Detail } from '../../components/Gestion/Detail';
 import { Header } from '../../components/Header.jsx';
 import { Table } from '../../components/Gestion/Table';
 import Tooltip from '@mui/material/Tooltip';
+import Loader from '../../components/Loader.jsx';
 
 export const AgendaUsu = () => {
 	const { currentUser } = useAuth();
@@ -29,6 +30,7 @@ export const AgendaUsu = () => {
 	const [startDate, setStartDate] = useState(dayjs());
 	const [turnoOcupado, setTurnoOcupado] = useState([]);
 	const user = currentUser.email;
+	const [loading, setLoading] = useState(true);
 	// deshabilita seleccion de dias de fin de semana
 	// const lastMonday = dayjs().startOf('week');
 	// const nextSunday = dayjs().endOf('week').startOf('day');
@@ -49,8 +51,10 @@ export const AgendaUsu = () => {
 			try {
 				const fetchedTurnos = await getTurnos();
 				setData(fetchedTurnos);
+				setLoading(false);
 			} catch (error) {
 				console.error('Error al obtener turnos', error);
+				setLoading(false);
 			}
 		};
 		loadTurnos();
@@ -144,7 +148,7 @@ export const AgendaUsu = () => {
 					// );
 
 					createTurno(nuevoTurno);
-
+					setLoading(false);
 					await Swal.fire({
 						icon: 'success',
 						title: 'Su turno fue registrado!',
@@ -180,6 +184,7 @@ export const AgendaUsu = () => {
 			});
 			if (result.isConfirmed) {
 				await deleteTurno(id);
+				setLoading(false);
 				Swal.fire(
 					'Eliminado',
 					'El turno fue eliminado con exito',
@@ -203,7 +208,7 @@ export const AgendaUsu = () => {
 
 	return (
 		<>
-			<div className='bg-gradient-to-tl from-[#1e1e1e] to-[#4077ad] pb-3 pt-32'>
+			<div className='bg-gradient-to-tl from-[#1e1e1e] to-[#4077ad] pb-3 pt-24'>
 				<Header />
 				<div className='rounded-xl container-lg mb-1 '>
 					<Detail modulo={'Turnos'} />
@@ -280,6 +285,9 @@ export const AgendaUsu = () => {
 						<h2 className='my-4 text-2xl font-extrabold text-center text-white'>
 							Su/s turno/s registrado/s
 						</h2>
+						{loading ? (
+						<Loader />
+					) : (
 						<div className='table-responsive'>
 							<ThemeProvider theme={darkTheme}>
 								<CssBaseline />
@@ -291,6 +299,7 @@ export const AgendaUsu = () => {
 								/>
 							</ThemeProvider>
 						</div>
+							)}
 					</div>
 				</div>
 			</div>

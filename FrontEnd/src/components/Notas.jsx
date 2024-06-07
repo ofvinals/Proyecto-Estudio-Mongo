@@ -212,7 +212,7 @@ export const Notas = () => {
 				<Form
 					className=' flex flex-col sm:flex-row flex-wrap justify-evenly items-center'
 					onSubmit={onSubmit}>
-					<Form.Group className='w-full mb-3' controlId='resp'>
+					<Form.Group className='w-50% mb-3' controlId='resp'>
 						<Form.Label className='text-white font-medium'>
 							Responsable
 						</Form.Label>
@@ -263,14 +263,14 @@ export const Notas = () => {
 						id='inputrecord'
 						className='flex flex-col sm:flex-row	 flex-wrap items-center justify-around w-full'>
 						<Button
-							className='bg-white shadow-3xl btnAdmin text-primary text-center p-1 py-2 border-2 w-[170px] mb-4 sm:mb-1 border-primary rounded-xl'
+							className='bg-white shadow-3xl btnAdmin text-primary text-center p-1 py-2 border-2 w-[200px] mb-4 sm:mb-1 border-primary rounded-xl'
 							type='submit'>
 							<i className='text-xl pe-2 bi bi-check2-square'></i>
 							Registrar Nota
 						</Button>
 						<Button
 							type='button'
-							className='bg-white shadow-3xl btnAdmin text-primary text-center p-1 border-2 py-2 w-[200px] mb-1 border-primary rounded-xl'
+							className='bg-white shadow-3xl btnAdmin text-primary text-center p-1 border-2 py-2 w-[200px] mb-4 sm:mb-1 border-primary rounded-xl'
 							onClick={toggleMostrarNotas}>
 							<i className='text-xl pe-2 bi bi-archive'></i>
 							{mostrarNotasPendientes

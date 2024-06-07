@@ -3,7 +3,7 @@ import { useRef } from 'react';
 import Form from 'react-bootstrap/Form';
 import '../css/Header.css';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext.jsx';
+import { useAuth } from '../context/UseContext.jsx';
 import { Modal } from 'react-bootstrap';
 
 export const Recuperar = ({ showModal, onClose }) => {

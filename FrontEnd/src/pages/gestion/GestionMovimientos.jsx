@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react';
-import { useAuth } from '../../context/AuthContext.jsx';
+import { useAuth } from '../../context/UseContext.jsx';
 import { Link, useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import Swal from 'sweetalert2';
@@ -20,11 +20,11 @@ import {
 } from '../../hooks/UseExptes.js';
 import { Table } from '../../components/Gestion/Table';
 import { Detail } from '../../components/Gestion/Detail';
-import { VerMov } from '../../components/Modals/Views/VerMov';
-import { EditarMov } from '../../components/Modals/Edits/EditarMov';
-import { CargaMov } from '../../components/Modals/News/CargaMov';
 import { Header } from '../../components/Header.jsx';
 import Tooltip from '@mui/material/Tooltip';
+import Loader from '../../components/Loader.jsx';
+import Modals from '../../components/Modals.jsx';
+import { MovForm } from '../../components/Forms/MovForm.jsx';
 
 export const GestionMovimientos = () => {
 	const { currentUser } = useAuth();
@@ -39,8 +39,9 @@ export const GestionMovimientos = () => {
 	const [openNewModal, setopenNewModal] = useState(false);
 	const [rowId, setRowId] = useState(null);
 	const [reloadTable, setReloadTable] = useState(false);
+	const [loading, setLoading] = useState(true);
 	const expteId = expte._id;
-	
+
 	const handleOpenNewModal = () => {
 		setopenNewModal(true);
 	};
@@ -68,8 +69,10 @@ export const GestionMovimientos = () => {
 				const expediente = await getExpte(id);
 				setExpte(expediente);
 				setData(expediente.movimientos);
+				setLoading(false);
 			} catch (error) {
 				console.error('Error al obtener movimientos del expediente', error);
+				setLoading(false);
 			}
 		};
 		fetchExpte();
@@ -80,8 +83,10 @@ export const GestionMovimientos = () => {
 			try {
 				const diasSinMov = await calcularDiasTranscurridos(id);
 				setDiasCaducidad(diasSinMov);
+				setLoading(false);
 			} catch (error) {
 				console.error('Error al obtener movimientos del expediente', error);
+				setLoading(false);
 			}
 		};
 		fetchExpte();
@@ -128,11 +133,12 @@ export const GestionMovimientos = () => {
 		},
 		{
 			text: 'Editar',
-			icon: (admin || coadmin) ? (
-				<Tooltip title='Editar movimiento' arrow>
-					<EditIcon color='success' cursor='pointer' />
-				</Tooltip>
-			): null,
+			icon:
+				admin || coadmin ? (
+					<Tooltip title='Editar movimiento' arrow>
+						<EditIcon color='success' cursor='pointer' />
+					</Tooltip>
+				) : null,
 			onClick: (row) => {
 				handleOpenEditModal(row.original._id);
 			},
@@ -143,7 +149,7 @@ export const GestionMovimientos = () => {
 				<Tooltip title='Eliminar movimiento' arrow>
 					<DeleteIcon color='error' cursor='pointer' />
 				</Tooltip>
-			): null,
+			) : null,
 			onClick: (row) => borrarMov(row.original._id, expteId),
 		},
 	];
@@ -166,7 +172,9 @@ export const GestionMovimientos = () => {
 				cancelButtonText: 'Cancelar',
 			});
 			if (result.isConfirmed) {
+				setLoading(true);
 				await deleteMov(expteId, rowId);
+				setLoading(false);
 				Swal.fire({
 					icon: 'success',
 					title: 'Movimiento eliminado correctamente',
@@ -184,17 +192,15 @@ export const GestionMovimientos = () => {
 
 	return (
 		<>
-			<div className='bg-gradient-to-tl from-[#1e1e1e] to-[#4077ad] pb-3 pt-32'>
+			<div className='bg-gradient-to-tl from-[#1e1e1e] to-[#4077ad] pb-3 pt-24'>
 				<Header />
 				<div className=' rounded-xl container-lg mb-1 '>
 					<Detail modulo={'Movimientos de Expediente'} />
 				</div>
-
 				<hr className='linea text-white mx-3' />
-
 				<div className='container-lg'>
 					<div className='flex justify-around flex-wrap my-3'>
-						{(admin || coadmin) ? (
+						{admin || coadmin ? (
 							<button
 								className='bg-white shadow-3xl btnAdmin text-primary text-center p-2 border-2 w-[220px] mb-3 border-primary rounded-xl font-semibold'
 								onClick={() => handleOpenNewModal()}>
@@ -209,14 +215,11 @@ export const GestionMovimientos = () => {
 							Volver al Panel
 						</Link>
 					</div>
-
 					<hr className='linea mx-3 text-white' />
-
 					<div>
 						<h2 className='my-4 text-2xl font-extrabold text-center text-white'>
 							Datos del Expediente
 						</h2>
-
 						<div className=''>
 							<p className='text-white font-medium ml-5 my-2'>
 								<u>Nro Expte:</u> {expte.nroexpte}
@@ -237,7 +240,6 @@ export const GestionMovimientos = () => {
 								<u>Dias sin movimientos:</u> {diasCaducidad}{' '}
 								<span>Dias</span>
 							</p>
-
 							<p></p>
 						</div>
 						<hr className='linea mx-3' />
@@ -245,42 +247,48 @@ export const GestionMovimientos = () => {
 					<h2 className='my-4 text-3xl font-extrabold text-center bg-gradient-to-t from-primary to-blue-200 text-transparent bg-clip-text'>
 						Movimientos del Expediente
 					</h2>
-					<div className='table-responsive'>
-						<ThemeProvider theme={darkTheme}>
-							<CssBaseline />
-							<Table
-								columns={columns}
-								data={data}
-								actions={actions}
-								borrarMov={borrarMov}
-							/>
-						</ThemeProvider>
-					</div>
+					{loading ? (
+						<Loader />
+					) : (
+						<div className='table-responsive'>
+							<ThemeProvider theme={darkTheme}>
+								<CssBaseline />
+								<Table
+									columns={columns}
+									data={data}
+									actions={actions}
+									borrarMov={borrarMov}
+								/>
+							</ThemeProvider>
+						</div>
+					)}
 				</div>
 			</div>
-			{openNewModal && (
-				<CargaMov
-					expteId={expteId}
-					showModal={openNewModal}
+
+			<div>
+				<Modals
+					isOpen={openEditModal}
 					onClose={handleCloseModal}
-				/>
-			)}
-			{openViewModal && (
-				<VerMov
-					rowId={rowId}
-					expteId={expteId}
-					showModal={openViewModal}
+					title='Editar Movimiento'>
+					<MovForm rowId={rowId} onClose={handleCloseModal} mode='edit' />
+				</Modals>
+				<Modals
+					isOpen={openViewModal}
 					onClose={handleCloseModal}
-				/>
-			)}
-			{openEditModal && (
-				<EditarMov
-					rowId={rowId}
-					expteId={expteId}
-					showModal={openEditModal}
+					title='Ver Movimiento'>
+					<MovForm rowId={rowId} onClose={handleCloseModal} mode='view' />
+				</Modals>
+				<Modals
+					isOpen={openNewModal}
 					onClose={handleCloseModal}
-				/>
-			)}
+					title='Cargar Movimiento'>
+					<MovForm
+						rowId={rowId}
+						onClose={handleCloseModal}
+						mode='create'
+					/>
+				</Modals>
+			</div>
 		</>
 	);
 };

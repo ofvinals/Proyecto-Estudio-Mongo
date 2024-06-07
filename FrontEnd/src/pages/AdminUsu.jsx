@@ -1,17 +1,18 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext.jsx';
+import { useAuth } from '../context/UseContext.jsx';
 import '../css/Header.css';
 import Swal from 'sweetalert2';
 import { Detail } from '../components/Gestion/Detail.jsx';
 import { Header } from '../components/Header.jsx';
 import { Novedades } from '../components/Novedades.jsx';
-import { EditarUsu } from '../components/Modals/Edits/EditarUsu.jsx';
 import { useState } from 'react';
+import Modals from '../components/Modals.jsx';
+import { UserForm } from '../components/Forms/UserForm.jsx';
 
 export const AdminUsu = () => {
 	const { currentUser, logout } = useAuth({});
 	const navigate = useNavigate();
-	const userId = currentUser.id;
+	const rowId = currentUser.id;
 	const [openEditModal, setopenEditModal] = useState(false);
 
 	const handleCloseModal = () => {
@@ -37,11 +38,10 @@ export const AdminUsu = () => {
 		<>
 			<div className='bg-gradient-to-tl from-[#1e1e1e] to-[#4077ad]'>
 				<Header />
-				<div className=' rounded-xl container-lg mb-1 pt-32 '>
+				<div className=' rounded-xl container-lg mb-1 pt-24 '>
 					<Detail modulo={'Usuario'} />
 				</div>
 				<hr className='linea text-white mx-3' />
-
 				<div className='flex flex-wrap items-center justify-around mt-3 px-10'>
 					<Link
 						className='bg-white shadow-3xl btnAdmin mx-2 text-primary text-center p-2 border-2 w-[230px] mb-3 border-primary rounded-xl font-bold'
@@ -75,29 +75,28 @@ export const AdminUsu = () => {
 						className='bg-white shadow-3xl btnAdmin mx-2 text-primary text-center p-2 border-2 w-[230px] mb-3 border-primary rounded-xl font-bold'
 						type='button'
 						onClick={() => {
-							handleOpenEditModal(userId);
+							handleOpenEditModal(rowId);
 						}}>
 						<i className='text-xl pe-2 bi bi-person-gear'></i>
 						Modificar tus Datos
 					</button>
 					<button
 						onClick={handleLogOut}
-						className='bg-background shadow-3xl btnLogout mx-2 text-white text-center p-2 border-2 w-[200px] mb-3 border-white rounded-xl font-bold'>
+						className='bg-background shadow-3xl btnLogout mx-2 text-white text-center p-2 border-2 w-[230px] mb-3 border-white rounded-xl font-bold'>
 						<i className='text-xl pe-2 bi bi-x-circle'></i>
 						Cerrar Sesion
 					</button>
 				</div>
-
 				<hr className='linea text-white mx-3' />
 				<Novedades />
 			</div>
-			{openEditModal && (
-				<EditarUsu
-					rowId={userId}
-					showModal={openEditModal}
-					onClose={handleCloseModal}
-				/>
-			)}
+
+			<Modals
+				isOpen={openEditModal}
+				onClose={handleCloseModal}
+				title='Editar Datos del Usuario'>
+				<UserForm rowId={rowId} onClose={handleCloseModal} mode='edit' />
+			</Modals>
 		</>
 	);
 };

@@ -3,7 +3,7 @@ import { GoogleOAuthProvider } from '@react-oauth/google';
 
 import { Login } from '../src/pages/Login';
 import { Footer } from '../src/components/Footer';
-import { Nosotros } from '../src/pages/Nosotros';
+import { Nosotros } from '../src/pages/About';
 import { Contact } from '../src/pages/Contact';
 import { Registro } from '../src/pages/Registro';
 import { Services } from '../src/pages/Services';
