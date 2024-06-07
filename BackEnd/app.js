@@ -60,10 +60,14 @@ app.get('/scrape', async (req, res) => {
 		const $ = cheerio.load(data);
 		let articles = [];
 
-		$('a.headline').each((index, element) => {
-			const title = $(element).text();
-			const link = $(element).attr('href');
-			articles.push({ title, link });
+		$('article').each((index, element) => {
+			const titleElement = $(element).find('a.headline');
+			const title = titleElement.text().trim();
+			const link = titleElement.attr('href');
+
+			if (title && link) {
+				articles.push({ title, link });
+			}
 		});
 		console.log(articles);
 		res.json(articles);
