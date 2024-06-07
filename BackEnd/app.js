@@ -58,23 +58,35 @@ app.get('/scrape', async (req, res) => {
 		const { data } = await axios.get('https://www.diariojudicial.com/');
 		const $ = cheerio.load(data);
 		let articles = [];
+
 		// Ajustar selectores según la estructura actual de la página
 		$('div.col-12.col-lg-3.mb-4').each((index, element) => {
-			const title = $(element).find('h5').text().trim();
-			console.log(title);
-			const link = $(element).find('h5 ').attr('href');
-			console.log(link)
-			const imgSrc = $(element).find('amp-img').attr('src');
-			console.log(imgSrc);
+			const title = $(element)
+				.find('h5 a.d-block.ff2.fw-bold.text-dark.mb-3')
+				.text()
+				.trim();
 
-			if (title && link && imgSrc) {
+			const link = $(element)
+				.find('h5 a.d-block.ff2.fw-bold.text-dark.mb-3')
+				.attr('href');
+
+			const imgSrc = $(element).find('amp-img').attr('src');
+
+			const description = $(element)
+				.find('h5 a.d-block.h6.text-dark')
+				.text()
+				.trim();
+
+			if (title && link && imgSrc && description) {
 				articles.push({
 					title,
-					link: `https://www.diariojudicial.com/${link}`,
+					link: `https://www.diariojudicial.com${link}`,
 					imgSrc,
+					description,
 				});
 			}
 		});
+
 		res.json(articles);
 	} catch (error) {
 		console.error(error);
