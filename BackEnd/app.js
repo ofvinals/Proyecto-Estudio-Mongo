@@ -80,7 +80,7 @@ app.get('/scrape', async (req, res) => {
 			if (title && link && imgSrc && description) {
 				articles.push({
 					title,
-					link: `https://www.diariojudicial.com${link}`,
+					link: `https://www.diariojudicial.com/${link}`,
 					imgSrc,
 					description,
 				});

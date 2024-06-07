@@ -163,7 +163,7 @@ export const Home = () => {
 			<Services />
 			<News />
 			<div className='flex items-center justify-center'>
-				<div className='imagensection4 md:w-[750px] xl:w-[1100px] rounded-xl mt-3 flex flex-col flex-around h-[450px] w-full mb-10'>
+				<div className='imagensection4 md:w-[750px] xl:w-[1100px] rounded-xl mt-3 flex flex-col flex-around h-[550px] sm:h-[450px] w-full mb-10'>
 					<p className=' titlecontac w-full flex justify-center font-bold text-4xl text-[#25b0f0] text-center items-center'>
 						CONTACTO
 					</p>
@@ -181,13 +181,13 @@ export const Home = () => {
 								<i className='text-[#25b0f0] text-2xl bi bi-telephone-fill mb-3l bi bi-telephone-fill me-2 mb-3'></i>
 								<p className='text-white text-2xl'>+54 381-458 1382</p>
 							</div>
-							<div className='contmail flex flex-col text-center items-center w-6/12 text-base'>
+							<div className='contmail flex flex-col text-center items-center w-6/12 text-base mt-12 sm:mt-4'>
 								<i className='text-[#25b0f0] text-2xl bi bi-envelope-at-fill me-2 '></i>
 								<p className='text-white text-2xl'>
 									ofvinals@gmail.com
 								</p>
 							</div>
-							<div className='contdir flex flex-col text-center items-center w-6/12 text-base'>
+							<div className='contdir flex flex-col text-center items-center w-6/12 text-base mt-16 sm:mt-8'>
 								<i className='text-[#25b0f0] text-2xl bi bi-geo-alt-fill me-2 '></i>
 								<p className='text-white text-2xl'>
 									9 de Julio 620 Planta Baja C - SMT

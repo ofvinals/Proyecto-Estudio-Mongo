@@ -5,6 +5,7 @@ import Loader from '../Loader';
 
 export const News = () => {
 	const [articles, setArticles] = useState([]);
+	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
 		const fetchArticles = async () => {
@@ -13,6 +14,7 @@ export const News = () => {
 					'https://proyecto-estudio-mongo.onrender.com/scrape'
 				);
 				setArticles(response.data);
+				setLoading(false)
 			} catch (error) {
 				console.error('Error fetching articles', error);
 			}
@@ -41,27 +43,27 @@ export const News = () => {
 				Noticias Judiciales de Interés
 			</h2>
 
-			{articles ? (
-				<Carousel className='h-[570px] mb-12 mx-6 sm:mx-24'>
+			{articles || loading ? (
+				<Carousel className='h-[600px] mb-16 mx-6 sm:mx-24'>
 					{articles.map((article, index) => (
 						<Carousel.Item key={index}>
-							{console.log(article)}
 							<a
 								href={article.link}
 								target='_blank'
 								rel='noopener noreferrer'>
-								<img referrerPolicy='same-origin' className='rounded-xl object-cover w-full' src={article.imgSrc} alt={article.title} />
+								<img referrerPolicy='same-origin' className='rounded-xl object-cover w-full max-h-[400px] ' src={article.imgSrc} alt={article.title} />
 								<h3 className='text-background text-3xl font-bold text-center py-3'>
 									{article.title}
 								</h3>
 							</a>
 							<div>
-								<p className='text-background text-md text-center sm:mx-10'>
+								<p className='text-background text-center sm:mx-10 overflow-hidden overflow-ellipsis'>
 									{article.description}
 								</p>
 							</div>
 						</Carousel.Item>
 					))}
+					
 				</Carousel>
 			) : (
 				<Loader />
