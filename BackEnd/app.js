@@ -56,23 +56,21 @@ app.use('/api', notasRoutes);
 app.get('/scrape', async (req, res) => {
 	try {
 		const { data } = await axios.get('https://www.diariojudicial.com/');
-		console.log(data)
+		console.log(data);
 		const $ = cheerio.load(data);
 		let articles = [];
 		// Ajustar selectores según la estructura actual de la página
 		$('div.col-12.col-lg-3.mb-4').each((index, element) => {
-			const title = $(element)
-				.find('h5 a.d-block.ff2.fw-bold.text-dark.mb-3')
-				.text()
-				.trim();
-			const link = $(element)
-				.find('h5 a.d-block.ff2.fw-bold.text-dark.mb-3')
-				.attr('href');
+			const title = $(element).find('h5 ').text().trim();
+			console.log(title);
+			const link = $(element).find('h5 ').attr('href');
+			const imgSrc = $(element).find('amp-img').attr('src');
 
-			if (title && link) {
+			if (title && link && imgSrc) {
 				articles.push({
 					title,
-					link: `https://www.diariojudicial.com${link}`,
+					link: `https://www.diariojudicial.com/${link}`,
+					imgSrc
 				});
 			}
 		});
