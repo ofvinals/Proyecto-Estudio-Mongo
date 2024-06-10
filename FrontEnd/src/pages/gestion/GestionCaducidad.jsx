@@ -4,8 +4,6 @@ import { useMemo } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { Visibility as VisibilityIcon } from '@mui/icons-material';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
 import '../../css/Header.css';
 import { filterExpedientes, getExptes } from '../../hooks/UseExptes.js';
 import { Table } from '../../components/Gestion/Table.jsx';
@@ -77,12 +75,6 @@ export const GestionCaducidad = () => {
 		},
 	];
 
-	const darkTheme = createTheme({
-		palette: {
-			mode: 'dark',
-		},
-	});
-
 	return (
 		<>
 			<div className='bg-gradient-to-tl from-[#1e1e1e] to-[#4077ad] pb-3 pt-24'>
@@ -111,13 +103,8 @@ export const GestionCaducidad = () => {
 					{loading ? (
 						<Loader />
 					) : (
-					<div className='table-responsive'>
-						<ThemeProvider theme={darkTheme}>
-							<CssBaseline />
-							<Table columns={columns} data={data} actions={actions} />
-						</ThemeProvider>
-					</div>
-						)}
+						<Table columns={columns} data={data} actions={actions} />
+					)}
 				</div>
 			</div>
 		</>

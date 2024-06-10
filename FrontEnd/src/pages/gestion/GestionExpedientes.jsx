@@ -7,9 +7,6 @@ import {
 	Delete as DeleteIcon,
 	Visibility as VisibilityIcon,
 } from '@mui/icons-material';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
-import Swal from 'sweetalert2';
 import '../../css/Header.css';
 import { getExptes, deleteExpte } from '../../hooks/UseExptes.js';
 import { Table } from '../../components/Gestion/Table';
@@ -19,6 +16,7 @@ import Tooltip from '@mui/material/Tooltip';
 import Loader from '../../components/Loader.jsx';
 import Modals from '../../components/Modals.jsx';
 import { ExpteForm } from '../../components/Forms/ExpteForm.jsx';
+import { DeleteConfirmation } from '../../components/Gestion/DeleteFunction.jsx';
 
 export const GestionExpedientes = () => {
 	const { currentUser } = useAuth();
@@ -32,7 +30,11 @@ export const GestionExpedientes = () => {
 	const [rowId, setRowId] = useState(null);
 	const [reloadTable, setReloadTable] = useState(false);
 	const [loading, setLoading] = useState(true);
-
+	const [confirmDelete, setConfirmDelete] = useState(false);
+	const [deleteInfo, setDeleteInfo] = useState({
+		rowId: null,
+		itemDescription: '',
+	});
 	const handleOpenNewModal = () => {
 		setopenNewModal(true);
 	};
@@ -46,6 +48,15 @@ export const GestionExpedientes = () => {
 		setopenNewModal(false);
 		setopenEditModal(false);
 		setReloadTable((prevState) => !prevState);
+	};
+
+	const handleDelete = async (rowId) => {
+		try {
+			await deleteExpte(rowId);
+			setReloadTable((prevState) => !prevState);
+		} catch (error) {
+			console.error('Error al eliminar:', error);
+		}
 	};
 
 	useEffect(() => {
@@ -131,45 +142,15 @@ export const GestionExpedientes = () => {
 					<DeleteIcon color='error' cursor='pointer' />
 				</Tooltip>
 			) : null,
-			onClick: (row) => borrarExpte(row.original._id),
+			onClick: (row) => {
+				setDeleteInfo({
+					rowId: row.original._id,
+					itemDescription: 'el expediente',
+				});
+				setConfirmDelete(true);
+			},
 		},
 	];
-
-	const darkTheme = createTheme({
-		palette: {
-			mode: 'dark',
-		},
-	});
-
-	// funcion para eliminar expedientes
-	async function borrarExpte(id) {
-		try {
-			const result = await Swal.fire({
-				title: '¿Estás seguro?',
-				text: 'Confirmas la eliminación del expediente?',
-				icon: 'warning',
-				showCancelButton: true,
-				confirmButtonColor: '#d33',
-				cancelButtonColor: '#8f8e8b',
-				confirmButtonText: 'Sí, eliminar',
-				cancelButtonText: 'Cancelar',
-			});
-			if (result.isConfirmed) {
-				setLoading(true)
-				await deleteExpte(id);
-				setLoading(false);
-				Swal.fire({
-					icon: 'success',
-					title: 'Expediente eliminado correctamente',
-					showConfirmButton: false,
-					timer: 1500,
-				});
-				setData((prevData) => prevData.filter((expte) => expte._id !== id));
-			}
-		} catch (error) {
-			console.error('Error al eliminar el expediente:', error);
-		}
-	}
 
 	return (
 		<div className='bg-gradient-to-tl from-[#1e1e1e] to-[#4077ad] pb-3 pt-24'>
@@ -222,17 +203,11 @@ export const GestionExpedientes = () => {
 					{loading ? (
 						<Loader />
 					) : (
-						<div className='table-responsive'>
-							<ThemeProvider theme={darkTheme}>
-								<CssBaseline />
-								<Table
-									columns={columns}
-									data={data}
-									actions={actions}
-									borrarExpte={borrarExpte}
-								/>
-							</ThemeProvider>
-						</div>
+						<Table
+							columns={columns}
+							data={data}
+							actions={actions}
+						/>
 					)}
 				</div>
 			</div>
@@ -242,7 +217,11 @@ export const GestionExpedientes = () => {
 					isOpen={openEditModal}
 					onClose={handleCloseModal}
 					title='Editar Expediente'>
-					<ExpteForm rowId={rowId} onClose={handleCloseModal} mode='edit' />
+					<ExpteForm
+						rowId={rowId}
+						onClose={handleCloseModal}
+						mode='edit'
+					/>
 				</Modals>
 				<Modals
 					isOpen={openNewModal}
@@ -255,6 +234,14 @@ export const GestionExpedientes = () => {
 						mode='create'
 					/>
 				</Modals>
+				{confirmDelete && (
+					<DeleteConfirmation
+						rowId={deleteInfo.rowId}
+						itemDescription={deleteInfo.itemDescription}
+						onDelete={handleDelete}
+						onCancel={() => setConfirmDelete(false)} 
+					/>
+				)}
 			</div>
 		</div>
 	);

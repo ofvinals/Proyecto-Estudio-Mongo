@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import Swal from 'sweetalert2';
 import '../../css/Header.css';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../context/UseContext.jsx';
@@ -8,8 +7,6 @@ import {
 	Delete as DeleteIcon,
 	Visibility as VisibilityIcon,
 } from '@mui/icons-material';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
 import dayjs from 'dayjs';
 import { getTurnos, deleteTurno } from '../../hooks/UseTurns.js';
 import { Table } from '../../components/Gestion/Table';
@@ -20,7 +17,8 @@ import { Button } from 'react-bootstrap';
 import { GoogleCalendar } from '../../components/GoogleCalendar.jsx';
 import Loader from '../../components/Loader.jsx';
 import Modals from '../../components/Modals.jsx';
-import  {TurnoForm } from '../../components/Forms/TurnoForm.jsx';
+import { TurnoForm } from '../../components/Forms/TurnoForm.jsx';
+import { DeleteConfirmation } from '../../components/Gestion/DeleteFunction.jsx';
 
 export const GestionAgenda = () => {
 	const { currentUser } = useAuth();
@@ -33,6 +31,11 @@ export const GestionAgenda = () => {
 	const [reloadTable, setReloadTable] = useState(false);
 	const [rowId, setRowId] = useState(null);
 	const [loading, setLoading] = useState(true);
+	const [confirmDelete, setConfirmDelete] = useState(false);
+	const [deleteInfo, setDeleteInfo] = useState({
+		rowId: null,
+		itemDescription: '',
+	});
 
 	const handleOpenViewModal = (rowId) => {
 		setopenViewModal(true);
@@ -53,6 +56,15 @@ export const GestionAgenda = () => {
 		setopenEditModal(false);
 		setopenGoogleModal(false);
 		setReloadTable((prevState) => !prevState);
+	};
+
+	const handleDelete = async (rowId) => {
+		try {
+			await deleteTurno(rowId);
+			setReloadTable((prevState) => !prevState);
+		} catch (error) {
+			console.error('Error al eliminar:', error);
+		}
 	};
 
 	useEffect(() => {
@@ -145,47 +157,15 @@ export const GestionAgenda = () => {
 					<DeleteIcon color='error' cursor='pointer' />
 				</Tooltip>
 			) : null,
-			onClick: (row) => borrarTurno(row.original._id),
+			onClick: (row) => {
+				setDeleteInfo({
+					rowId: row.original._id,
+					itemDescription: 'el turno',
+				});
+				setConfirmDelete(true);
+			},
 		},
 	];
-
-	const darkTheme = createTheme({
-		palette: {
-			mode: 'dark',
-		},
-	});
-
-	// funcion para eliminar turnos
-	async function borrarTurno(id) {
-		try {
-			const result = await Swal.fire({
-				title: '¿Estás seguro?',
-				text: 'Confirmas la eliminacion del turno',
-				icon: 'warning',
-				showCancelButton: true,
-				confirmButtonColor: '#d33',
-				cancelButtonColor: '#8f8e8b',
-				confirmButtonText: 'Sí, eliminar',
-				cancelButtonText: 'Cancelar',
-			});
-			if (result.isConfirmed) {
-				setLoading(true);
-				await deleteTurno(id);
-				setLoading(false);
-				Swal.fire({
-					icon: 'success',
-					title: 'El turno fue eliminado!',
-					showConfirmButton: false,
-					timer: 2500,
-				});
-				setData((prevData) => prevData.filter((turno) => turno._id !== id));
-			}
-		} catch (error) {
-			console.error('Error al eliminar el turno:', error);
-			Swal.fire('Error', 'Hubo un problema al eliminar el turno', 'error');
-			setLoading(false);
-		}
-	}
 
 	return (
 		<div className='bg-gradient-to-tl from-[#1e1e1e] to-[#4077ad] pb-3 pt-24'>
@@ -229,18 +209,12 @@ export const GestionAgenda = () => {
 				{loading ? (
 					<Loader />
 				) : (
-					<div className='table-responsive'>
-						<ThemeProvider theme={darkTheme}>
-							<CssBaseline />
-							<Table
-								columns={columns}
-								data={data}
-								actions={actions}
-								borrarTurno={borrarTurno}
-								handleOpenViewModal={handleOpenViewModal}
-							/>
-						</ThemeProvider>
-					</div>
+					<Table
+						columns={columns}
+						data={data}
+						actions={actions}
+						handleOpenViewModal={handleOpenViewModal}
+					/>
 				)}
 			</div>
 
@@ -274,6 +248,14 @@ export const GestionAgenda = () => {
 						onClose={handleCloseModal}
 					/>
 				</Modals>
+				{confirmDelete && (
+					<DeleteConfirmation
+						rowId={deleteInfo.rowId}
+						itemDescription={deleteInfo.itemDescription}
+						onDelete={handleDelete}
+						onCancel={() => setConfirmDelete(false)}
+					/>
+				)}
 			</div>
 		</div>
 	);

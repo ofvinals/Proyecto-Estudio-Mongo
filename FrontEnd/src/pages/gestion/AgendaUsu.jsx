@@ -14,8 +14,6 @@ import 'dayjs/locale/es-mx';
 import '../../css/Header.css';
 dayjs.locale('es');
 import { Delete as DeleteIcon } from '@mui/icons-material';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
 import emailjs from '@emailjs/browser';
 import { Detail } from '../../components/Gestion/Detail';
 import { Header } from '../../components/Header.jsx';
@@ -93,12 +91,6 @@ export const AgendaUsu = () => {
 			onClick: (row) => borrarTurno(row.original._id),
 		},
 	];
-
-	const darkTheme = createTheme({
-		palette: {
-			mode: 'dark',
-		},
-	});
 
 	// funcion para crear nuevo turno
 	const handleCrearCita = async () => {
@@ -288,17 +280,14 @@ export const AgendaUsu = () => {
 						{loading ? (
 						<Loader />
 					) : (
-						<div className='table-responsive'>
-							<ThemeProvider theme={darkTheme}>
-								<CssBaseline />
+
 								<Table
 									columns={columns}
 									data={data}
 									actions={actions}
 									borrarTurno={borrarTurno}
 								/>
-							</ThemeProvider>
-						</div>
+
 							)}
 					</div>
 				</div>

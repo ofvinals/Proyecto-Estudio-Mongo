@@ -9,8 +9,6 @@ import {
 	Delete as DeleteIcon,
 	Visibility as VisibilityIcon,
 } from '@mui/icons-material';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
 import { getUsers, deleteUser } from '../../hooks/UseUsers.js';
 import { Table } from '../../components/Gestion/Table';
 import { Detail } from '../../components/Gestion/Detail';
@@ -18,6 +16,7 @@ import { Header } from '../../components/Header.jsx';
 import Tooltip from '@mui/material/Tooltip';
 import { UserForm } from '../../components/Forms/UserForm.jsx';
 import Modals from '../../components/Modals.jsx';
+import { DeleteConfirmation } from '../../components/Gestion/DeleteFunction.jsx';
 
 export const GestionUsuarios = () => {
 	const { currentUser } = useAuth();
@@ -29,7 +28,11 @@ export const GestionUsuarios = () => {
 	const [rowId, setRowId] = useState(null);
 	const [reloadTable, setReloadTable] = useState(false);
 	const [loading, setLoading] = useState(true);
-
+	const [confirmDelete, setConfirmDelete] = useState(false);
+	const [deleteInfo, setDeleteInfo] = useState({
+		rowId: null,
+		itemDescription: '',
+	});
 	const handleOpenViewModal = (rowId) => {
 		setopenViewModal(true);
 		setRowId(rowId);
@@ -44,6 +47,15 @@ export const GestionUsuarios = () => {
 		setopenViewModal(false);
 		setopenEditModal(false);
 		setReloadTable((prevState) => !prevState);
+	};
+
+	const handleDelete = async (rowId) => {
+		try {
+			await deleteUser(rowId);
+			setReloadTable((prevState) => !prevState);
+		} catch (error) {
+			console.error('Error al eliminar:', error);
+		}
 	};
 
 	useEffect(() => {
@@ -135,28 +147,26 @@ export const GestionUsuarios = () => {
 		{
 			text: 'Eliminar',
 			icon: admin ? (
-				<Tooltip title='Suspender usuario' arrow>
+				<Tooltip title='Suspender/Eliminar usuario' arrow>
 					<DeleteIcon color='error' cursor='pointer' />
 				</Tooltip>
 			) : null,
 			onClick: (row) => {
 				if (!row.original.admin) {
-					borrarUsuario(row.original._id);
+					setDeleteInfo({
+						rowId: row.original._id,
+						itemDescription: 'el usuario',
+					});
 				} else {
 					Swal.fire({
 						icon: 'error',
-						title: 'No puedes suspender este usuario',
+						title: 'No puedes eliminar este usuario',
 						text: 'Este usuario no puede ser suspendido ni eliminado.',
 					});
 				}
 			},
 		},
 	];
-	const darkTheme = createTheme({
-		palette: {
-			mode: 'dark',
-		},
-	});
 
 	// funcion para eliminar usuarios
 	async function borrarUsuario(id) {
@@ -214,17 +224,12 @@ export const GestionUsuarios = () => {
 					{loading ? (
 						<Loader />
 					) : (
-						<div className='table-responsive'>
-							<ThemeProvider theme={darkTheme}>
-								<CssBaseline />
-								<Table
-									columns={columns}
-									data={data}
-									actions={actions}
-									borrarUsuario={borrarUsuario}
-								/>
-							</ThemeProvider>
-						</div>
+						<Table
+							columns={columns}
+							data={data}
+							actions={actions}
+							borrarUsuario={borrarUsuario}
+						/>
 					)}
 				</div>
 
@@ -249,6 +254,14 @@ export const GestionUsuarios = () => {
 							mode='view'
 						/>
 					</Modals>
+					{confirmDelete && (
+					<DeleteConfirmation
+						rowId={deleteInfo.rowId}
+						itemDescription={deleteInfo.itemDescription}
+						onDelete={handleDelete}
+						onCancel={() => setConfirmDelete(false)}
+					/>
+				)}
 				</div>
 			</div>
 		</>

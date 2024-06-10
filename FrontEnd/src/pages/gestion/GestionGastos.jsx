@@ -3,15 +3,12 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../context/UseContext.jsx';
 import { Link } from 'react-router-dom';
-import Swal from 'sweetalert2';
 import '../../css/Header.css';
 import {
 	Edit as EditIcon,
 	Delete as DeleteIcon,
 	Visibility as VisibilityIcon,
 } from '@mui/icons-material';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
 import { getGastos, deleteGasto } from '../../hooks/UseBills.js';
 import { Table } from '../../components/Gestion/Table';
 import { Detail } from '../../components/Gestion/Detail';
@@ -22,6 +19,7 @@ import Tooltip from '@mui/material/Tooltip';
 import Loader from '../../components/Loader.jsx';
 import Modals from '../../components/Modals.jsx';
 import { GastoForm } from '../../components/Forms/GastoForm.jsx';
+import { DeleteConfirmation } from '../../components/Gestion/DeleteFunction.jsx';
 
 export const GestionGastos = () => {
 	const { currentUser } = useAuth();
@@ -36,7 +34,11 @@ export const GestionGastos = () => {
 	const [rowId, setRowId] = useState(null);
 	const [loading, setLoading] = useState(true);
 	const [reloadTable, setReloadTable] = useState(false);
-
+	const [confirmDelete, setConfirmDelete] = useState(false);
+	const [deleteInfo, setDeleteInfo] = useState({
+		rowId: null,
+		itemDescription: '',
+	});
 	const handleOpenNewModal = () => {
 		setopenNewModal(true);
 	};
@@ -61,6 +63,15 @@ export const GestionGastos = () => {
 		setopenPayModal(false);
 		setopenNewModal(false);
 		setReloadTable((prevState) => !prevState);
+	};
+
+	const handleDelete = async (rowId) => {
+		try {
+			await deleteGasto(rowId);
+			setReloadTable((prevState) => !prevState);
+		} catch (error) {
+			console.error('Error al eliminar:', error);
+		}
 	};
 
 	useEffect(() => {
@@ -178,46 +189,15 @@ export const GestionGastos = () => {
 					<DeleteIcon color='error' cursor='pointer' />
 				</Tooltip>
 			) : null,
-			onClick: (row) => borrarGasto(row.original._id),
+			onClick: (row) => {
+				setDeleteInfo({
+					rowId: row.original._id,
+					itemDescription: 'el gasto',
+				});
+				setConfirmDelete(true);
+			},
 		},
 	];
-
-	const darkTheme = createTheme({
-		palette: {
-			mode: 'dark',
-		},
-	});
-
-	// funcion para eliminar gastos
-	async function borrarGasto(id) {
-		try {
-			const result = await Swal.fire({
-				title: '¿Estás seguro?',
-				text: 'Confirmas la eliminacion del gasto',
-				icon: 'warning',
-				showCancelButton: true,
-				confirmButtonColor: '#d33',
-				cancelButtonColor: '#8f8e8b',
-				confirmButtonText: 'Sí, eliminar',
-				cancelButtonText: 'Cancelar',
-			});
-			if (result.isConfirmed) {
-				setLoading(true);
-				await deleteGasto(id);
-				setLoading(false);
-				Swal.fire({
-					icon: 'success',
-					title: 'Gasto eliminado correctamente',
-					showConfirmButton: false,
-					timer: 1500,
-				});
-				setData((prevData) => prevData.filter((gasto) => gasto._id !== id));
-			}
-		} catch (error) {
-			console.error('Error al eliminar el gasto:', error);
-			setLoading(false);
-		}
-	}
 
 	return (
 		<div className='bg-gradient-to-tl from-[#1e1e1e] to-[#4077ad] pb-3 pt-24'>
@@ -269,17 +249,11 @@ export const GestionGastos = () => {
 					{loading ? (
 						<Loader />
 					) : (
-						<div className='table-responsive'>
-							<ThemeProvider theme={darkTheme}>
-								<CssBaseline />
-								<Table
-									columns={columns}
-									data={data}
-									actions={actions}
-									borrarGasto={borrarGasto}
-								/>
-							</ThemeProvider>
-						</div>
+						<Table
+							columns={columns}
+							data={data}
+							actions={actions}
+						/>
 					)}
 				</div>
 			</div>
@@ -318,6 +292,14 @@ export const GestionGastos = () => {
 						mode='create'
 					/>
 				</Modals>
+				{confirmDelete && (
+					<DeleteConfirmation
+						rowId={deleteInfo.rowId}
+						itemDescription={deleteInfo.itemDescription}
+						onDelete={handleDelete}
+						onCancel={() => setConfirmDelete(false)} 
+					/>
+				)}
 			</div>
 		</div>
 	);

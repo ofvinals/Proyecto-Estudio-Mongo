@@ -3,10 +3,11 @@ import {
 	useMaterialReactTable,
 } from 'material-react-table';
 import { Box } from '@mui/material';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { MRT_Localization_ES } from 'material-react-table/locales/es';
 import PropTypes from 'prop-types';
+import { theme } from './ThemeTable';
 
 export const Table = ({ columns, data, actions }) => {
 	Table.propTypes = {
@@ -58,15 +59,9 @@ export const Table = ({ columns, data, actions }) => {
 		),
 	});
 
-	const darkTheme = createTheme({
-		palette: {
-			mode: 'dark',
-		},
-	});
-
 	return (
-		<div className=''>
-			<ThemeProvider theme={darkTheme}>
+		<div className='table-responsive'>
+			<ThemeProvider theme={theme}>
 				<CssBaseline />
 				<MaterialReactTable table={table} />
 			</ThemeProvider>

@@ -9,9 +9,6 @@ import {
 	Delete as DeleteIcon,
 	Visibility as VisibilityIcon,
 } from '@mui/icons-material';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
-import Swal from 'sweetalert2';
 import '../../css/Header.css';
 import { getCajas, deleteCaja } from '../../hooks/UseCajas.js';
 import { Detail } from '../../components/Gestion/Detail.jsx';
@@ -21,6 +18,7 @@ import Tooltip from '@mui/material/Tooltip';
 import Loader from '../../components/Loader.jsx';
 import Modals from '../../components/Modals.jsx';
 import CajaForm from '../../components/Forms/CajaForm.jsx';
+import { DeleteConfirmation } from '../../components/Gestion/DeleteFunction.jsx';
 
 export const GestionCaja = () => {
 	const { currentUser } = useAuth();
@@ -29,6 +27,11 @@ export const GestionCaja = () => {
 	const [openEditModal, setopenEditModal] = useState(false);
 	const [openNewModal, setopenNewModal] = useState(false);
 	const [reloadTable, setReloadTable] = useState(false);
+	const [confirmDelete, setConfirmDelete] = useState(false);
+	const [deleteInfo, setDeleteInfo] = useState({
+		rowId: null,
+		itemDescription: '',
+	});
 	const [loading, setLoading] = useState(true);
 	const [rowId, setRowId] = useState(null);
 	const admin = currentUser.admin;
@@ -60,6 +63,15 @@ export const GestionCaja = () => {
 	const handleOpenEditModal = (rowId) => {
 		setopenEditModal(true);
 		setRowId(rowId);
+	};
+
+	const handleDelete = async (rowId) => {
+		try {
+			await deleteCaja(rowId);
+			setReloadTable((prevState) => !prevState);
+		} catch (error) {
+			console.error('Error al eliminar:', error);
+		}
 	};
 
 	const handleCloseModal = () => {
@@ -192,7 +204,7 @@ export const GestionCaja = () => {
 		{
 			text: 'Ver',
 			icon: (
-				<Tooltip title='Tarea realizada' arrow>
+				<Tooltip title='Ver Item de Caja' arrow>
 					<VisibilityIcon color='primary' cursor='pointer' />
 				</Tooltip>
 			),
@@ -204,7 +216,7 @@ export const GestionCaja = () => {
 			text: 'Editar',
 			icon:
 				admin || coadmin ? (
-					<Tooltip title='Tarea realizada' arrow>
+					<Tooltip title='Editar Item de Caja' arrow>
 						<EditIcon color='success' cursor='pointer' />
 					</Tooltip>
 				) : null,
@@ -215,57 +227,25 @@ export const GestionCaja = () => {
 		{
 			text: 'Eliminar',
 			icon: admin ? (
-				<Tooltip title='Tarea realizada' arrow>
+				<Tooltip title='Eliminar Item de Caja' arrow>
 					<DeleteIcon color='error' cursor='pointer' />
 				</Tooltip>
 			) : null,
-			onClick: (row) => borrarCaja(row.original._id),
+			onClick: (row) => {
+				setDeleteInfo({
+					rowId: row.original._id,
+					itemDescription: 'la Caja',
+				});
+				setConfirmDelete(true);
+			},
 		},
 	];
-
-	const darkTheme = createTheme({
-		palette: {
-			mode: 'dark',
-		},
-	});
-
-	// funcion para eliminar movimientos de caja
-	async function borrarCaja(id) {
-		try {
-			const result = await Swal.fire({
-				title: '¿Estás seguro?',
-				text: 'Confirmas la eliminacion del movimiento de la caja?',
-				icon: 'warning',
-				showCancelButton: true,
-				confirmButtonColor: '#d33',
-				cancelButtonColor: '#8f8e8b',
-				confirmButtonText: 'Sí, eliminar',
-				cancelButtonText: 'Cancelar',
-			});
-			if (result.isConfirmed) {
-				setLoading(true);
-				await deleteCaja(id);
-				setLoading(false);
-
-				Swal.fire({
-					icon: 'success',
-					title: 'Movimiento de caja eliminado correctamente',
-					showConfirmButton: false,
-					timer: 1500,
-				});
-				setData((prevData) => prevData.filter((caja) => caja._id !== id));
-			}
-		} catch (error) {
-			console.error('Error al eliminar el movimiento:', error);
-			setLoading(false);
-		}
-	}
 
 	return (
 		<div className='bg-gradient-to-tl from-[#1e1e1e] to-[#4077ad] pb-3 pt-24'>
 			<Header />
 			<div className=' rounded-xl container-lg mb-1 '>
-				<Detail modulo={'Caja'} />
+				<Detail modulo={'Movimientos de Caja'} />
 			</div>
 			<hr className='linea text-white mx-3' />
 			<div className='container-lg'>
@@ -303,18 +283,12 @@ export const GestionCaja = () => {
 				{loading ? (
 					<Loader />
 				) : (
-					<div className='table-responsive'>
-						<ThemeProvider theme={darkTheme}>
-							<CssBaseline />
-							<Table
-								columns={columns}
-								data={data}
-								actions={actions}
-								borrarCaja={borrarCaja}
-								handleOpenViewModal={handleOpenViewModal}
-							/>
-						</ThemeProvider>
-					</div>
+					<Table
+						columns={columns}
+						data={data}
+						actions={actions}
+						handleOpenViewModal={handleOpenViewModal}
+					/>
 				)}
 			</div>
 
@@ -341,6 +315,14 @@ export const GestionCaja = () => {
 						mode='create'
 					/>
 				</Modals>
+				{confirmDelete && (
+					<DeleteConfirmation
+						rowId={deleteInfo.rowId}
+						itemDescription={deleteInfo.itemDescription}
+						onDelete={handleDelete}
+						onCancel={() => setConfirmDelete(false)} 
+					/>
+				)}
 			</div>
 		</div>
 	);
