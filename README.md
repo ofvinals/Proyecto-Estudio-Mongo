@@ -1,4 +1,4 @@
-Proyecto para el manejo de expedientes judiciales para estudios juridicos. Ademas permite registrar gastos por expedientes, posee un registro de caja diaria y mensual y registracion de turnos mediante Google Calendar API.- 
+Fullstack project carried out at the request of the client. Allows the administration of movements of files, users, expenses and income. Selection and registration of shifts online with Google Calendar (API). Implementation of webscrapping to show news of local judicial interest
 
 ---
 
