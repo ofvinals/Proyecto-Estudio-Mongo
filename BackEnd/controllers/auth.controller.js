@@ -116,6 +116,7 @@ const profile = async (req, res) => {
 const verifyToken = async (req, res) => {
 	const authHeader = req.headers['authorization'];
 	const token = authHeader && authHeader.split(' ')[1];
+	console.log(token)
 	if (!token) return res.send(false);
 
 	Jwt.verify(token, process.env.TOKEN_SECRET, async (error, user) => {
