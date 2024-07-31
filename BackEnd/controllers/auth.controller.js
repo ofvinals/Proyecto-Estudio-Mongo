@@ -36,7 +36,7 @@ const register = async (req, res) => {
 			displayName: `${userSaved.nombre} ${userSaved.apellido}`,
 			email: userSaved.email,
 			admin: userSaved.admin,
-			coadmin:userSaved.coadmin
+			coadmin: userSaved.coadmin,
 		});
 
 		res.cookie('token', token);
@@ -77,7 +77,7 @@ const login = async (req, res) => {
 			displayName: `${userFound.nombre} ${userFound.apellido}`,
 			email: userFound.email,
 			admin: userFound.admin,
-			coadmin:userFound.coadmin
+			coadmin: userFound.coadmin,
 		});
 
 		res.cookie('token', token);
@@ -89,7 +89,7 @@ const login = async (req, res) => {
 			displayName: `${userFound.nombre} ${userFound.apellido}`,
 			accessToken: token,
 			admin: userFound.admin,
-			coadmin:userFound.coadmin
+			coadmin: userFound.coadmin,
 		});
 	} catch (error) {
 		console.log(error);
@@ -116,22 +116,22 @@ const profile = async (req, res) => {
 const verifyToken = async (req, res) => {
 	const authHeader = req.headers['authorization'];
 	const token = authHeader && authHeader.split(' ')[1];
-	console.log(token)
+	console.log(token);
 	if (!token) return res.send(false);
 
 	Jwt.verify(token, process.env.TOKEN_SECRET, async (error, user) => {
 		if (error) return res.status(401).json(['No autorizado']);
-
+		console.log(error, 'user', user);
 		const userFound = await User.findById(user.id);
 		if (!userFound) return res.status(401).json(['No autorizado']);
-
+		console.log('userFound', userFound);
 		return res.json({
 			id: userFound._id,
 			email: userFound.email,
 			displayName: `${userFound.nombre} ${userFound.apellido}`,
 			token: token,
 			admin: userFound.admin,
-			coadmin: userFound.coadmin
+			coadmin: userFound.coadmin,
 		});
 	});
 };
