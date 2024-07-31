@@ -155,7 +155,7 @@ export const GestionExpedientes = () => {
 				cancelButtonText: 'Cancelar',
 			});
 			if (result.isConfirmed) {
-				setLoading(true)
+				setLoading(true);
 				await deleteExpte(id);
 				setLoading(false);
 				Swal.fire({
@@ -242,7 +242,11 @@ export const GestionExpedientes = () => {
 					isOpen={openEditModal}
 					onClose={handleCloseModal}
 					title='Editar Expediente'>
-					<ExpteForm rowId={rowId} onClose={handleCloseModal} mode='edit' />
+					<ExpteForm
+						rowId={rowId}
+						onClose={handleCloseModal}
+						mode='edit'
+					/>
 				</Modals>
 				<Modals
 					isOpen={openNewModal}

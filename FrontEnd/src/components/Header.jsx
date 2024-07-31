@@ -4,7 +4,7 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/UseContext.jsx';
+import { useAuth } from '../hooks/useAuth';
 import '../css/Header.css';
 import Swal from 'sweetalert2';
 
@@ -12,11 +12,11 @@ export const Header = () => {
 	const [expand, setExpand] = useState(false);
 	const [scrolled, setScrolled] = useState(false);
 	const [logoSrc, setLogoSrc] = useState('/logo 2.png');
-	const { currentUser, logout } = useAuth();
+	const { loggedUser, logout } = useAuth();
 	const navigate = useNavigate();
-	const user = currentUser ? currentUser.email : null;
-	const admin = currentUser ? currentUser.admin : null;
-	const coadmin = currentUser ? currentUser.coadmin : null;
+	const user = loggedUser ? loggedUser.email : null;
+	const admin = loggedUser ? loggedUser.admin : null;
+	const coadmin = loggedUser ? loggedUser.coadmin : null;
 
 	const handleNavCollapseToggle = () => {
 		setExpand(true);

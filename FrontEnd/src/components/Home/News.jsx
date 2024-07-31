@@ -14,7 +14,7 @@ export const News = () => {
 					'https://proyecto-estudio-mongo.onrender.com/scrape'
 				);
 				setArticles(response.data);
-				setLoading(false)
+				setLoading(false);
 			} catch (error) {
 				console.error('Error fetching articles', error);
 			}
@@ -51,7 +51,12 @@ export const News = () => {
 								href={article.link}
 								target='_blank'
 								rel='noopener noreferrer'>
-								<img referrerPolicy='same-origin' className='rounded-xl object-cover w-full max-h-[400px] ' src={article.imgSrc} alt={article.title} />
+								<img
+									referrerPolicy='same-origin'
+									className='rounded-xl object-cover w-full max-h-[400px] '
+									src={article.imgSrc}
+									alt={article.title}
+								/>
 								<h3 className='text-background text-3xl font-bold text-center py-3'>
 									{article.title}
 								</h3>
@@ -63,7 +68,6 @@ export const News = () => {
 							</div>
 						</Carousel.Item>
 					))}
-					
 				</Carousel>
 			) : (
 				<Loader />

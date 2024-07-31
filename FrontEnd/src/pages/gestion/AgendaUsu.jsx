@@ -116,7 +116,6 @@ export const AgendaUsu = () => {
 				title: 'Turno no disponible',
 				text: 'Lo siento, elige otro turno',
 				confirmButtonColor: '#8f8e8b',
-				
 			});
 			return;
 		} else {
@@ -257,7 +256,6 @@ export const AgendaUsu = () => {
 												color: 'success',
 												focused: true,
 												size: 'medium',
-												
 											}),
 										}}
 										disableHighlightToday={false}
@@ -286,20 +284,20 @@ export const AgendaUsu = () => {
 							Su/s turno/s registrado/s
 						</h2>
 						{loading ? (
-						<Loader />
-					) : (
-						<div className='table-responsive'>
-							<ThemeProvider theme={darkTheme}>
-								<CssBaseline />
-								<Table
-									columns={columns}
-									data={data}
-									actions={actions}
-									borrarTurno={borrarTurno}
-								/>
-							</ThemeProvider>
-						</div>
-							)}
+							<Loader />
+						) : (
+							<div className='table-responsive'>
+								<ThemeProvider theme={darkTheme}>
+									<CssBaseline />
+									<Table
+										columns={columns}
+										data={data}
+										actions={actions}
+										borrarTurno={borrarTurno}
+									/>
+								</ThemeProvider>
+							</div>
+						)}
 					</div>
 				</div>
 			</div>

@@ -20,7 +20,7 @@ import { Button } from 'react-bootstrap';
 import { GoogleCalendar } from '../../components/GoogleCalendar.jsx';
 import Loader from '../../components/Loader.jsx';
 import Modals from '../../components/Modals.jsx';
-import  {TurnoForm } from '../../components/Forms/TurnoForm.jsx';
+import { TurnoForm } from '../../components/Forms/TurnoForm.jsx';
 
 export const GestionAgenda = () => {
 	const { currentUser } = useAuth();

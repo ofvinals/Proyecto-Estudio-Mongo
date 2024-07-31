@@ -7,7 +7,7 @@ import Swal from 'sweetalert2';
 import { Button } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { getUser, updateUser } from '../../hooks/UseUsers.js';
-import Loader from '../../components/Loader.jsx';
+import Loader from '../Loader.jsx';
 import { useState } from 'react';
 
 export const UserForm = ({ rowId, onClose, mode = 'edit' }) => {

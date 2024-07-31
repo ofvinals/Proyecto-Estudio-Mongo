@@ -1,7 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/UseContext.jsx';
+import { useAuth } from '../hooks/useAuth';
+import { useLoad } from '../hooks/useLoad';
 import '../css/Header.css';
 import { Notas } from '../components/Notas.jsx';
 import Swal from 'sweetalert2';
@@ -9,11 +10,12 @@ import { Detail } from '../components/Gestion/Detail.jsx';
 import { Header } from '../components/Header.jsx';
 
 export const Admin = () => {
-	const { currentUser, logout } = useAuth({});
 	const navigate = useNavigate();
-	const admin = currentUser.admin;
-	const coadmin = currentUser.coadmin;
-
+	const { loggedUser, logout } = useAuth();
+	const { isLoading } = useLoad();
+	console.log(loggedUser)
+	const admin = true;
+	const coadmin = false;
 	useEffect(() => {
 		if (!admin && !coadmin) {
 			navigate('/adminusu');
