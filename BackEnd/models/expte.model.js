@@ -9,7 +9,6 @@ const expteSchema = new mongoose.Schema(
 		nroexpte: {
 			type: String,
 			require: true,
-			unique: true
 		},
 		radicacion: {
 			type: String,

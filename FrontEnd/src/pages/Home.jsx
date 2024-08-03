@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import Carousel from 'react-bootstrap/Carousel';
 import '../css/Home.css';
-import { Header } from '../components/Header';
+import { Header } from '../components/header/Header';
 import { Count } from '../components/Home/Count';
 import { Whatsapp } from '../components/Whatsapp';
 import { Services } from '../components/Home/Services';

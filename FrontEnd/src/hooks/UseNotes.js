@@ -1,57 +1,53 @@
-import { apiURL } from '/api/apiURL.js';
+import { useAppDispatch, useAppSelector } from './store';
+import {
+	getNote as getNoteThunk,
+	getNotes as getNotesThunk,
+	createNote as createNoteThunk,
+	updateNote as updateNoteThunk,
+	deleteNote as deleteNoteThunk,
+} from '../store/notes/thunks';
+import { clearNote as clearNoteThunk } from '../store/notes/slice';
 
-export const getNotas = async () => {
-	try {
-		const token = localStorage.getItem('token');
-		const res = await apiURL.get('/api/notas', {
-			withCredentials: true,
-			headers: { authorization: `Bearer ${token}` },
-		});
-		return res.data;
-	} catch (error) {
-		console.error(error);
-	}
-};
+export function useNotesActions() {
+	const notes = useAppSelector((state) => state.notes.notes);
+	const note = useAppSelector((state) => state.notes.note);
+	const noteStatus = useAppSelector((state) => state.notes.status);
 
-export const createNota = async (values) => {
-	try {
-		const token = localStorage.getItem('token');
-		const res = await apiURL.post('/api/notas', values, {
-			withCredentials: true,
-			headers: { authorization: `Bearer ${token}` },
-		});
-		return res.data;
-	} catch (error) {
-		console.log(error);
-	}
-};
+	const dispatch = useAppDispatch();
 
-export const updateNota = async (id, values) => {
-	try {
-		const token = localStorage.getItem('token');
-		const res = await apiURL.put(`/api/notas/${id}`, values, {
-			withCredentials: true,
-			headers: { authorization: `Bearer ${token}` },
-		});
-		return res.data;
-	} catch (error) {
-		console.error(error);
-	}
-};
+	const getNote = async (id) => {
+		await dispatch(getNoteThunk(id));
+	};
 
-export const deleteNota = async (id) => {
-	try {
-		const token = localStorage.getItem('token');
-		const res = await apiURL.delete(`/api/notas/${id}`, {
-			withCredentials: true,
-			headers: { authorization: `Bearer ${token}` },
-		});
-		return res.data
-	} catch (error) {
-		console.log(error);
-	} finally {
-		setTimeout(async () => {
-			await getNotas();
-		}, 100);
-	}
-};
+	const getNotes = async () => {
+		await dispatch(getNotesThunk());
+	};
+
+	const createNote = async (noteoData) => {
+		await dispatch(createNoteThunk({ note: noteoData }));
+	};
+
+	const updateNote = async ({ rowId, values }) => {
+		await dispatch(updateNoteThunk({ id: rowId, values }));
+	};
+
+	const deleteNote = async (id) => {
+		await dispatch(deleteNoteThunk(id));
+	};
+
+	const clearNote = () => {
+		dispatch(clearNoteThunk());
+	};
+
+	return {
+		notes,
+		note,
+		getNote,
+		getNotes,
+		createNote,
+		updateNote,
+		deleteNote,
+		clearNote,
+		noteStatus,
+	};
+}

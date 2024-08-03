@@ -5,7 +5,7 @@ import CardGroup from 'react-bootstrap/CardGroup';
 import Container from 'react-bootstrap/Container';
 import { NavLink } from 'react-router-dom';
 import { Whatsapp } from '../components/Whatsapp';
-import { Header } from '../components/Header';
+import { Header } from '../components/header/Header';
 import '../css/Header.css';
 
 export const Interes = () => {

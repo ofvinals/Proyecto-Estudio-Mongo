@@ -1,71 +1,53 @@
-import { apiURL } from '/api/apiURL.js';
+import { useAppDispatch, useAppSelector } from './store';
+import {
+	getBill as getBillThunk,
+	getBills as getBillsThunk,
+	createBill as createBillThunk,
+	updateBill as updateBillThunk,
+	deleteBill as deleteBillThunk,
+} from '../store/bills/thunks';
+import { clearBill } from '../store/bills/slice';
 
-export const getGastos = async () => {
-	try {
-		const token = localStorage.getItem('token');
-		const res = await apiURL.get('/api/gastos', {
-			withCredentials: true,
-			headers: { authorization: `Bearer ${token}` },
-		});
-		return res.data;
-	} catch (error) {
-		console.error(error);
-	}
-};
+export function useBillActions() {
+	const bills = useAppSelector((state) => state.bills.bills);
+	const bill = useAppSelector((state) => state.bills.bill);
+	const billStatus = useAppSelector((state) => state.bills.status);
 
-export const getGasto = async (id) => {
-	try {
-		const token = localStorage.getItem('token');
-		const res = await apiURL.get(`/api/gastos/${id}`, {
-			withCredentials: true,
-			headers: { authorization: `Bearer ${token}` },
-		});
-		return res.data;
-	} catch (error) {
-		console.error(error);
-	}
-};
+	const dispatch = useAppDispatch();
 
-export const createGasto = async (values) => {
-	try {
-		const token = localStorage.getItem('token');
-		const res = await apiURL.post('/api/gastos', values, {
-			withCredentials: true,
-			headers: { authorization: `Bearer ${token}` },
-		});
-		return res.data;
-	} catch (error) {
-		console.error('Error en la solicitud:', error);
-		console.log('Datos de la respuesta:', error.response.data);
-	}
-};
+	const getBill = async (id) => {
+		await dispatch(getBillThunk(id));
+	};
 
-export const updateGasto = async (id, values) => {
-	try {
-		const token = localStorage.getItem('token');
-		const res = await apiURL.put(`/api/gastos/${id}`, values, {
-			withCredentials: true,
-			headers: { authorization: `Bearer ${token}` },
-		});
-		return res.data;
-	} catch (error) {
-		console.error(error);
-	}
-};
+	const getBills = async () => {
+		await dispatch(getBillsThunk());
+	};
 
-export const deleteGasto = async (id) => {
-	try {
-		const token = localStorage.getItem('token');
-		const res = await apiURL.delete(`/api/gastos/${id}`, {
-			withCredentials: true,
-			headers: { authorization: `Bearer ${token}` },
-		});
-		return res.data;
-	} catch (error) {
-		console.log(error);
-	} finally {
-		setTimeout(async () => {
-			await getGastos();
-		}, 100);
-	}
-};
+	const createBill = async (gasto) => {
+		await dispatch(createBillThunk({ gasto }));
+	};
+
+	const updateBill = async (rowId, values) => {
+		await dispatch(updateBillThunk({ id: rowId, values }));
+	};
+
+	const deleteBill = async (id) => {
+		await dispatch(deleteBillThunk(id));
+	};
+
+	const clearStateBill = () => {
+		dispatch(clearBill());
+	};
+
+	return {
+		bills,
+		bill,
+		getBill,
+		getBills,
+		createBill,
+		updateBill,
+		deleteBill,
+		clearStateBill,
+		billStatus,
+	};
+}

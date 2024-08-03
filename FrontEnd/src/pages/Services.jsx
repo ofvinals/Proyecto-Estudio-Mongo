@@ -1,4 +1,4 @@
-import { Header } from '../components/Header';
+import { Header } from '../components/header/Header';
 import { Whatsapp } from '../components/Whatsapp';
 
 export const Services = () => {

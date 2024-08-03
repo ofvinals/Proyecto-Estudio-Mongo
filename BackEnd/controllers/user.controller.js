@@ -61,7 +61,7 @@ const getUser = async (req, res) => {
 const getUserByGoogle = async (req, res) => {
 	try {
 		const userEmail = req.params.userEmail;
-		const userFound = await User.findOne({ email: userEmail })	
+		const userFound = await User.findOne({ email: userEmail });
 		const token = await createAccessToken({
 			id: userFound._id,
 			displayName: `${userFound.nombre} ${userFound.apellido}`,
@@ -83,30 +83,29 @@ const getUserByGoogle = async (req, res) => {
 
 const updateUser = async (req, res) => {
 	try {
-		const { nombre, apellido, email, dni, domicilio, celular, password } =
-			req.body;
-		const updateFields = {
-			nombre,
-			apellido,
-			email,
-			dni,
-			domicilio,
-			celular,
-		};
+		const { password, ...updateFields } = req.body;
+console.log(req.body)
+console.log(req.params)
 
-		// Verificar si el campo password está presente en la solicitud
+		// Agregar el password solo si está presente
 		if (password) {
-			// Si el password está presente, agregarlo al objeto de campos a actualizar
-			updateFields.password = password;
+			updateFields.password = await bcrypt.hash(password, 10);
 		}
-		const updateUser = await User.findByIdAndUpdate(
+
+		const updatedUser = await User.findByIdAndUpdate(
 			req.params.id,
 			updateFields,
 			{
 				new: true,
+				lean: true,
 			}
 		);
-		res.json(updateUser);
+
+		if (!updatedUser) {
+			return res.status(404).json({ message: 'Usuario no encontrado' });
+		}
+
+		res.json(updatedUser);
 	} catch (error) {
 		return res.status(500).json({ message: error.message });
 	}

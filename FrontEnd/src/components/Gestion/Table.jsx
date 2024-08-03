@@ -65,7 +65,7 @@ export const Table = ({ columns, data, actions }) => {
 	});
 
 	return (
-		<div className=''>
+		<div>
 			<ThemeProvider theme={darkTheme}>
 				<CssBaseline />
 				<MaterialReactTable table={table} />

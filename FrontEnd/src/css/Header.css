@@ -1,7 +1,7 @@
 .stickytop {
 	position: sticky;
 	top: 0;
-	z-index: 1000; 
+	z-index: 1000;
 }
 .btnlogin:hover {
 	background-color: #185574 !important;
@@ -14,7 +14,7 @@
 	color: #185574 !important;
 }
 .stickytop .nav-link {
-	color: red!important; /* Cambia el color de los enlaces cuando el navbar está pegajoso */
+	color: red !important; /* Cambia el color de los enlaces cuando el navbar está pegajoso */
 }
 /* bg-gradient-to-tl from-[#1e1e1e] to-[#4077ad] */
 .error-message {
@@ -46,9 +46,13 @@
 .textshadow {
 	text-shadow: 3px 5px 6px rgba(0, 0, 0, 0.6) !important;
 }
-.backgroundimage{
-	background-image: linear-gradient(100deg, rgba(255,255, 240, 0.02), rgba(0, 0, 0, 1)),
-	url(/imagenfondo.jpg);
+.backgroundimage {
+	background-image: linear-gradient(
+			100deg,
+			rgba(255, 255, 240, 0.02),
+			rgba(0, 0, 0, 1)
+		),
+		url(/imagenfondo.jpg);
 	background-size: cover;
 	background-position: center;
 }
@@ -56,7 +60,7 @@
 	top: 0;
 	left: 0;
 	padding: 30px 30px;
-	opacity:0;
+	opacity: 0;
 	transition: all 0.5s ease 0s;
 }
 .description:hover {
@@ -77,9 +81,13 @@
 	box-shadow: 7px 5px 10px 0px rgba(0, 0, 0, 0.62) !important;
 }
 
-.about{
-	background-image: linear-gradient(100deg, rgba(255,255, 240, 0.02), rgba(0, 0, 0, 1)),
-	url(/imagenfondo.jpg);
+.about {
+	background-image: linear-gradient(
+			100deg,
+			rgba(255, 255, 240, 0.02),
+			rgba(0, 0, 0, 1)
+		),
+		url(/imagenfondo.jpg);
 	background-size: cover;
 	object-fit: cover;
 	background-position: center;
@@ -98,5 +106,11 @@ input[type='number']::-webkit-outer-spin-button {
 	position: fixed;
 	top: 0;
 	width: 100%;
-	z-index: 1000; 
+	z-index: 1000;
+}
+.modal-header {
+	background-color: #e5e5e5;
+}
+.modal-body {
+	background-color: #e5e5e5;
 }

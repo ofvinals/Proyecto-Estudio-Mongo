@@ -1,6 +1,6 @@
 import Card from 'react-bootstrap/Card';
 import { Whatsapp } from '../components/Whatsapp';
-import { Header } from '../components/Header';
+import { Header } from '../components/header/Header';
 
 import '../css/Header.css';
 
@@ -88,75 +88,6 @@ export const Nosotros = () => {
 					</Card.Text>
 				</Card.Body>
 			</div>
-
-			{/* <div className='flex justify-around flex-wrap flex-row items-center mb-5'>
-
-				<div className='col-md-4 col-sm-6 w-5/12 mx-1 bg-background mb-3'>
-					<div className='items-center text-center mt-1 relative'>
-						<div className='items-center text-center relative'>
-							<img className='bg-contain w-full min-h-[170px]' src='/01.jpg' />
-							<p className='description text-[12px] absolute text-center w-full h-full text-white bg-[#8f8e8b]  '>
-								Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-								Praesent urna diam, maximus ut ullamcorper quis
-							</p>
-						</div>
-						<div className='p-3'>
-							<h3 className='text-base text-center text-white '>Oscar Frias Viñals</h3>
-							<span className='block text-white text-center text-[12px]'>Abogado</span>
-						</div>
-					</div>
-				</div>
-
-				<div className='col-md-4 col-sm-6 w-5/12 mx-1 bg-background mb-3'>
-					<div className='items-center text-center mt-1 relative'>
-						<div className='items-center text-center relative'>
-							<img className='bg-contain w-full min-h-[170px]' src='/01.jpg' />
-							<p className='description text-[12px] absolute text-center w-full h-full text-white bg-[#8f8e8b]'>
-								Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-								Praesent urna diam, maximus ut ullamcorper quis
-							</p>
-						</div>
-						<div className='p-3'>
-							<h3 className='text-base text-center text-white'>Jorge Posse Ponessa (h)</h3>
-							<span className='block text-white text-center text-[12px]'>Abogado</span>
-						</div>
-					</div>
-				</div>
-
-				<div className='col-md-4 col-sm-6 w-5/12 mx-1 bg-background'>
-					<div className='items-center text-center mt-1 relative'>
-						<div className='items-center text-center relative'>
-							<img className='bg-contain w-full min-h-[170px]' src='/01.jpg' />
-							<p className='description text-[12px] absolute text-center w-full h-full text-white bg-[#8f8e8b] '>
-								Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-								Praesent urna diam, maximus ut ull
-							</p>
-						</div>
-
-						<div className='p-3'>
-							<h3 className='text-base text-center text-white'>M. Soledad Lizarraga</h3>
-							<span className='block text-white text-center text-[12px]'>Abogado Junior</span>
-						</div>
-					</div>
-				</div>
-
-				<div className='col-md-4 col-sm-6 w-5/12 mx-1 bg-background'>
-					<div className='items-center text-center mt-1 relative'>
-						<div className='items-center text-center relative'>
-							<img className='bg-contain w-full min-h-[170px]' src='/01.jpg' />
-							<p className='description text-[12px] absolute text-center w-full h-full text-white bg-[#8f8e8b]'>
-								Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-								Praesent urna diam, maximus ut ull
-							</p>
-						</div>
-
-						<div className='p-3'>
-							<h3 className='text-base text-center text-white'>Martin A. Soto </h3>
-							<span className='block text-white text-center text-[12px]'>Abogado Junior</span>
-						</div>
-					</div>
-				</div>
-			</div> */}
 		</>
 	);
 };
