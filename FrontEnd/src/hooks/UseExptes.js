@@ -1,196 +1,74 @@
-import { apiURL } from '/api/apiURL.js';
+import { useAppDispatch, useAppSelector } from './store';
+import {
+	getExpte as getExpteThunk,
+	getExptes as getExptesThunk,
+	createExpte as createExpteThunk,
+	updateExpte as updateExpteThunk,
+	deleteExpte as deleteExpteThunk,
+	createMov as createMovThunk,
+	updateMov as updateMovThunk,
+	deleteMov as deleteMovThunk,
+} from '../store/exptes/thunks';
+import { clearExpte } from '../store/exptes/slice';
 
-export const getExptes = async () => {
-	try {
-		const token = localStorage.getItem('token');
-		const res = await apiURL.get('/api/exptes', {
-			withCredentials: true,
-			headers: { authorization: `Bearer ${token}` },
-		});
-		return res.data;
-	} catch (error) {
-		console.error(error);
-	}
-};
+export function useExpteActions() {
+	const exptes = useAppSelector((state) => state.exptes.exptes);
+	const expte = useAppSelector((state) => state.exptes.expte);
+	const mov = useAppSelector((state) => state.exptes.mov);
 
-export const getExpte = async (id) => {
-	try {
-		const token = localStorage.getItem('token');
-		const res = await apiURL.get(`/api/exptes/${id}`, {
-			withCredentials: true,
-			headers: { authorization: `Bearer ${token}` },
-		});
-		return res.data;
-	} catch (error) {
-		console.error(error);
-	}
-};
+	const expteStatus = useAppSelector((state) => state.exptes.status);
 
-export const createExpte = async (values) => {
-	try {
-		const token = localStorage.getItem('token');
-		const res = await apiURL.post('/api/exptes', values, {
-			withCredentials: true,
-			headers: { authorization: `Bearer ${token}` },
-		});
-		return res.data;
-	} catch (error) {
-		console.log(error);
-	}
-};
+	const dispatch = useAppDispatch();
 
-export const updateExpte = async (id, values) => {
-	try {
-		const token = localStorage.getItem('token');
-		const res = await apiURL.put(`/api/exptes/${id}`, values, {
-			withCredentials: true,
-			headers: { authorization: `Bearer ${token}` },
-		});
-		return res.data;
-	} catch (error) {
-		console.error(error);
-	}
-};
+	const getExpte = async (id) => {
+		await dispatch(getExpteThunk(id));
+	};
 
-export const deleteExpte = async (id) => {
-	try {
-		const token = localStorage.getItem('token');
-		const res = await apiURL.delete(`/api/exptes/${id}`, {
-			withCredentials: true,
-			headers: { authorization: `Bearer ${token}` },
-		});
-		return res.data;
-	} catch (error) {
-		console.log(error);
-	} finally {
-		setTimeout(async () => {
-			await getExptes();
-		}, 100);
-	}
-};
+	const getExptes = async () => {
+		await dispatch(getExptesThunk());
+	};
 
-export const createMov = async (movData, expteId) => {
-	try {
-		const token = localStorage.getItem('token');
-		const response = await apiURL.post(
-			`/api/exptes/${expteId}/movimientos`,
-			movData,
-			{
-				withCredentials: true,
-				headers: { authorization: `Bearer ${token}` },
-			}
-		);
-		return response.data;
-	} catch (error) {
-		console.log(error);
-	}
-};
+	const createExpte = async (values) => {
+		await dispatch(createExpteThunk(values));
+	};
 
-export const updateMov = async (expteId, rowId, movData ) => {
-	try {
-		const token = localStorage.getItem('token');
-		const res = await apiURL.put(`/api/exptes/${expteId}/movimientos/${rowId}`, movData, {
-			withCredentials: true,
-			headers: { authorization: `Bearer ${token}` },
-		});
-		return res.data;
-	} catch (error) {
-		console.error(error);
-	}
-};
+	const updateExpte = async (rowId, values) => {
+		await dispatch(updateExpteThunk({ id: rowId, values }));
+	};
 
-export const deleteMov = async (expedienteId, movimientoId) => {
-	try {
-		const token = localStorage.getItem('token');
-		const res = await apiURL.delete(
-			`/api/exptes/${movimientoId}/movimientos/${expedienteId}`,
-			{
-				withCredentials: true,
-				headers: { authorization: `Bearer ${token}` },
-			}
-		);
-		return res.data;
-	} catch (error) {
-		console.log(error);
-	}
-};
+	const deleteExpte = async (id) => {
+		await dispatch(deleteExpteThunk(id));
+	};
 
-export const calcularDiasTranscurridos = async (id) => {
-	try {
-		const token = localStorage.getItem('token');
-		const expediente = await apiURL.get(`/api/exptes/${id}`, {
-			withCredentials: true,
-			headers: { authorization: `Bearer ${token}` },
-		});
-		if (expediente.data.movimientos.length === 0) {
-			return null;
-		}
-		// Obtén el último movimiento del expediente
-		const ultimoMovimiento =
-			expediente.data.movimientos[expediente.data.movimientos.length - 1];
-		// Convierte la fecha del último movimiento a objeto Date
-		const fechaParts = ultimoMovimiento.fecha.split('/');
-		const year = fechaParts[2];
-		const month = fechaParts[1].padStart(2, '0');
-		const day = fechaParts[0].padStart(2, '0');
-		const fechaFormateada = `${year}-${month}-${day}`;
+	const clearStateExpte = () => {
+		dispatch(clearExpte());
+	};
 
-		const fechaUltimoMovimiento = new Date(fechaFormateada);
-		// Calcula la diferencia en milisegundos entre la fecha actual y la fecha del último movimiento
-		const diferenciaTiempoMs = Date.now() - fechaUltimoMovimiento.getTime();
+	const createMov = async (expteId, movData) => {
+		await dispatch(createMovThunk({ expteId, movData }));
+	};
 
-		// Convierte la diferencia de tiempo de milisegundos a días
-		const diasTranscurridos = Math.floor(
-			diferenciaTiempoMs / (1000 * 60 * 60 * 24)
-		);
-		return diasTranscurridos;
-	} catch (error) {
-		console.error('Error al calcular los días transcurridos:', error);
-		throw error;
-	}
-};
+	const updateMov = async (expteId, rowId, movData) => {
+		await dispatch(updateMovThunk({ expteId, rowId, movData }));
+	};
 
-export const filterExpedientes = (expedientes) => {
-	const today = new Date();
-	return expedientes.filter((expediente) => {
-		if (expediente.movimientos.length === 0) {
-			return true; 
-		}
-		const fechaParts =
-			expediente.movimientos[expediente.movimientos.length - 1].fecha.split(
-				'/'
-			);
-		const year = fechaParts[2];
-		const month = fechaParts[1].padStart(2, '0');
-		const day = fechaParts[0].padStart(2, '0');
-		const fechaFormateada = `${year}-${month}-${day}`;
-		const ultimoMovimiento = new Date(fechaFormateada);
-		const diferenciaDias = Math.floor(
-			(today - ultimoMovimiento) / (1000 * 60 * 60 * 24)
-		);
-		return diferenciaDias > 60;
-	});
-};
+	const deleteMov = async (expedienteId, movimientoId) => {
+		await dispatch(deleteMovThunk({ expedienteId, movimientoId }));
+	};
 
-export const novedadesExpedientes = (expedientes) => {
-	const today = new Date();
-	return expedientes.filter((expediente) => {
-		if (expediente.movimientos.length === 0) {
-			return false; 
-		}
-		const fechaParts =
-			expediente.movimientos[expediente.movimientos.length - 1].fecha.split(
-				'/'
-			);
-		const year = fechaParts[2];
-		const month = fechaParts[1].padStart(2, '0');
-		const day = fechaParts[0].padStart(2, '0');
-		const fechaFormateada = `${year}-${month}-${day}`;
-		const ultimoMovimiento = new Date(fechaFormateada);
-		// Calcula la diferencia en horas
-		const diferenciaHoras = Math.floor(
-			(today - ultimoMovimiento) / (1000 * 60 * 60)
-		);
-		return diferenciaHoras <= 48;
-	});
-};
+	return {
+		exptes,
+		expte,
+		getExpte,
+		getExptes,
+		createExpte,
+		updateExpte,
+		deleteExpte,
+		clearStateExpte,
+		expteStatus,
+		mov,
+		createMov,
+		updateMov,
+		deleteMov,
+	};
+}

@@ -1,10 +1,9 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react';
-import { useAuth } from '../../context/UseContext.jsx';
+import { useAuth } from '../../hooks/useAuth.js';
 import { Link, useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import Swal from 'sweetalert2';
 import {
 	Edit as EditIcon,
 	Delete as DeleteIcon,
@@ -13,84 +12,63 @@ import {
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import '../../css/Header.css';
-import {
-	getExpte,
-	deleteMov,
-	calcularDiasTranscurridos,
-} from '../../hooks/UseExptes.js';
+import { useExpteActions } from '../../hooks/UseExptes.js';
 import { Table } from '../../components/Gestion/Table';
 import { Detail } from '../../components/Gestion/Detail';
-import { Header } from '../../components/Header.jsx';
+import { Header } from '../../components/header/Header.jsx';
 import Tooltip from '@mui/material/Tooltip';
-import Loader from '../../components/Loader.jsx';
-import Modals from '../../components/Modals.jsx';
+import Loader from '../../utils/Loader.jsx';
+import Modals from '../../utils/Modals.jsx';
 import { MovForm } from '../../components/Forms/MovForm.jsx';
+import { useSelector } from 'react-redux';
+import useModal from '../../hooks/useModal';
+import { calcularDiasTranscurridos } from '../../hooks/useExptesFilter.js';
 
 export const GestionMovimientos = () => {
-	const { currentUser } = useAuth();
+	const { loggedUser } = useAuth();
 	const { id } = useParams();
+	const { getExpte, deleteMov } = useExpteActions();
 	const [data, setData] = useState([]);
-	const [expte, setExpte] = useState([]);
-	const [diasCaducidad, setDiasCaducidad] = useState([]);
-	const admin = currentUser.admin;
-	const coadmin = currentUser.coadmin;
-	const [openViewModal, setopenViewModal] = useState(false);
-	const [openEditModal, setopenEditModal] = useState(false);
-	const [openNewModal, setopenNewModal] = useState(false);
+	const [expteId, setExpteId] = useState([]);
 	const [rowId, setRowId] = useState(null);
-	const [reloadTable, setReloadTable] = useState(false);
-	const [loading, setLoading] = useState(true);
-	const expteId = expte._id;
+	const [diasCaducidad, setDiasCaducidad] = useState([]);
+	const expte = useSelector((state) => state.exptes.expte);
+	const statusExpte = useSelector((state) => state.exptes.statusExpte);
+	const statusUpdate = useSelector((state) => state.exptes.statusUpdate);
+	const statusSign = useSelector((state) => state.exptes.statusSign);
+	const viewModal = useModal();
+	const editModal = useModal();
+	const newModal = useModal();
+	const admin = loggedUser.admin;
+	const coadmin = loggedUser.coadmin;
 
-	const handleOpenNewModal = () => {
-		setopenNewModal(true);
+	console.log(id); 
+	const dataExpte = async () => {
+		try {
+			await getExpte(id);
+		} catch (error) {
+			console.error('Error al obtener movimientos del expediente', error);
+		}
 	};
-
-	const handleOpenViewModal = (rowId) => {
-		setopenViewModal(true);
-		setRowId(rowId);
-	};
-
-	const handleOpenEditModal = (rowId) => {
-		setopenEditModal(true);
-		setRowId(rowId);
-	};
-	// Función para cerrar el modal
-	const handleCloseModal = () => {
-		setopenViewModal(false);
-		setopenNewModal(false);
-		setopenEditModal(false);
-		setReloadTable((prevState) => !prevState);
-	};
+	
+	console.log(expte);
+	useEffect(() => {
+		dataExpte();
+		setData(expte.movimientos);
+		setExpteId(expte._id);
+	}, [statusSign, statusUpdate]);
 
 	useEffect(() => {
-		const fetchExpte = async () => {
-			try {
-				const expediente = await getExpte(id);
-				setExpte(expediente);
-				setData(expediente.movimientos);
-				setLoading(false);
-			} catch (error) {
-				console.error('Error al obtener movimientos del expediente', error);
-				setLoading(false);
-			}
-		};
-		fetchExpte();
-	}, [id, reloadTable]);
-
-	useEffect(() => {
-		const fetchExpte = async () => {
+		const dataExpte = async () => {
 			try {
 				const diasSinMov = await calcularDiasTranscurridos(id);
 				setDiasCaducidad(diasSinMov);
-				setLoading(false);
 			} catch (error) {
 				console.error('Error al obtener movimientos del expediente', error);
-				setLoading(false);
 			}
 		};
-		fetchExpte();
-	}, [id]);
+		dataExpte();
+	}, []);
 
 	const columns = React.useMemo(
 		() => [
@@ -128,7 +106,8 @@ export const GestionMovimientos = () => {
 				</Tooltip>
 			),
 			onClick: (row) => {
-				handleOpenViewModal(row.original._id);
+				setRowId(row.original._id);
+				viewModal.openModal();
 			},
 		},
 		{
@@ -140,7 +119,8 @@ export const GestionMovimientos = () => {
 					</Tooltip>
 				) : null,
 			onClick: (row) => {
-				handleOpenEditModal(row.original._id);
+				setRowId(row.original._id);
+				editModal.openModal();
 			},
 		},
 		{
@@ -150,7 +130,7 @@ export const GestionMovimientos = () => {
 					<DeleteIcon color='error' cursor='pointer' />
 				</Tooltip>
 			) : null,
-			onClick: (row) => borrarMov(row.original._id, expteId),
+			onClick: (row) => deleteMov(row.original._id, expteId),
 		},
 	];
 
@@ -159,36 +139,6 @@ export const GestionMovimientos = () => {
 			mode: 'dark',
 		},
 	});
-
-	// funcion para eliminar movimientos
-	async function borrarMov(expteId, rowId) {
-		try {
-			const result = await Swal.fire({
-				title: '¿Estás seguro?',
-				text: 'Confirmas la eliminacion del movimiento?',
-				icon: 'warning',
-				showCancelButton: true,
-				confirmButtonColor: '#d33',
-				cancelButtonText: 'Cancelar',
-			});
-			if (result.isConfirmed) {
-				setLoading(true);
-				await deleteMov(expteId, rowId);
-				setLoading(false);
-				Swal.fire({
-					icon: 'success',
-					title: 'Movimiento eliminado correctamente',
-					showConfirmButton: false,
-					timer: 1500,
-				});
-				const updatedExpte = await getExpte(id);
-				setExpte(updatedExpte);
-				setData(updatedExpte.movimientos);
-			}
-		} catch (error) {
-			console.error('Error al eliminar el movimiento:', error);
-		}
-	}
 
 	return (
 		<>
@@ -202,89 +152,92 @@ export const GestionMovimientos = () => {
 					<div className='flex justify-around flex-wrap my-3'>
 						{admin || coadmin ? (
 							<button
-								className='bg-white shadow-3xl btnAdmin text-primary text-center p-2 border-2 w-[220px] mb-3 border-primary rounded-xl font-semibold'
-								onClick={() => handleOpenNewModal()}>
+								className='bg-background shadow-3xl btnLogout text-white text-center flex items-center justify-center p-2 border-2 w-[210px] mb-3 border-white rounded-xl font-semibold'
+								onClick={() => newModal.openModal()}>
 								<i className='text-xl pe-2 bi bi-file-earmark-plus'></i>
-								Agregar movimiento
+								Agregar Movimiento del Expediente
 							</button>
 						) : null}
 						<Link
 							to='/gestionexpedientes'
-							className='bg-background shadow-3xl btnLogout text-white text-center p-2 border-2 w-[220px] mb-3 border-white rounded-xl font-semibold'>
+							className='bg-background shadow-3xl btnLogout text-white text-center flex items-center justify-center p-2 border-2 w-[210px] mb-3 border-white rounded-xl font-semibold'>
 							<i className='text-xl pe-2 bi bi-box-arrow-left'></i>
 							Volver al Panel
 						</Link>
 					</div>
 					<hr className='linea mx-3 text-white' />
-					<div>
-						<h2 className='my-4 text-2xl font-extrabold text-center text-white'>
-							Datos del Expediente
-						</h2>
-						<div className=''>
-							<p className='text-white font-medium ml-5 my-2'>
-								<u>Nro Expte:</u> {expte.nroexpte}
-							</p>
-							<p className='text-white font-medium ml-5 my-2'>
-								<u>Caratula:</u> {expte.caratula}
-							</p>
-							<p className='text-white font-medium ml-5 my-2'>
-								<u>Fuero:</u> {expte.radicacion}
-							</p>
-							<p className='text-white font-medium ml-5 my-2'>
-								<u>Juzgado:</u> {expte.juzgado}
-							</p>
-							<p
-								className={`text-white font-medium ml-5 my-2 ${
-									diasCaducidad > 45 ? 'text-red-500 text-xl' : ''
-								}`}>
-								<u>Dias sin movimientos:</u> {diasCaducidad}{' '}
-								<span>Dias</span>
-							</p>
-							<p></p>
+					{statusExpte === 'Cargando' || !expte ? (
+						<Loader />
+					) : (
+						<div>
+							<h2 className='my-4 text-2xl font-extrabold text-center text-white'>
+								Datos del Expediente
+							</h2>
+							<div className=''>
+								<p className='text-white font-medium ml-5 my-2'>
+									<u>Nro Expte:</u> {expte.nroexpte}
+								</p>
+								<p className='text-white font-medium ml-5 my-2'>
+									<u>Caratula:</u> {expte.caratula}
+								</p>
+								<p className='text-white font-medium ml-5 my-2'>
+									<u>Fuero:</u> {expte.radicacion}
+								</p>
+								<p className='text-white font-medium ml-5 my-2'>
+									<u>Juzgado:</u> {expte.juzgado}
+								</p>
+								<p
+									className={`text-white font-medium ml-5 my-2 ${
+										diasCaducidad > 45 ? 'text-red-500 text-xl' : ''
+									}`}>
+									<u>Dias sin movimientos:</u> {diasCaducidad}{' '}
+									<span>Dias</span>
+								</p>
+							</div>
+							<hr className='linea mx-3' />
 						</div>
-						<hr className='linea mx-3' />
-					</div>
+					)}
 					<h2 className='my-4 text-3xl font-extrabold text-center bg-gradient-to-t from-primary to-blue-200 text-transparent bg-clip-text'>
 						Movimientos del Expediente
 					</h2>
-					{loading ? (
-						<Loader />
-					) : (
-						<div className='table-responsive'>
-							<ThemeProvider theme={darkTheme}>
-								<CssBaseline />
-								<Table
-									columns={columns}
-									data={data}
-									actions={actions}
-									borrarMov={borrarMov}
-								/>
-							</ThemeProvider>
-						</div>
-					)}
+
+					<div className='table-responsive'>
+						<ThemeProvider theme={darkTheme}>
+							<CssBaseline />
+							<Table columns={columns} data={data} actions={actions} />
+						</ThemeProvider>
+					</div>
 				</div>
 			</div>
 
 			<div>
 				<Modals
-					isOpen={openEditModal}
-					onClose={handleCloseModal}
+					isOpen={editModal.isOpen}
+					onClose={editModal.closeModal}
 					title='Editar Movimiento'>
-					<MovForm rowId={rowId} onClose={handleCloseModal} mode='edit' />
-				</Modals>
-				<Modals
-					isOpen={openViewModal}
-					onClose={handleCloseModal}
-					title='Ver Movimiento'>
-					<MovForm rowId={rowId} onClose={handleCloseModal} mode='view' />
-				</Modals>
-				<Modals
-					isOpen={openNewModal}
-					onClose={handleCloseModal}
-					title='Cargar Movimiento'>
 					<MovForm
 						rowId={rowId}
-						onClose={handleCloseModal}
+						onClose={editModal.closeModal}
+						mode='edit'
+					/>
+				</Modals>
+				<Modals
+					isOpen={viewModal.isOpen}
+					onClose={viewModal.closeModal}
+					title='Ver Movimiento'>
+					<MovForm
+						rowId={rowId}
+						onClose={viewModal.closeModal}
+						mode='view'
+					/>
+				</Modals>
+				<Modals
+					isOpen={newModal.isOpen}
+					onClose={newModal.closeModal}
+					title='Cargar Nuevo Movimiento'>
+					<MovForm
+						rowId={rowId}
+						onClose={newModal.closeModal}
 						mode='create'
 					/>
 				</Modals>

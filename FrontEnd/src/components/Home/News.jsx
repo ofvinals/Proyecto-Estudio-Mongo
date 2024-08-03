@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Carousel } from 'react-bootstrap';
 import axios from 'axios';
-import Loader from '../Loader';
+import Loader from '../../utils/Loader.jsx';
 
 export const News = () => {
 	const [articles, setArticles] = useState([]);

@@ -25,13 +25,11 @@ export function useAuth() {
 
 	const loginEmail = async ({ email, password }) => {
 		const userAction = await dispatch(login({ email, password }));
-		console.log(userAction);
 		if (userAction.error) {
 			alert(userAction.payload);
 		} else {
 			const user = userAction.payload;
-			console.log(user);
-			if (user.admin || user.coadmin) {
+			if (user.admin) {
 				navigate('/admin');
 			} else {
 				navigate('/adminusu');

@@ -9,7 +9,7 @@ import dayjs from 'dayjs';
 dayjs.locale('es');
 import { Button, Modal } from 'react-bootstrap';
 import Swal from 'sweetalert2';
-import { createTurno } from '../hooks/UseTurns.js';
+import { useTurnActions } from '../hooks/UseTurns.js';
 
 export const GoogleCalendar = ({ showModal, onClose }) => {
 	const [start, setStart] = useState(new Date());
@@ -17,8 +17,8 @@ export const GoogleCalendar = ({ showModal, onClose }) => {
 	const [eventName, setEventName] = useState('');
 	const [eventDescription, setEventDescription] = useState('');
 	const { loginWithGoogle } = useAuth();
-	const googleToken= localStorage.getItem('googleToken')
-
+	const googleToken = localStorage.getItem('googleToken');
+	const { createTurn } = useTurnActions();
 	const handleGoogle = async (e) => {
 		try {
 			e.preventDefault();
@@ -69,7 +69,7 @@ export const GoogleCalendar = ({ showModal, onClose }) => {
 			motivo: eventDescription,
 		};
 		try {
-			await createTurno(nuevoTurno);
+			await createTurn(nuevoTurno);
 			await Swal.fire({
 				icon: 'success',
 				title: 'El evento fue registrado!',
@@ -182,7 +182,9 @@ export const GoogleCalendar = ({ showModal, onClose }) => {
 								<i className='text-xl pe-2 bi bi-check2-square'></i>
 								Crear Evento
 							</Button>
-							<Button onClick={onClose} className='bg-white shadow-3xl btnAdmin text-primary text-center p-2 border-2 w-[150px] my-3 border-primary rounded-xl font-semibold'>
+							<Button
+								onClick={onClose}
+								className='bg-white shadow-3xl btnAdmin text-primary text-center p-2 border-2 w-[150px] my-3 border-primary rounded-xl font-semibold'>
 								<i className='text-xl pe-2 bi bi-x-circle-fill'></i>
 								Cancelar
 							</Button>
@@ -196,16 +198,20 @@ export const GoogleCalendar = ({ showModal, onClose }) => {
 						</p>
 
 						<div className='flex flex-wrap items-center w-full justify-around'>
-						<Button
-							className='bg-background shadow-3xl btnLogout text-white text-center p-2 border-2 w-[230px] my-3  border-white rounded-xl font-semibold'
-							onClick={(e) => handleGoogle(e)}>
-							<i className='text-xl pe-2 bi bi-google'></i>
-							Ingresa con Google
-						</Button>
-						<Button type='button' onClick={onClose} className='bg-white shadow-3xl btnAdmin text-primary text-center p-2 border-2 w-[150px] my-3 border-primary rounded-xl font-semibold'>
-							<i className='text-xl pe-2 bi bi-x-circle-fill'></i>
-							Cancelar
-						</Button></div>
+							<Button
+								className='bg-background shadow-3xl btnLogout text-white text-center p-2 border-2 w-[230px] my-3  border-white rounded-xl font-semibold'
+								onClick={(e) => handleGoogle(e)}>
+								<i className='text-xl pe-2 bi bi-google'></i>
+								Ingresa con Google
+							</Button>
+							<Button
+								type='button'
+								onClick={onClose}
+								className='bg-white shadow-3xl btnAdmin text-primary text-center p-2 border-2 w-[150px] my-3 border-primary rounded-xl font-semibold'>
+								<i className='text-xl pe-2 bi bi-x-circle-fill'></i>
+								Cancelar
+							</Button>
+						</div>
 					</>
 				)}
 			</Modal.Body>

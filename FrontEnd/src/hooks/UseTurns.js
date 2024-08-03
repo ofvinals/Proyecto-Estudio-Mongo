@@ -1,70 +1,53 @@
-import { apiURL } from '/api/apiURL.js';
+import { useAppDispatch, useAppSelector } from './store';
+import {
+	getTurn as getTurnThunk,
+	getTurns as getTurnsThunk,
+	createTurn as createTurnThunk,
+	updateTurn as updateTurnThunk,
+	deleteTurn as deleteTurnThunk,
+} from '../store/turns/thunks';
+import { clearTurn as clearTurnThunk } from '../store/turns/slice';
 
-export const getTurnos = async () => {
-	try {
-		const token = localStorage.getItem('token');
-		const res = await apiURL.get('/api/turnos', {
-			withCredentials: true,
-			headers: { authorization: `Bearer ${token}` },
-		});
-		return res.data;
-	} catch (error) {
-		console.error(error);
-	}
-};
+export function useTurnActions() {
+	const turns = useAppSelector((state) => state.turns.turns);
+	const turn = useAppSelector((state) => state.turns.turn);
+	const turnStatus = useAppSelector((state) => state.turns.status);
 
-export const getTurno = async (id) => {
-	try {
-		const token = localStorage.getItem('token');
-		const res = await apiURL.get(`/api/turnos/${id}`, {
-			withCredentials: true,
-			headers: { authorization: `Bearer ${token}` },
-		});
-		return res.data;
-	} catch (error) {
-		console.error(error);
-	}
-};
+	const dispatch = useAppDispatch();
 
-export const createTurno = async (values) => {
-	try {
-		const token = localStorage.getItem('token');
-		const res = await apiURL.post('/api/turnos', values, {
-			withCredentials: true,
-			headers: { authorization: `Bearer ${token}` },
-		});
-		return res.data;
-	} catch (error) {
-		console.log(error);
-	}
-};
+	const getTurn = async (id) => {
+		await dispatch(getTurnThunk(id));
+	};
 
-export const updateTurno = async (id, values) => {
-	try {
-		const token = localStorage.getItem('token');
-		const res = await apiURL.put(`/api/turnos/${id}`, values, {
-			withCredentials: true,
-			headers: { authorization: `Bearer ${token}` },
-		});
-		return res.data;
-	} catch (error) {
-		console.error(error);
-	}
-};
+	const getTurns = async () => {
+		await dispatch(getTurnsThunk());
+	};
 
-export const deleteTurno = async (id) => {
-	try {
-		const token = localStorage.getItem('token');
-		const res = await apiURL.delete(`/api/turnos/${id}`, {
-			withCredentials: true,
-			headers: { authorization: `Bearer ${token}` },
-		});
-		return res.data;
-	} catch (error) {
-		console.log(error);
-	} finally {
-		setTimeout(async () => {
-			await getTurnos();
-		}, 100);
-	}
-};
+	const createTurn = async (turnoData) => {
+		await dispatch(createTurnThunk({ turn: turnoData }));
+	};
+
+	const updateTurn = async ({ rowId, values }) => {
+		await dispatch(updateTurnThunk({ id: rowId, values }));
+	};
+
+	const deleteTurn = async (id) => {
+		await dispatch(deleteTurnThunk(id));
+	};
+
+	const clearTurn = () => {
+		dispatch(clearTurnThunk());
+	};
+
+	return {
+		turns,
+		turn,
+		getTurn,
+		getTurns,
+		createTurn,
+		updateTurn,
+		deleteTurn,
+		clearTurn,
+		turnStatus,
+	};
+}

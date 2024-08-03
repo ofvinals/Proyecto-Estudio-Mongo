@@ -6,7 +6,7 @@ import {
 	verifyLoggedUser,
 } from './thunks';
 
-export const userExtraReducers = (builder) => {
+export const authExtraReducers = (builder) => {
 	builder
 		.addCase(loginWithGoogle.pending, (state) => {
 			state.statusSign = 'Cargando';

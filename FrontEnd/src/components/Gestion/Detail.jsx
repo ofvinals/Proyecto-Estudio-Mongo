@@ -1,10 +1,10 @@
 /* eslint-disable react/prop-types */
-import { useAuth } from '../../context/UseContext';
+import { useAuth } from '../../hooks/useAuth';
 
 export const Detail = ({ modulo }) => {
 	const nombreModulo = modulo;
-	const { currentUser } = useAuth();
-	const displayName = currentUser.displayName;
+	const { loggedUser } = useAuth();
+	const displayName = loggedUser.displayName;
 
 	return (
 		<div>

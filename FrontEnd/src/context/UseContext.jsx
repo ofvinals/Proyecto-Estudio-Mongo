@@ -1,9 +1,9 @@
 import { useContext } from "react";
-import AuthContext from "./AuthContext";
+import AppContext from "./AppContext";
 
 // funcion que retorna el contexto del objeto creado por useContext
 export const useAuth = () => {
-	const context = useContext(AuthContext);
+	const context = useContext(AppContext);
 	if (!context) {
 		throw new Error('Error, no se creo el contexto!');
 	}

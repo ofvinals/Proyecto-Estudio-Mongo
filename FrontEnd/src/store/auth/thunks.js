@@ -2,7 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { apiURL } from '/api/apiURL.js';
 import { auth } from '../../firebase/config.js';
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
-import { getUserbyGoogle } from '../../hooks/UseUsers.js';
+import { useUserActions } from '../../hooks/UseUserActions.js';
 
 // FUNCION REGISTRO DE USUARIOS
 export const register = createAsyncThunk(
@@ -49,7 +49,7 @@ export const loginWithGoogle = createAsyncThunk(
 		provider.addScope('https://www.googleapis.com/auth/userinfo.email');
 		provider.addScope('https://www.googleapis.com/auth/userinfo.profile');
 		provider.addScope('https://www.googleapis.com/auth/calendar.events');
-
+		const { getUserbyGoogle } = useUserActions();
 		try {
 			const result = await signInWithPopup(auth, provider);
 			const credential = GoogleAuthProvider.credentialFromResult(result);
@@ -89,7 +89,6 @@ export const verifyLoggedUser = createAsyncThunk(
 	'user/verifyLoggedUser',
 	async (_, { rejectWithValue }) => {
 		const token = localStorage.getItem('token');
-		console.log(token);
 		if (!token) {
 			return rejectWithValue('No token found');
 		}
@@ -100,7 +99,6 @@ export const verifyLoggedUser = createAsyncThunk(
 					Authorization: `Bearer ${token}`,
 				},
 			});
-			console.log(response);
 			if (response.status === 200) {
 				return response.data;
 			} else {

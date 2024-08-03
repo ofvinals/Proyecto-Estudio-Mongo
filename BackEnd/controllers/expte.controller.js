@@ -10,7 +10,7 @@ const getExptes = async (req, res) => {
 };
 
 const createExpte = async (req, res) => {
-	// Extraer los campos del cuerpo de la solicitud (request body)
+	console.log(req.body);
 	const {
 		cliente,
 		nroexpte,
@@ -23,21 +23,20 @@ const createExpte = async (req, res) => {
 	} = req.body;
 
 	try {
-		// Crear una nueva instancia del modelo Expte utilizando los datos de la solicitud
 		const newExpte = new Expte({
 			cliente,
 			nroexpte,
 			radicacion,
 			juzgado,
+			caratula: `${actor} c/ ${demandado} s/ ${proceso}`,
 			actor,
 			demandado,
 			proceso,
-			caratula: `${actor} C/ ${demandado} S/ ${proceso}`,
 			estado,
 			user: req.user.id,
 		});
-		const savedExpte = await newExpte.save();
 
+		const savedExpte = await newExpte.save();
 		res.json(savedExpte);
 	} catch (error) {
 		return res.status(500).json({ message: error.message });

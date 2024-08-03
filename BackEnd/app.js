@@ -31,6 +31,7 @@ app.use((req, res, next) => {
 app.use(
 	cors({
 		origin: [
+			'http://localhost:5174',
 			'http://localhost:5173',
 			'https://proyecto-estudio-mongo.vercel.app',
 			'https://proyecto-estudio-mongo.onrender.com',

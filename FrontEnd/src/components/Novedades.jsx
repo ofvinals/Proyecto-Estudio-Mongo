@@ -6,29 +6,31 @@ import '../css/Header.css';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { Visibility as VisibilityIcon } from '@mui/icons-material';
-import { getExptes, novedadesExpedientes } from '../hooks/UseExptes.js';
 import { Table } from './Gestion/Table.jsx';
 import Tooltip from '@mui/material/Tooltip';
 import { useNavigate } from 'react-router-dom';
+import { novedadesExpedientes } from '../hooks/useExptesFilter.js';
+import { useExpteActions } from '../../hooks/UseExptes.js';
+import { useSelector } from 'react-redux';
 
 export const Novedades = () => {
 	const { currentUser } = useAuth({});
+	const { getExptes } = useExpteActions();
 	const [data, setData] = useState([]);
 	const navigate = useNavigate();
 	const admin = currentUser.admin;
 	const coadmin = currentUser.coadmin;
 	const user = currentUser.email;
+	const exptes = useSelector((state) => state.exptes.exptes);
 
 	useEffect(() => {
 		const loadExptes = async () => {
 			try {
-				const expedientes = await getExptes();
-				const fetchedExptes = expedientes.map((doc) => {
-					return { ...doc, _id: doc._id };
-				});
-				const filteredByClientExptes = admin || coadmin
-					? fetchedExptes
-					: fetchedExptes.filter((expte) => expte.cliente === user);
+				getExptes();
+				const filteredByClientExptes =
+					admin || coadmin
+						? exptes
+						: exptes.filter((expte) => expte.cliente === user);
 				const filteredExpedientes = novedadesExpedientes(
 					filteredByClientExptes
 				);

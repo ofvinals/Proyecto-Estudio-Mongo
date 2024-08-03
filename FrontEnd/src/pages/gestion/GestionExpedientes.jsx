@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useAuth } from '../../context/UseContext.jsx';
+import { useAuth } from '../../hooks/useAuth.js';
 import { Link, useNavigate } from 'react-router-dom';
 import { useState, useEffect, useMemo } from 'react';
 import {
@@ -9,66 +9,84 @@ import {
 } from '@mui/icons-material';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import Swal from 'sweetalert2';
 import '../../css/Header.css';
-import { getExptes, deleteExpte } from '../../hooks/UseExptes.js';
+import { useExpteActions } from '../../hooks/UseExptes.js';
 import { Table } from '../../components/Gestion/Table';
 import { Detail } from '../../components/Gestion/Detail';
-import { Header } from '../../components/Header.jsx';
+import { Header } from '../../components/header/Header.jsx';
 import Tooltip from '@mui/material/Tooltip';
-import Loader from '../../components/Loader.jsx';
-import Modals from '../../components/Modals.jsx';
+import Loader from '../../utils/Loader.jsx';
+import Modals from '../../utils/Modals.jsx';
 import { ExpteForm } from '../../components/Forms/ExpteForm.jsx';
+import { useSelector } from 'react-redux';
+import useModal from '../../hooks/useModal';
+import { filterExpedientes } from '../../hooks/useExptesFilter.js';
 
 export const GestionExpedientes = () => {
-	const { currentUser } = useAuth();
-	const navigate = useNavigate();
+	const { loggedUser } = useAuth();
+	const { getExptes, deleteExpte } = useExpteActions();
+	const [viewArchived, setViewArchived] = useState(false);
+	const [viewCaducidad, setViewCaducidad] = useState(false);
 	const [data, setData] = useState([]);
-	const user = currentUser.email;
-	const admin = currentUser.admin;
-	const coadmin = currentUser.coadmin;
-	const [openNewModal, setopenNewModal] = useState(false);
-	const [openEditModal, setopenEditModal] = useState(false);
 	const [rowId, setRowId] = useState(null);
-	const [reloadTable, setReloadTable] = useState(false);
-	const [loading, setLoading] = useState(true);
+	const navigate = useNavigate();
+	const exptes = useSelector((state) => state.exptes.exptes);
+	const statusExpte = useSelector((state) => state.exptes.status);
+	const statusUpdate = useSelector((state) => state.exptes.statusUpdate);
+	const statusSign = useSelector((state) => state.exptes.statusSign);
+	const editModal = useModal();
+	const newModal = useModal();
+	const user = loggedUser.email;
+	const admin = loggedUser.admin;
+	const coadmin = loggedUser.coadmin;
 
-	const handleOpenNewModal = () => {
-		setopenNewModal(true);
-	};
-
-	const handleOpenEditModal = (rowId) => {
-		setopenEditModal(true);
-		setRowId(rowId);
-	};
-
-	const handleCloseModal = () => {
-		setopenNewModal(false);
-		setopenEditModal(false);
-		setReloadTable((prevState) => !prevState);
+	const dataExptes = async () => {
+		try {
+			await getExptes();
+		} catch (error) {
+			console.error('Error al obtener expedientes:', error);
+		}
 	};
 
 	useEffect(() => {
-		const fetchExptes = async () => {
-			try {
-				const expedientes = await getExptes();
-				const fetchedExptes = expedientes.map((doc) => {
-					return { ...doc, _id: doc._id };
-				});
-				const filteredExptes =
-					admin || coadmin
-						? fetchedExptes
-						: fetchedExptes.filter((expte) => expte.cliente === user);
-				setData(filteredExptes);
-				setLoading(false);
-			} catch (error) {
-				console.error('Error al obtener expedientes', error);
-				setLoading(false);
-			}
-		};
+		dataExptes();
+	}, []);
 
-		fetchExptes();
-	}, [reloadTable]);
+	useEffect(() => {
+		try {
+			const filteredExptes = exptes.filter((expte) =>
+				viewArchived
+					? expte.estado === 'Terminado'
+					: expte.estado !== 'Terminado'
+			);
+			const finalFilteredExptes =
+				admin || coadmin
+					? filteredExptes
+					: filteredExptes.filter((expte) => expte.cliente === user);
+			setData(finalFilteredExptes);
+		} catch (error) {
+			console.error('Error al obtener gastos', error);
+		}
+	}, [exptes, viewArchived]);
+
+	useEffect(() => {
+		try {
+			if (viewCaducidad) {
+				const caducadosExptes = filterExpedientes(exptes);
+				setData(caducadosExptes);
+			} else {
+				setData(exptes);
+			}
+		} catch (error) {
+			console.error('Error al obtener expedientes caducados', error);
+		}
+	}, [exptes, viewCaducidad]);
+
+	useEffect(() => {
+		if (statusUpdate === 'Exitoso' || statusSign === 'Exitoso') {
+			dataExptes();
+		}
+	}, [statusUpdate, statusSign]);
 
 	const columns = useMemo(
 		() => [
@@ -109,7 +127,8 @@ export const GestionExpedientes = () => {
 				</Tooltip>
 			),
 			onClick: (row) => {
-				navigate(`/gestionmovimientos/${row.original._id}`);
+				console.log(row.original._id),
+					navigate(`/gestionmovimientos/${row.original._id}`);
 			},
 		},
 		{
@@ -121,7 +140,8 @@ export const GestionExpedientes = () => {
 					</Tooltip>
 				) : null,
 			onClick: (row) => {
-				handleOpenEditModal(row.original._id);
+				setRowId(row.original._id);
+				editModal.openModal();
 			},
 		},
 		{
@@ -131,45 +151,11 @@ export const GestionExpedientes = () => {
 					<DeleteIcon color='error' cursor='pointer' />
 				</Tooltip>
 			) : null,
-			onClick: (row) => borrarExpte(row.original._id),
+			onClick: (row) => deleteExpte(row.original._id),
 		},
 	];
 
-	const darkTheme = createTheme({
-		palette: {
-			mode: 'dark',
-		},
-	});
-
-	// funcion para eliminar expedientes
-	async function borrarExpte(id) {
-		try {
-			const result = await Swal.fire({
-				title: '¿Estás seguro?',
-				text: 'Confirmas la eliminación del expediente?',
-				icon: 'warning',
-				showCancelButton: true,
-				confirmButtonColor: '#d33',
-				cancelButtonColor: '#8f8e8b',
-				confirmButtonText: 'Sí, eliminar',
-				cancelButtonText: 'Cancelar',
-			});
-			if (result.isConfirmed) {
-				setLoading(true);
-				await deleteExpte(id);
-				setLoading(false);
-				Swal.fire({
-					icon: 'success',
-					title: 'Expediente eliminado correctamente',
-					showConfirmButton: false,
-					timer: 1500,
-				});
-				setData((prevData) => prevData.filter((expte) => expte._id !== id));
-			}
-		} catch (error) {
-			console.error('Error al eliminar el expediente:', error);
-		}
-	}
+	const darkTheme = createTheme({ palette: { mode: 'dark' } });
 
 	return (
 		<div className='bg-gradient-to-tl from-[#1e1e1e] to-[#4077ad] pb-3 pt-24'>
@@ -184,42 +170,48 @@ export const GestionExpedientes = () => {
 						{admin || coadmin ? (
 							<button
 								type='button'
-								className='bg-white shadow-3xl btnAdmin text-primary text-center p-2 border-2 w-[270px] mb-3 border-primary rounded-xl font-semibold'
-								onClick={handleOpenNewModal}>
+								className='bg-background shadow-3xl btnLogout text-white text-center flex items-center justify-center p-2 border-2 w-[210px] mb-3 border-white rounded-xl font-semibold'
+								onClick={() => newModal.openModal()}>
 								<i className='text-xl pe-2 bi bi-file-earmark-plus'></i>
-								Registrar nuevo expediente
+								Registrar Nuevo Expediente
 							</button>
 						) : null}
 						{(admin || coadmin) && (
-							<Link
-								to='/exptesarchivados'
-								className='bg-white shadow-3xl btnAdmin text-primary text-center p-2 mx-3 border-2 w-[270px] mb-3 border-primary rounded-xl font-semibold'>
-								<i className='text-xl pe-2 bi bi-archive'></i>
-								Expedientes Archivados
-							</Link>
+							<button
+								onClick={() => setViewArchived(!viewArchived)}
+								className='bg-background shadow-3xl text-neutral-200 text-center flex items-center justify-center p-2 border-2 w-[210px] mb-3 border-neutral-200 rounded-xl font-semibold hover:text-background hover:bg-neutral-200 hover:border-background'>
+								<i className='text-xl pe-2 bi bi-box-arrow-left'></i>
+								{viewArchived
+									? 'Ver Expedientes en Tramite'
+									: 'Ver Expedientes Archivados'}
+							</button>
 						)}
 						{(admin || coadmin) && (
-							<Link
-								to='/gestioncaducidad'
-								className='bg-white shadow-3xl btnAdmin text-primary text-center p-2 mx-3 border-2 w-[270px] mb-3 border-primary rounded-xl font-semibold'>
+							<button
+								onClick={() => setViewCaducidad(!viewCaducidad)}
+								className='bg-background shadow-3xl btnLogout text-white text-center flex items-center justify-center p-2 border-2 w-[210px] mb-3 border-white rounded-xl font-semibold'>
 								<i className='text-xl pe-2 bi bi-calendar2-x'></i>
-								Expedientes a caducar
-							</Link>
+								{viewCaducidad ? 'Expedientes en Tramite' : 'Expedientes a caducar'}
+							</button>
 						)}
 						<Link
 							to={admin || coadmin ? '/Admin' : '/AdminUsu'}
-							className='bg-background shadow-3xl btnLogout text-white text-center p-2 border-2 w-[200px] mb-3 border-white rounded-xl font-semibold'>
+							className='bg-background shadow-3xl btnLogout text-white text-center flex items-center justify-center p-2 border-2 w-[210px] mb-3 border-white rounded-xl font-semibold'>
 							<i className='text-xl pe-2 bi bi-box-arrow-left'></i>
 							Volver al Panel
 						</Link>
 					</div>
 					<hr className='linea mx-3' />
 					<div>
-						<p className='my-4 text-3xl font-extrabold text-center  bg-gradient-to-t from-primary to-blue-200 text-transparent bg-clip-text'>
-							Expedientes en Tramite
+						<p className='my-4 text-3xl font-extrabold text-center bg-gradient-to-t from-primary to-blue-200 text-transparent bg-clip-text'>
+							{viewCaducidad
+								? 'Expedientes Proximos a Caducar'
+								: viewArchived
+								? 'Expedientes Terminados'
+								: 'Expedientes en Tramite'}
 						</p>
 					</div>
-					{loading ? (
+					{statusExpte === 'Cargando' ? (
 						<Loader />
 					) : (
 						<div className='table-responsive'>
@@ -229,7 +221,6 @@ export const GestionExpedientes = () => {
 									columns={columns}
 									data={data}
 									actions={actions}
-									borrarExpte={borrarExpte}
 								/>
 							</ThemeProvider>
 						</div>
@@ -239,25 +230,21 @@ export const GestionExpedientes = () => {
 
 			<div>
 				<Modals
-					isOpen={openEditModal}
-					onClose={handleCloseModal}
+					isOpen={editModal.isOpen}
+					onClose={editModal.closeModal}
 					title='Editar Expediente'>
 					<ExpteForm
 						rowId={rowId}
-						onClose={handleCloseModal}
+						onClose={editModal.closeModal}
 						mode='edit'
 					/>
 				</Modals>
 				<Modals
-					isOpen={openNewModal}
-					onClose={handleCloseModal}
-					title='Cargar Expediente'
+					isOpen={newModal.isOpen}
+					onClose={newModal.closeModal}
+					title='Registrar Nuevo Expediente'
 					showSaveButton={false}>
-					<ExpteForm
-						rowId={rowId}
-						onClose={handleCloseModal}
-						mode='create'
-					/>
+					<ExpteForm onClose={newModal.closeModal} mode='create' />
 				</Modals>
 			</div>
 		</div>

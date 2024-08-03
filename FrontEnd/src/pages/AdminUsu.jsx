@@ -1,18 +1,17 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/UseContext.jsx';
+import { useAuth } from '../hooks/useAuth';
 import '../css/Header.css';
-import Swal from 'sweetalert2';
 import { Detail } from '../components/Gestion/Detail.jsx';
-import { Header } from '../components/Header.jsx';
-import { Novedades } from '../components/Novedades.jsx';
+import { Header } from '../components/header/Header.jsx';
+// import { Novedades } from '../components/Novedades.jsx';
 import { useState } from 'react';
-import Modals from '../components/Modals.jsx';
+import Modals from '../utils/Modals.jsx';
 import { UserForm } from '../components/Forms/UserForm.jsx';
 
 export const AdminUsu = () => {
-	const { currentUser, logout } = useAuth({});
+	const { loggedUser, logout } = useAuth({});
 	const navigate = useNavigate();
-	const rowId = currentUser.id;
+	const rowId = loggedUser.id;
 	const [openEditModal, setopenEditModal] = useState(false);
 
 	const handleCloseModal = () => {
@@ -25,12 +24,6 @@ export const AdminUsu = () => {
 
 	const handleLogOut = async () => {
 		await logout();
-		Swal.fire({
-			icon: 'success',
-			title: 'Su sesion fue cerrada!',
-			showConfirmButton: false,
-			timer: 1500,
-		});
 		navigate('/home');
 	};
 
@@ -88,7 +81,7 @@ export const AdminUsu = () => {
 					</button>
 				</div>
 				<hr className='linea text-white mx-3' />
-				<Novedades />
+				{/* <Novedades /> */}
 			</div>
 
 			<Modals

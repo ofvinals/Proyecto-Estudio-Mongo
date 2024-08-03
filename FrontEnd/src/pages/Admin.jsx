@@ -2,20 +2,17 @@
 import { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
-import { useLoad } from '../hooks/useLoad';
 import '../css/Header.css';
-import { Notas } from '../components/Notas.jsx';
-import Swal from 'sweetalert2';
+import { Notes } from '../components/Notes.jsx';
 import { Detail } from '../components/Gestion/Detail.jsx';
-import { Header } from '../components/Header.jsx';
+import { Header } from '../components/header/Header.jsx';
 
 export const Admin = () => {
 	const navigate = useNavigate();
 	const { loggedUser, logout } = useAuth();
-	const { isLoading } = useLoad();
-	console.log(loggedUser)
-	const admin = true;
-	const coadmin = false;
+	const admin = loggedUser.admin;
+	const coadmin = loggedUser.coadmin;
+
 	useEffect(() => {
 		if (!admin && !coadmin) {
 			navigate('/adminusu');
@@ -24,18 +21,12 @@ export const Admin = () => {
 
 	const handleLogOut = async () => {
 		await logout();
-		Swal.fire({
-			icon: 'success',
-			title: 'Su sesion fue cerrada!',
-			showConfirmButton: false,
-			timer: 1500,
-		});
 		navigate('/home');
 	};
 
 	return (
 		<>
-			<div className='bg-gradient-to-tl from-[#1e1e1e] to-[#4077ad]'>
+			<section className='bg-gradient-to-tl from-[#1e1e1e] to-[#4077ad]'>
 				<Header />
 				<div className=' rounded-xl container-lg mb-1 pt-24'>
 					<Detail modulo={'estudio'} />
@@ -61,7 +52,7 @@ export const Admin = () => {
 						to='/gestionagenda'>
 						<i className='text-xl pe-2 bi bi-calendar-check-fill'></i>
 						Gestionar Agenda
-					</Link> 
+					</Link>
 					<Link
 						className='bg-white shadow-3xl btnAdmin mx-2 text-primary text-center p-2 border-2 w-[240px] mb-3 border-primary rounded-xl font-bold'
 						to='/gestiongastos'>
@@ -85,8 +76,8 @@ export const Admin = () => {
 						Cerrar Sesion
 					</Link>
 				</div>
-				<Notas />
-			</div>
+				<Notes />
+			</section>
 		</>
 	);
 };

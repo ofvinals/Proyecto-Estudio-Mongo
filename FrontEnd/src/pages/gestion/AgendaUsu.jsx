@@ -5,8 +5,8 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { MobileDateTimePicker } from '@mui/x-date-pickers/MobileDateTimePicker';
-import { useAuth } from '../../context/UseContext.jsx';
-import { getTurnos, createTurno, deleteTurno } from '../../hooks/UseTurns.js';
+import { useAuth } from '../../hooks/useAuth.js';
+import { useTurnActions } from '../../hooks/UseTurns.js';
 import { Button } from 'react-bootstrap';
 import Swal from 'sweetalert2';
 import dayjs from 'dayjs';
@@ -16,21 +16,22 @@ dayjs.locale('es');
 import { Delete as DeleteIcon } from '@mui/icons-material';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import emailjs from '@emailjs/browser';
 import { Detail } from '../../components/Gestion/Detail';
-import { Header } from '../../components/Header.jsx';
+import { Header } from '../../components/header/Header.jsx';
 import { Table } from '../../components/Gestion/Table';
 import Tooltip from '@mui/material/Tooltip';
-import Loader from '../../components/Loader.jsx';
+import Loader from '../../utils/Loader.jsx';
+import { useExpteActions } from '../../hooks/UseExptes.js';
 
 export const AgendaUsu = () => {
-	const { currentUser } = useAuth();
+	const { loggedUser } = useAuth();
 	const form = useRef();
 	const [data, setData] = useState();
 	const [startDate, setStartDate] = useState(dayjs());
 	const [turnoOcupado, setTurnoOcupado] = useState([]);
-	const user = currentUser.email;
+	const user = loggedUser.email;
 	const [loading, setLoading] = useState(true);
+	const { getTurnos, createTurno, deleteTurno } = useExpteActions();
 	// deshabilita seleccion de dias de fin de semana
 	// const lastMonday = dayjs().startOf('week');
 	// const nextSunday = dayjs().endOf('week').startOf('day');
@@ -283,9 +284,9 @@ export const AgendaUsu = () => {
 						<h2 className='my-4 text-2xl font-extrabold text-center text-white'>
 							Su/s turno/s registrado/s
 						</h2>
-						{loading ? (
-							<Loader />
-						) : (
+						{statusTurn === 'Cargando' ? (
+						<Loader />
+					) : (
 							<div className='table-responsive'>
 								<ThemeProvider theme={darkTheme}>
 									<CssBaseline />
