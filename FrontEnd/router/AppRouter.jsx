@@ -10,16 +10,15 @@ import { Interes } from '../src/pages/Interes';
 
 import PrivateRoute from './PrivateRoute';
 
-import { Admin } from '../src/pages/Admin';
-import { AdminUsu } from '../src/pages/AdminUsu';
+import { DashboardUser } from '../src/pages/DashboardUser';
+import { DashboardAdmin } from '../src/pages/DashboardAdmin';
 import { GestionUsers } from '../src/pages/gestion/GestionUsers';
 import { GestionExpedientes } from '../src/pages/gestion/GestionExpedientes';
 import { GestionAgenda } from '../src/pages/gestion/GestionAgenda';
 import { GestionBills } from '../src/pages/gestion/GestionBills';
 import { GestionMovimientos } from '../src/pages/gestion/GestionMovimientos';
 import { GestionCash } from '../src/pages/gestion/GestionCash';
-
-import { AgendaUsu } from '../src/pages/gestion/AgendaUsu';
+import { UserAgenda } from '../src/pages/gestion/UserAgenda';
 
 export const AppRouter = () => {
 	return (
@@ -40,7 +39,7 @@ export const AppRouter = () => {
 						<Route
 							path='/gestiongastos'
 							element={<GestionBills />}></Route>
-						<Route path='/admin' element={<Admin />}></Route>
+						<Route path='/adminusu' element={<DashboardUser />}></Route>
 						<Route
 							path='/gestionusuarios'
 							element={<GestionUsers />}></Route>
@@ -50,8 +49,8 @@ export const AppRouter = () => {
 						<Route
 							path='/gestionagenda'
 							element={<GestionAgenda />}></Route>
-						<Route path='/adminusu' element={<AdminUsu />}></Route>
-						<Route path='/agendausu' element={<AgendaUsu />}></Route>
+						<Route path='/admin' element={<DashboardAdmin />}></Route>
+						<Route path='/agendausu' element={<UserAgenda />}></Route>
 					</Route>
 				</Routes>
 				<Footer />

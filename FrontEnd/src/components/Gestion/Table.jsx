@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import {
 	MaterialReactTable,
 	useMaterialReactTable,
@@ -6,20 +7,14 @@ import { Box } from '@mui/material';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { MRT_Localization_ES } from 'material-react-table/locales/es';
-import PropTypes from 'prop-types';
+
+const theme = createTheme({
+	palette: {
+		mode: 'light',
+	},
+});
 
 export const Table = ({ columns, data, actions }) => {
-	Table.propTypes = {
-		columns: PropTypes.array.isRequired,
-		data: PropTypes.array.isRequired,
-		actions: PropTypes.arrayOf(
-			PropTypes.shape({
-				onClick: PropTypes.func.isRequired,
-				icon: PropTypes.node.isRequired,
-			})
-		).isRequired,
-	};
-
 	const table = useMaterialReactTable({
 		columns,
 		data: data || [],
@@ -43,33 +38,39 @@ export const Table = ({ columns, data, actions }) => {
 			variant: 'outlined',
 		},
 		renderRowActions: ({ row }) => (
-			<Box sx={{}}>
-				<div className='d-flex flex-row flex-nowrap'>
-					{actions.map((action, index) => (
-						<span
-							key={index}
-							className=' mx-2'
-							onClick={() => action.onClick && action.onClick(row)}>
-							{action.icon}
-						</span>
-					))}
-				</div>
+			<Box sx={{ display: 'flex', flexDirection: 'row', gap: 1 }}>
+				{actions.map((action, index) => (
+					<span
+						key={index}
+						onClick={() => action.onClick && action.onClick(row)}>
+						{action.icon}
+					</span>
+				))}
 			</Box>
 		),
 	});
 
-	const darkTheme = createTheme({
-		palette: {
-			mode: 'dark',
-		},
-	});
-
 	return (
-		<div>
-			<ThemeProvider theme={darkTheme}>
-				<CssBaseline />
-				<MaterialReactTable table={table} />
-			</ThemeProvider>
-		</div>
+		<ThemeProvider theme={theme}>
+			<CssBaseline />
+			<MaterialReactTable
+				table={table}
+				sx={{
+					'& .MuiTableCell-root': {
+						borderBottom: '1px solid #ddd',
+					},
+					'& .MuiTableHead-root': {
+						backgroundColor: '#e0e0e0',
+					},
+					'& .MuiTableCell-head': {
+						backgroundColor: '#185574',
+						fontWeight: 'bold',
+					},
+					'& .MuiTableBody-root': {
+						fontSize: '0.875rem',
+					},
+				}}
+			/>
+		</ThemeProvider>
 	);
 };

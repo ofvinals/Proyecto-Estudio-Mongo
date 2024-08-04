@@ -10,8 +10,6 @@ import {
 	Edit as EditIcon,
 	Visibility as VisibilityIcon,
 } from '@mui/icons-material';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
 import { useBillActions } from '../../hooks/UseBills.js';
 import { Detail } from '../../components/Gestion/Detail.jsx';
 import { Table } from '../../components/Gestion/Table.jsx';
@@ -53,19 +51,15 @@ export const GestionBills = () => {
 	}, []);
 
 	useEffect(() => {
-		try {
-			const filteredGastos = bills.filter((gasto) =>
-				viewArchived
-					? gasto.estado === 'Cancelado'
-					: gasto.estado !== 'Cancelado'
-			);
-			const finalFilteredGastos = admin
-				? filteredGastos
-				: filteredGastos.filter((gasto) => gasto.cliente === user);
-			setData(finalFilteredGastos);
-		} catch (error) {
-			console.error('Error al obtener gastos', error);
-		}
+		const filteredGastos = bills.filter((gasto) =>
+			viewArchived
+				? gasto.estado === 'Cancelado'
+				: gasto.estado !== 'Cancelado'
+		);
+		const finalFilteredGastos = admin
+			? filteredGastos
+			: filteredGastos.filter((gasto) => gasto.cliente === user);
+		setData(finalFilteredGastos);
 	}, [bills, viewArchived]);
 
 	useEffect(() => {
@@ -180,15 +174,9 @@ export const GestionBills = () => {
 		},
 	];
 
-	const darkTheme = createTheme({
-		palette: {
-			mode: 'dark',
-		},
-	});
-
 	return (
 		<>
-			<div className='bg-gradient-to-tl from-[#1e1e1e] to-[#4077ad] pb-3 pt-24'>
+			<section className='bg-gradient-to-tl from-[#1e1e1e] to-[#4077ad] pb-3 pt-24'>
 				<Header />
 				<div className=' rounded-xl container-lg mb-1 '>
 					<Detail
@@ -234,18 +222,11 @@ export const GestionBills = () => {
 						<Loader />
 					) : (
 						<div className='table-responsive'>
-							<ThemeProvider theme={darkTheme}>
-								<CssBaseline />
-								<Table
-									columns={columns}
-									data={data}
-									actions={actions}
-								/>
-							</ThemeProvider>
+							<Table columns={columns} data={data} actions={actions} />
 						</div>
 					)}
 				</div>
-			</div>
+			</section>
 			<Modals
 				isOpen={editModal.isOpen}
 				onClose={editModal.closeModal}
@@ -269,8 +250,7 @@ export const GestionBills = () => {
 			<Modals
 				isOpen={newModal.isOpen}
 				onClose={newModal.closeModal}
-				title='Cargar Nuevo Gasto'
-				>
+				title='Cargar Nuevo Gasto'>
 				<BillForm onClose={newModal.closeModal} mode='create' />
 			</Modals>
 		</>

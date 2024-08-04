@@ -1,15 +1,15 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../hooks/useAuth';
+import { useAuth } from '../hooks/useAuth.js';
 import '../css/Header.css';
 import { Detail } from '../components/Gestion/Detail.jsx';
 import { Header } from '../components/header/Header.jsx';
-// import { Novedades } from '../components/Novedades.jsx';
+import { Novedades } from '../components/Gestion/Novedades.jsx';
 import { useState } from 'react';
 import Modals from '../utils/Modals.jsx';
 import { UserForm } from '../components/Forms/UserForm.jsx';
 
-export const AdminUsu = () => {
-	const { loggedUser, logout } = useAuth({});
+export const DashboardUser = () => {
+	const { loggedUser, logoutUser } = useAuth();
 	const navigate = useNavigate();
 	const rowId = loggedUser.id;
 	const [openEditModal, setopenEditModal] = useState(false);
@@ -23,7 +23,7 @@ export const AdminUsu = () => {
 	};
 
 	const handleLogOut = async () => {
-		await logout();
+		await logoutUser();
 		navigate('/home');
 	};
 
@@ -81,7 +81,7 @@ export const AdminUsu = () => {
 					</button>
 				</div>
 				<hr className='linea text-white mx-3' />
-				{/* <Novedades /> */}
+				<Novedades />
 			</div>
 
 			<Modals

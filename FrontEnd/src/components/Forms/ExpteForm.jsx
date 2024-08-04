@@ -31,7 +31,7 @@ export const ExpteForm = ({ rowId, onClose, mode }) => {
 		if (mode === 'edit' || mode === 'view') {
 			getExpte(rowId);
 		}
-	}, [rowId]);
+	}, []);
 
 	useEffect(() => {
 		if (

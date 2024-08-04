@@ -1,17 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
-import '../css/Header.css';
+import '../../css/Header.css';
 import CheckIcon from '@mui/icons-material/Check';
 import PendingActionsIcon from '@mui/icons-material/PendingActions';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
 import { useForm } from 'react-hook-form';
 import { Button, Form } from 'react-bootstrap';
-import { Table } from './Gestion/Table.jsx';
+import { Table } from './Table.jsx';
 import Tooltip from '@mui/material/Tooltip';
 import { useSelector } from 'react-redux';
-import { useNotesActions } from '../hooks/UseNotes.js';
-import Loader from '../utils/Loader.jsx';
+import { useNotesActions } from '../../hooks/UseNotes.js';
+import Loader from '../../utils/Loader.jsx';
 
 export const Notes = () => {
 	const [data, setData] = useState([]);
@@ -31,17 +29,6 @@ export const Notes = () => {
 
 	const toggleMostrarNotas = () => {
 		setMostrarNotasPendientes(!mostrarNotasPendientes);
-		if (mostrarNotasPendientes) {
-			const notasPendientes = notes.filter(
-				(note) => note.estado === 'Pendiente'
-			);
-			setData(notasPendientes);
-		} else {
-			const notasArchivadas = notes.filter(
-				(note) => note.estado === 'Archivado'
-			);
-			setData(notasArchivadas);
-		}
 	};
 
 	const loadNotas = async () => {
@@ -55,6 +42,29 @@ export const Notes = () => {
 	useEffect(() => {
 		loadNotas();
 	}, [statusUpdate, statusSign]);
+
+	useEffect(() => {
+		if (notes.length > 0) {
+			const notasPendientes = notes.filter(
+				(note) => note.estado === 'Pendiente'
+			);
+			setData(notasPendientes);
+		}
+	}, [notes]);
+
+	useEffect(() => {
+		if (mostrarNotasPendientes) {
+			const notasPendientes = notes.filter(
+				(note) => note.estado === 'Pendiente'
+			);
+			setData(notasPendientes);
+		} else {
+			const notasArchivadas = notes.filter(
+				(note) => note.estado === 'Archivado'
+			);
+			setData(notasArchivadas);
+		}
+	}, [mostrarNotasPendientes, notes]);
 
 	const onSubmit = handleSubmit(async (values) => {
 		values.estado = 'Pendiente';
@@ -107,12 +117,6 @@ export const Notes = () => {
 					onClick: (row) => desarchiveNote(row.original._id),
 				},
 		  ];
-
-	const darkTheme = createTheme({
-		palette: {
-			mode: 'dark',
-		},
-	});
 
 	return (
 		<>
@@ -202,14 +206,7 @@ export const Notes = () => {
 						<Loader />
 					) : (
 						<div className='table-responsive'>
-							<ThemeProvider theme={darkTheme}>
-								<CssBaseline />
-								<Table
-									columns={columns}
-									data={data}
-									actions={actions}
-								/>
-							</ThemeProvider>
+							<Table columns={columns} data={data} actions={actions} />
 						</div>
 					)}
 				</div>

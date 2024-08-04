@@ -27,7 +27,7 @@ export function useCashActions() {
 		await dispatch(createCashThunk({ cash: cashData }));
 	};
 
-	const updateCash = async (rowId, values) => {
+	const updateCash = async ({ rowId, values }) => {
 		await dispatch(updateCashThunk({ id: rowId, values }));
 	};
 

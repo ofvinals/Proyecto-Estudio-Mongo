@@ -7,8 +7,6 @@ import {
 	Delete as DeleteIcon,
 	Visibility as VisibilityIcon,
 } from '@mui/icons-material';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
 import '../../css/Header.css';
 import { useExpteActions } from '../../hooks/UseExptes.js';
 import { Table } from '../../components/Gestion/Table';
@@ -53,20 +51,16 @@ export const GestionExpedientes = () => {
 	}, []);
 
 	useEffect(() => {
-		try {
-			const filteredExptes = exptes.filter((expte) =>
-				viewArchived
-					? expte.estado === 'Terminado'
-					: expte.estado !== 'Terminado'
-			);
-			const finalFilteredExptes =
-				admin || coadmin
-					? filteredExptes
-					: filteredExptes.filter((expte) => expte.cliente === user);
-			setData(finalFilteredExptes);
-		} catch (error) {
-			console.error('Error al obtener gastos', error);
-		}
+		const filteredExptes = exptes.filter((expte) =>
+			viewArchived
+				? expte.estado === 'Terminado'
+				: expte.estado !== 'Terminado'
+		);
+		const finalFilteredExptes =
+			admin || coadmin
+				? filteredExptes
+				: filteredExptes.filter((expte) => expte.cliente === user);
+		setData(finalFilteredExptes);
 	}, [exptes, viewArchived]);
 
 	useEffect(() => {
@@ -127,8 +121,7 @@ export const GestionExpedientes = () => {
 				</Tooltip>
 			),
 			onClick: (row) => {
-				console.log(row.original._id),
-					navigate(`/gestionmovimientos/${row.original._id}`);
+				navigate(`/gestionmovimientos/${row.original._id}`);
 			},
 		},
 		{
@@ -155,10 +148,8 @@ export const GestionExpedientes = () => {
 		},
 	];
 
-	const darkTheme = createTheme({ palette: { mode: 'dark' } });
-
 	return (
-		<div className='bg-gradient-to-tl from-[#1e1e1e] to-[#4077ad] pb-3 pt-24'>
+		<section className='bg-gradient-to-tl from-[#1e1e1e] to-[#4077ad] pb-3 pt-24'>
 			<Header />
 			<div className=' rounded-xl container-lg mb-1 '>
 				<Detail modulo={'Expedientes'} />
@@ -191,7 +182,9 @@ export const GestionExpedientes = () => {
 								onClick={() => setViewCaducidad(!viewCaducidad)}
 								className='bg-background shadow-3xl btnLogout text-white text-center flex items-center justify-center p-2 border-2 w-[210px] mb-3 border-white rounded-xl font-semibold'>
 								<i className='text-xl pe-2 bi bi-calendar2-x'></i>
-								{viewCaducidad ? 'Expedientes en Tramite' : 'Expedientes a caducar'}
+								{viewCaducidad
+									? 'Expedientes en Tramite'
+									: 'Expedientes a caducar'}
 							</button>
 						)}
 						<Link
@@ -215,14 +208,7 @@ export const GestionExpedientes = () => {
 						<Loader />
 					) : (
 						<div className='table-responsive'>
-							<ThemeProvider theme={darkTheme}>
-								<CssBaseline />
-								<Table
-									columns={columns}
-									data={data}
-									actions={actions}
-								/>
-							</ThemeProvider>
+							<Table columns={columns} data={data} actions={actions} />
 						</div>
 					)}
 				</div>
@@ -247,6 +233,6 @@ export const GestionExpedientes = () => {
 					<ExpteForm onClose={newModal.closeModal} mode='create' />
 				</Modals>
 			</div>
-		</div>
+		</section>
 	);
 };

@@ -36,7 +36,7 @@ export const Contact = () => {
 	return (
 		<>
 			<Header />
-			<div className='pb-5 flex flex-col justify-center items-center backgroundimage'>
+			<section className='pb-5 flex flex-col justify-center items-center backgroundimage'>
 				<Whatsapp />
 				<div className=''>
 					<h1 className='text-3xl font-bold mt-28 bg-gradient-to-t from-primary to-blue-200 text-transparent bg-clip-text text-center'>
@@ -89,7 +89,7 @@ export const Contact = () => {
 						Enviar
 					</button>
 				</form>
-			</div>
+			</section>
 		</>
 	);
 };

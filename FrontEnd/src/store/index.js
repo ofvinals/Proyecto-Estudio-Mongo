@@ -7,6 +7,7 @@ import billsReducer from './bills/slice';
 import cajasReducer from './cashs/slice';
 import toastReducer from './toast/slice';
 import notesReducer from './notes/slice';
+import newsReducer from './news/slice';
 
 export const store = configureStore({
 	reducer: {
@@ -18,6 +19,7 @@ export const store = configureStore({
 		cashs: cajasReducer,
 		toast: toastReducer,
 		notes: notesReducer,
+		news: newsReducer,
 	},
 	middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(),
 });

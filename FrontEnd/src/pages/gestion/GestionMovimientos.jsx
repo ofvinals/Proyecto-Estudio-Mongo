@@ -9,8 +9,6 @@ import {
 	Delete as DeleteIcon,
 	Visibility as VisibilityIcon,
 } from '@mui/icons-material';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
 import '../../css/Header.css';
 import { useExpteActions } from '../../hooks/UseExptes.js';
 import { Table } from '../../components/Gestion/Table';
@@ -42,7 +40,6 @@ export const GestionMovimientos = () => {
 	const admin = loggedUser.admin;
 	const coadmin = loggedUser.coadmin;
 
-	console.log(id); 
 	const dataExpte = async () => {
 		try {
 			await getExpte(id);
@@ -50,16 +47,20 @@ export const GestionMovimientos = () => {
 			console.error('Error al obtener movimientos del expediente', error);
 		}
 	};
-	
-	console.log(expte);
+
 	useEffect(() => {
 		dataExpte();
-		setData(expte.movimientos);
-		setExpteId(expte._id);
 	}, [statusSign, statusUpdate]);
 
 	useEffect(() => {
-		const dataExpte = async () => {
+		if (expte && expte.movimientos) {
+			setData(expte.movimientos);
+			setExpteId(expte._id);
+		}
+	}, [expte]);
+
+	useEffect(() => {
+		const dataCaducidad = async () => {
 			try {
 				const diasSinMov = await calcularDiasTranscurridos(id);
 				setDiasCaducidad(diasSinMov);
@@ -67,7 +68,7 @@ export const GestionMovimientos = () => {
 				console.error('Error al obtener movimientos del expediente', error);
 			}
 		};
-		dataExpte();
+		dataCaducidad();
 	}, []);
 
 	const columns = React.useMemo(
@@ -134,15 +135,9 @@ export const GestionMovimientos = () => {
 		},
 	];
 
-	const darkTheme = createTheme({
-		palette: {
-			mode: 'dark',
-		},
-	});
-
 	return (
 		<>
-			<div className='bg-gradient-to-tl from-[#1e1e1e] to-[#4077ad] pb-3 pt-24'>
+			<section className='bg-gradient-to-tl from-[#1e1e1e] to-[#4077ad] pb-3 pt-24'>
 				<Header />
 				<div className=' rounded-xl container-lg mb-1 '>
 					<Detail modulo={'Movimientos de Expediente'} />
@@ -202,13 +197,10 @@ export const GestionMovimientos = () => {
 					</h2>
 
 					<div className='table-responsive'>
-						<ThemeProvider theme={darkTheme}>
-							<CssBaseline />
-							<Table columns={columns} data={data} actions={actions} />
-						</ThemeProvider>
+						<Table columns={columns} data={data} actions={actions} />
 					</div>
 				</div>
-			</div>
+			</section>
 
 			<div>
 				<Modals

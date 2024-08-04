@@ -6,8 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import '../../css/Header.css';
 import { useAuth } from '../../hooks/useAuth';
-import emailjs from '@emailjs/browser';
-import Swal from 'sweetalert2';
+// import emailjs from '@emailjs/browser';
 import Modals from '../../utils/Modals';
 import { Login } from './Login';
 
@@ -22,9 +21,12 @@ export const Registro = ({ setOpenRegister }) => {
 	} = useForm();
 	const form = useRef();
 	const [showPassword, setShowPassword] = useState(false);
+	const [showCoPassword, setShowCoPassword] = useState(false);
+
 	const [openModal, setOpenModal] = useState(null);
 
 	const toggleShowPassword = () => setShowPassword(!showPassword);
+	const toggleShowCoPassword = () => setShowCoPassword(!showCoPassword);
 
 	const handleLogin = () => {
 		setOpenRegister && setOpenRegister(false);
@@ -34,22 +36,15 @@ export const Registro = ({ setOpenRegister }) => {
 	const onSubmit = handleSubmit(async (values) => {
 		try {
 			await registerUser(values);
-			emailjs.sendForm(
-				'service_iew5q2g',
-				'template_fgl8bsq',
-				form.current,
-				'saMzvd5sdlHj2BhYr'
-			);
+			// emailjs.sendForm(
+			// 	'service_iew5q2g',
+			// 	'template_fgl8bsq',
+			// 	form.current,
+			// 	'saMzvd5sdlHj2BhYr'
+			// );
 			navigate('/adminusu');
 		} catch (error) {
-			console.error('Error al registrar:', error);
-			Swal.fire({
-				icon: 'error',
-				title: 'Error de registro',
-				text: 'Hubo un error en el registro de usuario. Intenta nuevamente!',
-				showConfirmButton: false,
-				timer: 1500,
-			});
+			console.error('Error al registrar el usuario:', error);
 		}
 	});
 
@@ -135,7 +130,7 @@ export const Registro = ({ setOpenRegister }) => {
 					<div className='flex flex-row items-center bg-neutral-200 shadow-2xl w-full rounded-md focus:outline-none border-2 border-black'>
 						<Form.Control
 							className='border-none '
-							type={showPassword ? 'text' : 'password'}
+							type={showCoPassword ? 'text' : 'password'}
 							{...register('copassword', {
 								required: {
 									value: true,
@@ -158,11 +153,11 @@ export const Registro = ({ setOpenRegister }) => {
 						)}
 						<Button
 							type='button'
-							onClick={toggleShowPassword}
+							onClick={toggleShowCoPassword}
 							className='border-none  bg-white text-black'>
 							<i
 								className={`text-xl p-2 ${
-									showPassword ? 'bi-eye-slash' : 'bi-eye'
+									showCoPassword ? 'bi-eye-slash' : 'bi-eye'
 								}`}></i>
 						</Button>
 					</div>

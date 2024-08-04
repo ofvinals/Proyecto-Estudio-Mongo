@@ -11,27 +11,29 @@ import { Button } from 'react-bootstrap';
 import Swal from 'sweetalert2';
 import dayjs from 'dayjs';
 import 'dayjs/locale/es-mx';
-import '../../css/Header.css';
+import '../../css/AgendaUsu.css';
 dayjs.locale('es');
 import { Delete as DeleteIcon } from '@mui/icons-material';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
-import { Detail } from '../../components/Gestion/Detail';
+import { Detail } from '../../components/Gestion/Detail.jsx';
 import { Header } from '../../components/header/Header.jsx';
-import { Table } from '../../components/Gestion/Table';
+import { Table } from '../../components/Gestion/Table.jsx';
 import Tooltip from '@mui/material/Tooltip';
 import Loader from '../../utils/Loader.jsx';
-import { useExpteActions } from '../../hooks/UseExptes.js';
+import { useSelector } from 'react-redux';
+import { Box } from '@mui/material';
 
-export const AgendaUsu = () => {
+export const UserAgenda = () => {
 	const { loggedUser } = useAuth();
-	const form = useRef();
-	const [data, setData] = useState();
+	const { getTurns, createTurn, deleteTurn } = useTurnActions();
 	const [startDate, setStartDate] = useState(dayjs());
 	const [turnoOcupado, setTurnoOcupado] = useState([]);
+
 	const user = loggedUser.email;
-	const [loading, setLoading] = useState(true);
-	const { getTurnos, createTurno, deleteTurno } = useExpteActions();
+	const turns = useSelector((state) => state.turns.turns);
+	const statusTurn = useSelector((state) => state.turns.status);
+	const statusUpdate = useSelector((state) => state.turns.statusUpdate);
+	const statusSign = useSelector((state) => state.turns.statusSign);
+	const form = useRef();
 	// deshabilita seleccion de dias de fin de semana
 	// const lastMonday = dayjs().startOf('week');
 	// const nextSunday = dayjs().endOf('week').startOf('day');
@@ -47,19 +49,17 @@ export const AgendaUsu = () => {
 		return view === 'hours' && (isHourBefore9 || isHourAfter6);
 	};
 
+	const loadTurns = async () => {
+		try {
+			await getTurns();
+		} catch (error) {
+			console.error('Error al obtener turnos', error);
+		}
+	};
+
 	useEffect(() => {
-		const loadTurnos = async () => {
-			try {
-				const fetchedTurnos = await getTurnos();
-				setData(fetchedTurnos);
-				setLoading(false);
-			} catch (error) {
-				console.error('Error al obtener turnos', error);
-				setLoading(false);
-			}
-		};
-		loadTurnos();
-	}, []);
+		loadTurns();
+	}, [statusUpdate, statusSign]);
 
 	const columns = React.useMemo(
 		() => [
@@ -91,15 +91,9 @@ export const AgendaUsu = () => {
 					<DeleteIcon color='error' cursor='pointer' />
 				</Tooltip>
 			),
-			onClick: (row) => borrarTurno(row.original._id),
+			onClick: (row) => deleteTurn(row.original._id),
 		},
 	];
-
-	const darkTheme = createTheme({
-		palette: {
-			mode: 'dark',
-		},
-	});
 
 	// funcion para crear nuevo turno
 	const handleCrearCita = async () => {
@@ -107,7 +101,6 @@ export const AgendaUsu = () => {
 		const formatoTurnoSeleccionado =
 			dayjs(startDate).format('DD/MM/YYYY HH:mm');
 		// Comprueba si el turno seleccionado ya está ocupado
-
 		const isTurnoOcupado = turnoOcupado.some(
 			(turno) => turno.turno === formatoTurnoSeleccionado
 		);
@@ -146,16 +139,7 @@ export const AgendaUsu = () => {
 					// 	nuevoTurno,
 					// 	'saMzvd5sdlHj2BhYr'
 					// );
-
-					createTurno(nuevoTurno);
-					setLoading(false);
-					await Swal.fire({
-						icon: 'success',
-						title: 'Su turno fue registrado!',
-						showConfirmButton: false,
-						timer: 2500,
-					});
-					window.location.reload();
+					createTurn(nuevoTurno);
 				} catch (error) {
 					console.error(
 						'Error al enviar el formulario por EmailJS:',
@@ -169,46 +153,9 @@ export const AgendaUsu = () => {
 		return;
 	};
 
-	// funcion para borrar turnos
-	async function borrarTurno(id) {
-		try {
-			const result = await Swal.fire({
-				title: '¿Estás seguro?',
-				text: 'Confirmas la eliminacion del turno?',
-				icon: 'warning',
-				showCancelButton: true,
-				confirmButtonColor: '#d33',
-				cancelButtonColor: '#8f8e8b',
-				confirmButtonText: 'Sí, eliminar',
-				cancelButtonText: 'Cancelar',
-			});
-			if (result.isConfirmed) {
-				await deleteTurno(id);
-				setLoading(false);
-				Swal.fire(
-					'Eliminado',
-					'El turno fue eliminado con exito',
-					'success'
-				);
-				window.location.reload();
-			}
-			setTurnoOcupado((prevData) =>
-				prevData.filter((turno) => turno.id !== id)
-			);
-		} catch (error) {
-			console.error('Error al eliminar el turno:', error);
-			Swal.fire({
-				icon: 'error',
-				title: 'Hubo un error al eliminar su turno!',
-				showConfirmButton: false,
-				timer: 2500,
-			});
-		}
-	}
-
 	return (
 		<>
-			<div className='bg-gradient-to-tl from-[#1e1e1e] to-[#4077ad] pb-3 pt-24'>
+			<section className='bg-gradient-to-tl from-[#1e1e1e] to-[#4077ad] pb-3 pt-24'>
 				<Header />
 				<div className='rounded-xl container-lg mb-1 '>
 					<Detail modulo={'Turnos'} />
@@ -228,43 +175,50 @@ export const AgendaUsu = () => {
 						<p className='my-4 text-xl font-medium text-center text-white'>
 							Seleccioná el dia y hora de tu preferencia:
 						</p>
-
-						<LocalizationProvider
-							dateAdapter={AdapterDayjs}
-							adapterLocale='es-mx'>
-							<DemoContainer components={['NobileDateTimePicker']}>
-								<DemoItem label=''>
-									<MobileDateTimePicker
-										defaultValue={dayjs()}
-										formatDensity='dense'
-										disablePast={true}
-										ampm={false}
-										shouldDisableTime={shouldDisableTime}
-										inputFormat='DD/MM/YYYY HH:mm'
-										shouldDisableDate={isWeekend}
-										selected={startDate}
-										onChange={(date) => setStartDate(date)}
-										minutesStep={30}
-										views={[
-											'year',
-											'month',
-											'day',
-											'hours',
-											'minutes',
-										]}
-										slotProps={{
-											textField: () => ({
-												color: 'success',
-												focused: true,
-												size: 'medium',
-											}),
-										}}
-										disableHighlightToday={false}
-									/>
-								</DemoItem>
-							</DemoContainer>
-						</LocalizationProvider>
-						<div className='flex flex-row justify-around py-3'>
+						<Box
+							sx={{
+								display: 'flex',
+								justifyContent: 'center',
+								alignItems: 'center',
+								
+							}}>
+							<LocalizationProvider
+								dateAdapter={AdapterDayjs}
+								adapterLocale='es-mx'>
+								<DemoContainer components={['NobileDateTimePicker']}>
+									<DemoItem label=''>
+										<MobileDateTimePicker
+											defaultValue={dayjs()}
+											formatDensity='dense'
+											disablePast={true}
+											ampm={false}
+											shouldDisableTime={shouldDisableTime}
+											inputFormat='DD/MM/YYYY HH:mm'
+											shouldDisableDate={isWeekend}
+											selected={startDate}
+											onChange={(date) => setStartDate(date)}
+											minutesStep={30}
+											views={[
+												'year',
+												'month',
+												'day',
+												'hours',
+												'minutes',
+											]}
+											slotProps={{
+												textField: () => ({
+													sx: { width: '100%', maxWidth: '300px' },
+													focused: true,
+													size: 'medium',
+												}),
+											}}
+											disableHighlightToday={true}
+										/>
+									</DemoItem>
+								</DemoContainer>
+							</LocalizationProvider>
+						</Box>
+						<div className='flex flex-row justify-around py-3 mt-2'>
 							<Button
 								className='bg-white shadow-3xl btnAdmin text-primary text-center p-2 border-2 w-[200px] mb-3 border-primary rounded-xl font-semibold'
 								ref={form}
@@ -285,23 +239,21 @@ export const AgendaUsu = () => {
 							Su/s turno/s registrado/s
 						</h2>
 						{statusTurn === 'Cargando' ? (
-						<Loader />
-					) : (
+							<Loader />
+						) : (
 							<div className='table-responsive'>
-								<ThemeProvider theme={darkTheme}>
-									<CssBaseline />
+			
 									<Table
 										columns={columns}
-										data={data}
+										data={turns}
 										actions={actions}
-										borrarTurno={borrarTurno}
 									/>
-								</ThemeProvider>
+				
 							</div>
 						)}
 					</div>
 				</div>
-			</div>
+			</section>
 		</>
 	);
 };

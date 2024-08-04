@@ -8,8 +8,6 @@ import {
 	Delete as DeleteIcon,
 	Visibility as VisibilityIcon,
 } from '@mui/icons-material';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
 import { useUserActions } from '../../hooks/UseUserActions.js';
 import { Table } from '../../components/Gestion/Table.jsx';
 import { Detail } from '../../components/Gestion/Detail.jsx';
@@ -130,11 +128,9 @@ export const GestionUsers = () => {
 		},
 	];
 
-	const darkTheme = createTheme({ palette: { mode: 'dark' } });
-
 	return (
 		<>
-			<div className='bg-gradient-to-tl from-[#1e1e1e] to-[#4077ad] pb-3 pt-24'>
+			<section className='bg-gradient-to-tl from-[#1e1e1e] to-[#4077ad] pb-3 pt-24'>
 				<Header />
 				<div className=' rounded-xl container-lg mb-1 '>
 					<Detail modulo={'Usuarios'} />
@@ -159,14 +155,7 @@ export const GestionUsers = () => {
 						<Loader />
 					) : (
 						<div className='table-responsive'>
-							<ThemeProvider theme={darkTheme}>
-								<CssBaseline />
-								<Table
-									columns={columns}
-									data={users}
-									actions={actions}
-								/>
-							</ThemeProvider>
+							<Table columns={columns} data={users} actions={actions} />
 						</div>
 					)}
 				</div>
@@ -193,7 +182,7 @@ export const GestionUsers = () => {
 						/>
 					</Modals>
 				</div>
-			</div>
+			</section>
 		</>
 	);
 };

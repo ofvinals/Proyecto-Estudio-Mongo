@@ -1,19 +1,20 @@
 import { useNavigate } from 'react-router-dom';
 import { register, login, loginWithGoogle, logout } from '../store/auth/thunks';
 import { useAppDispatch, useAppSelector } from './store';
+import { useUserActions } from './UseUserActions';
 
 export function useAuth() {
+	const { getUserbyGoogle } = useUserActions();
 	const loggedUser = useAppSelector((state) => state.auth.loggedUser);
-	const statusSign = useAppSelector((state) => state.auth.statusSign);
+	const statusAuth = useAppSelector((state) => state.auth.statusAuth);
 	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
 
-	const loginGoogle = async ({ setOpenSignIn }) => {
-		const userAction = await dispatch(loginWithGoogle());
+	const loginGoogle = async () => {
+		const userAction = await dispatch(loginWithGoogle({ getUserbyGoogle }));
 		if (userAction.error) {
 			alert(userAction.payload);
 		} else {
-			setOpenSignIn(false);
 			const user = userAction.payload;
 			if (user.admin || user.coadmin) {
 				navigate('/admin');
@@ -38,19 +39,14 @@ export function useAuth() {
 		return userAction.payload;
 	};
 
-	const registerUser = async (user, { setOpenRegister }) => {
-		const res = await dispatch(register(user));
-
-		if (res.error) {
-			alert(res.payload);
-		} else {
-			setOpenRegister(false);
-			navigate('/account');
-		}
+	const registerUser = async (user) => {
+		await dispatch(register(user));
+		navigate('/adminusu');
 	};
 
 	const logoutUser = () => {
 		dispatch(logout());
+		navigate('/home');
 	};
 
 	return {
@@ -59,6 +55,6 @@ export function useAuth() {
 		loginEmail,
 		registerUser,
 		logoutUser,
-		statusSign,
+		statusAuth,
 	};
 }
