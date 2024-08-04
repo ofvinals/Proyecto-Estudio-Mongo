@@ -2,16 +2,16 @@ import { Link } from 'react-router-dom';
 import Carousel from 'react-bootstrap/Carousel';
 import '../css/Home.css';
 import { Header } from '../components/header/Header';
-import { Count } from '../components/Home/Count';
+import { Count } from '../components/home/Count';
 import { Whatsapp } from '../components/Whatsapp';
-import { Services } from '../components/Home/Services';
-import { News } from '../components/Home/News';
+import { Services } from '../components/home/Services';
+import { News } from '../components/home/News';
 
 export const Home = () => {
 	return (
 		<>
 			<Header />
-			<div className='bg-white'>
+			<section className='bg-white'>
 				<Whatsapp />
 				<div className='imagennav rounded-b-lg flex flex-col h-[450px]'>
 					<div className='flex flex-col absolute top-1/4 sm:top-1/3 left-0 right-0 items-center text-center text-3xl text-white font-bold'>
@@ -30,16 +30,16 @@ export const Home = () => {
 						</Link>
 					</div>
 				</div>
-			</div>
+			</section>
 
-			<div className='imagenlogosec2 h-[290px] mt-10 bg-white flex justify-center'>
+			<section className='imagenlogosec2 h-[290px] mt-10 bg-white flex justify-center'>
 				<Link
 					className='btnhome text-base p-2 bg-background text-white rounded-lg font-semibold flex items-center justify-center text-center cursor-pointer mt-[250px] min-w-[222px] max-w-[300px] border-1 hover:bg-white hover:text-[#25aff0]'
 					to='/login'>
 					<i className='text-xl fa-solid fa-right-to-bracket me-2'></i>
 					Ingresa a tu cuenta
 				</Link>
-			</div>
+			</section>
 
 			<p className=' bg-[#185574] p-5 rounded-lg w-full text-5xl font-bold text-center my-10 text-white'>
 				Somos el {''}
@@ -49,7 +49,7 @@ export const Home = () => {
 				{''}de Tucuman!
 			</p>
 
-			<div className='flex items-center justify-center '>
+			<section className='flex items-center justify-center '>
 				<Carousel
 					slide={false}
 					className='lg:w-[1000px] md:w-[700px] w-full h-full '>
@@ -142,10 +142,10 @@ export const Home = () => {
 						</div>
 					</Carousel.Item>
 				</Carousel>
-			</div>
+			</section>
 			<Count />
 
-			<div className='d-flex flex-row justify-center my-10 mr-2 md:mx-16 xl:mx-36 h-[380px]'>
+			<section className='d-flex flex-row justify-center my-10 mr-2 md:mx-16 xl:mx-36 h-[380px]'>
 				<div className='imagenlogosec4 flex justify-center items-center  w-5/12'></div>
 				<div className='w-7/12 h-full flex bg-[#185574] rounded-md flex-col justify-center align-center'>
 					<p className='text-white w-full flex text-center justify-center text-2xl lg:text-3xl font-bold mt-3 '>
@@ -158,11 +158,11 @@ export const Home = () => {
 						responsabilidad en la relacion con nuestros clientes.-
 					</p>
 				</div>
-			</div>
+			</section>
 
 			<Services />
 			<News />
-			<div className='flex items-center justify-center'>
+			<section className='flex items-center justify-center'>
 				<div className='imagensection4 md:w-[750px] xl:w-[1100px] rounded-xl mt-3 flex flex-col flex-around h-[550px] sm:h-[450px] w-full mb-10'>
 					<p className=' titlecontac w-full flex justify-center font-bold text-4xl text-[#25b0f0] text-center items-center'>
 						CONTACTO
@@ -204,7 +204,7 @@ export const Home = () => {
 						</div>
 					</div>
 				</div>
-			</div>
+			</section>
 		</>
 	);
 };

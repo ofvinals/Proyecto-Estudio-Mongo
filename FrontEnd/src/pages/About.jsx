@@ -8,7 +8,7 @@ export const Nosotros = () => {
 	return (
 		<>
 			<Header />
-			<div className='flex flex-wrap justify-center flex-col backgroundimage pt-28'>
+			<section className='flex flex-wrap justify-center flex-col backgroundimage pt-28'>
 				<Whatsapp />
 				<h1 className=' text-3xl my-3 font-bold  bg-gradient-to-t from-primary to-blue-200 text-transparent bg-clip-text text-center'>
 					Sobre Nosotros
@@ -41,7 +41,7 @@ export const Nosotros = () => {
 					confidencialidad son las bases sobre las que se asienta nuestro
 					equipo de trabajo.-
 				</p>
-			</div>
+			</section>
 			<div className='flex row row-cols-12 justify-center p-3'>
 				<Card.Body className='mt-10 mx-10 py-2 max-w-[800px] bg-background text-white border-white rounded-xl'>
 					<Card.Title className=' py-3 text-white text-center text-2xl'>

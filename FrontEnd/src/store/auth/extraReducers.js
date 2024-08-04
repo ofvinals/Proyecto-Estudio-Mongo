@@ -61,14 +61,14 @@ export const authExtraReducers = (builder) => {
 
 	builder
 		.addCase(logout.pending, (state) => {
-			state.statusLoggedUser = 'Cargando';
+			state.statusSign = 'Cargando';
 		})
-		.addCase(logout.fulfilled, (state, action) => {
-			state.statusLoggedUser = 'Exitoso';
+		.addCase(logout.fulfilled, (state) => {
+			state.statusSign = 'Exitoso';
 			state.loggedUser = null;
 		})
 		.addCase(logout.rejected, (state, action) => {
-			state.statusLoggedUser = 'Fallido';
+			state.statusSign = 'Fallido';
 			state.error = action.payload;
 		});
 };

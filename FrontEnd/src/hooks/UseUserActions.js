@@ -1,6 +1,7 @@
 import { useAppDispatch, useAppSelector } from './store';
 import {
 	getUser as getUserThunk,
+	getUserbyGoogle as getUserbyGoogleThunk,
 	getUsers as getUsersThunk,
 	createUser as createUserThunk,
 	deleteUser as deleteUserThunk,
@@ -23,6 +24,10 @@ export function useUserActions() {
 		await dispatch(getUsersThunk());
 	};
 
+	const getUserbyGoogle = async () => {
+		await dispatch(getUserbyGoogleThunk());
+	};
+
 	const createUser = async (userData) => {
 		await dispatch(createUserThunk({ user: userData }));
 	};
@@ -43,6 +48,7 @@ export function useUserActions() {
 		users,
 		user,
 		getUser,
+		getUserbyGoogle,
 		getUsers,
 		createUser,
 		deleteUser,

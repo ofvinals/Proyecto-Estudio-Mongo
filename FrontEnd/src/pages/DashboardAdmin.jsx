@@ -1,15 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../hooks/useAuth';
+import { useAuth } from '../hooks/useAuth.js';
 import '../css/Header.css';
-import { Notes } from '../components/Notes.jsx';
+import { Notes } from '../components/Gestion/Notes.jsx';
 import { Detail } from '../components/Gestion/Detail.jsx';
 import { Header } from '../components/header/Header.jsx';
 
-export const Admin = () => {
+export const DashboardAdmin = () => {
 	const navigate = useNavigate();
-	const { loggedUser, logout } = useAuth();
+	const { loggedUser, logoutUser } = useAuth();
 	const admin = loggedUser.admin;
 	const coadmin = loggedUser.coadmin;
 
@@ -20,8 +20,7 @@ export const Admin = () => {
 	}, []);
 
 	const handleLogOut = async () => {
-		await logout();
-		navigate('/home');
+		await logoutUser();
 	};
 
 	return (

@@ -9,8 +9,6 @@ import {
 	Delete as DeleteIcon,
 	Visibility as VisibilityIcon,
 } from '@mui/icons-material';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
 import '../../css/Header.css';
 import { useCashActions } from '../../hooks/UseCashs.js';
 import { Detail } from '../../components/Gestion/Detail.jsx';
@@ -183,10 +181,8 @@ export const GestionCash = () => {
 		},
 	];
 
-	const darkTheme = createTheme({ palette: { mode: 'dark' } });
-
 	return (
-		<div className='bg-gradient-to-tl from-[#1e1e1e] to-[#4077ad] pb-3 pt-24'>
+		<section className='bg-gradient-to-tl from-[#1e1e1e] to-[#4077ad] pb-3 pt-24'>
 			<Header />
 			<div className=' rounded-xl container-lg mb-1 '>
 				<Detail modulo={'Caja'} />
@@ -228,10 +224,7 @@ export const GestionCash = () => {
 					<Loader />
 				) : (
 					<div className='table-responsive'>
-						<ThemeProvider theme={darkTheme}>
-							<CssBaseline />
-							<Table columns={columns} data={data} actions={actions} />
-						</ThemeProvider>
+						<Table columns={columns} data={data} actions={actions} />
 					</div>
 				)}
 			</div>
@@ -264,6 +257,6 @@ export const GestionCash = () => {
 					<CashForm onClose={newModal.closeModal} mode='create' />
 				</Modals>
 			</div>
-		</div>
+		</section>
 	);
 };

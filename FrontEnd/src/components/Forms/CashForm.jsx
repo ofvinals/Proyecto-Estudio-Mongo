@@ -23,7 +23,7 @@ const CashForm = ({ rowId, onClose, mode = 'edit' }) => {
 		if (mode === 'edit' || mode === 'view') {
 			getCash(rowId);
 		}
-	}, [rowId]);
+	}, []);
 
 	// Mueve la función al nivel raíz del cuerpo del componente
 	useEffect(() => {
@@ -107,9 +107,7 @@ const CashForm = ({ rowId, onClose, mode = 'edit' }) => {
 						readOnly={mode === 'view'}
 					/>
 					{errors.fecha && (
-						<span className='error-message'>
-							{errors.fecha.message}
-						</span>
+						<span className='error-message'>{errors.fecha.message}</span>
 					)}
 				</Form.Group>
 				<Form.Group
@@ -157,9 +155,7 @@ const CashForm = ({ rowId, onClose, mode = 'edit' }) => {
 						<option value='EGRESO'>EGRESO</option>
 					</Form.Control>
 					{errors.tipo && (
-						<span className='error-message'>
-							{errors.tipo.message}
-						</span>
+						<span className='error-message'>{errors.tipo.message}</span>
 					)}
 				</Form.Group>
 
@@ -193,12 +189,24 @@ const CashForm = ({ rowId, onClose, mode = 'edit' }) => {
 						Comprobante de caja
 					</Form.Label>
 					{mode === 'edit' || mode === 'create' ? (
-						<Form.Control type='file' {...register('file')} />
+						<Form.Control
+							className='items-center shadow-2xl w-full rounded-md p-2 focus:outline-none border-2 border-black text-black'
+							type='file'
+							{...register('file')}
+						/>
+					) : cash.file ? (
+						<a
+							href={cash.file}
+							target='_blank'
+							rel='noopener noreferrer'
+							className='text-blue-500 underline'>
+							Ver comprobante de caja adjunto
+						</a>
 					) : (
 						<Form.Control
 							plaintext
 							readOnly
-							defaultValue='Sin comprobante'
+							defaultValue='Sin comprobante de caja adjunto'
 						/>
 					)}
 				</Form.Group>
@@ -227,9 +235,7 @@ const CashForm = ({ rowId, onClose, mode = 'edit' }) => {
 						<option value='Cancelado'>Cancelado</option>
 					</Form.Control>
 					{errors.estado && (
-						<span className='error-message'>
-							{errors.estado.message}
-						</span>
+						<span className='error-message'>{errors.estado.message}</span>
 					)}
 				</Form.Group>
 				<Form.Group className='flex flex-wrap items-center w-full justify-around mt-3'>

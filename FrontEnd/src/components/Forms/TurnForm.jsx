@@ -24,7 +24,7 @@ export const TurnForm = ({ rowId, onClose, mode }) => {
 		if (mode === 'edit' || mode === 'view') {
 			getTurn(rowId);
 		}
-	}, [rowId]);
+	}, []);
 
 	useEffect(() => {
 		if (
@@ -59,7 +59,7 @@ export const TurnForm = ({ rowId, onClose, mode }) => {
 					className='flex flex-wrap justify-around items-center'>
 					<Form.Group
 						className='flex flex-col mb-3 items-center justify-around w-5/12 mx-2'
-						Id='cliente'>
+						id='cliente'>
 						<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>
 							Cliente
 						</Form.Label>
@@ -77,7 +77,7 @@ export const TurnForm = ({ rowId, onClose, mode }) => {
 
 					<Form.Group
 						className='flex flex-col mb-3 items-center justify-around w-5/12 mx-2'
-						Id='turno'>
+						id='turno'>
 						<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>
 							Turno
 						</Form.Label>
@@ -105,7 +105,7 @@ export const TurnForm = ({ rowId, onClose, mode }) => {
 
 					<Form.Group
 						className='flex flex-col mb-3 items-center justify-around w-full mx-2'
-						Id='motivo'>
+						id='motivo'>
 						<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>
 							Motivo
 						</Form.Label>

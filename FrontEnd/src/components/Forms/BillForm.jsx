@@ -30,7 +30,7 @@ export const BillForm = ({ rowId, onClose, mode }) => {
 		if (mode === 'edit' || mode === 'view') {
 			getBill(rowId);
 		}
-	}, [rowId]);
+	}, []);
 
 	useEffect(() => {
 		if (
@@ -280,17 +280,23 @@ export const BillForm = ({ rowId, onClose, mode }) => {
 						</Form.Label>
 						{mode === 'edit' || mode === 'create' ? (
 							<Form.Control
+								className='items-center shadow-2xl w-full rounded-md p-2 focus:outline-none border-2 border-black text-black'
 								type='file'
 								{...register('fileUrl')}
-								onChange={() => {
-									updateCaratula(watch('nroexpte'));
-								}}
 							/>
+						) : bill.fileUrl ? (
+							<a
+								href={bill.fileUrl}
+								target='_blank'
+								rel='noopener noreferrer'
+								className='text-blue-500 underline'>
+								Ver comprobante adjunto
+							</a>
 						) : (
 							<Form.Control
 								plaintext
 								readOnly
-								defaultValue='Sin comprobante'
+								defaultValue='Sin comprobante adjunto'
 							/>
 						)}
 					</Form.Group>

@@ -1,41 +1,19 @@
-import { useState, useEffect } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { Carousel } from 'react-bootstrap';
-import axios from 'axios';
+import { useNewsActions } from '../../hooks/useNews.js';
 import Loader from '../../utils/Loader.jsx';
 
 export const News = () => {
-	const [articles, setArticles] = useState([]);
-	const [loading, setLoading] = useState(true);
+	const articles = useSelector((state) => state.news.articles);
+	const status = useSelector((state) => state.news.status);
+	const error = useSelector((state) => state.news.error);
+	const { getNews } = useNewsActions();
 
 	useEffect(() => {
-		const fetchArticles = async () => {
-			try {
-				const response = await axios.get(
-					'https://proyecto-estudio-mongo.onrender.com/scrape'
-				);
-				setArticles(response.data);
-				setLoading(false);
-			} catch (error) {
-				console.error('Error fetching articles', error);
-			}
-		};
-		fetchArticles();
+		getNews();
 	}, []);
-	// useEffect(() => {
-	// 	const loadData = async () => {
-	// 		try {
-	// 			const url = `https://newsapi.org/v2/top-headlines?sources=google-news-ar&apiKey=${apiKey}`;
-	// 			const response = await fetch(url);
-	// 			const data = await response.json();
-	// 			console.log(data);
-	// 			setNews(data.articles);
-	// 		} catch (error) {
-	// 			console.error('Error fetching data:', error);
-	// 		}
-	// 	};
-
-	// 	loadData();
-	// }, []);
 
 	return (
 		<div>
@@ -43,8 +21,12 @@ export const News = () => {
 				Noticias Judiciales de Interés
 			</h2>
 
-			{articles || loading ? (
-				<Carousel className='h-[600px] mb-16 mx-6 sm:mx-24'>
+			{status === 'Cargando' ? (
+				<Loader />
+			) : status === 'Fallido' ? (
+				<p>Error: {error}</p>
+			) : (
+				<Carousel className='h-[550px] mb-16 mx-6 sm:mx-24'>
 					{articles.map((article, index) => (
 						<Carousel.Item key={index}>
 							<a
@@ -53,7 +35,7 @@ export const News = () => {
 								rel='noopener noreferrer'>
 								<img
 									referrerPolicy='same-origin'
-									className='rounded-xl object-cover w-full max-h-[400px] '
+									className='rounded-xl object-cover w-full max-h-[400px]'
 									src={article.imgSrc}
 									alt={article.title}
 								/>
@@ -69,8 +51,6 @@ export const News = () => {
 						</Carousel.Item>
 					))}
 				</Carousel>
-			) : (
-				<Loader />
 			)}
 		</div>
 	);

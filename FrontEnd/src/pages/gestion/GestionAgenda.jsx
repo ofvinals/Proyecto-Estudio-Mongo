@@ -12,8 +12,6 @@ import useModal from '../../hooks/useModal';
 import { Table } from '../../components/Gestion/Table';
 import { TurnForm } from '../../components/Forms/TurnForm.jsx';
 import { GoogleCalendar } from '../../components/GoogleCalendar.jsx';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
 import Tooltip from '@mui/material/Tooltip';
 import { Button } from 'react-bootstrap';
 import '../../css/Header.css';
@@ -93,10 +91,8 @@ export const GestionAgenda = () => {
 		},
 	];
 
-	const darkTheme = createTheme({ palette: { mode: 'dark' } });
-
 	return (
-		<div className='bg-gradient-to-tl from-[#1e1e1e] to-[#4077ad] pb-3 pt-24'>
+		<section className='bg-gradient-to-tl from-[#1e1e1e] to-[#4077ad] pb-3 pt-24'>
 			<div className=' rounded-xl container-lg mb-1 '>
 				<Detail modulo='Agenda' />
 			</div>
@@ -119,10 +115,7 @@ export const GestionAgenda = () => {
 				{statusTurn === 'Cargando' ? (
 					<Loader />
 				) : (
-					<ThemeProvider theme={darkTheme}>
-						<CssBaseline />
-						<Table columns={columns} data={turns} actions={actions} />
-					</ThemeProvider>
+					<Table columns={columns} data={turns} actions={actions} />
 				)}
 			</div>
 
@@ -155,6 +148,6 @@ export const GestionAgenda = () => {
 					onClose={googleModal.closeModal}
 				/>
 			</Modals>
-		</div>
+		</section>
 	);
 };

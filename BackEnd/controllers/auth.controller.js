@@ -5,6 +5,7 @@ const Jwt = require('jsonwebtoken');
 // const { TOKEN_SECRET } = require('../app.js');
 
 const register = async (req, res) => {
+	console.log('req.body', req.body)
 	const { email, password, nombre, apellido, dni, domicilio, celular } =
 		req.body;
 	try {
@@ -40,17 +41,18 @@ const register = async (req, res) => {
 		});
 
 		res.cookie('token', token);
-		localStorage.setItem('token', token);
 
 		return res.status(200).json({
-			accessToken: token,
 			id: userSaved._id,
 			email: userSaved.email,
 			displayName: `${userSaved.nombre} ${userSaved.apellido}`,
+			accessToken: token,
+			admin: userSaved.admin,
+			coadmin: userSaved.coadmin,
 		});
 	} catch (error) {
 		console.log(error);
-		return res.status(500).json(['Error de registro de usuario']);
+		return res.status(500).json({ message: error.message });
 	}
 };
 
@@ -93,7 +95,39 @@ const login = async (req, res) => {
 		});
 	} catch (error) {
 		console.log(error);
-		return res.status(500).json(['Error de Ingreso']);
+		return res.status(500).json({ message: error.message });
+	}
+};
+
+const googleLogin = async (req, res) => {
+	try {
+		const { token, email } = req.body;
+		// Buscar al usuario en la base de datos
+		let userFound = await User.findOne({ email });
+		// Generar el token de acceso
+		const accessToken = await createAccessToken({
+			id: userFound._id,
+			displayName: `${userFound.nombre} ${userFound.apellido}`,
+			email: userFound.email,
+			googleToken: token,
+			admin: userFound.admin,
+			coadmin: userFound.coadmin,
+		});
+
+		res.cookie('token', accessToken);
+
+		// envia respuesta al frontend
+		return res.status(200).json({
+			id: userFound._id,
+			email: userFound.email,
+			displayName: `${userFound.nombre} ${userFound.apellido}`,
+			accessToken: accessToken,
+			admin: userFound.admin,
+			coadmin: userFound.coadmin,
+		});
+	} catch (error) {
+		console.error(error);
+		return res.status(500).json({ message: error.message });
 	}
 };
 
@@ -116,15 +150,12 @@ const profile = async (req, res) => {
 const verifyToken = async (req, res) => {
 	const authHeader = req.headers['authorization'];
 	const token = authHeader && authHeader.split(' ')[1];
-	console.log(token);
 	if (!token) return res.send(false);
 
 	Jwt.verify(token, process.env.TOKEN_SECRET, async (error, user) => {
 		if (error) return res.status(401).json(['No autorizado']);
-		console.log(error, 'user', user);
 		const userFound = await User.findById(user.id);
 		if (!userFound) return res.status(401).json(['No autorizado']);
-		console.log('userFound', userFound);
 		return res.json({
 			id: userFound._id,
 			email: userFound.email,
@@ -139,6 +170,7 @@ const verifyToken = async (req, res) => {
 module.exports = {
 	register,
 	login,
+	googleLogin,
 	logout,
 	profile,
 	verifyToken,

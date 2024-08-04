@@ -12,8 +12,8 @@ export function AppProvider({ children }) {
 
 	const loggedUser = useSelector((state) => state.auth.loggedUser);
 	const statusAuth = useSelector((state) => state.auth.statusAuth);
-console.log(loggedUser)
 	useEffect(() => {
+		console.log("verificando loggedUser")
 		dispatch(verifyLoggedUser());
 	}, [dispatch]);
 

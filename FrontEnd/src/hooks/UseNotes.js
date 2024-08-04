@@ -23,8 +23,8 @@ export function useNotesActions() {
 		await dispatch(getNotesThunk());
 	};
 
-	const createNote = async (noteoData) => {
-		await dispatch(createNoteThunk({ note: noteoData }));
+	const createNote = async (noteData) => {
+		await dispatch(createNoteThunk(noteData));
 	};
 
 	const updateNote = async ({ rowId, values }) => {
