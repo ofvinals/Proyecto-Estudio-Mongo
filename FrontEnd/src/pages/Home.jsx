@@ -2,10 +2,10 @@ import { Link } from 'react-router-dom';
 import Carousel from 'react-bootstrap/Carousel';
 import '../css/Home.css';
 import { Header } from '../components/header/Header';
-import { Count } from '../components/home/Count';
+import { Count } from '../components/Home/Count';
 import { Whatsapp } from '../components/Whatsapp';
-import { Services } from '../components/home/Services';
-import { News } from '../components/home/News';
+import { Services } from '../components/Home/Services';
+import { News } from '../components/Home/News';
 
 export const Home = () => {
 	return (
