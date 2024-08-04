@@ -21,6 +21,7 @@ import { MovForm } from '../../components/Forms/MovForm.jsx';
 import { useSelector } from 'react-redux';
 import useModal from '../../hooks/useModal';
 import { calcularDiasTranscurridos } from '../../hooks/useExptesFilter.js';
+import { Button } from 'react-bootstrap';
 
 export const GestionMovimientos = () => {
 	const { loggedUser } = useAuth();
@@ -146,12 +147,12 @@ export const GestionMovimientos = () => {
 				<div className='container-lg'>
 					<div className='flex justify-around flex-wrap my-3'>
 						{admin || coadmin ? (
-							<button
+							<Button
 								className='bg-background shadow-3xl btnLogout text-white text-center flex items-center justify-center p-2 border-2 w-[210px] mb-3 border-white rounded-xl font-semibold'
 								onClick={() => newModal.openModal()}>
 								<i className='text-xl pe-2 bi bi-file-earmark-plus'></i>
 								Agregar Movimiento del Expediente
-							</button>
+							</Button>
 						) : null}
 						<Link
 							to='/gestionexpedientes'

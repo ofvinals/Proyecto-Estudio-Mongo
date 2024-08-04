@@ -1,27 +1,16 @@
 /* eslint-disable react/prop-types */
-import { createContext, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { verifyLoggedUser } from '../store/auth/thunks';
+import { createContext } from 'react';
 import { useLoad } from '../hooks/useLoad';
 
 export const AppContext = createContext();
 
 export function AppProvider({ children }) {
-	const dispatch = useDispatch();
 	const { isLoading } = useLoad();
 
-	const loggedUser = useSelector((state) => state.auth.loggedUser);
-	const statusAuth = useSelector((state) => state.auth.statusAuth);
-	useEffect(() => {
-		console.log("verificando loggedUser")
-		dispatch(verifyLoggedUser());
-	}, [dispatch]);
-
 	return (
-		<AppContext.Provider value={{ isLoading, loggedUser, statusAuth }}>
+		<AppContext.Provider value={{ isLoading }}>
 			{children}
 		</AppContext.Provider>
 	);
 }
 export default AppContext;
-

@@ -11,37 +11,41 @@ export function useAuth() {
 	const navigate = useNavigate();
 
 	const loginGoogle = async () => {
-		const userAction = await dispatch(loginWithGoogle({ getUserbyGoogle }));
-		if (userAction.error) {
-			alert(userAction.payload);
-		} else {
-			const user = userAction.payload;
+		try {
+			const userAction = await dispatch(loginWithGoogle({ getUserbyGoogle })).unwrap();
+			const user = userAction;
 			if (user.admin || user.coadmin) {
 				navigate('/admin');
 			} else {
 				navigate('/adminusu');
 			}
+		} catch (error) {
+			alert(error);
 		}
 	};
 
 	const loginEmail = async ({ email, password }) => {
-		const userAction = await dispatch(login({ email, password }));
-		if (userAction.error) {
-			alert(userAction.payload);
-		} else {
-			const user = userAction.payload;
+		try {
+			const userAction = await dispatch(login({ email, password })).unwrap();
+			const user = userAction;
 			if (user.admin) {
 				navigate('/admin');
 			} else {
 				navigate('/adminusu');
 			}
+			return user;
+		} catch (error) {
+			alert(error);
 		}
-		return userAction.payload;
 	};
 
 	const registerUser = async (user) => {
-		await dispatch(register(user));
-		navigate('/adminusu');
+		try {
+			await dispatch(register(user)).unwrap();
+			navigate('/adminusu');
+		} catch (error) {
+			alert(error);
+		}
 	};
 
 	const logoutUser = () => {

@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useState } from 'react';
-import { useAuth } from '../context/UseContext.jsx';
+import { useAuth } from '../hooks/useAuth.js';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -8,7 +8,6 @@ import { MobileDateTimePicker } from '@mui/x-date-pickers/MobileDateTimePicker';
 import dayjs from 'dayjs';
 dayjs.locale('es');
 import { Button, Modal } from 'react-bootstrap';
-import Swal from 'sweetalert2';
 import { useTurnActions } from '../hooks/UseTurns.js';
 
 export const GoogleCalendar = ({ showModal, onClose }) => {
@@ -16,13 +15,14 @@ export const GoogleCalendar = ({ showModal, onClose }) => {
 	const [end, setEnd] = useState(new Date());
 	const [eventName, setEventName] = useState('');
 	const [eventDescription, setEventDescription] = useState('');
-	const { loginWithGoogle } = useAuth();
+	const { loginGoogle } = useAuth();
 	const googleToken = localStorage.getItem('googleToken');
 	const { createTurn } = useTurnActions();
+
 	const handleGoogle = async (e) => {
 		try {
 			e.preventDefault();
-			await loginWithGoogle();
+			await loginGoogle();
 		} catch (error) {
 			console.error('Error al iniciar sesión con Google:', error);
 		}
@@ -70,16 +70,9 @@ export const GoogleCalendar = ({ showModal, onClose }) => {
 		};
 		try {
 			await createTurn(nuevoTurno);
-			await Swal.fire({
-				icon: 'success',
-				title: 'El evento fue registrado!',
-				showConfirmButton: false,
-				timer: 2500,
-			});
 			onClose();
 		} catch (error) {
 			console.log(error);
-			Swal.fire('El evento no fue agendado', '', 'info');
 		}
 	};
 

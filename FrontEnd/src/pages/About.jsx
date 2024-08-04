@@ -42,7 +42,7 @@ export const Nosotros = () => {
 					equipo de trabajo.-
 				</p>
 			</section>
-			<div className='flex row row-cols-12 justify-center p-3'>
+			<section className='flex row row-cols-12 justify-center p-3'>
 				<Card.Body className='mt-10 mx-10 py-2 max-w-[800px] bg-background text-white border-white rounded-xl'>
 					<Card.Title className=' py-3 text-white text-center text-2xl'>
 						Mision
@@ -87,7 +87,7 @@ export const Nosotros = () => {
 						internacionales.-
 					</Card.Text>
 				</Card.Body>
-			</div>
+			</section>
 		</>
 	);
 };

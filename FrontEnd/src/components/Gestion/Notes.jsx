@@ -4,7 +4,7 @@ import '../../css/Header.css';
 import CheckIcon from '@mui/icons-material/Check';
 import PendingActionsIcon from '@mui/icons-material/PendingActions';
 import { useForm } from 'react-hook-form';
-import { Button, Form } from 'react-bootstrap';
+import { Button, Form, FormSelect } from 'react-bootstrap';
 import { Table } from './Table.jsx';
 import Tooltip from '@mui/material/Tooltip';
 import { useSelector } from 'react-redux';
@@ -128,11 +128,11 @@ export const Notes = () => {
 				<Form
 					className=' flex flex-col sm:flex-row flex-wrap justify-evenly items-center'
 					onSubmit={onSubmit}>
-					<Form.Group className='w-50% mb-3' controlId='resp'>
+					<Form.Group className='w-2/6 mb-3' controlId='resp'>
 						<Form.Label className='text-white font-medium'>
 							Responsable
 						</Form.Label>
-						<select
+						<FormSelect
 							className='items-center shadow-2xl w-full rounded-md p-2 focus:outline-none border-2 border-black text-black'
 							type='text'
 							{...register('responsable', {
@@ -145,7 +145,7 @@ export const Notes = () => {
 							<option value='OSCAR'>OSCAR</option>
 							<option value='JORGE'>JORGE</option>
 							<option value='MARIA'>MARIA</option>
-						</select>
+						</FormSelect>
 						{errors.responsable && (
 							<span className='error-message'>
 								{errors.responsable.message}

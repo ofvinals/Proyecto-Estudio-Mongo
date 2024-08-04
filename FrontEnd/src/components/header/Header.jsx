@@ -76,7 +76,7 @@ export const Header = () => {
 	const toggleClassName = scrolled ? 'bg-background' : '';
 
 	return (
-		<>
+		<header>
 			<Navbar
 				data-bs-theme='dark'
 				expand='lg'
@@ -154,15 +154,15 @@ export const Header = () => {
 								) : null}
 								<div className='flex flex-wrap items-center justify-center'>
 									{user ? (
-										<button
+										<Button
 											onClick={() => {
 												handleNavCollapse();
 												handleLogOut();
 											}}
-											className='mx-3 lg:m-0 btnlogin md:mb-2 lg:mb-0 w-[162px] bg-transparent border-2 border-white p-2 lg:mr-3 rounded-lg'>
+											className='mx-3 lg:m-0 btnlogin md:mb-2 lg:mb-0 w-[162px] text-background bg-transparent border-2 border-background p-2 lg:mr-3 rounded-lg'>
 											<i className='pr-2 text-xl bi bi-box-arrow-left'></i>
 											Cerrar Sesión
-										</button>
+										</Button>
 									) : (
 										<Button
 											onClick={() => {
@@ -199,11 +199,11 @@ export const Header = () => {
 			{openRegister && (
 				<Modals
 					isOpen={openRegister}
-					title="Registro de nuevo usuario"
+					title="Registro de Nuevo Usuario"
 					onClose={() => setOpenRegister(false)}>
 					<Registro />
 				</Modals>
 			)}
-		</>
+		</header>
 	);
 };

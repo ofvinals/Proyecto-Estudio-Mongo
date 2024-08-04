@@ -162,7 +162,7 @@ export const Home = () => {
 
 			<Services />
 			<News />
-			<section className='flex items-center justify-center'>
+			<section className='flex items-center justify-center mt-2'>
 				<div className='imagensection4 md:w-[750px] xl:w-[1100px] rounded-xl mt-3 flex flex-col flex-around h-[550px] sm:h-[450px] w-full mb-10'>
 					<p className=' titlecontac w-full flex justify-center font-bold text-4xl text-[#25b0f0] text-center items-center'>
 						CONTACTO

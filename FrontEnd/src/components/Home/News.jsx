@@ -26,7 +26,7 @@ export const News = () => {
 			) : status === 'Fallido' ? (
 				<p>Error: {error}</p>
 			) : (
-				<Carousel className='h-[550px] mb-16 mx-6 sm:mx-24'>
+				<Carousel className='h-[600px] md:h-[550px] mb-16 mx-6 sm:mx-24'>
 					{articles.map((article, index) => (
 						<Carousel.Item key={index}>
 							<a

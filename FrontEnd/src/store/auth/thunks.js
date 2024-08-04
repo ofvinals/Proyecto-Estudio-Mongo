@@ -79,6 +79,7 @@ export const loginWithGoogle = createAsyncThunk(
 				email: userEmail,
 			});
 			localStorage.setItem('token', res.data.accessToken);
+			localStorage.setItem('googleToken', GoogleToken);
 			dispatch(
 				showToast({
 					type: 'success',
@@ -145,6 +146,7 @@ export const verifyLoggedUser = createAsyncThunk(
 					Authorization: `Bearer ${token}`,
 				},
 			});
+
 			if (res.status === 200) {
 				dispatch(
 					showToast({

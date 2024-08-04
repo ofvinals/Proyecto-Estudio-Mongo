@@ -19,6 +19,7 @@ import Modals from '../../utils/Modals.jsx';
 import Loader from '../../utils/Loader.jsx';
 import { Link } from 'react-router-dom';
 import { Detail } from '../../components/Gestion/Detail.jsx';
+import { Header } from '../../components/header/Header.jsx';
 
 export const GestionAgenda = () => {
 	const { loggedUser } = useAuth();
@@ -93,11 +94,27 @@ export const GestionAgenda = () => {
 
 	return (
 		<section className='bg-gradient-to-tl from-[#1e1e1e] to-[#4077ad] pb-3 pt-24'>
+			<Header />
 			<div className=' rounded-xl container-lg mb-1 '>
 				<Detail modulo='Agenda' />
 			</div>
 			<div className='container-lg'>
 				<div className='flex justify-around flex-wrap my-2'>
+					<Button
+						type='button'
+						onClick={() =>
+							window.open(
+								'https://calendar.google.com/calendar/embed?src=365fa9c4ffc2a2c85cd2d4c3e28942427e52a6a2a6d92386566dbe9ada6d50fe%40group.calendar.google.com&ctz=America%2FArgentina%2FBuenos_Aires'
+							)
+						}
+						className='bg-background shadow-3xl text-neutral-200 text-center flex items-center justify-center p-2 border-2 w-[210px] mb-3 border-neutral-200 rounded-xl font-semibold hover:text-background hover:bg-neutral-200 hover:border-background'>
+						<img
+							className='w-6 h-6 mr-3'
+							src='https://www.svgrepo.com/show/475656/google-color.svg'
+							alt='google logo'
+						/>
+						Ver Agenda del Estudio
+					</Button>
 					<Button
 						onClick={() => googleModal.openModal()}
 						className='bg-background shadow-3xl text-neutral-200 text-center flex items-center justify-center p-2 border-2 w-[210px] mb-3 border-neutral-200 rounded-xl font-semibold hover:text-background hover:bg-neutral-200 hover:border-background'>
