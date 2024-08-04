@@ -20,6 +20,8 @@ import Modals from '../../utils/Modals.jsx';
 import { BillForm } from '../../components/Forms/BillForm.jsx';
 import { useSelector } from 'react-redux';
 import useModal from '../../hooks/useModal.js';
+import { Button } from 'react-bootstrap';
+import { Pagos } from '../../components/Pagos.jsx';
 
 export const GestionBills = () => {
 	const { loggedUser } = useAuth();
@@ -37,6 +39,7 @@ export const GestionBills = () => {
 	const viewModal = useModal();
 	const editModal = useModal();
 	const newModal = useModal();
+	const payModal = useModal();
 
 	const dataBills = async () => {
 		try {
@@ -187,24 +190,31 @@ export const GestionBills = () => {
 				</div>
 				<hr className='linea text-white mx-3' />
 				<div className='container-lg'>
-					<div className='flex justify-around py-3'>
+					<div className='flex flex-wrap justify-around py-3'>
 						{admin || coadmin ? (
-							<button
+							<Button
 								type='button'
 								className='bg-background shadow-3xl text-neutral-200 text-center flex items-center justify-center p-2 border-2 w-[210px] mb-3 border-neutral-200 rounded-xl font-semibold hover:text-background hover:bg-neutral-200 hover:border-background'
 								onClick={() => newModal.openModal()}>
 								<i className='text-xl pe-2 bi bi-file-earmark-plus'></i>
 								Registrar Nuevo Gasto
-							</button>
+							</Button>
 						) : null}
-						<button
+						<Button
 							onClick={() => setViewArchived(!viewArchived)}
 							className='bg-background shadow-3xl text-neutral-200 text-center flex items-center justify-center p-2 border-2 w-[210px] mb-3 border-neutral-200 rounded-xl font-semibold hover:text-background hover:bg-neutral-200 hover:border-background'>
 							<i className='text-xl pe-2 bi bi-box-arrow-left'></i>
 							{viewArchived
 								? 'Ver Gastos Pendientes'
 								: 'Ver Gastos Archivados'}
-						</button>
+						</Button>
+						<Button
+							type='button'
+							className='bg-white shadow-3xl btnAdmin text-primary text-center p-2 border-2 w-[210px] mb-3 border-primary rounded-xl font-semibold'
+							onClick={() => payModal.openModal()}>
+							<i className='text-xl pe-2 bi bi-cash-coin'></i>
+							Medios de pago
+						</Button>
 						<Link
 							to={'/admin'}
 							className='bg-background shadow-3xl text-neutral-200 text-center flex items-center justify-center p-2 border-2 w-[210px] mb-3 border-neutral-200 rounded-xl font-semibold hover:text-background hover:bg-neutral-200 hover:border-background'>
@@ -252,6 +262,13 @@ export const GestionBills = () => {
 				onClose={newModal.closeModal}
 				title='Cargar Nuevo Gasto'>
 				<BillForm onClose={newModal.closeModal} mode='create' />
+			</Modals>
+
+			<Modals
+				isOpen={payModal.isOpen}
+				onClose={payModal.closeModal}
+				title='Medios de Pago'>
+				<Pagos onClose={payModal.closeModal} />
 			</Modals>
 		</>
 	);

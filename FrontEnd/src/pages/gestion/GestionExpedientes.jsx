@@ -19,6 +19,7 @@ import { ExpteForm } from '../../components/Forms/ExpteForm.jsx';
 import { useSelector } from 'react-redux';
 import useModal from '../../hooks/useModal';
 import { filterExpedientes } from '../../hooks/useExptesFilter.js';
+import { Button } from 'react-bootstrap';
 
 export const GestionExpedientes = () => {
 	const { loggedUser } = useAuth();
@@ -159,33 +160,33 @@ export const GestionExpedientes = () => {
 				<div>
 					<div className='flex flex-wrap justify-around my-3'>
 						{admin || coadmin ? (
-							<button
+							<Button
 								type='button'
 								className='bg-background shadow-3xl btnLogout text-white text-center flex items-center justify-center p-2 border-2 w-[210px] mb-3 border-white rounded-xl font-semibold'
 								onClick={() => newModal.openModal()}>
 								<i className='text-xl pe-2 bi bi-file-earmark-plus'></i>
 								Registrar Nuevo Expediente
-							</button>
+							</Button>
 						) : null}
 						{(admin || coadmin) && (
-							<button
+							<Button
 								onClick={() => setViewArchived(!viewArchived)}
 								className='bg-background shadow-3xl text-neutral-200 text-center flex items-center justify-center p-2 border-2 w-[210px] mb-3 border-neutral-200 rounded-xl font-semibold hover:text-background hover:bg-neutral-200 hover:border-background'>
 								<i className='text-xl pe-2 bi bi-box-arrow-left'></i>
 								{viewArchived
 									? 'Ver Expedientes en Tramite'
 									: 'Ver Expedientes Archivados'}
-							</button>
+							</Button>
 						)}
 						{(admin || coadmin) && (
-							<button
+							<Button
 								onClick={() => setViewCaducidad(!viewCaducidad)}
 								className='bg-background shadow-3xl btnLogout text-white text-center flex items-center justify-center p-2 border-2 w-[210px] mb-3 border-white rounded-xl font-semibold'>
 								<i className='text-xl pe-2 bi bi-calendar2-x'></i>
 								{viewCaducidad
 									? 'Expedientes en Tramite'
 									: 'Expedientes a caducar'}
-							</button>
+							</Button>
 						)}
 						<Link
 							to={admin || coadmin ? '/Admin' : '/AdminUsu'}

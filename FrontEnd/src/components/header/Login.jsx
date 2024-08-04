@@ -64,7 +64,7 @@ export const Login = ({ setOpenLogin }) => {
 							Email
 						</Form.Label>
 						<input
-							className='items-center lowercase shadow-2xl w-6/12 rounded-md p-2 focus:outline-none border-2 border-black'
+							className='items-center lowercase shadow-2xl w-8/12 rounded-md p-2 focus:outline-none border-2 border-black'
 							type='email'
 							id='email'
 							name='email'
@@ -92,7 +92,7 @@ export const Login = ({ setOpenLogin }) => {
 						<Form.Label className='text-start  bg-transparent text-xl text-neutral-200 w-6/12 font-medium'>
 							Contraseña
 						</Form.Label>
-						<div className='flex flex-row shadow-2xl justify-center w-6/12 bg-white rounded-lg border-2 border-black'>
+						<div className='flex flex-row shadow-2xl justify-center w-8/12 bg-white rounded-lg border-2 border-black'>
 							<input
 								className='items-center text-black  p-2 w-full rounded-md focus:outline-none '
 								type={showPassword ? 'text' : 'password'}
@@ -109,16 +109,16 @@ export const Login = ({ setOpenLogin }) => {
 								})}
 							/>
 
-							<button
+							<Button
 								type='button'
 								onClick={toggleShowPassword}
 								id='vercontrasena'
-								className=' border-none '>
+								className=' border-none bg-transparent text-black '>
 								<i
 									className={`text-xl p-2 ${
 										showPassword ? 'bi-eye-slash' : 'bi-eye'
 									}`}></i>
-							</button>
+							</Button>
 						</div>
 						{errors.password && (
 							<span className='error-message'>
@@ -147,7 +147,7 @@ export const Login = ({ setOpenLogin }) => {
 						<Button
 							type='button'
 							onClick={(e) => handleGoogle(e)}
-							className='text-center font-semibold flex justify-center items-center text-neutral-200 shadow-3xl bg-background border-neutral-200 border-2 p-2.5 w-[255px] rounded-lg hover:bg-neutral-200 hover:border-background hover:text-background'
+							className='text-center font-semibold flex justify-center items-center text-neutral-200 shadow-3xl bg-background border-neutral-200 border-2 p-2 mx-3   rounded-lg hover:bg-neutral-200 hover:border-background hover:text-background'
 							id='googleLogin'>
 							<img
 								className='w-6 h-6 mr-3'

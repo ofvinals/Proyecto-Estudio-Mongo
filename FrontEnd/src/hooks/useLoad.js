@@ -6,7 +6,7 @@ export function useLoad() {
 	const [isLoading, setIsLoading] = useState(true);
 
 	useEffect(() => {
-		if (statusAuth === 'Fallido' || statusAuth === 'Exitoso') {
+		if (statusAuth === 'Exitoso' || statusAuth === 'Fallido') {
 			setIsLoading(false);
 		} else {
 			setIsLoading(true);

@@ -84,7 +84,7 @@ export const Registro = ({ setOpenRegister }) => {
 						</Form.Group>
 					)
 				)}
-				<Form.Group className='mb-3 flex flex-col'>
+				<Form.Group className='mb-3 flex flex-col w-10/12 md:w-8/12'>
 					<Form.Label className='text-start bg-transparent text-xl text-neutral-200 w-10/12 font-medium'>
 						Contraseña
 					</Form.Label>
@@ -121,9 +121,9 @@ export const Registro = ({ setOpenRegister }) => {
 					</div>
 				</Form.Group>
 
-				<Form.Group className='mb-3 flex flex-col'>
+				<Form.Group className='mb-3 flex flex-col w-10/12 md:w-8/12'>
 					<Form.Label
-						className='text-start bg-transparent text-xl text-neutral-200 w-10/12 font-medium'
+						className='text-start bg-transparent text-xl text-neutral-200  font-medium'
 						id='inputconfirm'>
 						Confirmar Contraseña
 					</Form.Label>

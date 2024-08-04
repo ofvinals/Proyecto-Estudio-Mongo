@@ -29,7 +29,7 @@ export const DashboardUser = () => {
 
 	return (
 		<>
-			<div className='bg-gradient-to-tl from-[#1e1e1e] to-[#4077ad]'>
+			<section className='bg-gradient-to-tl from-[#1e1e1e] to-[#4077ad]'>
 				<Header />
 				<div className=' rounded-xl container-lg mb-1 pt-24 '>
 					<Detail modulo={'Usuario'} />
@@ -82,7 +82,7 @@ export const DashboardUser = () => {
 				</div>
 				<hr className='linea text-white mx-3' />
 				<Novedades />
-			</div>
+			</section>
 
 			<Modals
 				isOpen={openEditModal}
