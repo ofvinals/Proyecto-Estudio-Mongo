@@ -85,7 +85,7 @@ export const Registro = ({ setOpenRegister }) => {
 					)
 				)}
 				<Form.Group className='mb-3 flex flex-col'>
-					<Form.Label className='text-start bg-transparent text-xl text-neutral-200 w-7/12 font-medium'>
+					<Form.Label className='text-start bg-transparent text-xl text-neutral-200 w-10/12 font-medium'>
 						Contraseña
 					</Form.Label>
 					<div className='flex flex-row items-center bg-neutral-200 shadow-2xl w-full rounded-md focus:outline-none border-2 border-black'>
@@ -123,7 +123,7 @@ export const Registro = ({ setOpenRegister }) => {
 
 				<Form.Group className='mb-3 flex flex-col'>
 					<Form.Label
-						className='text-start bg-transparent text-xl text-neutral-200 w-full font-medium'
+						className='text-start bg-transparent text-xl text-neutral-200 w-10/12 font-medium'
 						id='inputconfirm'>
 						Confirmar Contraseña
 					</Form.Label>
