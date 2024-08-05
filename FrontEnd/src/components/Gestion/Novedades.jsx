@@ -4,7 +4,7 @@ import { useEffect, useState, useMemo } from 'react';
 import { useAuth } from '../../hooks/useAuth.js';
 import '../../css/Header.css';
 import { Visibility as VisibilityIcon } from '@mui/icons-material';
-import { Table } from '../gestion/Table.jsx';
+import { Table } from './Table.jsx';
 import Tooltip from '@mui/material/Tooltip';
 import { useNavigate } from 'react-router-dom';
 import { novedadesExpedientes } from '../../hooks/useExptesFilter.js';
@@ -83,7 +83,7 @@ export const Novedades = () => {
 				</Tooltip>
 			),
 			onClick: (row) => {
-				navigate(`/gestionmovimientos/${row.original._id}`);
+				navigate(`/Gestionmovimientos/${row.original._id}`);
 			},
 		},
 	];

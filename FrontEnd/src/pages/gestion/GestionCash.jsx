@@ -11,13 +11,13 @@ import {
 } from '@mui/icons-material';
 import '../../css/Header.css';
 import { useCashActions } from '../../hooks/UseCashs.js';
-import { Detail } from '../../components/gestion/Detail.jsx';
-import { Table } from '../../components/gestion/Table.jsx';
+import { Detail } from '../../components/Gestion/Detail.jsx';
+import { Table } from '../../components/Gestion/Table.jsx';
 import { Header } from '../../components/header/Header.jsx';
 import Tooltip from '@mui/material/Tooltip';
 import Loader from '../../utils/Loader.jsx';
 import Modals from '../../utils/Modals.jsx';
-import CashForm from '../../components/forms/CashForm.jsx';
+import CashForm from '../../components/Forms/CashForm.jsx';
 import { useSelector } from 'react-redux';
 import useModal from '../../hooks/useModal';
 import { months } from '../../helpers/months.js';

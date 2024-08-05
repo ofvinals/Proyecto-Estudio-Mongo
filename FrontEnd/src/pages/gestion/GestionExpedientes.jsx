@@ -9,13 +9,13 @@ import {
 } from '@mui/icons-material';
 import '../../css/Header.css';
 import { useExpteActions } from '../../hooks/UseExptes.js';
-import { Table } from '../../components/gestion/Table';
-import { Detail } from '../../components/gestion/Detail';
+import { Table } from '../../components/Gestion/Table';
+import { Detail } from '../../components/Gestion/Detail';
 import { Header } from '../../components/header/Header.jsx';
 import Tooltip from '@mui/material/Tooltip';
 import Loader from '../../utils/Loader.jsx';
 import Modals from '../../utils/Modals.jsx';
-import { ExpteForm } from '../../components/forms/ExpteForm.jsx';
+import { ExpteForm } from '../../components/Forms/ExpteForm.jsx';
 import { useSelector } from 'react-redux';
 import useModal from '../../hooks/useModal';
 import { filterExpedientes } from '../../hooks/useExptesFilter.js';

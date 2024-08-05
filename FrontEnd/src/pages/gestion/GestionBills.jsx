@@ -11,13 +11,13 @@ import {
 	Visibility as VisibilityIcon,
 } from '@mui/icons-material';
 import { useBillActions } from '../../hooks/UseBills.js';
-import { Detail } from '../../components/gestion/Detail.jsx';
-import { Table } from '../../components/gestion/Table.jsx';
+import { Detail } from '../../components/Gestion/Detail.jsx';
+import { Table } from '../../components/Gestion/Table.jsx';
 import { Header } from '../../components/header/Header.jsx';
 import Tooltip from '@mui/material/Tooltip';
 import Loader from '../../utils/Loader.jsx';
 import Modals from '../../utils/Modals.jsx';
-import { BillForm } from '../../components/forms/BillForm.jsx';
+import { BillForm } from '../../components/Forms/BillForm.jsx';
 import { useSelector } from 'react-redux';
 import useModal from '../../hooks/useModal.js';
 import { Button } from 'react-bootstrap';
