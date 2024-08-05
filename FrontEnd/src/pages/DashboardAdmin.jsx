@@ -3,8 +3,8 @@ import { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth.js';
 import '../css/Header.css';
-import { Notes } from '../components/Gestion/Notes.jsx';
-import { Detail } from '../components/Gestion/Detail.jsx';
+import { Notes } from '../components/gestion/Notes.jsx';
+import { Detail } from '../components/gestion/Detail.jsx';
 import { Header } from '../components/header/Header.jsx';
 
 export const DashboardAdmin = () => {

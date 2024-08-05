@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/prop-types */
 import { Form, Button } from 'react-bootstrap';
 
 export const Pagos = ({ onClose }) => {

@@ -1,11 +1,15 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
 import '../../css/Header.css';
 import { useForm } from 'react-hook-form';
-import { Button } from 'react-bootstrap';
+import {
+	FormInput,
+	FormSelect,
+	SaveButton,
+	CancelButton,
+} from '../../utils/Form.jsx';
 import { useUserActions } from '../../hooks/UseUserActions.js';
 import { useExpteActions } from '../../hooks/UseExptes.js';
 import { useSelector } from 'react-redux';
@@ -86,292 +90,198 @@ export const ExpteForm = ({ rowId, onClose, mode }) => {
 	}
 
 	return (
-		<>
-			<div>
-				<Form
-					className='flex flex-wrap justify-around items-center'
-					onSubmit={onSubmit}>
-					<Form.Group
-						className='flex flex-col mb-3 items-center justify-around w-5/12 mt-2'
-						id='inputname'>
-						<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>
-							Cliente
-						</Form.Label>
-						<select
-							className='items-center shadow-2xl w-full rounded-md p-2 focus:outline-none border-2 border-black text-black'
-							aria-label='Default select'
-							{...register('cliente')}
-							readOnly={mode === 'view'}>
-							<option>Selecciona..</option>
-							{users.map((user, index) => (
-								<option key={index} value={user.email}>
-									{`${user.nombre} ${user.apellido}`}
-								</option>
-							))}
-						</select>
-					</Form.Group>
+		<div>
+			<Form
+				className='flex flex-wrap justify-around items-center'
+				onSubmit={onSubmit}>
+				<FormInput
+					label='Cliente'
+					name='cliente'
+					register={register}
+					errors={errors}
+					mode={mode}
+					selectOptions={users.map((user) => ({
+						value: user.email,
+						label: `${user.nombre} ${user.apellido}`,
+					}))}
+				/>
 
-					<Form.Group
-						className='flex flex-col mb-3 items-center justify-around w-5/12 mt-2'
-						id='inputname'>
-						<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>
-							Nro Expediente
-						</Form.Label>
-						<Form.Control
-							className={`items-center w-full p-2 focus:outline-none text-black ${
-								mode === 'view'
-									? 'border-none shadow-none bg-transparent'
-									: 'border-2 border-black shadow-2xl rounded-md'
-							}`}
-							type='text'
-							{...register('nroexpte', {
-								required: {
-									value: true,
-									message: 'El numero de expediente es requerido',
-								},
-							})}
-							readOnly={mode === 'view'}
-						/>
-						{errors.nroexpte && (
-							<span className='error-message'>
-								{errors.nroexpte.message}
-							</span>
-						)}
-					</Form.Group>
+				<FormInput
+					label='Nro Expediente'
+					name='nroexpte'
+					type='text'
+					register={register}
+					errors={errors}
+					mode={mode}
+					options={{
+						required: {
+							value: true,
+							message: 'El numero de expediente es requerido',
+						},
+					}}
+				/>
 
-					<Form.Group
-						className='mb-3 flex flex-col w-full '
-						hidden={mode === 'create'}
-						id='inputcaratula'>
-						<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>
-							Caratula
-						</Form.Label>
-						<Form.Control
-							className='border-none shadow-none bg-transparent'
-							type='text'
-							{...register('caratula')}
-							readOnly
-						/>
-					</Form.Group>
+				{mode !== 'create' && (
+					<FormInput
+						label='Caratula'
+						name='caratula'
+						type='text'
+						register={register}
+						errors={errors}
+						mode='view'
+					/>
+				)}
 
-					<Form.Group
-						className='flex flex-col mb-3 items-center justify-around w-5/12 mx-2'
-						id='inputradic'>
-						<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>
-							Fuero
-						</Form.Label>
-						<select
-							className='items-center shadow-2xl w-full rounded-md p-2 focus:outline-none border-2 border-black text-black'
-							aria-label='Default select'
-							{...register('radicacion', {
-								required: {
-									value: true,
-									message: 'La radicacion es requerida',
-								},
-							})}
-							readOnly={mode === 'view'}>
-							<option value=''>Selecciona..</option>
-							<option value='Civil y Comercial'>
-								Civil y Comercial
-							</option>
-							<option value='Contensioso Admnistrativo'>
-								Contensioso Admnistrativo
-							</option>
-							<option value='Documentos y Locaciones'>
-								Documentos y Locaciones
-							</option>
-							<option value='Familia y Sucesiones'>
-								Familia y Sucesiones
-							</option>
-							<option value='Trabajo'>Trabajo</option>
-						</select>
-						{errors.radicacion && (
-							<span className='error-message'>
-								{errors.radicacion.message}
-							</span>
-						)}
-					</Form.Group>
+				<FormSelect
+					label='Fuero'
+					name='radicacion'
+					register={register}
+					errors={errors}
+					mode={mode}
+					selectOptions={[
+						{ value: '', label: 'Selecciona..' },
+						{ value: 'Civil y Comercial', label: 'Civil y Comercial' },
+						{
+							value: 'Contensioso Admnistrativo',
+							label: 'Contensioso Admnistrativo',
+						},
+						{
+							value: 'Documentos y Locaciones',
+							label: 'Documentos y Locaciones',
+						},
+						{
+							value: 'Familia y Sucesiones',
+							label: 'Familia y Sucesiones',
+						},
+						{ value: 'Trabajo', label: 'Trabajo' },
+					]}
+					options={{
+						required: {
+							value: true,
+							message: 'La radicacion del expediente es requerido',
+						},
+					}}
+				/>
 
-					<Form.Group
-						className='flex flex-col mb-3 items-center justify-around w-5/12 mx-2'
-						id='inputradic'>
-						<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>
-							Juzgado
-						</Form.Label>
-						<select
-							className='items-center shadow-2xl w-full rounded-md p-2 focus:outline-none border-2 border-black text-black'
-							aria-label='Default select'
-							{...register('juzgado', {
-								required: {
-									value: true,
-									message: 'El juzgado es requerido',
-								},
-							})}
-							readOnly={mode === 'view'}>
-							<option value=''>Selecciona..</option>
-							<option value='I NOM'>I NOM</option>
-							<option value='II NOM'>II NOM</option>
-							<option value='III NOM'>III NOM</option>
-							<option value='IV NOM'>IV NOM</option>
-							<option value='V NOM'>V NOM</option>
-							<option value='VI NOM'>VI NOM</option>
-							<option value='VII NOM'>VII NOM</option>
-							<option value='VIII NOM'>VIII NOM</option>
-							<option value='IX NOM'>IX NOM</option>
-							<option value='X NOM'>X NOM</option>
-							<option value='XI NOM'>XI NOM</option>
-							<option value='XII NOM'>XII NOM</option>
-						</select>
-						{errors.juzgado && (
-							<span className='error-message'>
-								{errors.juzgado.message}
-							</span>
-						)}
-					</Form.Group>
+				<FormSelect
+					label='Juzgado'
+					name='juzgado'
+					register={register}
+					errors={errors}
+					mode={mode}
+					selectOptions={[
+						{ value: '', label: 'Selecciona..' },
+						{ value: 'I NOM', label: 'I NOM' },
+						{ value: 'II NOM', label: 'II NOM' },
+						{ value: 'III NOM', label: 'III NOM' },
+						{ value: 'IV NOM', label: 'IV NOM' },
+						{ value: 'V NOM', label: 'V NOM' },
+						{ value: 'VI NOM', label: 'VI NOM' },
+						{ value: 'VII NOM', label: 'VII NOM' },
+						{ value: 'VIII NOM', label: 'VIII NOM' },
+						{ value: 'IX NOM', label: 'IX NOM' },
+						{ value: 'X NOM', label: 'X NOM' },
+						{ value: 'XI NOM', label: 'XI NOM' },
+						{ value: 'XII NOM', label: 'XII NOM' },
+					]}
+					options={{
+						required: {
+							value: true,
+							message: 'La radicacion del expediente es requerido',
+						},
+					}}
+				/>
 
-					<Form.Group
-						className='flex flex-col mb-3 items-center justify-around w-full mx-2'
-						id='inputdomic'>
-						<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>
-							Actor
-						</Form.Label>
-						<Form.Control
-							className={`items-center w-full p-2 focus:outline-none text-black ${
-								mode === 'view'
-									? 'border-none shadow-none bg-transparent'
-									: 'border-2 border-black shadow-2xl rounded-md'
-							}`}
-							type='text'
-							{...register('actor', {
-								required: {
-									value: true,
-									message: 'El actor es requerido',
-								},
-							})}
-							readOnly={mode === 'view'}
-						/>
-						{errors.actor && (
-							<span className='error-message'>
-								{errors.actor.message}
-							</span>
-						)}
-					</Form.Group>
+				<FormInput
+					label='Actor'
+					name='actor'
+					type='text'
+					register={register}
+					errors={errors}
+					mode={mode}
+					options={{
+						required: { value: true, message: 'El actor es requerido' },
+					}}
+				/>
 
-					<Form.Group
-						className='flex flex-col mb-3 items-center justify-around w-full mx-2'
-						id='inputcel'>
-						<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>
-							Demandado
-						</Form.Label>
-						<Form.Control
-							className={`items-center w-full p-2 focus:outline-none text-black ${
-								mode === 'view'
-									? 'border-none shadow-none bg-transparent'
-									: 'border-2 border-black shadow-2xl rounded-md'
-							}`}
-							type='text'
-							{...register('demandado', {
-								required: {
-									value: true,
-									message: 'El demandado es requerido',
-								},
-							})}
-							readOnly={mode === 'view'}
-						/>
-						{errors.demandado && (
-							<span className='error-message'>
-								{errors.demandado.message}
-							</span>
-						)}
-					</Form.Group>
+				<FormInput
+					label='Demandado'
+					name='demandado'
+					type='text'
+					register={register}
+					errors={errors}
+					mode={mode}
+					options={{
+						required: {
+							value: true,
+							message: 'El demandado es requerido',
+						},
+					}}
+				/>
 
-					<Form.Group
-						className='flex flex-col mb-3 items-center justify-around w-5/12 mx-2'
-						id='inputemail'>
-						<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>
-							Tipo de Proceso
-						</Form.Label>
-						<select
-							className='items-center shadow-2xl w-full rounded-md p-2 focus:outline-none border-2 border-black text-black'
-							aria-label='Default select example'
-							{...register('proceso', {
-								required: {
-									value: true,
-									message: 'El tipo de proceso es requerido',
-								},
-							})}
-							readOnly={mode === 'view'}>
-							<option value=''>Selecciona..</option>
-							<option value='Cobro de Pesos'>Cobro de Pesos</option>
-							<option value='Daños y Perjuicios'>
-								Daños y Perjuicios
-							</option>
-							<option value='Desalojo'>Desalojo</option>
-							<option value='Cobro Ejecutivo'>Cobro Ejecutivo</option>
-							<option value='Reivindicacion'>Reivindicacion</option>
-							<option value='Sucesion'>Sucesion</option>
-							<option value='Accion de Consumo'>
-								Accion de Consumo
-							</option>
-						</select>
-						{errors.proceso && (
-							<span className='error-message'>
-								{errors.proceso.message}
-							</span>
-						)}
-					</Form.Group>
+				<FormSelect
+					label='Tipo de Proceso'
+					name='proceso'
+					register={register}
+					errors={errors}
+					mode={mode}
+					selectOptions={[
+						{ value: '', label: 'Selecciona..' },
+						{ value: 'Cobro de Pesos', label: 'Cobro de Pesos' },
+						{ value: 'Daños y Perjuicios', label: 'Daños y Perjuicios' },
+						{ value: 'Desalojo', label: 'Desalojo' },
+						{ value: 'Cobro Ejecutivo', label: 'Cobro Ejecutivo' },
+						{ value: 'Reivindicacion', label: 'Reivindicacion' },
+						{ value: 'Sucesion', label: 'Sucesion' },
+						{ value: 'Accion de Consumo', label: 'Accion de Consumo' },
+					]}
+					options={{
+						required: {
+							value: true,
+							message: 'El tipo de proceso es requerido',
+						},
+					}}
+				/>
 
-					<Form.Group
-						className='flex flex-col mb-3 items-center justify-around w-5/12 mx-2'
-						id='inputemail'>
-						<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>
-							Estado
-						</Form.Label>
-						<select
-							className='items-center shadow-2xl w-full rounded-md p-2 focus:outline-none border-2 border-black text-black'
-							aria-label='Default select'
-							{...register('estado', {
-								required: {
-									value: true,
-									message: 'El estado es requerido',
-								},
-							})}
-							readOnly={mode === 'view'}>
-							<option value=''>Selecciona..</option>
-							<option value='En tramite'>En tramite</option>
-							<option value='Mediacion'>Mediacion</option>
-							<option value='Extrajudicial'>Extrajudicial</option>
-							<option value='Terminado'>Terminado</option>
-							<option value='Caduco'>Caduco</option>
-						</select>
-						{errors.estado && (
-							<span className='error-message'>
-								{errors.estado.message}
-							</span>
-						)}
-					</Form.Group>
+				<FormSelect
+					label='Estado'
+					name='estado'
+					register={register}
+					errors={errors}
+					mode={mode}
+					selectOptions={[
+						{ value: '', label: 'Selecciona..' },
+						{ value: 'En tramite', label: 'En tramite' },
+						{ value: 'Mediacion', label: 'Mediacion' },
+						{ value: 'Extrajudicial', label: 'Extrajudicial' },
+						{ value: 'Terminado', label: 'Terminado' },
+						{ value: 'Caduco', label: 'Caduco' },
+					]}
+					options={{
+						required: {
+							value: true,
+							message: 'El estado del expediente es requerido',
+						},
+					}}
+				/>
 
-					<Form.Group className='flex flex-wrap items-center w-full justify-around mt-3'>
-						{mode !== 'view' && (
-							<Button
-								className='bg-background shadow-3xl btnLogout text-white text-center p-2 border-2 w-[230px] my-3  border-white rounded-xl font-semibold'
-								type='submit'>
-								<i className='text-xl pe-2 bi bi-check2-square'></i>
-								{mode === 'create'
+				<Form.Group className='flex flex-wrap items-center w-full justify-around mt-3'>
+					{mode !== 'view' && (
+						<SaveButton
+							onSubmit={onSubmit}
+							label={
+								mode === 'create'
 									? 'Registrar Expediente'
-									: 'Guardar Cambios'}
-							</Button>
-						)}
-						<Link
-							to='/gestionexpedientes'
-							onClick={onClose}
-							className='bg-white shadow-3xl btnAdmin text-primary text-center p-2 border-2 w-[150px] my-3 border-primary rounded-xl font-semibold'>
-							<i className='text-xl pe-2 bi bi-x-circle-fill'></i>
-							{mode === 'view' ? 'Volver' : 'Cancelar'}
-						</Link>
-					</Form.Group>
-				</Form>
-			</div>
-		</>
+									: 'Guardar Cambios'
+							}
+						/>
+					)}
+					<CancelButton
+						onClose={onClose}
+						label={mode === 'view' ? 'Volver' : 'Cancelar'}
+					/>
+				</Form.Group>
+			</Form>
+		</div>
 	);
 };

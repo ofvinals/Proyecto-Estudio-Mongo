@@ -1,12 +1,12 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth.js';
 import '../css/Header.css';
-import { Detail } from '../components/Gestion/Detail.jsx';
+import { Detail } from '../components/gestion/Detail.jsx';
 import { Header } from '../components/header/Header.jsx';
-import { Novedades } from '../components/Gestion/Novedades.jsx';
+import { Novedades } from '../components/gestion/Novedades.jsx';
 import { useState } from 'react';
 import Modals from '../utils/Modals.jsx';
-import { UserForm } from '../components/Forms/UserForm.jsx';
+import { UserForm } from '../components/forms/UserForm.jsx';
 
 export const DashboardUser = () => {
 	const { loggedUser, logoutUser } = useAuth();

@@ -11,13 +11,13 @@ import {
 	Visibility as VisibilityIcon,
 } from '@mui/icons-material';
 import { useBillActions } from '../../hooks/UseBills.js';
-import { Detail } from '../../components/Gestion/Detail.jsx';
-import { Table } from '../../components/Gestion/Table.jsx';
+import { Detail } from '../../components/gestion/Detail.jsx';
+import { Table } from '../../components/gestion/Table.jsx';
 import { Header } from '../../components/header/Header.jsx';
 import Tooltip from '@mui/material/Tooltip';
 import Loader from '../../utils/Loader.jsx';
 import Modals from '../../utils/Modals.jsx';
-import { BillForm } from '../../components/Forms/BillForm.jsx';
+import { BillForm } from '../../components/forms/BillForm.jsx';
 import { useSelector } from 'react-redux';
 import useModal from '../../hooks/useModal.js';
 import { Button } from 'react-bootstrap';
@@ -210,7 +210,7 @@ export const GestionBills = () => {
 						</Button>
 						<Button
 							type='button'
-							className='bg-white shadow-3xl btnAdmin text-primary text-center p-2 border-2 w-[210px] mb-3 border-primary rounded-xl font-semibold'
+							className='bg-background shadow-3xl text-neutral-200 text-center flex items-center justify-center p-2 border-2 w-[210px] mb-3 border-neutral-200 rounded-xl font-semibold hover:text-background hover:bg-neutral-200 hover:border-background'
 							onClick={() => payModal.openModal()}>
 							<i className='text-xl pe-2 bi bi-cash-coin'></i>
 							Medios de pago

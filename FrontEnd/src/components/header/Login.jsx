@@ -10,13 +10,14 @@ import { Recuperar } from './Recuperar.jsx';
 import Modals from '../../utils/Modals.jsx';
 import { Registro } from './Registro.jsx';
 import { useSelector } from 'react-redux';
+import { ProgressSpinner } from 'primereact/progressspinner';
 
 export const Login = ({ setOpenLogin }) => {
 	const { loginGoogle, loginEmail } = useAuth();
 	const [showPassword, setShowPassword] = useState(false);
 	const [openModal, setOpenModal] = useState(null);
 	const toggleShowPassword = () => setShowPassword(!showPassword);
-	const statusSign = useSelector((state) => state.auth.statusSign);
+	const statusAuth = useSelector((state) => state.auth.statusAuth);
 	const {
 		register,
 		handleSubmit,
@@ -134,29 +135,49 @@ export const Login = ({ setOpenLogin }) => {
 							¿ Olvidaste tu contraseña ?
 						</Button>
 					</Form.Group>
-
-					<Form.Group
-						className='flex flex-col items-center'
-						controlId='inputpassword'>
-						<Button
-							className='m-3 btnlogin w-[142px] bg-white border-2 shadow-3xl border-background text-background p-2 rounded-lg font-semibold'
-							type='submit'>
-							<i className='text-xl pe-2 bi bi-box-arrow-in-right'></i>
-							{statusSign === 'Cargando' ? 'Cargando' : 'Ingresar'}
-						</Button>
-						<Button
-							type='button'
-							onClick={(e) => handleGoogle(e)}
-							className='text-center font-semibold flex justify-center items-center text-neutral-200 shadow-3xl bg-background border-neutral-200 border-2 p-2 mx-3   rounded-lg hover:bg-neutral-200 hover:border-background hover:text-background'
-							id='googleLogin'>
-							<img
-								className='w-6 h-6 mr-3'
-								src='https://www.svgrepo.com/show/475656/google-color.svg'
-								alt='google logo'
-							/>
-							Ingresar con Google
-						</Button>
-					</Form.Group>
+					{statusAuth === 'Cargando' ? (
+						<Form.Group
+							className='flex flex-col items-center'
+							controlId='inputpassword'>
+							<Button
+								className='m-3 btnlogin w-[142px] bg-white flex items-center justify-center border-2 shadow-3xl border-background text-background p-2 rounded-lg font-semibold'
+								type='submit'>
+								<ProgressSpinner
+									style={{
+										width: '30px',
+										height: '30px',
+									}}
+									strokeWidth='8'
+									fill='var(--surface-ground)'
+									animationDuration='.6s'
+								/>
+								Cargando
+							</Button>
+						</Form.Group>
+					) : (
+						<Form.Group
+							className='flex flex-col items-center'
+							controlId='inputpassword'>
+							<Button
+								className='m-3 btnlogin w-[142px] bg-white flex items-center justify-center border-2 shadow-3xl border-background text-background p-2 rounded-lg font-semibold'
+								type='submit'>
+								<i className='text-xl pe-2 bi bi-box-arrow-in-right'></i>
+								Ingresar
+							</Button>
+							<Button
+								type='button'
+								onClick={(e) => handleGoogle(e)}
+								className='text-center font-semibold flex justify-center items-center text-neutral-200 shadow-3xl bg-background border-neutral-200 border-2 p-2 mx-3   rounded-lg hover:bg-neutral-200 hover:border-background hover:text-background'
+								id='googleLogin'>
+								<img
+									className='w-6 h-6 mr-3'
+									src='https://www.svgrepo.com/show/475656/google-color.svg'
+									alt='google logo'
+								/>
+								Ingresar con Google
+							</Button>
+						</Form.Group>
+					)}
 
 					<p className='mt-6 text-neutral-400 text-sm text-center'>
 						No tienes una cuenta?<br></br>
