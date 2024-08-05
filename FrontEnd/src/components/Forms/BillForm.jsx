@@ -3,7 +3,12 @@
 import { useState, useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
 import '../../css/Header.css';
-import { Button, FormSelect } from 'react-bootstrap';
+import {
+	FormInput,
+	FormSelect,
+	SaveButton,
+	CancelButton,
+} from '../../utils/Form.jsx';
 import { useForm } from 'react-hook-form';
 import { useExpteActions } from '../../hooks/UseExptes.js';
 import { uploadFile } from '../../firebase/config.js';
@@ -59,6 +64,7 @@ export const BillForm = ({ rowId, onClose, mode }) => {
 		const selectedExpteNro = e.target.value;
 		updateCaratula(selectedExpteNro);
 	};
+
 	const updateCaratula = (selectedExpteNro) => {
 		const selectedExpte = exptes.find(
 			(expte) => expte.nroexpte === selectedExpteNro
@@ -110,218 +116,138 @@ export const BillForm = ({ rowId, onClose, mode }) => {
 	}
 
 	return (
-		<>
-			<div>
-				<Form
-					className='flex flex-wrap justify-around items-center'
-					onSubmit={onSubmit}>
-					<Form.Group
-						className='flex flex-col mb-3 items-center justify-around w-6/12 mx-2'
-						id='inputname'>
-						<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>
-							Expediente
-						</Form.Label>
-						<FormSelect
-							className={`items-center w-full p-2 focus:outline-none text-black ${
-								mode === 'view'
-									? 'border-none shadow-none bg-transparent'
-									: 'border-2 border-black shadow-2xl rounded-md'
-							}`}
-							aria-label='Default select'
-							name='expte'
-							{...register('nroexpte')}
-							onChange={handleExpteSelectChange}
-							disabled={mode === 'view'}
-							readOnly={mode === 'view'}>
-							<option>Selecciona..</option>
-							{exptes.map((expte, index) => (
-								<option key={index} value={expte.nroexpte}>
-									{expte.nroexpte}
-								</option>
-							))}
-						</FormSelect>
-					</Form.Group>
+		<Form
+			className='flex flex-wrap justify-around items-center'
+			onSubmit={onSubmit}>
+			<FormSelect
+				label='Expediente'
+				name='nroexpte'
+				register={register}
+				errors={errors}
+				mode={mode}
+				selectOptions={exptes.map((expte) => ({
+					value: expte.nroexpte,
+					label: expte.nroexpte,
+				}))}
+				onChange={handleExpteSelectChange}
+				readOnly={mode === 'view'}
+				options={{
+					required: {
+						value: true,
+						message: 'El numero de expediente es requerido',
+					},
+				}}
+			/>
 
-					<Form.Group
-						className='mb-3 flex flex-col w-full mx-2'
-						id='inputcaratula'>
-						<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>
-							Caratula
-						</Form.Label>
-						<Form.Control
-							className='border-none shadow-none bg-transparent'
-							type='text'
-							{...register('caratula')}
-							readOnly
-						/>
-					</Form.Group>
+			<FormInput
+				label='Caratula'
+				name='caratula'
+				type='text'
+				register={register}
+				errors={errors}
+				mode={mode}
+				readOnly
+			/>
 
-					<Form.Group
-						className='flex flex-col mb-3 items-center justify-around w-5/12 mx-2'
-						id='inputconcepto'>
-						<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>
-							Concepto
-						</Form.Label>
-						<FormSelect
-							className={`items-center w-full p-2 focus:outline-none text-black ${
-								mode === 'view'
-									? 'border-none shadow-none bg-transparent'
-									: 'border-2 border-black shadow-2xl rounded-md'
-							}`}
-							aria-label='Default select'
-							onChange={() => {
-								updateCaratula(watch('nroexpte'));
-							}}
-							{...register('concepto', {
-								required: {
-									value: true,
-									message: 'El concepto es requerido',
-								},
-							})}
-							disabled={mode === 'view'}
-							readOnly={mode === 'view'}>
-							<option value=''>Selecciona..</option>
-							<option value='Planilla Fiscal'>Planilla Fiscal</option>
-							<option value='Gastos de Apersonamiento'>
-								Gastos de Apersonamiento
-							</option>
-							<option value='Bonos de Movilidad'>
-								Bonos de Movilidad
-							</option>
-							<option value='Honorarios Profesionales'>
-								Honorarios Profesionales
-							</option>
-							<option value='Gastos de pericias'>
-								Gastos de pericias
-							</option>
-							<option value='Gastos Extrajudiciales'>
-								Gastos Extrajudiciales
-							</option>
-						</FormSelect>
-						{errors.concepto && (
-							<span className='error-message'>
-								{errors.concepto.message}
-							</span>
-						)}
-					</Form.Group>
+			<FormSelect
+				label='Concepto'
+				name='concepto'
+				register={register}
+				errors={errors}
+				mode={mode}
+				selectOptions={[
+					{ value: 'Planilla Fiscal', label: 'Planilla Fiscal' },
+					{
+						value: 'Gastos de Apersonamiento',
+						label: 'Gastos de Apersonamiento',
+					},
+					{ value: 'Bonos de Movilidad', label: 'Bonos de Movilidad' },
+					{
+						value: 'Honorarios Profesionales',
+						label: 'Honorarios Profesionales',
+					},
+					{ value: 'Gastos de pericias', label: 'Gastos de pericias' },
+					{
+						value: 'Gastos Extrajudiciales',
+						label: 'Gastos Extrajudiciales',
+					},
+				]}
+				readOnly={mode === 'view'}
+				options={{
+					required: {
+						value: true,
+						message: 'El concepto es requerido',
+					},
+				}}
+			/>
 
-					<Form.Group
-						className='flex flex-col mb-3 items-center justify-around w-5/12 mx-2'
-						id='inputmonto'>
-						<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>
-							Monto
-						</Form.Label>
-						<Form.Control
-							className={`items-center w-full p-2 focus:outline-none text-black ${
-								mode === 'view'
-									? 'border-none shadow-none bg-transparent'
-									: 'border-2 border-black shadow-2xl rounded-md'
-							}`}
-							type='number'
-							onChange={() => {
-								updateCaratula(watch('nroexpte'));
-							}}
-							{...register('monto', {
-								required: {
-									value: true,
-									message: 'El monto es requerido',
-								},
-							})}
-							readOnly={mode === 'view'}
-						/>
-						{errors.monto && (
-							<span className='error-message'>
-								{errors.monto.message}
-							</span>
-						)}
-					</Form.Group>
+			<FormInput
+				label='Monto'
+				name='monto'
+				type='number'
+				register={register}
+				errors={errors}
+				mode={mode}
+			/>
 
-					<Form.Group
-						className='flex flex-col mb-3 items-center justify-around w-6/12 mx-2'
-						id='inputsubname'>
-						<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>
-							Estado
-						</Form.Label>
-						<FormSelect
-							className={`items-center w-full p-2 focus:outline-none text-black ${
-								mode === 'view'
-									? 'border-none shadow-none bg-transparent'
-									: 'border-2 border-black shadow-2xl rounded-md'
-							}`}
-							aria-label='Default select'
-							onChange={() => {
-								updateCaratula(watch('nroexpte'));
-							}}
-							{...register('estado', {
-								required: {
-									value: true,
-									message: 'El estado es requerido',
-								},
-							})}
-							disabled={mode === 'view'}
-							readOnly={mode === 'view'}>
-							<option value=''>Selecciona..</option>
-							<option value='Pendiente'>Pendiente</option>
-							<option value='Pagado'>Pagado</option>
-							<option value='Cancelado'>Cancelado</option>
-						</FormSelect>
-						{errors.estado && (
-							<span className='error-message'>
-								{errors.estado.message}
-							</span>
-						)}
-					</Form.Group>
+			<FormSelect
+				label='Estado'
+				name='estado'
+				register={register}
+				errors={errors}
+				mode={mode}
+				selectOptions={[
+					{ value: 'Pendiente', label: 'Pendiente' },
+					{ value: 'Pagado', label: 'Pagado' },
+					{ value: 'Cancelado', label: 'Cancelado' },
+				]}
+				readOnly={mode === 'view'}
+				options={{
+					required: {
+						value: true,
+						message: 'El monto es requerido',
+					},
+				}}
+			/>
+			<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>
+				Comprobante de gasto
+			</Form.Label>
+			{mode === 'edit' || mode === 'create' ? (
+				<Form.Control
+					className='items-center shadow-2xl w-full rounded-md p-2 focus:outline-none border-2 border-black text-black'
+					type='file'
+					{...register('fileUrl')}
+				/>
+			) : bill?.fileUrl ? (
+				<a
+					href={bill.fileUrl}
+					target='_blank'
+					rel='noopener noreferrer'
+					className='text-blue-500 underline'>
+					Ver comprobante adjunto
+				</a>
+			) : (
+				<Form.Control
+					plaintext
+					readOnly
+					defaultValue='Sin comprobante adjunto'
+				/>
+			)}
 
-					<Form.Group
-						className='flex flex-col mb-3 items-center justify-around w-full mx-2'
-						id='fileUrl'>
-						<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>
-							Comprobante de gasto
-						</Form.Label>
-						{mode === 'edit' || mode === 'create' ? (
-							<Form.Control
-								className='items-center shadow-2xl w-full rounded-md p-2 focus:outline-none border-2 border-black text-black'
-								type='file'
-								{...register('fileUrl')}
-							/>
-						) : bill.fileUrl ? (
-							<a
-								href={bill.fileUrl}
-								target='_blank'
-								rel='noopener noreferrer'
-								className='text-blue-500 underline'>
-								Ver comprobante adjunto
-							</a>
-						) : (
-							<Form.Control
-								plaintext
-								readOnly
-								defaultValue='Sin comprobante adjunto'
-							/>
-						)}
-					</Form.Group>
-
-					<Form.Group className='flex flex-wrap items-center w-full justify-around mt-3'>
-						{mode !== 'view' && (
-							<Button
-								className='bg-background shadow-3xl btnLogout text-white text-center p-2 border-2 w-[230px] my-3  border-white rounded-xl font-semibold'
-								type='submit'>
-								<i className='text-xl pe-2 bi bi-check2-square'></i>
-								{mode === 'create'
-									? 'Registrar Gasto'
-									: 'Guardar Cambios'}
-							</Button>
-						)}
-						<Button
-							type='button'
-							className='bg-white shadow-3xl btnAdmin text-primary text-center p-2 border-2 w-[150px] my-3 border-primary rounded-xl font-semibold'
-							onClick={onClose}>
-							<i className='text-xl pe-2 bi bi-x-circle-fill'></i>
-							{mode === 'view' ? 'Volver' : 'Cancelar'}
-						</Button>
-					</Form.Group>
-				</Form>
-			</div>
-		</>
+			<Form.Group className='flex flex-wrap items-center w-full justify-around mt-3'>
+				{mode !== 'view' && (
+					<SaveButton
+						onSubmit={onSubmit}
+						label={
+							mode === 'create' ? 'Registrar Gasto' : 'Guardar Cambios'
+						}
+					/>
+				)}
+				<CancelButton
+					onClose={onClose}
+					label={mode === 'view' ? 'Volver' : 'Cancelar'}
+				/>
+			</Form.Group>
+		</Form>
 	);
 };

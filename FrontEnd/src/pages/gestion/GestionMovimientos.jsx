@@ -11,13 +11,13 @@ import {
 } from '@mui/icons-material';
 import '../../css/Header.css';
 import { useExpteActions } from '../../hooks/UseExptes.js';
-import { Table } from '../../components/Gestion/Table';
-import { Detail } from '../../components/Gestion/Detail';
+import { Table } from '../../components/gestion/Table';
+import { Detail } from '../../components/gestion/Detail';
 import { Header } from '../../components/header/Header.jsx';
 import Tooltip from '@mui/material/Tooltip';
 import Loader from '../../utils/Loader.jsx';
 import Modals from '../../utils/Modals.jsx';
-import { MovForm } from '../../components/Forms/MovForm.jsx';
+import { MovForm } from '../../components/forms/MovForm.jsx';
 import { useSelector } from 'react-redux';
 import useModal from '../../hooks/useModal';
 import { calcularDiasTranscurridos } from '../../hooks/useExptesFilter.js';
@@ -86,7 +86,7 @@ export const GestionMovimientos = () => {
 			},
 			{
 				header: 'Adjunto',
-				accessorKey: 'file',
+				accessorKey: 'fileUrl',
 				size: 50,
 				Cell: ({ row }) => {
 					if (row.original.fileUrl) {

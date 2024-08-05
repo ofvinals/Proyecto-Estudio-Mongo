@@ -9,27 +9,27 @@ import {
 export const authExtraReducers = (builder) => {
 	builder
 		.addCase(loginWithGoogle.pending, (state) => {
-			state.statusSign = 'Cargando';
+			state.statusAuth = 'Cargando';
 		})
 		.addCase(loginWithGoogle.fulfilled, (state, action) => {
-			state.statusSign = 'Exitoso';
+			state.statusAuth = 'Exitoso';
 			state.loggedUser = action.payload;
 		})
 		.addCase(loginWithGoogle.rejected, (state, action) => {
-			state.statusSign = 'Fallido';
+			state.statusAuth = 'Fallido';
 			state.error = action.payload;
 		});
 
 	builder
 		.addCase(login.pending, (state) => {
-			state.statusSign = 'Cargando';
+			state.statusAuth = 'Cargando';
 		})
 		.addCase(login.fulfilled, (state, action) => {
-			state.statusSign = 'Exitoso';
+			state.statusAuth = 'Exitoso';
 			state.loggedUser = action.payload;
 		})
 		.addCase(login.rejected, (state, action) => {
-			state.statusSign = 'Fallido';
+			state.statusAuth = 'Fallido';
 			state.error = action.payload;
 		});
 

@@ -2,13 +2,19 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { Form, Button } from 'react-bootstrap';
+import { Form } from 'react-bootstrap';
 import { useCashActions } from '../../hooks/UseCashs.js';
+import {
+	FormInput,
+	FormSelect,
+	SaveButton,
+	CancelButton,
+} from '../../utils/Form.jsx';
 import { uploadFile } from '../../firebase/config.js';
 import { useSelector } from 'react-redux';
 import Loader from '../../utils/Loader.jsx';
 
-const CashForm = ({ rowId, onClose, mode = 'edit' }) => {
+const CashForm = ({ rowId, onClose, mode }) => {
 	const {
 		register,
 		handleSubmit,
@@ -84,176 +90,70 @@ const CashForm = ({ rowId, onClose, mode = 'edit' }) => {
 	}
 
 	return (
-		<>
-			<Form
-				className='flex flex-wrap justify-around items-center'
-				onSubmit={onSubmit}>
-				<Form.Group
-					className='flex flex-col mb-3 items-center justify-around w-5/12 mt-2'
-					controlId='fecha'>
-					<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>
-						Fecha
-					</Form.Label>
-					<Form.Control
-						className={`items-center w-full p-2 focus:outline-none text-black ${
-							mode === 'view'
-								? 'border-none shadow-none bg-transparent'
-								: 'border-2 border-black shadow-2xl rounded-md'
-						}`}
-						type='date'
-						{...register('fecha', {
-							required: 'La fecha es requerida',
-						})}
-						readOnly={mode === 'view'}
-					/>
-					{errors.fecha && (
-						<span className='error-message'>{errors.fecha.message}</span>
-					)}
-				</Form.Group>
-				<Form.Group
-					className='flex flex-col mb-3 items-center justify-around w-5/12 mt-2'
-					controlId='concepto'>
-					<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>
-						Concepto
-					</Form.Label>
-					<Form.Control
-						className={`items-center w-full p-2 focus:outline-none text-black ${
-							mode === 'view'
-								? 'border-none shadow-none bg-transparent'
-								: 'border-2 border-black shadow-2xl rounded-md'
-						}`}
-						type='text'
-						{...register('concepto', {
-							required: 'El concepto es requerido',
-						})}
-						readOnly={mode === 'view'}
-					/>
-					{errors.concepto && (
-						<span className='error-message'>
-							{errors.concepto.message}
-						</span>
-					)}
-				</Form.Group>
-
-				<Form.Group
-					className='flex flex-col mb-3 items-center justify-around w-5/12 mt-2'
-					controlId='tipo'>
-					<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>
-						Tipo
-					</Form.Label>
-					<Form.Control
-						className={`items-center w-full p-2 focus:outline-none text-black ${
-							mode === 'view'
-								? 'border-none shadow-none bg-transparent'
-								: 'border-2 border-black shadow-2xl rounded-md'
-						}`}
-						as='select'
-						{...register('tipo', { required: 'El tipo es requerido' })}
-						readOnly={mode === 'view'}>
-						<option value=''>Selecciona..</option>
-						<option value='INGRESO'>INGRESO</option>
-						<option value='EGRESO'>EGRESO</option>
-					</Form.Control>
-					{errors.tipo && (
-						<span className='error-message'>{errors.tipo.message}</span>
-					)}
-				</Form.Group>
-
-				<Form.Group
-					className='flex flex-col mb-3 items-center justify-around w-5/12 mt-2'
-					controlId='monto'>
-					<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>
-						Monto
-					</Form.Label>
-					<Form.Control
-						className={`items-center w-full p-2 focus:outline-none text-black ${
-							mode === 'view'
-								? 'border-none shadow-none bg-transparent'
-								: 'border-2 border-black shadow-2xl rounded-md'
-						}`}
-						type='number'
-						{...register('monto', {
-							required: 'El monto del gasto es requerido',
-						})}
-						readOnly={mode === 'view'}
-					/>
-					{errors.monto && (
-						<span className='text-warning fs-6'>
-							{errors.monto.message}
-						</span>
-					)}
-				</Form.Group>
-
-				<Form.Group controlId='file'>
-					<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>
-						Comprobante de caja
-					</Form.Label>
-					{mode === 'edit' || mode === 'create' ? (
-						<Form.Control
-							className='items-center shadow-2xl w-full rounded-md p-2 focus:outline-none border-2 border-black text-black'
-							type='file'
-							{...register('file')}
-						/>
-					) : cash.file ? (
-						<a
-							href={cash.file}
-							target='_blank'
-							rel='noopener noreferrer'
-							className='text-blue-500 underline'>
-							Ver comprobante de caja adjunto
-						</a>
-					) : (
-						<Form.Control
-							plaintext
-							readOnly
-							defaultValue='Sin comprobante de caja adjunto'
-						/>
-					)}
-				</Form.Group>
-
-				<Form.Group
-					className='flex flex-col mb-3 items-center justify-around w-5/12 mt-2'
-					controlId='estado'>
-					<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>
-						Estado
-					</Form.Label>
-					<Form.Control
-						className={`items-center w-full p-2 focus:outline-none text-black ${
-							mode === 'view'
-								? 'border-none shadow-none bg-transparent'
-								: 'border-2 border-black shadow-2xl rounded-md'
-						}`}
-						as='select'
-						{...register('estado', {
-							required: 'El estado es requerido',
-						})}
-						readOnly={mode === 'view'}>
-						<option value=''>Selecciona..</option>
-						<option value='Pendiente'>Pendiente</option>
-						<option value='Pagado'>Pagado</option>
-						<option value='Cobrado'>Cobrado</option>
-						<option value='Cancelado'>Cancelado</option>
-					</Form.Control>
-					{errors.estado && (
-						<span className='error-message'>{errors.estado.message}</span>
-					)}
-				</Form.Group>
-				<Form.Group className='flex flex-wrap items-center w-full justify-around mt-3'>
-					{mode !== 'view' && (
-						<Button
-							type='submit'
-							className='bg-background shadow-3xl btnLogout text-white text-center p-2 border-2 w-[230px] my-3  border-white rounded-xl font-semibold'>
-							{mode === 'create' ? 'Registrar Cash' : 'Guardar Cambios'}
-						</Button>
-					)}
-					<Button
-						className='bg-white shadow-3xl btnAdmin text-primary text-center p-2 border-2 w-[150px] my-3 border-primary rounded-xl font-semibold'
-						onClick={onClose}>
-						{mode === 'view' ? 'Volver' : 'Cancelar'}
-					</Button>
-				</Form.Group>
-			</Form>
-		</>
+		<Form
+			className='flex flex-wrap justify-around items-center'
+			onSubmit={onSubmit}>
+			<FormInput
+				label='Fecha'
+				name='fecha'
+				type='date'
+				register={register}
+				errors={errors}
+				mode={mode}
+				options={{
+					required: {
+						value: true,
+						message: 'La fecha es requerida',
+					},
+				}}
+			/>
+			<FormInput
+				label='Concepto'
+				name='concepto'
+				register={register}
+				errors={errors}
+				mode={mode}
+				options={{
+					required: {
+						value: true,
+						message: 'El concepto es requerido',
+					},
+				}}
+			/>
+			<FormSelect
+				label='Tipo'
+				name='tipo'
+				register={register}
+				errors={errors}
+				mode={mode}
+				selectOptions={[
+					{ value: 'INGRESO', label: 'INGRESO' },
+					{ value: 'EGRESO', label: 'EGRESO' },
+				]}
+			/>
+			<FormInput
+				label='Monto'
+				name='monto'
+				type='number'
+				register={register}
+				errors={errors}
+				mode={mode}
+				options={{
+					required: {
+						value: true,
+						message: 'El monto es requerido',
+					},
+				}}
+			/>
+			<SaveButton
+				onSubmit={onSubmit}
+				label={mode === 'create' ? 'Registrar Cash' : 'Guardar Cambios'}
+			/>
+			<CancelButton
+				onClose={onClose}
+				label={mode === 'view' ? 'Volver' : 'Cancelar'}
+			/>
+		</Form>
 	);
 };
 

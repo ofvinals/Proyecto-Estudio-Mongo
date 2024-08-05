@@ -4,12 +4,18 @@ import '../../css/Header.css';
 import CheckIcon from '@mui/icons-material/Check';
 import PendingActionsIcon from '@mui/icons-material/PendingActions';
 import { useForm } from 'react-hook-form';
-import { Button, Form, FormSelect } from 'react-bootstrap';
-import { Table } from './Table.jsx';
+import {
+	FormInput,
+	FormSelect,
+	SaveButton,
+	CancelButton,
+} from '../../utils/Form.jsx';
+import { Table } from '../gestion/Table.jsx';
 import Tooltip from '@mui/material/Tooltip';
 import { useSelector } from 'react-redux';
 import { useNotesActions } from '../../hooks/UseNotes.js';
 import Loader from '../../utils/Loader.jsx';
+import { Form } from 'react-bootstrap';
 
 export const Notes = () => {
 	const [data, setData] = useState([]);
@@ -126,74 +132,54 @@ export const Notes = () => {
 					Tablero de Notas y Recordatorios
 				</h2>
 				<Form
-					className=' flex flex-col sm:flex-row flex-wrap justify-evenly items-center'
+					className='flex flex-col sm:flex-row flex-wrap justify-evenly items-center'
 					onSubmit={onSubmit}>
-					<Form.Group className='w-2/6 mb-3' controlId='resp'>
-						<Form.Label className='text-white font-medium'>
-							Responsable
-						</Form.Label>
-						<FormSelect
-							className='items-center shadow-2xl w-full rounded-md p-2 focus:outline-none border-2 border-black text-black'
-							type='text'
-							{...register('responsable', {
-								required: {
-									value: true,
-									message: 'El responsable es requerido',
-								},
-							})}>
-							<option value=''>Selecciona..</option>
-							<option value='OSCAR'>OSCAR</option>
-							<option value='JORGE'>JORGE</option>
-							<option value='MARIA'>MARIA</option>
-						</FormSelect>
-						{errors.responsable && (
-							<span className='error-message'>
-								{errors.responsable.message}
-							</span>
-						)}
-					</Form.Group>
-					<Form.Group className='mb-3' controlId='record'>
-						<Form.Label className='text-white font-medium'>
-							Recordatorio/Nota
-						</Form.Label>
-						<Form.Control
-							as='textarea'
-							className='items-center shadow-2xl w-full rounded-md p-2 focus:outline-none border-2 border-black text-black'
-							placeholder='Ingresa el recordatorio o nota...'
-							rows={3}
-							cols={35}
-							{...register('recordatorio', {
-								required: {
-									value: true,
-									message: 'El recordatorio es requerido',
-								},
-							})}
+					<FormSelect
+						label='Responsable'
+						name='responsable'
+						register={register}
+						errors={errors}
+						selectOptions={[
+							{ value: '', label: 'Selecciona..' },
+							{ value: 'OSCAR', label: 'OSCAR' },
+							{ value: 'JORGE', label: 'JORGE' },
+							{ value: 'MARIA', label: 'MARIA' },
+						]}
+						options={{
+							required: {
+								value: true,
+								message: 'El responsable es requerido',
+							},
+						}}
+						className='w-2/6 text-white'
+					/>
+					<FormInput
+						label='Recordatorio/Nota'
+						name='recordatorio'
+						type='textarea'
+						register={register}
+						errors={errors}
+						placeholder='Ingresa el recordatorio o nota...'
+						rows={3}
+						className='w-full text-white'
+						options={{
+							required: {
+								value: true,
+								message: 'El texto de recordatorio es requerido',
+							},
+						}}
+					/>
+					<div className='flex flex-col sm:flex-row flex-wrap items-center justify-around w-full'>
+						<SaveButton onSubmit={onSubmit} label='Registrar Nota' />
+						<CancelButton
+							onClose={toggleMostrarNotas}
+							label={
+								mostrarNotasPendientes
+									? 'Ver Notas Archivadas'
+									: 'Ver Notas Pendientes'
+							}
 						/>
-						{errors.recordatorio && (
-							<span className='error-message'>
-								{errors.recordatorio.message}
-							</span>
-						)}
-					</Form.Group>
-					<Form.Group
-						id='inputrecord'
-						className='flex flex-col sm:flex-row	 flex-wrap items-center justify-around w-full'>
-						<Button
-							className='bg-white shadow-3xl btnAdmin text-primary text-center p-1 py-2 border-2 w-[200px] mb-4 sm:mb-1 border-primary rounded-xl'
-							type='submit'>
-							<i className='text-xl pe-2 bi bi-check2-square'></i>
-							Registrar Nota
-						</Button>
-						<Button
-							type='button'
-							className='bg-white shadow-3xl btnAdmin text-primary text-center p-1 border-2 py-2 w-[200px] mb-4 sm:mb-1 border-primary rounded-xl'
-							onClick={toggleMostrarNotas}>
-							<i className='text-xl pe-2 bi bi-archive'></i>
-							{mostrarNotasPendientes
-								? 'Ver Notas Archivadas'
-								: 'Ver Notas Pendientes'}
-						</Button>
-					</Form.Group>
+					</div>
 				</Form>
 				<hr className='linea text-white mx-3 mt-3' />
 				<div className='table-responsive container-lg'>
