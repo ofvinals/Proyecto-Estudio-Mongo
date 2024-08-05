@@ -13,7 +13,7 @@ import { Table } from '../../components/Gestion/Table.jsx';
 import { Detail } from '../../components/Gestion/Detail.jsx';
 import { Header } from '../../components/header/Header.jsx';
 import Tooltip from '@mui/material/Tooltip';
-import { UserForm } from '../../components/forms/UserForm.jsx';
+import { UserForm } from '../../components/Forms/UserForm.jsx';
 import Modals from '../../utils/Modals.jsx';
 import { useSelector } from 'react-redux';
 import Loader from '../../utils/Loader.jsx';

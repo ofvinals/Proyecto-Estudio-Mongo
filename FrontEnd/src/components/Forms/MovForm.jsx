@@ -5,7 +5,7 @@ import Form from 'react-bootstrap/Form';
 import '../../css/Header.css';
 import { FormInput, SaveButton, CancelButton } from '../../utils/Form.jsx';
 import { useForm } from 'react-hook-form';
-import { useExpteActions } from '../../hooks/UseExptes';
+import { useExpteActions } from '../../hooks/UseExptes.js';
 import { uploadFile } from '../../firebase/config.js';
 import { useSelector } from 'react-redux';
 import Loader from '../../utils/Loader.jsx';

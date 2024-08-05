@@ -10,7 +10,7 @@ import {
 } from '@mui/icons-material';
 import useModal from '../../hooks/useModal';
 import { Table } from '../../components/Gestion/Table';
-import { TurnForm } from '../../components/forms/TurnForm.jsx';
+import { TurnForm } from '../../components/Forms/TurnForm.jsx';
 import { GoogleCalendar } from '../../components/GoogleCalendar.jsx';
 import Tooltip from '@mui/material/Tooltip';
 import { Button } from 'react-bootstrap';

@@ -17,7 +17,7 @@ import { Header } from '../../components/header/Header.jsx';
 import Tooltip from '@mui/material/Tooltip';
 import Loader from '../../utils/Loader.jsx';
 import Modals from '../../utils/Modals.jsx';
-import { MovForm } from '../../components/forms/MovForm.jsx';
+import { MovForm } from '../../components/Forms/MovForm.jsx';
 import { useSelector } from 'react-redux';
 import useModal from '../../hooks/useModal';
 import { calcularDiasTranscurridos } from '../../hooks/useExptesFilter.js';

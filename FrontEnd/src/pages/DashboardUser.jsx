@@ -6,7 +6,7 @@ import { Header } from '../components/header/Header.jsx';
 import { Novedades } from '../components/Gestion/Novedades.jsx';
 import { useState } from 'react';
 import Modals from '../utils/Modals.jsx';
-import { UserForm } from '../components/forms/UserForm.jsx';
+import { UserForm } from '../components/Forms/UserForm.jsx';
 
 export const DashboardUser = () => {
 	const { loggedUser, logoutUser } = useAuth();
