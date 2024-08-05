@@ -9,8 +9,8 @@ import {
 	Visibility as VisibilityIcon,
 } from '@mui/icons-material';
 import { useUserActions } from '../../hooks/UseUserActions.js';
-import { Table } from '../../components/gestion/Table.jsx';
-import { Detail } from '../../components/gestion/Detail.jsx';
+import { Table } from '../../components/Gestion/Table.jsx';
+import { Detail } from '../../components/Gestion/Detail.jsx';
 import { Header } from '../../components/header/Header.jsx';
 import Tooltip from '@mui/material/Tooltip';
 import { UserForm } from '../../components/forms/UserForm.jsx';

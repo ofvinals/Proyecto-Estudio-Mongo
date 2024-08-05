@@ -10,7 +10,7 @@ import {
 	SaveButton,
 	CancelButton,
 } from '../../utils/Form.jsx';
-import { Table } from '../gestion/Table.jsx';
+import { Table } from '../Gestion/Table.jsx';
 import Tooltip from '@mui/material/Tooltip';
 import { useSelector } from 'react-redux';
 import { useNotesActions } from '../../hooks/UseNotes.js';

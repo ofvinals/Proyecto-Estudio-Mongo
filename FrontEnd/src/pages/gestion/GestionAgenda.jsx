@@ -9,7 +9,7 @@ import {
 	Visibility as VisibilityIcon,
 } from '@mui/icons-material';
 import useModal from '../../hooks/useModal';
-import { Table } from '../../components/gestion/Table';
+import { Table } from '../../components/Gestion/Table';
 import { TurnForm } from '../../components/forms/TurnForm.jsx';
 import { GoogleCalendar } from '../../components/GoogleCalendar.jsx';
 import Tooltip from '@mui/material/Tooltip';
@@ -18,7 +18,7 @@ import '../../css/Header.css';
 import Modals from '../../utils/Modals.jsx';
 import Loader from '../../utils/Loader.jsx';
 import { Link } from 'react-router-dom';
-import { Detail } from '../../components/gestion/Detail.jsx';
+import { Detail } from '../../components/Gestion/Detail.jsx';
 import { Header } from '../../components/header/Header.jsx';
 
 export const GestionAgenda = () => {
