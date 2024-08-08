@@ -55,7 +55,7 @@ export const Interes = () => {
 						<CardGroup className='flex flex-wrap justify-center'>
 							{pages.map((page, index) => (
 								<Col key={index} xs={10} md={4} className='mb-3'>
-									<Card className='flex flex-col flex-wrap justify-center h-[250px] items-center text-center rounded-xl border-white border-2 bg-background m-2'>
+									<Card className='flex flex-col flex-wrap justify-center hover:translate-y-3 h-[250px] items-center text-center rounded-xl border-white border-2 bg-background m-2'>
 										<Card.Body className='flex flex-col items-center'>
 											<Card.Title className='text-xl font-semibold text-white text-center h-[56px]'>
 												{page.name}

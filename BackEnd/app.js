@@ -95,6 +95,21 @@ app.get('/scrape', async (req, res) => {
 	}
 });
 
+const oauth2Client = new google.auth.OAuth2(
+	CLIENT_ID, // Reemplaza con tu Client ID
+	CLIENT_SECRET, // Reemplaza con tu Client Secret
+	REDIRECT_URI // Reemplaza con tu Redirect URI
+);
+
+// Configura los tokens de acceso y refresco
+oauth2Client.setCredentials({
+	access_token: 'ACCESS_TOKEN',
+	refresh_token: 'REFRESH_TOKEN',
+});
+
+// API de Google Calendar
+const calendar = google.calendar({ version: 'v3', auth: oauth2Client });
+
 async function main() {
 	try {
 		await connectDB();

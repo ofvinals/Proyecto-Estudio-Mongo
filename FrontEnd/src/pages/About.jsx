@@ -47,7 +47,7 @@ export const Nosotros = () => {
 					<Card.Title className=' py-3 text-white text-center text-2xl'>
 						Mision
 					</Card.Title>
-					<Card.Text className='mx-5 pb-3 text-white text-center'>
+					<Card.Text className='mx-5 pb-3 text-sm text-white text-center'>
 						Nuestra mision consiste en diagnosticar y evaluar
 						correctamente los problemas, conflictos y consultas de
 						nuestros clientes, alineando las alternativas de solución con
@@ -64,7 +64,7 @@ export const Nosotros = () => {
 					<Card.Title className=' py-3 text-white text-center text-2xl'>
 						Vision
 					</Card.Title>
-					<Card.Text className='mx-5 pb-3 text-white text-center'>
+					<Card.Text className='mx-5 pb-3  text-sm text-white text-center'>
 						Nuestra visión se basa en el liderazgo respaldado por la
 						profesionalidad, el más estricto y cuidadoso análisis del
 						marco regulatorio, y la más calificada doctrina a la que
@@ -79,7 +79,7 @@ export const Nosotros = () => {
 					<Card.Title className='py-3 text-white text-center text-2xl'>
 						Valores
 					</Card.Title>
-					<Card.Text className='mx-5 pb-3 text-white text-center'>
+					<Card.Text className='mx-5 pb-3  text-sm text-white text-center'>
 						Los valores son esenciales en cualquier organización. Es por
 						ello que ratificamos nuestro compromiso con el cumplimiento de
 						la legislación vigente, y con el mandato de las reglas éticas

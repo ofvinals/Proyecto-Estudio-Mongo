@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import '../css/Home.css';
 import { Header } from '../components/header/Header';
 import { Count } from '../components/Home/Count';
@@ -7,8 +6,26 @@ import { Services } from '../components/Home/Services';
 import { News } from '../components/Home/News';
 import { CarrouselHome } from '../components/Home/CarrouselHome';
 import { ContactHome } from '../components/Home/ContactHome';
+import { useState } from 'react';
+import { Button } from 'react-bootstrap';
+import Modals from '../utils/Modals';
+import { Login } from '../components/header/Login';
+import { Registro } from '../components/header/Registro';
 
 export const Home = () => {
+	const [openLogin, setOpenLogin] = useState(false);
+	const [openRegister, setOpenRegister] = useState(false);
+
+	const handleLogin = () => {
+		setOpenRegister(false);
+		setOpenLogin(true);
+	};
+
+	const handleRegisterUser = () => {
+		setOpenLogin(false);
+		setOpenRegister(true);
+	};
+
 	return (
 		<>
 			<Header />
@@ -24,23 +41,23 @@ export const Home = () => {
 					</div>
 
 					<div className='flex flex-row justify-center top-3/4 left-0 right-0 sm:top-80 absolute'>
-						<Link
+						<Button
 							className='btnhome text-base p-1 bg-background text-white rounded-lg font-semibold min-w-[222px] max-w-[300px] flex items-center justify-center text-center border-1 border-white hover:border-[#25aff0] '
-							to='/login'>
+							onClick={handleRegisterUser}>
 							<i className=' text-2xl pr-1 bi bi-calendar-check me-2 '></i>
 							Agenda tu turno ahora!
-						</Link>
+						</Button>
 					</div>
 				</div>
 			</section>
 
 			<section className='imagenlogosec2 h-[290px] mt-10 bg-white flex justify-center'>
-				<Link
+				<Button
 					className='btnhome text-base p-2 bg-background text-white rounded-lg font-semibold flex items-center justify-center text-center cursor-pointer mt-[250px] min-w-[222px] max-w-[300px] border-1 hover:bg-white hover:text-[#25aff0]'
-					to='/login'>
+					onClick={handleLogin}>
 					<i className='text-xl fa-solid fa-right-to-bracket me-2'></i>
 					Ingresa a tu cuenta
-				</Link>
+				</Button>
 			</section>
 
 			<p className=' bg-[#185574] p-5 rounded-lg w-full text-5xl font-bold text-center my-10 text-white'>
@@ -75,6 +92,22 @@ export const Home = () => {
 			<News />
 
 			<ContactHome />
+			{openLogin && (
+				<Modals
+					title='Ingreso a Mi Cuenta'
+					isOpen={openLogin}
+					onClose={() => setOpenLogin(false)}>
+					<Login />
+				</Modals>
+			)}
+			{openRegister && (
+				<Modals
+					isOpen={openRegister}
+					title='Registro de Nuevo Usuario'
+					onClose={() => setOpenRegister(false)}>
+					<Registro />
+				</Modals>
+			)}
 		</>
 	);
 };

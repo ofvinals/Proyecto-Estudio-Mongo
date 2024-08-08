@@ -20,6 +20,7 @@ import Loader from '../../utils/Loader.jsx';
 import { Link } from 'react-router-dom';
 import { Detail } from '../../components/Gestion/Detail.jsx';
 import { Header } from '../../components/header/Header.jsx';
+import { CalendarSCta } from '../../components/CalendarSCta.jsx';
 
 export const GestionAgenda = () => {
 	const { loggedUser } = useAuth();
@@ -33,6 +34,7 @@ export const GestionAgenda = () => {
 	const viewModal = useModal();
 	const editModal = useModal();
 	const googleModal = useModal();
+	const googleSctaModal = useModal();
 
 	const dataTurns = async () => {
 		try {
@@ -163,6 +165,15 @@ export const GestionAgenda = () => {
 				<GoogleCalendar
 					showModal={googleModal.isOpen}
 					onClose={googleModal.closeModal}
+				/>
+			</Modals>
+			<Modals
+				isOpen={googleSctaModal.isOpen}
+				onClose={googleSctaModal.closeModal}
+				title='Calendar Google S/Cta'>
+				<CalendarSCta
+					showModal={googleSctaModal.isOpen}
+					onClose={googleSctaModal.closeModal}
 				/>
 			</Modals>
 		</section>

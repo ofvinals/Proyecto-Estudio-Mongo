@@ -71,9 +71,40 @@ const deleteTurno = async (req, res) => {
 		return res.status(500).json({ message: error.message });
 	}
 };
+
+const createTurnoGoogle = async (req, res) => {
+	const { summary, description, start, end } = req.body;
+console.log(req.body)
+	try {
+		const event = {
+			summary: summary,
+			description: description,
+			start: {
+				dateTime: start,
+				timeZone: 'Europe/Madrid', // Cambia según la zona horaria
+			},
+			end: {
+				dateTime: end,
+				timeZone: 'Europe/Madrid',
+			},
+		};
+
+		const response = await calendar.events.insert({
+			calendarId: 'primary', // O el ID del calendario específico
+			resource: event,
+		});
+
+		res.status(200).send('Evento creado con éxito');
+	} catch (error) {
+		console.error('Error al crear el evento:', error);
+		res.status(500).send('Error al crear el evento');
+	}
+};
+
 module.exports = {
 	getTurno,
 	getTurnos,
+	createTurnoGoogle,
 	createTurno,
 	updateTurno,
 	deleteTurno,
