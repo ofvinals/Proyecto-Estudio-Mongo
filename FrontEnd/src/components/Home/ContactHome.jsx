@@ -1,6 +1,15 @@
-import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import { Button } from 'react-bootstrap';
+import Modals from '../../utils/Modals';
+import { Login } from '../header/Login';
 
 export const ContactHome = () => {
+	const [openLogin, setOpenLogin] = useState(false);
+
+	const handleLogin = () => {
+		setOpenLogin(true);
+	};
+
 	return (
 		<section className='flex items-center justify-center pt-10'>
 			<div className='imagensection4 md:w-[750px] xl:w-[1100px] rounded-xl mt-3 flex flex-col flex-around h-[550px] sm:h-[450px] w-full mb-10'>
@@ -33,15 +42,23 @@ export const ContactHome = () => {
 						</div>
 					</div>
 					<div className='contbtn '>
-						<Link
+						<Button
 							className='btnhome text-base p-2 bg-background text-white rounded-lg font-semibold min-w-[222px] max-w-[300px] flex items-center justify-center text-center border-1 border-white hover:border-[#25aff0]'
-							to='/login'>
+							onClick={handleLogin}>
 							<i className='icosecboton bi bi-calendar-check me-2'></i>
 							AGENDA TU TURNO ONLINE!
-						</Link>
+						</Button>
 					</div>
 				</div>
 			</div>
+			{openLogin && (
+				<Modals
+					title='Ingreso a Mi Cuenta'
+					isOpen={openLogin}
+					onClose={() => setOpenLogin(false)}>
+					<Login />
+				</Modals>
+			)}
 		</section>
 	);
 };

@@ -16,7 +16,6 @@ export const Header = () => {
 	const [scrolled, setScrolled] = useState(false);
 	const [openLogin, setOpenLogin] = useState(false);
 	const [openRegister, setOpenRegister] = useState(false);
-
 	const [logoSrc, setLogoSrc] = useState('/logo 2.png');
 	const { loggedUser, logoutUser } = useAuth();
 	const navigate = useNavigate();
@@ -33,12 +32,12 @@ export const Header = () => {
 	};
 
 	const handleLogin = () => {
-		setOpenRegister(false); // Cerrar el modal de registro al abrir el de login
+		setOpenRegister(false);
 		setOpenLogin(true);
 	};
 
 	const handleRegisterUser = () => {
-		setOpenLogin(false); // Cerrar el modal de login al abrir el de registro
+		setOpenLogin(false);
 		setOpenRegister(true);
 	};
 
@@ -192,14 +191,17 @@ export const Header = () => {
 				</Container>
 			</Navbar>
 			{openLogin && (
-				<Modals title="Ingreso a Mi Cuenta" isOpen={openLogin} onClose={() => setOpenLogin(false)}>
+				<Modals
+					title='Ingreso a Mi Cuenta'
+					isOpen={openLogin}
+					onClose={() => setOpenLogin(false)}>
 					<Login />
 				</Modals>
 			)}
 			{openRegister && (
 				<Modals
 					isOpen={openRegister}
-					title="Registro de Nuevo Usuario"
+					title='Registro de Nuevo Usuario'
 					onClose={() => setOpenRegister(false)}>
 					<Registro />
 				</Modals>
