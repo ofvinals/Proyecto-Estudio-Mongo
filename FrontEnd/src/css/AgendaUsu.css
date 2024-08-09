@@ -1,6 +1,6 @@
 .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input {
 	background-color: transparent !important;
-	color: #e5e5e5 !important;
+	color: #101010 !important;
 	text-align: center;
 	font-size: 125% !important;
 	border-color: white;
@@ -16,6 +16,10 @@
 .css-11a8txn-MuiStack-root{
 	border-color: white!important;
 
+}
+.css-tfwo93-MuiClock{
+	background-color: #e5e5e5!important;
+	color:black!important
 }
 .css-kzf2d7-MuiInputBase-root-MuiOutlinedInput-root.Mui-focused
 	.MuiOutlinedInput-notchedOutline {

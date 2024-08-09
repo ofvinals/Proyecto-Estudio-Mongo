@@ -23,15 +23,14 @@ const CashForm = ({ rowId, onClose, mode }) => {
 	} = useForm();
 	const { getCash, updateCash, createCash } = useCashActions();
 	const cash = useSelector((state) => state.cashs.cash);
-	const statusCash = useSelector((state) => state.cashs.statusCash);
+	const statusCash = useSelector((state) => state.cashs.status);
 
 	useEffect(() => {
 		if (mode === 'edit' || mode === 'view') {
 			getCash(rowId);
 		}
-	}, []);
+	}, [statusCash]);
 
-	// Mueve la función al nivel raíz del cuerpo del componente
 	useEffect(() => {
 		if (
 			statusCash === 'Exitoso' &&
@@ -63,7 +62,7 @@ const CashForm = ({ rowId, onClose, mode }) => {
 			const formattedDate = selectedDate.toLocaleDateString('es-AR', {
 				timeZone: 'America/Argentina/Buenos_Aires',
 			});
-			const cashData = {
+			const data = {
 				fecha: formattedDate,
 				mes: selectedDate.getMonth() + 1,
 				concepto: values.concepto,
@@ -74,10 +73,12 @@ const CashForm = ({ rowId, onClose, mode }) => {
 			};
 
 			if (mode === 'edit') {
-				await updateCash(rowId, cashData);
+				const values = data;
+				await updateCash({ rowId, values });
 				onClose();
 			} else if (mode === 'create') {
-				await createCash(cashData);
+				const values = data;
+				await createCash(values);
 				onClose();
 			}
 		} catch (error) {
@@ -145,14 +146,20 @@ const CashForm = ({ rowId, onClose, mode }) => {
 					},
 				}}
 			/>
-			<SaveButton
-				onSubmit={onSubmit}
-				label={mode === 'create' ? 'Registrar Cash' : 'Guardar Cambios'}
-			/>
-			<CancelButton
-				onClose={onClose}
-				label={mode === 'view' ? 'Volver' : 'Cancelar'}
-			/>
+			<Form.Group className='flex flex-wrap items-center w-full justify-around'>
+				{mode !== 'view' && (
+					<SaveButton
+						onSubmit={onSubmit}
+						label={
+							mode === 'create' ? 'Registrar Cash' : 'Guardar Cambios'
+						}
+					/>
+				)}
+				<CancelButton
+					onClose={onClose}
+					label={mode === 'view' ? 'Volver' : 'Cancelar'}
+				/>
+			</Form.Group>
 		</Form>
 	);
 };

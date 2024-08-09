@@ -94,7 +94,7 @@ export const ExpteForm = ({ rowId, onClose, mode }) => {
 			<Form
 				className='flex flex-wrap justify-around items-center'
 				onSubmit={onSubmit}>
-				<FormInput
+				<FormSelect
 					label='Cliente'
 					name='cliente'
 					register={register}

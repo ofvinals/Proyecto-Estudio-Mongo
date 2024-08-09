@@ -9,6 +9,7 @@ const initialState = {
 	statusExpte: 'Inactivo',
 	statusSign: 'Inactivo',
 	statusUpdate: 'Inactivo',
+	statusDelete: 'Inactivo',
 	statusMov: 'Inactivo',
 	error: null,
 };

@@ -28,8 +28,8 @@ export function useExpteActions() {
 		await dispatch(getExptesThunk());
 	};
 
-	const createExpte = async (values) => {
-		await dispatch(createExpteThunk(values));
+	const createExpte = async ({ values }) => {
+		await dispatch(createExpteThunk({ values }));
 	};
 
 	const updateExpte = async (rowId, values) => {

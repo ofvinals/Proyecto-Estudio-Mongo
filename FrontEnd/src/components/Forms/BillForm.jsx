@@ -35,7 +35,7 @@ export const BillForm = ({ rowId, onClose, mode }) => {
 		if (mode === 'edit' || mode === 'view') {
 			getBill(rowId);
 		}
-	}, []);
+	}, [rowId]);
 
 	useEffect(() => {
 		if (
@@ -49,18 +49,15 @@ export const BillForm = ({ rowId, onClose, mode }) => {
 			setValue('comprobante', bill.comprobante);
 			setValue('monto', bill.monto);
 			setValue('estado', bill.estado);
+			setSelectedExpteCaratula(bill.caratula);
 		}
-	}, [statusBill, bill]);
-
-	const dataExptes = async () => {
-		getExptes();
-	};
+	}, [setValue]);
 
 	useEffect(() => {
-		dataExptes();
+		getExptes();
 	}, []);
 
-	const handleExpteSelectChange = async (e) => {
+	const handleExpteSelectChange = (e) => {
 		const selectedExpteNro = e.target.value;
 		updateCaratula(selectedExpteNro);
 	};
@@ -77,12 +74,7 @@ export const BillForm = ({ rowId, onClose, mode }) => {
 	useEffect(() => {
 		// Llamada inicial para establecer la carátula
 		updateCaratula(watch('nroexpte'));
-	}, []);
-
-	useEffect(() => {
-		// Llamada cada vez que cambie el valor de nroexpte
-		updateCaratula(watch('nroexpte'));
-	}, [watch]);
+	}, [watch('nroexpte')]);
 
 	const onSubmit = handleSubmit(async (values) => {
 		try {
@@ -100,10 +92,12 @@ export const BillForm = ({ rowId, onClose, mode }) => {
 				estado: values.estado,
 			};
 			if (mode === 'edit') {
-				await updateBill(rowId, data);
+				const values = data;
+				await updateBill(rowId, values);
 				onClose();
 			} else if (mode === 'create') {
-				await createBill(data);
+				const values = data;
+				await createBill({ values });
 				onClose();
 			}
 		} catch (error) {
@@ -123,6 +117,7 @@ export const BillForm = ({ rowId, onClose, mode }) => {
 				label='Expediente'
 				name='nroexpte'
 				register={register}
+				disabled={mode === 'view'}
 				errors={errors}
 				mode={mode}
 				selectOptions={exptes.map((expte) => ({
@@ -130,7 +125,6 @@ export const BillForm = ({ rowId, onClose, mode }) => {
 					label: expte.nroexpte,
 				}))}
 				onChange={handleExpteSelectChange}
-				readOnly={mode === 'view'}
 				options={{
 					required: {
 						value: true,
@@ -155,6 +149,7 @@ export const BillForm = ({ rowId, onClose, mode }) => {
 				register={register}
 				errors={errors}
 				mode={mode}
+				disabled={mode === 'view'}
 				selectOptions={[
 					{ value: 'Planilla Fiscal', label: 'Planilla Fiscal' },
 					{
@@ -188,6 +183,14 @@ export const BillForm = ({ rowId, onClose, mode }) => {
 				register={register}
 				errors={errors}
 				mode={mode}
+				readOnly={mode === 'view'}
+				disabled={mode === 'view'}
+				options={{
+					required: {
+						value: true,
+						message: 'El monto es requerido',
+					},
+				}}
 			/>
 
 			<FormSelect
@@ -195,6 +198,7 @@ export const BillForm = ({ rowId, onClose, mode }) => {
 				name='estado'
 				register={register}
 				errors={errors}
+				disabled={mode === 'view'}
 				mode={mode}
 				selectOptions={[
 					{ value: 'Pendiente', label: 'Pendiente' },
@@ -205,7 +209,7 @@ export const BillForm = ({ rowId, onClose, mode }) => {
 				options={{
 					required: {
 						value: true,
-						message: 'El monto es requerido',
+						message: 'El estado es requerido',
 					},
 				}}
 			/>

@@ -67,6 +67,7 @@ export const loginWithGoogle = createAsyncThunk(
 		const provider = new GoogleAuthProvider();
 		provider.addScope('https://www.googleapis.com/auth/userinfo.email');
 		provider.addScope('https://www.googleapis.com/auth/userinfo.profile');
+		provider.addScope('https://www.googleapis.com/auth/calendar.events');
 		try {
 			const result = await signInWithPopup(auth, provider);
 			const credential = GoogleAuthProvider.credentialFromResult(result);

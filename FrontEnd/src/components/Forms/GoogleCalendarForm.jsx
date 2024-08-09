@@ -1,23 +1,24 @@
 /* eslint-disable react/prop-types */
 import { useState } from 'react';
-import { useAuth } from '../hooks/useAuth.js';
+import { useAuth } from '../../hooks/useAuth.js';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { MobileDateTimePicker } from '@mui/x-date-pickers/MobileDateTimePicker';
 import dayjs from 'dayjs';
 dayjs.locale('es');
-import { Button, Modal } from 'react-bootstrap';
-import { useTurnActions } from '../hooks/UseTurns.js';
+import { Button } from 'react-bootstrap';
+import { useTurnActions } from '../../hooks/UseTurns.js';
+import Form from 'react-bootstrap/Form';
 
-export const GoogleCalendar = ({ showModal, onClose }) => {
+export const GoogleCalendarForm = ({ onClose }) => {
 	const [start, setStart] = useState(new Date());
 	const [end, setEnd] = useState(new Date());
 	const [eventName, setEventName] = useState('');
 	const [eventDescription, setEventDescription] = useState('');
 	const { loginGoogle } = useAuth();
 	const googleToken = localStorage.getItem('googleToken');
-	const { createTurn } = useTurnActions();
+	const { createTurn, createEvent } = useTurnActions();
 
 	const handleGoogle = async (e) => {
 		try {
@@ -28,9 +29,9 @@ export const GoogleCalendar = ({ showModal, onClose }) => {
 		}
 	};
 
-	const createEvent = async function createCalendarEvent() {
+	const createEventCalendar = async () => {
 		try {
-			const event = {
+			const values = {
 				summary: eventName,
 				description: eventDescription,
 				start: {
@@ -42,20 +43,8 @@ export const GoogleCalendar = ({ showModal, onClose }) => {
 					timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
 				},
 			};
-			await fetch(
-				'https://www.googleapis.com/calendar/v3/calendars/365fa9c4ffc2a2c85cd2d4c3e28942427e52a6a2a6d92386566dbe9ada6d50fe@group.calendar.google.com/events',
-				{
-					method: 'POST',
-					headers: {
-						Authorization: 'Bearer ' + googleToken,
-					},
-					body: JSON.stringify(event),
-				}
-			)
-				.then((data) => data.json())
-				.then(() => {
-					console.log('Evento creado, revisa tu Google Calendar');
-				});
+			console.log(values);
+			createEvent(values);
 		} catch (error) {
 			console.error('Error al crear evento de calendario:', error);
 		}
@@ -63,13 +52,13 @@ export const GoogleCalendar = ({ showModal, onClose }) => {
 
 	const handleCrearVenc = async () => {
 		const formatoTurnoSeleccionado = dayjs(start).format('DD/MM/YYYY HH:mm');
-		const nuevoTurno = {
+		const values = {
 			turno: formatoTurnoSeleccionado,
 			tipo: eventName,
 			motivo: eventDescription,
 		};
 		try {
-			await createTurn(nuevoTurno);
+			await createTurn({ values });
 			onClose();
 		} catch (error) {
 			console.log(error);
@@ -77,14 +66,9 @@ export const GoogleCalendar = ({ showModal, onClose }) => {
 	};
 
 	return (
-		<Modal show={showModal} onHide={onClose}>
-			<Modal.Header closeButton>
-				<Modal.Title className='text-background font-bold'>
-					Cargar Vencimientos / Audiencias
-				</Modal.Title>
-			</Modal.Header>
-			<Modal.Body className='flex flex-col flex-wrap justify-around items-start'>
-				{googleToken ? (
+		<>
+			{googleToken ? (
+				<Form className='flex flex-col flex-wrap justify-around items-start'>
 					<>
 						<p className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>
 							Fecha del Evento
@@ -121,7 +105,7 @@ export const GoogleCalendar = ({ showModal, onClose }) => {
 										]}
 										slotProps={{
 											textField: () => ({
-												color: 'success',
+												sx: { width: '100%', maxWidth: '300px' },
 												focused: true,
 												size: 'medium',
 											}),
@@ -132,82 +116,80 @@ export const GoogleCalendar = ({ showModal, onClose }) => {
 							</DemoContainer>
 						</LocalizationProvider>
 
-						<div className='flex flex-wrap justify-around items-center'>
-							<p className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>
-								{' '}
+						<Form.Group className='w-full flex flex-col flex-wrap items-start'>
+							<Form.Label className='text-start bg-transparent text-xl my-2 text-background w-full font-medium'>
 								Tipo de evento
-							</p>
-							<select
-								className='items-center shadow-2xl w-full rounded-md p-2 focus:outline-none border-2 border-black text-black'
+							</Form.Label>
+							<Form.Select
+								className=' shadow-2xl w-2/3 rounded-md p-2 focus:outline-none border-2 border-black text-black'
 								aria-label='Default select'
 								onChange={(e) => setEventName(e.target.value)}>
 								<option>Selecciona..</option>
 								<option value='AUDIENCIA'>AUDIENCIA</option>
 								<option value='VENCIMIENTO'>VENCIMIENTO</option>
-							</select>
-						</div>
+							</Form.Select>
+						</Form.Group>
 
-						<div className='flex flex-wrap justify-around items-center'>
-							<p className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>
+						<Form.Group className='flex flex-wrap justify-around items-center'>
+							<Form.Label className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-medium'>
 								Descripcion
-							</p>
-							<textarea
+							</Form.Label>
+							<Form.Control
 								className='items-center shadow-2xl w-full rounded-md p-2 focus:outline-none border-2 border-black text-black'
 								rows='5'
-								cols='33'
+								cols='30'
+								as='textarea'
 								onChange={(e) => setEventDescription(e.target.value)}
 							/>
-						</div>
+						</Form.Group>
 
-						<div className='flex flex-wrap items-center w-full justify-around'>
+						<Form.Group className='flex flex-wrap items-center w-full justify-around'>
 							<Button
-								className='bg-background shadow-3xl btnLogout text-white text-center p-2 border-2 w-[230px] my-3  border-white rounded-xl font-semibold'
+								className='bg-background shadow-3xl btnLogout text-white text-center p-2 border-2 w-[150px] my-3  border-white rounded-xl font-semibold'
 								onClick={async () => {
 									try {
 										await Promise.all([
 											handleCrearVenc(),
-											createEvent(),
+											createEventCalendar(),
 										]);
 									} catch (error) {
 										console.error('Error al crear evento:', error);
 									}
 								}}>
-								<i className='text-xl pe-2 bi bi-check2-square'></i>
 								Crear Evento
 							</Button>
 							<Button
 								onClick={onClose}
 								className='bg-white shadow-3xl btnAdmin text-primary text-center p-2 border-2 w-[150px] my-3 border-primary rounded-xl font-semibold'>
-								<i className='text-xl pe-2 bi bi-x-circle-fill'></i>
 								Cancelar
 							</Button>
-						</div>
+						</Form.Group>
 					</>
-				) : (
-					<>
-						<p className='text-center text-primary'>
-							Para cargar eventos en el calendario del Estudio debes
-							estar logueado con una cuenta de Google
-						</p>
+				</Form>
+			) : (
+				<>
+					<p className='text-center text-primary'>
+						Para cargar eventos en el calendario del Estudio debes estar
+						logueado con una cuenta de Google
+					</p>
 
-						<div className='flex flex-wrap items-center w-full justify-around'>
-							<Button
-								className='bg-background shadow-3xl btnLogout text-white text-center p-2 border-2 w-[230px] my-3  border-white rounded-xl font-semibold'
-								onClick={(e) => handleGoogle(e)}>
-								<i className='text-xl pe-2 bi bi-google'></i>
-								Ingresa con Google
-							</Button>
-							<Button
-								type='button'
-								onClick={onClose}
-								className='bg-white shadow-3xl btnAdmin text-primary text-center p-2 border-2 w-[150px] my-3 border-primary rounded-xl font-semibold'>
-								<i className='text-xl pe-2 bi bi-x-circle-fill'></i>
-								Cancelar
-							</Button>
-						</div>
-					</>
-				)}
-			</Modal.Body>
-		</Modal>
+					<div className='flex flex-wrap items-center w-full justify-around'>
+						<Button
+							className='bg-background shadow-3xl btnLogout text-white text-center p-2 border-2 w-[230px] my-3  border-white rounded-xl font-semibold'
+							onClick={(e) => handleGoogle(e)}>
+							<i className='text-xl pe-2 bi bi-google'></i>
+							Ingresa con Google
+						</Button>
+						<Button
+							type='button'
+							onClick={onClose}
+							className='bg-white shadow-3xl btnAdmin text-primary text-center p-2 border-2 w-[150px] my-3 border-primary rounded-xl font-semibold'>
+							<i className='text-xl pe-2 bi bi-x-circle-fill'></i>
+							Cancelar
+						</Button>
+					</div>
+				</>
+			)}
+		</>
 	);
 };

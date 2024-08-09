@@ -32,6 +32,7 @@ export const GestionExpedientes = () => {
 	const exptes = useSelector((state) => state.exptes.exptes);
 	const statusExpte = useSelector((state) => state.exptes.status);
 	const statusUpdate = useSelector((state) => state.exptes.statusUpdate);
+	const statusDelete = useSelector((state) => state.exptes.statusDelete);
 	const statusSign = useSelector((state) => state.exptes.statusSign);
 	const editModal = useModal();
 	const newModal = useModal();
@@ -62,7 +63,7 @@ export const GestionExpedientes = () => {
 				? filteredExptes
 				: filteredExptes.filter((expte) => expte.cliente === user);
 		setData(finalFilteredExptes);
-	}, [exptes, viewArchived]);
+	}, [exptes, viewArchived, statusDelete, statusUpdate, statusSign]);
 
 	useEffect(() => {
 		try {

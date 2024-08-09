@@ -51,14 +51,14 @@ export const getBill = createAsyncThunk(
 
 export const createBill = createAsyncThunk(
 	'bill/createBill',
-	async (gasto, { dispatch }) => {
+	async ({values}, { dispatch }) => {
 		try {
 			const token = localStorage.getItem('token');
-			const res = await apiURL.post('/api/gastos', gasto, {
+			const res = await apiURL.post('/api/gastos', values, {
 				withCredentials: true,
 				headers: { authorization: `Bearer ${token}` },
 			});
-			getBills();
+			dispatch(getBills());
 			dispatch(
 				showToast({
 					type: 'success',
@@ -88,6 +88,7 @@ export const updateBill = createAsyncThunk(
 				withCredentials: true,
 				headers: { authorization: `Bearer ${token}` },
 			});
+			dispatch(getBills());
 			dispatch(
 				showToast({
 					type: 'success',
@@ -128,6 +129,7 @@ export const deleteBill = createAsyncThunk(
 					withCredentials: true,
 					headers: { authorization: `Bearer ${token}` },
 				});
+				dispatch(getBills());
 				dispatch(
 					showToast({
 						type: 'success',
@@ -136,6 +138,7 @@ export const deleteBill = createAsyncThunk(
 				);
 				return res.data;
 			}
+			dispatch(getBills());
 		} catch (error) {
 			dispatch(
 				showToast({

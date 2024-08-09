@@ -2,7 +2,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import Form from 'react-bootstrap/Form';
+import { Form } from 'react-bootstrap';
 import { FormInput, SaveButton, CancelButton } from '../../utils/Form.jsx';
 import '../../css/Header.css';
 import { useTurnActions } from '../../hooks/UseTurns.js';
@@ -38,10 +38,12 @@ export const TurnForm = ({ rowId, onClose, mode }) => {
 		}
 	}, [statusTurn, turn]);
 
-	const onSubmit = handleSubmit(async (data) => {
+	const onSubmit = handleSubmit(async (values) => {
 		try {
-			await updateTurn({ rowId, data });
-			onClose();
+			if (mode === 'edit') {
+				await updateTurn({ rowId, values });
+				onClose();
+			}
 		} catch (error) {
 			console.error('Error al editar el turno:', error);
 		}
@@ -62,6 +64,7 @@ export const TurnForm = ({ rowId, onClose, mode }) => {
 					type='text'
 					register={register}
 					mode={mode}
+					errors={errors}
 					readOnly
 					options={{
 						required: {

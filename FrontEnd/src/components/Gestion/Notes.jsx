@@ -137,6 +137,7 @@ export const Notes = () => {
 					<FormSelect
 						label='Responsable'
 						name='responsable'
+						customClass='true'
 						register={register}
 						errors={errors}
 						selectOptions={[
@@ -151,7 +152,6 @@ export const Notes = () => {
 								message: 'El responsable es requerido',
 							},
 						}}
-						className='w-2/6 text-white'
 					/>
 					<FormInput
 						label='Recordatorio/Nota'
@@ -161,7 +161,7 @@ export const Notes = () => {
 						errors={errors}
 						placeholder='Ingresa el recordatorio o nota...'
 						rows={3}
-						className='w-full text-white'
+						customClass='true'
 						options={{
 							required: {
 								value: true,

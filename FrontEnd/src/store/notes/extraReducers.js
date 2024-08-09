@@ -35,27 +35,27 @@ export const noteExtraReducers = (builder) => {
 
 	builder
 		.addCase(deleteNote.pending, (state) => {
-			state.statusSign = 'Cargando';
+			state.statusDelete = 'Cargando';
 		})
 		.addCase(deleteNote.fulfilled, (state, action) => {
-			state.statusSign = 'Exitoso';
-			state.note = action.payload;
+			state.statusDelete = 'Exitoso';
+			state.notes = action.payload;
 		})
 		.addCase(deleteNote.rejected, (state, action) => {
-			state.statusSign = 'Fallido';
+			state.statusDelete = 'Fallido';
 			state.error = action.payload;
 		});
 
 	builder
 		.addCase(createNote.pending, (state) => {
-			state.statusSign = 'Cargando';
+			state.statusNote = 'Cargando';
 		})
 		.addCase(createNote.fulfilled, (state, action) => {
-			state.statusSign = 'Exitoso';
-			state.note = action.payload;
+			state.statusNote = 'Exitoso';
+			state.notes = action.payload;
 		})
 		.addCase(createNote.rejected, (state, action) => {
-			state.statusSign = 'Fallido';
+			state.statusNote = 'Fallido';
 			state.error = action.payload;
 		});
 
@@ -65,7 +65,7 @@ export const noteExtraReducers = (builder) => {
 		})
 		.addCase(updateNote.fulfilled, (state, action) => {
 			state.statusUpdate = 'Exitoso';
-			state.note = action.payload;
+			state.notes = action.payload;
 		})
 		.addCase(updateNote.rejected, (state, action) => {
 			state.statusUpdate = 'Fallido';
