@@ -52,14 +52,14 @@ export const getExpte = createAsyncThunk(
 
 export const createExpte = createAsyncThunk(
 	'expte/createExpte',
-	async (expte, { dispatch }) => {
+	async ({values}, { dispatch }) => {
 		try {
 			const token = localStorage.getItem('token');
-			const res = await apiURL.post('/api/exptes', expte, {
+			const res = await apiURL.post('/api/exptes', values, {
 				withCredentials: true,
 				headers: { authorization: `Bearer ${token}` },
 			});
-			getExptes();
+			dispatch(getExptes());
 			dispatch(
 				showToast({
 					type: 'success',
@@ -89,6 +89,7 @@ export const updateExpte = createAsyncThunk(
 				withCredentials: true,
 				headers: { authorization: `Bearer ${token}` },
 			});
+			dispatch(getExptes());
 			dispatch(
 				showToast({
 					type: 'success',
@@ -129,6 +130,7 @@ export const deleteExpte = createAsyncThunk(
 					withCredentials: true,
 					headers: { authorization: `Bearer ${token}` },
 				});
+				dispatch(getExptes());
 				dispatch(
 					showToast({
 						type: 'success',
@@ -247,6 +249,7 @@ export const deleteMov = createAsyncThunk(
 				);
 				return res.data;
 			}
+			dispatch(getExptes());
 		} catch (error) {
 			dispatch(
 				showToast({

@@ -32,6 +32,7 @@ export const GestionBills = () => {
 	const bills = useSelector((state) => state.bills.bills);
 	const statusBill = useSelector((state) => state.bills.statusBill);
 	const statusUpdate = useSelector((state) => state.bills.statusUpdate);
+	const statusDelete = useSelector((state) => state.bills.statusDelete);
 	const statusSign = useSelector((state) => state.bills.statusSign);
 	const admin = loggedUser.admin;
 	const coadmin = loggedUser.coadmin;
@@ -67,7 +68,7 @@ export const GestionBills = () => {
 
 	useEffect(() => {
 		dataBills();
-	}, [viewArchived, statusUpdate, statusSign]);
+	}, [viewArchived, statusUpdate, statusSign, statusDelete]);
 
 	const formatValue = (value) => {
 		if (value instanceof Date) {

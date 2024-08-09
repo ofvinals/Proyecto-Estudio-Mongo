@@ -23,11 +23,11 @@ export function useBillActions() {
 		await dispatch(getBillsThunk());
 	};
 
-	const createBill = async (gasto) => {
-		await dispatch(createBillThunk({ gasto }));
+	const createBill = async ({values}) => {
+		await dispatch(createBillThunk({ values }));
 	};
 
-	const updateBill = async (rowId, values) => {
+	const updateBill = async ({rowId, values}) => {
 		await dispatch(updateBillThunk({ id: rowId, values }));
 	};
 

@@ -39,7 +39,7 @@ export const cashExtraReducers = (builder) => {
 		})
 		.addCase(createCash.fulfilled, (state, action) => {
 			state.statusCash = 'Exitoso';
-			state.cash = action.payload;
+			state.cashs = action.payload;
 		})
 		.addCase(createCash.rejected, (state, action) => {
 			state.statusCash = 'Fallido';
@@ -48,14 +48,14 @@ export const cashExtraReducers = (builder) => {
 
 	builder
 		.addCase(deleteCash.pending, (state) => {
-			state.statusSign = 'Cargando';
+			state.statusDelete = 'Cargando';
 		})
 		.addCase(deleteCash.fulfilled, (state, action) => {
-			state.statusSign = 'Exitoso';
-			state.cash = action.payload;
+			state.statusDelete = 'Exitoso';
+			state.cashs = action.payload;
 		})
 		.addCase(deleteCash.rejected, (state, action) => {
-			state.statusSign = 'Fallido';
+			state.statusDelete = 'Fallido';
 			state.error = action.payload;
 		});
 
@@ -65,7 +65,7 @@ export const cashExtraReducers = (builder) => {
 		})
 		.addCase(updateCash.fulfilled, (state, action) => {
 			state.statusUpdate = 'Exitoso';
-			state.cash = action.payload;
+			state.cashs = action.payload;
 		})
 		.addCase(updateCash.rejected, (state, action) => {
 			state.statusUpdate = 'Fallido';

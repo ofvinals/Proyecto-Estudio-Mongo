@@ -1,6 +1,7 @@
 import {
 	getTurn,
 	createTurn,
+	createEvent,
 	getTurns,
 	deleteTurn,
 	updateTurn,
@@ -35,27 +36,39 @@ export const turnExtraReducers = (builder) => {
 
 	builder
 		.addCase(deleteTurn.pending, (state) => {
-			state.statusSign = 'Cargando';
+			state.statusDelete = 'Cargando';
 		})
 		.addCase(deleteTurn.fulfilled, (state, action) => {
-			state.statusSign = 'Exitoso';
-			state.turn = action.payload;
+			state.statusDelete = 'Exitoso';
+			state.turns = action.payload;
 		})
 		.addCase(deleteTurn.rejected, (state, action) => {
-			state.statusSign = 'Fallido';
+			state.statusDelete = 'Fallido';
 			state.error = action.payload;
 		});
 
 	builder
 		.addCase(createTurn.pending, (state) => {
-			state.statusSign = 'Cargando';
+			state.statusTurn = 'Cargando';
 		})
 		.addCase(createTurn.fulfilled, (state, action) => {
-			state.statusSign = 'Exitoso';
-			state.turn = action.payload;
+			state.statusTurn = 'Exitoso';
+			state.turns = action.payload;
 		})
 		.addCase(createTurn.rejected, (state, action) => {
-			state.statusSign = 'Fallido';
+			state.statusTurn = 'Fallido';
+			state.error = action.payload;
+		});
+	builder
+		.addCase(createEvent.pending, (state) => {
+			state.statusTurn = 'Cargando';
+		})
+		.addCase(createEvent.fulfilled, (state, action) => {
+			state.statusTurn = 'Exitoso';
+			state.turns = action.payload;
+		})
+		.addCase(createEvent.rejected, (state, action) => {
+			state.statusTurn = 'Fallido';
 			state.error = action.payload;
 		});
 
@@ -65,7 +78,7 @@ export const turnExtraReducers = (builder) => {
 		})
 		.addCase(updateTurn.fulfilled, (state, action) => {
 			state.statusUpdate = 'Exitoso';
-			state.turn = action.payload;
+			state.turns = action.payload;
 		})
 		.addCase(updateTurn.rejected, (state, action) => {
 			state.statusUpdate = 'Fallido';

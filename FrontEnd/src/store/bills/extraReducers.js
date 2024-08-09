@@ -39,7 +39,7 @@ export const billExtraReducers = (builder) => {
 		})
 		.addCase(createBill.fulfilled, (state, action) => {
 			state.statusBill = 'Exitoso';
-			state.bill = action.payload;
+			state.bills = action.payload;
 		})
 		.addCase(createBill.rejected, (state, action) => {
 			state.statusBill = 'Fallido';
@@ -48,14 +48,14 @@ export const billExtraReducers = (builder) => {
 
 	builder
 		.addCase(deleteBill.pending, (state) => {
-			state.statusSign = 'Cargando';
+			state.statusDelete = 'Cargando';
 		})
 		.addCase(deleteBill.fulfilled, (state, action) => {
-			state.statusSign = 'Exitoso';
-			state.bill = action.payload;
+			state.statusDelete = 'Exitoso';
+			state.bills = action.payload;
 		})
 		.addCase(deleteBill.rejected, (state, action) => {
-			state.statusSign = 'Fallido';
+			state.statusDelete = 'Fallido';
 			state.error = action.payload;
 		});
 

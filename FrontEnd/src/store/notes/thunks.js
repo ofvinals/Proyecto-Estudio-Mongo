@@ -51,14 +51,14 @@ export const getNote = createAsyncThunk(
 
 export const createNote = createAsyncThunk(
 	'note/createNote',
-	async (note, { dispatch }) => {
+	async ({values}, { dispatch }) => {
 		try {
 			const token = localStorage.getItem('token');
-			const res = await apiURL.post('/api/notas', note, {
+			const res = await apiURL.post('/api/notas', values, {
 				withCredentials: true,
 				headers: { authorization: `Bearer ${token}` },
 			});
-			getNotes();
+			dispatch(getNotes());
 			dispatch(
 				showToast({
 					type: 'success',
@@ -88,6 +88,7 @@ export const updateNote = createAsyncThunk(
 				withCredentials: true,
 				headers: { authorization: `Bearer ${token}` },
 			});
+			dispatch(getNotes());
 			dispatch(
 				showToast({
 					type: 'success',
@@ -136,6 +137,7 @@ export const deleteNote = createAsyncThunk(
 				);
 				return res.data;
 			}
+			dispatch(getNotes());
 		} catch (error) {
 			dispatch(
 				showToast({

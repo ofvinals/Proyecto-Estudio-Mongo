@@ -74,13 +74,14 @@ export const getUserbyGoogle = createAsyncThunk(
 
 export const createUser = createAsyncThunk(
 	'user/createUser',
-	async (user, { dispatch }) => {
+	async ({ values }, { dispatch }) => {
 		try {
 			const token = localStorage.getItem('token');
-			const res = await apiURL.post('/api/users', user, {
+			const res = await apiURL.post('/api/users', values, {
 				withCredentials: true,
 				headers: { authorization: `Bearer ${token}` },
 			});
+			dispatch(getUsers());
 			dispatch(
 				showToast({
 					type: 'success',
@@ -110,7 +111,7 @@ export const updateUser = createAsyncThunk(
 				withCredentials: true,
 				headers: { authorization: `Bearer ${token}` },
 			});
-			getUsers();
+			dispatch(getUsers());
 			dispatch(
 				showToast({
 					type: 'success',
@@ -151,6 +152,7 @@ export const deleteUser = createAsyncThunk(
 					withCredentials: true,
 					headers: { authorization: `Bearer ${token}` },
 				});
+				dispatch(getUsers());
 				dispatch(
 					showToast({
 						type: 'success',
@@ -159,6 +161,7 @@ export const deleteUser = createAsyncThunk(
 				);
 				return res.data;
 			}
+			dispatch(getUsers());
 		} catch (error) {
 			dispatch(
 				showToast({

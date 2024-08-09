@@ -35,14 +35,14 @@ export const userExtraReducers = (builder) => {
 
 	builder
 		.addCase(deleteUser.pending, (state) => {
-			state.statusSign = 'Cargando';
+			state.statusDelete = 'Cargando';
 		})
 		.addCase(deleteUser.fulfilled, (state, action) => {
-			state.statusSign = 'Exitoso';
-			state.user = action.payload;
+			state.statusDelete = 'Exitoso';
+			state.users = action.payload;
 		})
 		.addCase(deleteUser.rejected, (state, action) => {
-			state.statusSign = 'Fallido';
+			state.statusDelete = 'Fallido';
 			state.error = action.payload;
 		});
 

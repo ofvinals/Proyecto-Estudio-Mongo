@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useAuth } from '../../hooks/useAuth.js';
 import { useTurnActions } from '../../hooks/UseTurns.js';
@@ -11,7 +11,7 @@ import {
 import useModal from '../../hooks/useModal';
 import { Table } from '../../components/Gestion/Table';
 import { TurnForm } from '../../components/Forms/TurnForm.jsx';
-import { GoogleCalendar } from '../../components/GoogleCalendar.jsx';
+import { GoogleCalendarForm } from '../../components/Forms/GoogleCalendarForm.jsx';
 import Tooltip from '@mui/material/Tooltip';
 import { Button } from 'react-bootstrap';
 import '../../css/Header.css';
@@ -20,16 +20,18 @@ import Loader from '../../utils/Loader.jsx';
 import { Link } from 'react-router-dom';
 import { Detail } from '../../components/Gestion/Detail.jsx';
 import { Header } from '../../components/header/Header.jsx';
-import { CalendarSCta } from '../../components/CalendarSCta.jsx';
+import { CalendarSCta } from '../../components/Forms/CalendarSCtaForm.jsx';
 
 export const GestionAgenda = () => {
 	const { loggedUser } = useAuth();
+	const { getTurns, deleteTurn } = useTurnActions();
+	const [rowId, setRowId] = useState(null);
 	const admin = loggedUser.admin;
 	const coadmin = loggedUser.coadmin;
-	const { getTurns, deleteTurn } = useTurnActions();
 	const turns = useSelector((state) => state.turns.turns);
 	const statusTurn = useSelector((state) => state.turns.status);
 	const statusUpdate = useSelector((state) => state.turns.statusUpdate);
+	const statusDelete = useSelector((state) => state.turns.statusDelete);
 	const statusSign = useSelector((state) => state.turns.statusSign);
 	const viewModal = useModal();
 	const editModal = useModal();
@@ -46,7 +48,7 @@ export const GestionAgenda = () => {
 
 	useEffect(() => {
 		dataTurns();
-	}, [statusUpdate, statusSign]);
+	}, [statusUpdate, statusSign, ]);
 
 	const columns = React.useMemo(
 		() => [
@@ -60,7 +62,7 @@ export const GestionAgenda = () => {
 				size: 250,
 			},
 		],
-		[]
+		
 	);
 
 	const actions = [
@@ -71,7 +73,10 @@ export const GestionAgenda = () => {
 					<VisibilityIcon color='primary' cursor='pointer' />
 				</Tooltip>
 			),
-			onClick: (row) => viewModal.openModal(row.original._id),
+			onClick: (row) => {
+				setRowId(row.original._id);
+				viewModal.openModal(row.original._id);
+			},
 		},
 		{
 			text: 'Editar',
@@ -81,7 +86,10 @@ export const GestionAgenda = () => {
 						<EditIcon color='success' cursor='pointer' />
 					</Tooltip>
 				) : null,
-			onClick: (row) => editModal.openModal(row.original._id),
+			onClick: (row) => {
+				setRowId(row.original._id);
+				editModal.openModal(row.original._id);
+			},
 		},
 		{
 			text: 'Eliminar',
@@ -141,9 +149,9 @@ export const GestionAgenda = () => {
 			<Modals
 				isOpen={editModal.isOpen}
 				onClose={editModal.closeModal}
-				title='Editar Turno'>
+				title='Editar Evento de Agenda'>
 				<TurnForm
-					rowId={editModal.data}
+					rowId={rowId}
 					onClose={editModal.closeModal}
 					mode='edit'
 				/>
@@ -151,9 +159,9 @@ export const GestionAgenda = () => {
 			<Modals
 				isOpen={viewModal.isOpen}
 				onClose={viewModal.closeModal}
-				title='Ver Turno'>
+				title='Ver Evento de Agenda'>
 				<TurnForm
-					rowId={viewModal.data}
+					rowId={rowId}
 					onClose={viewModal.closeModal}
 					mode='view'
 				/>
@@ -162,7 +170,7 @@ export const GestionAgenda = () => {
 				isOpen={googleModal.isOpen}
 				onClose={googleModal.closeModal}
 				title='Ingresar con Google'>
-				<GoogleCalendar
+				<GoogleCalendarForm
 					showModal={googleModal.isOpen}
 					onClose={googleModal.closeModal}
 				/>

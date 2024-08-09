@@ -51,14 +51,14 @@ export const getCash = createAsyncThunk(
 
 export const createCash = createAsyncThunk(
 	'cash/createCash',
-	async (cash, { dispatch }) => {
+	async ({values}, { dispatch }) => {
 		try {
 			const token = localStorage.getItem('token');
-			const res = await apiURL.post('/api/cashs', cash, {
+			const res = await apiURL.post('/api/cashs', values, {
 				withCredentials: true,
 				headers: { authorization: `Bearer ${token}` },
 			});
-			getCashs();
+			dispatch(getCashs());
 			dispatch(
 				showToast({
 					type: 'success',
@@ -88,6 +88,7 @@ export const updateCash = createAsyncThunk(
 				withCredentials: true,
 				headers: { authorization: `Bearer ${token}` },
 			});
+			dispatch(getCashs());
 			dispatch(
 				showToast({
 					type: 'success',
@@ -128,6 +129,7 @@ export const deleteCash = createAsyncThunk(
 					withCredentials: true,
 					headers: { authorization: `Bearer ${token}` },
 				});
+				dispatch(getCashs());
 				dispatch(
 					showToast({
 						type: 'success',
@@ -136,6 +138,7 @@ export const deleteCash = createAsyncThunk(
 				);
 				return res.data;
 			}
+			dispatch(getCashs());
 		} catch (error) {
 			dispatch(
 				showToast({

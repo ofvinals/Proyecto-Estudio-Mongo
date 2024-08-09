@@ -27,11 +27,11 @@ export const UserAgenda = () => {
 	const { getTurns, createTurn, deleteTurn } = useTurnActions();
 	const [startDate, setStartDate] = useState(dayjs());
 	const [turnoOcupado, setTurnoOcupado] = useState([]);
-
 	const user = loggedUser.email;
 	const turns = useSelector((state) => state.turns.turns);
 	const statusTurn = useSelector((state) => state.turns.status);
 	const statusUpdate = useSelector((state) => state.turns.statusUpdate);
+	const statusDelete = useSelector((state) => state.turns.statusDelete);
 	const statusSign = useSelector((state) => state.turns.statusSign);
 	const form = useRef();
 	// deshabilita seleccion de dias de fin de semana
@@ -59,7 +59,7 @@ export const UserAgenda = () => {
 
 	useEffect(() => {
 		loadTurns();
-	}, [statusUpdate, statusSign]);
+	}, [statusUpdate, statusSign, statusDelete]);
 
 	const columns = React.useMemo(
 		() => [
@@ -127,7 +127,7 @@ export const UserAgenda = () => {
 				cancelButtonText: 'Cancelar',
 			});
 			if (isConfirmed) {
-				const nuevoTurno = {
+				const values = {
 					turno: formatoTurnoSeleccionado,
 					email: user,
 					motivo: motivoConsulta,
@@ -139,7 +139,7 @@ export const UserAgenda = () => {
 					// 	nuevoTurno,
 					// 	'saMzvd5sdlHj2BhYr'
 					// );
-					createTurn(nuevoTurno);
+					createTurn(values);
 				} catch (error) {
 					console.error(
 						'Error al enviar el formulario por EmailJS:',
@@ -180,7 +180,6 @@ export const UserAgenda = () => {
 								display: 'flex',
 								justifyContent: 'center',
 								alignItems: 'center',
-								
 							}}>
 							<LocalizationProvider
 								dateAdapter={AdapterDayjs}
@@ -189,7 +188,7 @@ export const UserAgenda = () => {
 									<DemoItem label=''>
 										<MobileDateTimePicker
 											defaultValue={dayjs()}
-											formatDensity='dense'
+											formatDensity='spacious'
 											disablePast={true}
 											ampm={false}
 											shouldDisableTime={shouldDisableTime}
@@ -242,13 +241,11 @@ export const UserAgenda = () => {
 							<Loader />
 						) : (
 							<div className='table-responsive'>
-			
-									<Table
-										columns={columns}
-										data={turns}
-										actions={actions}
-									/>
-				
+								<Table
+									columns={columns}
+									data={turns}
+									actions={actions}
+								/>
 							</div>
 						)}
 					</div>

@@ -30,9 +30,9 @@ export const GestionCash = () => {
 	const [viewArchived, setViewArchived] = useState(false);
 	const [rowId, setRowId] = useState(null);
 	const cashs = useSelector((state) => state.cashs.cashs);
-	const statusCash = useSelector((state) => state.cashs.status);
+	const statusCash = useSelector((state) => state.cashs.statusCash);
 	const statusUpdate = useSelector((state) => state.cashs.statusUpdate);
-	const statusSign = useSelector((state) => state.cashs.statusSign);
+	const statusDelete = useSelector((state) => state.cashs.statusDelete);
 	const viewModal = useModal();
 	const editModal = useModal();
 	const newModal = useModal();
@@ -59,7 +59,7 @@ export const GestionCash = () => {
 
 	useEffect(() => {
 		dataCashs();
-	}, [statusUpdate, statusSign, viewArchived]);
+	}, [viewArchived, statusUpdate, statusDelete]);
 
 	const formatValue = (value) => {
 		if (value instanceof Date) {

@@ -28,8 +28,8 @@ export function useUserActions() {
 		await dispatch(getUserbyGoogleThunk());
 	};
 
-	const createUser = async (userData) => {
-		await dispatch(createUserThunk({ user: userData }));
+	const createUser = async ({ values }) => {
+		await dispatch(createUserThunk({ values }));
 	};
 
 	const updateUser = async ({ rowId, values }) => {

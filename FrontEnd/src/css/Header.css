@@ -3,6 +3,10 @@
 	top: 0;
 	z-index: 1000;
 }
+.customClass {
+	color: white !important;
+}
+
 .btnlogin:hover {
 	background-color: #185574 !important;
 	color: white;

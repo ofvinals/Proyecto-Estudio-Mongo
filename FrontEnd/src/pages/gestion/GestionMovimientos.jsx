@@ -34,6 +34,7 @@ export const GestionMovimientos = () => {
 	const expte = useSelector((state) => state.exptes.expte);
 	const statusExpte = useSelector((state) => state.exptes.statusExpte);
 	const statusUpdate = useSelector((state) => state.exptes.statusUpdate);
+	const statusDelete = useSelector((state) => state.exptes.statusDelete);
 	const statusSign = useSelector((state) => state.exptes.statusSign);
 	const viewModal = useModal();
 	const editModal = useModal();
@@ -51,7 +52,7 @@ export const GestionMovimientos = () => {
 
 	useEffect(() => {
 		dataExpte();
-	}, [statusSign, statusUpdate]);
+	}, [statusSign, statusUpdate, statusDelete]);
 
 	useEffect(() => {
 		if (expte && expte.movimientos) {

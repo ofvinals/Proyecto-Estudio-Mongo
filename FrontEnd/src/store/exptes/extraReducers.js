@@ -42,7 +42,7 @@ export const expteExtraReducers = (builder) => {
 		})
 		.addCase(createExpte.fulfilled, (state, action) => {
 			state.statusExpte = 'Exitoso';
-			state.expte = action.payload;
+			state.exptes = action.payload;
 		})
 		.addCase(createExpte.rejected, (state, action) => {
 			state.statusExpte = 'Fallido';
@@ -51,14 +51,14 @@ export const expteExtraReducers = (builder) => {
 
 	builder
 		.addCase(deleteExpte.pending, (state) => {
-			state.statusSign = 'Cargando';
+			state.statusDelete = 'Cargando';
 		})
 		.addCase(deleteExpte.fulfilled, (state, action) => {
-			state.statusSign = 'Exitoso';
-			state.expte = action.payload;
+			state.statusDelete = 'Exitoso';
+			state.exptes = action.payload;
 		})
 		.addCase(deleteExpte.rejected, (state, action) => {
-			state.statusSign = 'Fallido';
+			state.statusDelete = 'Fallido';
 			state.error = action.payload;
 		});
 
@@ -68,7 +68,7 @@ export const expteExtraReducers = (builder) => {
 		})
 		.addCase(updateExpte.fulfilled, (state, action) => {
 			state.statusUpdate = 'Exitoso';
-			state.expte = action.payload;
+			state.exptes = action.payload;
 		})
 		.addCase(updateExpte.rejected, (state, action) => {
 			state.statusUpdate = 'Fallido';
@@ -81,7 +81,7 @@ export const expteExtraReducers = (builder) => {
 		})
 		.addCase(createMov.fulfilled, (state, action) => {
 			state.statusMov = 'Exitoso';
-			state.expte = action.payload;
+			state.exptes = action.payload;
 		})
 		.addCase(createMov.rejected, (state, action) => {
 			state.statusMov = 'Fallido';
@@ -90,14 +90,14 @@ export const expteExtraReducers = (builder) => {
 
 	builder
 		.addCase(deleteMov.pending, (state) => {
-			state.statusSign = 'Cargando';
+			state.statusDelete = 'Cargando';
 		})
 		.addCase(deleteMov.fulfilled, (state, action) => {
-			state.statusSign = 'Exitoso';
-			state.mov = action.payload;
+			state.statusDelete = 'Exitoso';
+			state.movs = action.payload;
 		})
 		.addCase(deleteMov.rejected, (state, action) => {
-			state.statusSign = 'Fallido';
+			state.statusDelete = 'Fallido';
 			state.error = action.payload;
 		});
 
@@ -107,7 +107,7 @@ export const expteExtraReducers = (builder) => {
 		})
 		.addCase(updateMov.fulfilled, (state, action) => {
 			state.statusUpdate = 'Exitoso';
-			state.mov = action.payload;
+			state.movs = action.payload;
 		})
 		.addCase(updateMov.rejected, (state, action) => {
 			state.statusUpdate = 'Fallido';

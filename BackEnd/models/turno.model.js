@@ -2,20 +2,27 @@ const mongoose = require('mongoose');
 
 const turnoSchema = new mongoose.Schema(
 	{
-		turno: {
-			type: String,
-			required: true,
-			unique: true,
-		},
-		email: {
+		eventId: {
 			type: String,
 		},
 		tipo: {
 			type: String,
+			required: true,
+		},
+		start: {
+			type: String,
+			required: true,
 		},
 		motivo: {
 			type: String,
 			required: true,
+		},
+		creator: {
+			type: String,
+			required: true,
+		},
+		eventUrl: {
+			type: String,
 		},
 	},
 	{

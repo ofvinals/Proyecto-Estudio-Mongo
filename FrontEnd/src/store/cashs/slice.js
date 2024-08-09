@@ -8,6 +8,7 @@ const initialState = {
   statusCash: 'Inactivo',
   statusSign: 'Inactivo',
   statusUpdate: 'Inactivo',
+  statusDelete: 'Inactivo',
   error: null,
 };
 

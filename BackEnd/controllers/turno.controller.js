@@ -11,14 +11,16 @@ const getTurnos = async (req, res) => {
 
 const createTurno = async (req, res) => {
 	// Extraer los campos del cuerpo de la solicitud (request body)
-	const { turno, email, tipo, motivo } = req.body;
+	const { eventId, tipo, start, motivo, creator, eventUrl } = req.body;
 	try {
 		// Crear una nueva instancia del modelo Turno utilizando los datos de la solicitud
 		const newTurno = new Turno({
-			turno,
+			eventId,
 			tipo,
-			email,
+			start,
 			motivo,
+			creator,
+			eventUrl,
 		});
 		const savedTurno = await newTurno.save();
 
@@ -74,7 +76,7 @@ const deleteTurno = async (req, res) => {
 
 const createTurnoGoogle = async (req, res) => {
 	const { summary, description, start, end } = req.body;
-console.log(req.body)
+	console.log(req.body);
 	try {
 		const event = {
 			summary: summary,
