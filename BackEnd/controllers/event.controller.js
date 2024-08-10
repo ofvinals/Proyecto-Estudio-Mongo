@@ -93,8 +93,8 @@ const deleteEvent = async (req, res) => {
 		const { eventId, id } = req.query;
 		// Obtiene el usuario de google autenticado
 		const auth = new google.auth.GoogleAuth({
-			keyFile:
-				'client_secret_993541654096-l9jffbub2h4ro7c2d59r1euucrakkfen.apps.googleusercontent.com (2).json',
+			credentials: JSON.parse(process.env.GOOGLE_CREDENTIALS),
+
 			scopes: ['https://www.googleapis.com/auth/calendar'],
 		});
 		const calendar = google.calendar({ version: 'v3', auth });
