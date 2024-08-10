@@ -24,7 +24,7 @@ export const UserForm = ({ rowId, onClose, mode }) => {
 		if (mode === 'edit' || mode === 'view') {
 			getUser(rowId);
 		}
-	}, []);
+	}, [rowId]);
 
 	useEffect(() => {
 		if (

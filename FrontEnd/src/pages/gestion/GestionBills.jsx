@@ -51,13 +51,13 @@ export const GestionBills = () => {
 
 	useEffect(() => {
 		dataBills();
-	}, []);
+	}, [statusUpdate, statusSign, statusBill]);
 
 	useEffect(() => {
 		const filteredGastos = bills.filter((gasto) =>
 			viewArchived
-				? gasto.estado === 'Cancelado'
-				: gasto.estado !== 'Cancelado'
+				? gasto.estado === 'Pagado'
+				: gasto.estado !== 'Pagado'
 		);
 		const finalFilteredGastos = admin
 			? filteredGastos
@@ -67,7 +67,7 @@ export const GestionBills = () => {
 
 	useEffect(() => {
 		dataBills();
-	}, [viewArchived, statusUpdate, statusSign]);
+	}, [viewArchived]);
 
 	const formatValue = (value) => {
 		if (value instanceof Date) {

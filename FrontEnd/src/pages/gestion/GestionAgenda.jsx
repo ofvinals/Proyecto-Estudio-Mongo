@@ -29,7 +29,7 @@ export const GestionAgenda = () => {
 	const admin = loggedUser.admin;
 	const coadmin = loggedUser.coadmin;
 	const events = useSelector((state) => state.events.events);
-	const statusEvent = useSelector((state) => state.events.status);
+	const statusEvent = useSelector((state) => state.events.statusEvent);
 	const statusUpdate = useSelector((state) => state.events.statusUpdate);
 	const statusSign = useSelector((state) => state.events.statusSign);
 	const viewModal = useModal();

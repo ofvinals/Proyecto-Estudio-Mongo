@@ -51,7 +51,7 @@ export const BillForm = ({ rowId, onClose, mode }) => {
 			setValue('estado', bill.estado);
 			setSelectedExpteCaratula(bill.caratula);
 		}
-	}, [setValue]);
+	}, [statusBill, bill]);
 
 	useEffect(() => {
 		getExptes();
@@ -203,7 +203,6 @@ export const BillForm = ({ rowId, onClose, mode }) => {
 				selectOptions={[
 					{ value: 'Pendiente', label: 'Pendiente' },
 					{ value: 'Pagado', label: 'Pagado' },
-					{ value: 'Cancelado', label: 'Cancelado' },
 				]}
 				readOnly={mode === 'view'}
 				options={{
@@ -220,7 +219,7 @@ export const BillForm = ({ rowId, onClose, mode }) => {
 				<Form.Control
 					className='items-center shadow-2xl w-full rounded-md p-2 focus:outline-none border-2 border-black text-black'
 					type='file'
-					{...register('fileUrl')}
+					{...register('file')}
 				/>
 			) : bill?.fileUrl ? (
 				<a

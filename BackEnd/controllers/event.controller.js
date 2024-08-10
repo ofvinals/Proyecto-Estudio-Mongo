@@ -38,7 +38,6 @@ const createEvent = async (req, res) => {
 };
 
 const createGoogleEvent = async (req, res) => {
-	console.log(req.body);
 	const auth = new google.auth.GoogleAuth({
 		keyFile:
 			'client_secret_993541654096-l9jffbub2h4ro7c2d59r1euucrakkfen.apps.googleusercontent.com (2).json',

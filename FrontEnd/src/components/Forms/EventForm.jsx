@@ -24,7 +24,7 @@ export const EventForm = ({ rowId, onClose, mode }) => {
 		if (mode === 'edit' || mode === 'view') {
 			getEvent(rowId);
 		}
-	}, []);
+	}, [rowId]);
 
 	useEffect(() => {
 		if (

@@ -28,7 +28,7 @@ export const UserAgenda = () => {
 	const [startDate, setStartDate] = useState(dayjs());
 	const [end, setEnd] = useState(new Date());
 	const events = useSelector((state) => state.events.events);
-	const statusEvent = useSelector((state) => state.events.status);
+	const statusEvent = useSelector((state) => state.events.statusEvent);
 	const statusUpdate = useSelector((state) => state.events.statusUpdate);
 	const statusDelete = useSelector((state) => state.events.statusDelete);
 	const statusSign = useSelector((state) => state.events.statusSign);
@@ -73,7 +73,7 @@ export const UserAgenda = () => {
 		},
 		{
 			header: 'Motivo',
-			accessorKey: 'motivo',
+			accessorKey: 'description',
 			size: 200,
 		},
 	]);
