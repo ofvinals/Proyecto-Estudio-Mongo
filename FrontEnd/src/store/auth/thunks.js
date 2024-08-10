@@ -71,16 +71,19 @@ export const loginWithGoogle = createAsyncThunk(
 		try {
 			const result = await signInWithPopup(auth, provider);
 			const credential = GoogleAuthProvider.credentialFromResult(result);
-			const GoogleToken = credential.accessToken;
+			const googleToken = credential.accessToken;
+			const refreshToken = result.user.stsTokenManager.refreshToken;
 			const currentUser = result.user.providerData[0];
 			const userEmail = currentUser.email;
-			// Enviar token de Google al backend para verificar/registrar al usuario
+			// Envia token de Google al backend para verificar/registrar al usuario
 			const res = await apiURL.post('/api/googleLogin', {
-				token: GoogleToken,
+				token: googleToken,
+				refreshToken: refreshToken,
 				email: userEmail,
 			});
 			localStorage.setItem('token', res.data.accessToken);
-			localStorage.setItem('googleToken', GoogleToken);
+			localStorage.setItem('googleToken', googleToken);
+			localStorage.setItem('refreshToken', refreshToken); 
 			dispatch(
 				showToast({
 					type: 'success',
@@ -100,6 +103,19 @@ export const loginWithGoogle = createAsyncThunk(
 		}
 	}
 );
+
+export const refreshGoogleToken = async (refreshToken) => {
+	try {
+		const response = await apiURL.post('/api/refreshGoogleToken', {
+			refreshToken,
+		});
+		console.log('refreshGoogleToken', response);
+		return response.data.accessToken;
+	} catch (error) {
+		console.error('Error al refrescar el token:', error);
+		throw error;
+	}
+};
 
 // FUNCION LOGOUT
 export const logout = createAsyncThunk(

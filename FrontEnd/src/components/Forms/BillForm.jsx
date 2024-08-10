@@ -128,7 +128,7 @@ export const BillForm = ({ rowId, onClose, mode }) => {
 				options={{
 					required: {
 						value: true,
-						message: 'El numero de expediente es requerido',
+						message: 'El numero de expediente es obligatorio',
 					},
 				}}
 			/>
@@ -171,7 +171,7 @@ export const BillForm = ({ rowId, onClose, mode }) => {
 				options={{
 					required: {
 						value: true,
-						message: 'El concepto es requerido',
+						message: 'El concepto es obligatorio',
 					},
 				}}
 			/>
@@ -188,7 +188,7 @@ export const BillForm = ({ rowId, onClose, mode }) => {
 				options={{
 					required: {
 						value: true,
-						message: 'El monto es requerido',
+						message: 'El monto es obligatorio',
 					},
 				}}
 			/>
@@ -209,7 +209,7 @@ export const BillForm = ({ rowId, onClose, mode }) => {
 				options={{
 					required: {
 						value: true,
-						message: 'El estado es requerido',
+						message: 'El estado es obligatorio',
 					},
 				}}
 			/>

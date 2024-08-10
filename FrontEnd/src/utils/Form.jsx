@@ -14,7 +14,7 @@ export const FormInput = ({
 	const isCaratula = name === 'caratula';
 	const isExpte = name === 'nroexpte';
 	const inputClass = `items-center w-full p-2 focus:outline-none text-black ${
-		isCaratula || (isExpte && mode === 'view') || (mode === 'view')
+		isCaratula || (isExpte && mode === 'view') || mode === 'view'
 			? 'border-none shadow-none bg-transparent'
 			: 'border-2 border-black shadow-2xl rounded-md'
 	}`;
@@ -22,7 +22,7 @@ export const FormInput = ({
 	return (
 		<Form.Group
 			className={`flex flex-col mb-3 items-center justify-around ${
-				isCaratula ? 'w-full' : 'w-5/12'
+				isCaratula || type === 'textarea' ? 'w-full' : 'w-5/12'
 			} mt-2`}>
 			<Form.Label
 				className={`text-start bg-transparent text-xl mb-0 mt-2  ${
@@ -30,17 +30,32 @@ export const FormInput = ({
 				}  w-full font-medium`}>
 				{label}
 			</Form.Label>
-			<Form.Control
-				className={inputClass}
-				type={type}
-				{...register(name, options)}
-				readOnly={
-					isCaratula || (isExpte && mode === 'view') || mode === 'view'
-				}
-				disabled={
-					isCaratula || (isExpte && mode === 'view') || mode === 'view'
-				}
-			/>
+			{type === 'textarea' ? (
+				<Form.Control
+					as='textarea'
+					className={inputClass}
+					{...register(name, options)}
+					rows={5}
+					readOnly={
+						isCaratula || (isExpte && mode === 'view') || mode === 'view'
+					}
+					disabled={
+						isCaratula || (isExpte && mode === 'view') || mode === 'view'
+					}
+				/>
+			) : (
+				<Form.Control
+					className={inputClass}
+					type={type}
+					{...register(name, options)}
+					readOnly={
+						isCaratula || (isExpte && mode === 'view') || mode === 'view'
+					}
+					disabled={
+						isCaratula || (isExpte && mode === 'view') || mode === 'view'
+					}
+				/>
+			)}
 			{errors[name] && (
 				<span className='error-message'>{errors[name].message}</span>
 			)}

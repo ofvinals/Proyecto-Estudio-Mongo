@@ -1,31 +1,31 @@
-import { Router } from 'express';
-import { google } from 'googleapis';
-import { config } from 'dotenv';
+// import { Router } from 'express';
+// import { google } from 'googleapis';
+// import { config } from 'dotenv';
 
-config();
-const router = Router();
+// config();
+// const router = Router();
 
-const GOOGLE_CLIENT_ID =
-	'1050424447842-ekhv37d2lp8shcg8imrsbik8rrrerqh7.apps.googleusercontent.com';
-const GOOGLE_CLIENT_SECRET = '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';
-const REFRESH_TOKEN =
-	'1//0hfmD-SYqC5jhCgYIARAAGBESNwF-L9Ir1QqcCTLO3xDrdqk2HbxyXDgvzkArFBxONTu5HNPfCbteRHjLgRSKvlxWOXOWm7EJIa8';
+// const GOOGLE_CLIENT_ID =
+// 	'1050424447842-ekhv37d2lp8shcg8imrsbik8rrrerqh7.apps.googleusercontent.com';
+// const GOOGLE_CLIENT_SECRET = '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';
+// const REFRESH_TOKEN =
+// 	'1//0hfmD-SYqC5jhCgYIARAAGBESNwF-L9Ir1QqcCTLO3xDrdqk2HbxyXDgvzkArFBxONTu5HNPfCbteRHjLgRSKvlxWOXOWm7EJIa8';
 
-const oauth2Client = new google.auth.OAuth2(
-	GOOGLE_CLIENT_ID,
-	GOOGLE_CLIENT_SECRET,
-	'postmessage'
-);
+// const oauth2Client = new google.auth.OAuth2(
+// 	GOOGLE_CLIENT_ID,
+// 	GOOGLE_CLIENT_SECRET,
+// 	'postmessage'
+// );
 
-router.post('/create-tokens', async (req, res) => {
-	try {
-		const { code } = req.body;
-		const { tokens } = await oauth2Client.getToken(code);
-		res.send(tokens);
-	} catch (error) {
-		console.error('Error al obtener tokens:', error.message);
-	}
-});
+// router.post('/create-tokens', async (req, res) => {
+// 	try {
+// 		const { code } = req.body;
+// 		const { tokens } = await oauth2Client.getToken(code);
+// 		res.send(tokens);
+// 	} catch (error) {
+// 		console.error('Error al obtener tokens:', error.message);
+// 	}
+// });
 
 router.post('/create-event', async (req, res, next) => {
 	try {

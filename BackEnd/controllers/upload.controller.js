@@ -11,7 +11,7 @@ const upload = multer({ storage: storage });
 
 const handleFileUpload = async (req, res) => {
 	try {
-		// Realizar operaciones de subida de archivos aquí
+	
 
 		// Devolver la ubicación del archivo en la respuesta
 		const fileLocation = req.file.path; // Suponiendo que multer almacena la ruta del archivo en req.file.path

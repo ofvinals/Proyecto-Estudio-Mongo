@@ -117,7 +117,7 @@ const CashForm = ({ rowId, onClose, mode }) => {
 				options={{
 					required: {
 						value: true,
-						message: 'El concepto es requerido',
+						message: 'El concepto es obligatorio',
 					},
 				}}
 			/>
@@ -142,7 +142,7 @@ const CashForm = ({ rowId, onClose, mode }) => {
 				options={{
 					required: {
 						value: true,
-						message: 'El monto es requerido',
+						message: 'El monto es obligatorio',
 					},
 				}}
 			/>

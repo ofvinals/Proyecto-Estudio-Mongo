@@ -53,7 +53,6 @@ export const UserForm = ({ rowId, onClose, mode }) => {
 	});
 
 	if (statusUser === 'Cargando') {
-		
 		return <Loader />;
 	}
 
@@ -72,7 +71,7 @@ export const UserForm = ({ rowId, onClose, mode }) => {
 					options={{
 						required: {
 							value: true,
-							message: 'El nombre o razon social es requerido.',
+							message: 'El nombre o razon social es obligatorio.',
 						},
 					}}
 					readOnly={mode === 'view'}
@@ -98,7 +97,7 @@ export const UserForm = ({ rowId, onClose, mode }) => {
 					options={{
 						required: {
 							value: true,
-							message: 'El DNI/CUIT es requerido.',
+							message: 'El DNI/CUIT es obligatorio.',
 						},
 						minLength: {
 							value: 8,
@@ -124,7 +123,7 @@ export const UserForm = ({ rowId, onClose, mode }) => {
 					options={{
 						required: {
 							value: true,
-							message: 'El domicilio es requerido.',
+							message: 'El domicilio es obligatorio.',
 						},
 					}}
 					readOnly={mode === 'view'}
@@ -140,7 +139,7 @@ export const UserForm = ({ rowId, onClose, mode }) => {
 					options={{
 						required: {
 							value: true,
-							message: 'El celular es requerido.',
+							message: 'El celular es obligatorio.',
 						},
 						minLength: {
 							value: 10,

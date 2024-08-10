@@ -7,7 +7,7 @@ const cookieParser = require('cookie-parser');
 const authRoutes = require('./routes/auth.routes.js');
 const usersRoutes = require('./routes/users.routes.js');
 const cajasRoutes = require('./routes/cajas.routes.js');
-const turnosRoutes = require('./routes/turnos.routes.js');
+const eventsRoutes = require('./routes/events.routes.js');
 const gastosRoutes = require('./routes/gastos.routes.js');
 const exptesRoutes = require('./routes/exptes.routes.js');
 const uploadRoutes = require('./routes/upload.routes.js');
@@ -50,7 +50,7 @@ app.use('/api', usersRoutes);
 app.use('/api', cajasRoutes);
 app.use('/api', gastosRoutes);
 app.use('/api', exptesRoutes);
-app.use('/api', turnosRoutes);
+app.use('/api', eventsRoutes);
 app.use('/api', uploadRoutes);
 app.use('/api', notasRoutes);
 

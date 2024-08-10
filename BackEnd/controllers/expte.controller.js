@@ -10,7 +10,6 @@ const getExptes = async (req, res) => {
 };
 
 const createExpte = async (req, res) => {
-	console.log(req.body);
 	const {
 		cliente,
 		nroexpte,

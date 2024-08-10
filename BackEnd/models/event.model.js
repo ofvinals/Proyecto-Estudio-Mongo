@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
 
-const turnoSchema = new mongoose.Schema(
+const eventSchema = new mongoose.Schema(
 	{
 		eventId: {
 			type: String,
 		},
-		tipo: {
+		summary: {
 			type: String,
 			required: true,
 		},
@@ -13,13 +13,12 @@ const turnoSchema = new mongoose.Schema(
 			type: String,
 			required: true,
 		},
-		motivo: {
+		description: {
 			type: String,
 			required: true,
 		},
-		creator: {
+		user: {
 			type: String,
-			required: true,
 		},
 		eventUrl: {
 			type: String,
@@ -29,4 +28,4 @@ const turnoSchema = new mongoose.Schema(
 		timestamps: true,
 	}
 );
-module.exports = mongoose.model('Turno', turnoSchema);
+module.exports = mongoose.model('Event', eventSchema);
