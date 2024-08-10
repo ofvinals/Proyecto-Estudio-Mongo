@@ -2,7 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import usersReducer from './users/slice';
 import authReducer from './auth/slice';
 import exptesReducer from './exptes/slice';
-import turnsReducer from './turns/slice';
+import eventsReducer from './events/slice';
 import billsReducer from './bills/slice';
 import cajasReducer from './cashs/slice';
 import toastReducer from './toast/slice';
@@ -14,7 +14,7 @@ export const store = configureStore({
 		auth: authReducer,
 		users: usersReducer,
 		exptes: exptesReducer,
-		turns: turnsReducer,
+		events: eventsReducer,
 		bills: billsReducer,
 		cashs: cajasReducer,
 		toast: toastReducer,

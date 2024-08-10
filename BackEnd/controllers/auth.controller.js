@@ -2,10 +2,11 @@ const createAccessToken = require('../libs/jwt.js');
 const User = require('../models/user.model.js');
 const bcrypt = require('bcryptjs');
 const Jwt = require('jsonwebtoken');
+const axios = require('axios');
+
 // const { TOKEN_SECRET } = require('../app.js');
 
 const register = async (req, res) => {
-	console.log('req.body', req.body)
 	const { email, password, nombre, apellido, dni, domicilio, celular } =
 		req.body;
 	try {
@@ -51,7 +52,7 @@ const register = async (req, res) => {
 			coadmin: userSaved.coadmin,
 		});
 	} catch (error) {
-		console.log(error);
+		console.error(error);
 		return res.status(500).json({ message: error.message });
 	}
 };
@@ -94,7 +95,7 @@ const login = async (req, res) => {
 			coadmin: userFound.coadmin,
 		});
 	} catch (error) {
-		console.log(error);
+		console.error(error);
 		return res.status(500).json({ message: error.message });
 	}
 };
@@ -131,6 +132,24 @@ const googleLogin = async (req, res) => {
 	}
 };
 
+const refreshGoogleToken = async (req, res) => {
+	const refreshToken = req.body.refreshToken;
+	console.log(refreshToken);
+	try {
+		const response = await axios.post('https://oauth2.googleapis.com/token', {
+			refresh_token: refreshToken,
+			client_id: process.env.GOOGLE_CLIENT_ID,
+			client_secret: process.env.GOOGLE_CLIENT_SECRET,
+			grant_type: 'refresh_token',
+		});
+		const newAccessToken = response.data.access_token;
+		res.json({ accessToken: newAccessToken });
+	} catch (error) {
+		console.error('Error al actualizar el token Google:', error);
+		return res.status(500).json({ message: error.message });
+	}
+};
+
 const logout = (req, res) => {
 	res.cookie('token', '', { expires: new Date(0) });
 	return res.sendStatus(200);
@@ -139,7 +158,6 @@ const logout = (req, res) => {
 const profile = async (req, res) => {
 	const userFound = await User.findById(req.user.id);
 	if (!userFound) return res.status(400).json(['Usuario no encontrado']);
-
 	return res.json({
 		id: userFound._id,
 		email: userFound.email,
@@ -151,7 +169,6 @@ const verifyToken = async (req, res) => {
 	const authHeader = req.headers['authorization'];
 	const token = authHeader && authHeader.split(' ')[1];
 	if (!token) return res.send(false);
-
 	Jwt.verify(token, process.env.TOKEN_SECRET, async (error, user) => {
 		if (error) return res.status(401).json(['No autorizado']);
 		const userFound = await User.findById(user.id);
@@ -171,6 +188,7 @@ module.exports = {
 	register,
 	login,
 	googleLogin,
+	refreshGoogleToken,
 	logout,
 	profile,
 	verifyToken,

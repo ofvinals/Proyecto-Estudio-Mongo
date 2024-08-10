@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useAuth } from '../../hooks/useAuth.js';
-import { useTurnActions } from '../../hooks/UseTurns.js';
+import { useEventActions } from '../../hooks/UseEvents.js';
 import {
 	Edit as EditIcon,
 	Delete as DeleteIcon,
@@ -10,7 +10,7 @@ import {
 } from '@mui/icons-material';
 import useModal from '../../hooks/useModal';
 import { Table } from '../../components/Gestion/Table';
-import { TurnForm } from '../../components/Forms/TurnForm.jsx';
+import { EventForm } from '../../components/Forms/EventForm.jsx';
 import { GoogleCalendarForm } from '../../components/Forms/GoogleCalendarForm.jsx';
 import Tooltip from '@mui/material/Tooltip';
 import { Button } from 'react-bootstrap';
@@ -24,46 +24,46 @@ import { CalendarSCta } from '../../components/Forms/CalendarSCtaForm.jsx';
 
 export const GestionAgenda = () => {
 	const { loggedUser } = useAuth();
-	const { getTurns, deleteTurn } = useTurnActions();
+	const { getEvents, deleteEvent } = useEventActions();
 	const [rowId, setRowId] = useState(null);
 	const admin = loggedUser.admin;
 	const coadmin = loggedUser.coadmin;
-	const turns = useSelector((state) => state.turns.turns);
-	const statusTurn = useSelector((state) => state.turns.status);
-	const statusUpdate = useSelector((state) => state.turns.statusUpdate);
-	const statusDelete = useSelector((state) => state.turns.statusDelete);
-	const statusSign = useSelector((state) => state.turns.statusSign);
+	const events = useSelector((state) => state.events.events);
+	const statusEvent = useSelector((state) => state.events.statusEvent);
+	const statusUpdate = useSelector((state) => state.events.statusUpdate);
+	const statusSign = useSelector((state) => state.events.statusSign);
 	const viewModal = useModal();
 	const editModal = useModal();
 	const googleModal = useModal();
 	const googleSctaModal = useModal();
 
-	const dataTurns = async () => {
+	const dataEvents = async () => {
 		try {
-			await getTurns();
+			await getEvents();
 		} catch (error) {
 			console.error('Error al obtener usuarios:', error);
 		}
 	};
 
 	useEffect(() => {
-		dataTurns();
-	}, [statusUpdate, statusSign, ]);
+		dataEvents();
+	}, [statusUpdate, statusSign]);
 
-	const columns = React.useMemo(
-		() => [
-			{ header: 'Turno', accessorKey: 'turno', size: 50 },
-			{ header: 'Usuario', accessorKey: 'email', size: 50 },
-			{ header: 'Tipo', accessorKey: 'tipo', size: 50 },
-			{
-				header: 'Motivo',
-				accessorKey: 'motivo',
-				enableResizing: true,
-				size: 250,
-			},
-		],
-		
-	);
+	const columns = React.useMemo(() => [
+		{
+			header: 'Evento',
+			accessorKey: 'start',
+			size: 50,
+		},
+		{ header: 'Usuario', accessorKey: 'user', size: 50 },
+		{ header: 'Tipo', accessorKey: 'summary', size: 50 },
+		{
+			header: 'Motivo',
+			accessorKey: 'description',
+			enableResizing: true,
+			size: 250,
+		},
+	]);
 
 	const actions = [
 		{
@@ -98,7 +98,11 @@ export const GestionAgenda = () => {
 					<DeleteIcon color='error' cursor='pointer' />
 				</Tooltip>
 			) : null,
-			onClick: (row) => deleteTurn(row.original._id),
+			onClick: (row) =>
+				deleteEvent({
+					eventId: row.original.eventId,
+					id: row.original._id,
+				}),
 		},
 	];
 
@@ -139,10 +143,10 @@ export const GestionAgenda = () => {
 					</Link>
 				</div>
 
-				{statusTurn === 'Cargando' ? (
+				{statusEvent === 'Cargando' ? (
 					<Loader />
 				) : (
-					<Table columns={columns} data={turns} actions={actions} />
+					<Table columns={columns} data={events} actions={actions} />
 				)}
 			</div>
 
@@ -150,7 +154,7 @@ export const GestionAgenda = () => {
 				isOpen={editModal.isOpen}
 				onClose={editModal.closeModal}
 				title='Editar Evento de Agenda'>
-				<TurnForm
+				<EventForm
 					rowId={rowId}
 					onClose={editModal.closeModal}
 					mode='edit'
@@ -160,7 +164,7 @@ export const GestionAgenda = () => {
 				isOpen={viewModal.isOpen}
 				onClose={viewModal.closeModal}
 				title='Ver Evento de Agenda'>
-				<TurnForm
+				<EventForm
 					rowId={rowId}
 					onClose={viewModal.closeModal}
 					mode='view'
@@ -169,7 +173,7 @@ export const GestionAgenda = () => {
 			<Modals
 				isOpen={googleModal.isOpen}
 				onClose={googleModal.closeModal}
-				title='Ingresar con Google'>
+				title='Registrar Nuevo Evento de Agenda'>
 				<GoogleCalendarForm
 					showModal={googleModal.isOpen}
 					onClose={googleModal.closeModal}

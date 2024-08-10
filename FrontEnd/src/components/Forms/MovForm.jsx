@@ -116,11 +116,11 @@ export const MovForm = ({ rowId, onClose, mode }) => {
 					<Form.Control
 						className='items-center shadow-2xl w-full rounded-md p-2 focus:outline-none border-2 border-black text-black'
 						type='file'
-						{...register('fileUrl')}
+						{...register('file')}
 					/>
-				) : selectedMov.fileUrl ? (
+				) : selectedMov.file? (
 					<a
-						href={selectedMov.fileUrl}
+						href={selectedMov.file}
 						target='_blank'
 						rel='noopener noreferrer'
 						className='text-blue-500 underline'>

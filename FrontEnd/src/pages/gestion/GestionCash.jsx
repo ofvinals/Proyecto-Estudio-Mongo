@@ -32,7 +32,7 @@ export const GestionCash = () => {
 	const cashs = useSelector((state) => state.cashs.cashs);
 	const statusCash = useSelector((state) => state.cashs.statusCash);
 	const statusUpdate = useSelector((state) => state.cashs.statusUpdate);
-	const statusDelete = useSelector((state) => state.cashs.statusDelete);
+	const statusSign = useSelector((state) => state.cashs.statusSign);
 	const viewModal = useModal();
 	const editModal = useModal();
 	const newModal = useModal();
@@ -42,13 +42,13 @@ export const GestionCash = () => {
 	const dataCashs = async () => {
 		try {
 			await getCashs();
-			const mesActual = (new Date().getMonth() + 1).toString();
+			const mesActual = (new Date().getMonth() + 1);
 			const filteredCashs = cashs.filter((cash) => {
-				const mesCash = cash.mes.toString();
+				const mesCash = cash.mes;
 				if (viewArchived) {
 					return mesCash < mesActual;
 				} else {
-					return mesCash === mesActual;
+					return mesCash == mesActual;
 				}
 			});
 			setData(filteredCashs);
@@ -59,7 +59,7 @@ export const GestionCash = () => {
 
 	useEffect(() => {
 		dataCashs();
-	}, [viewArchived, statusUpdate, statusDelete]);
+	}, [viewArchived, statusUpdate, statusSign, statusCash]);
 
 	const formatValue = (value) => {
 		if (value instanceof Date) {

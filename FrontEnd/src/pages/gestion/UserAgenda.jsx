@@ -6,7 +6,7 @@ import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { MobileDateTimePicker } from '@mui/x-date-pickers/MobileDateTimePicker';
 import { useAuth } from '../../hooks/useAuth.js';
-import { useTurnActions } from '../../hooks/UseTurns.js';
+import { useEventActions } from '../../hooks/UseEvents.js';
 import { Button } from 'react-bootstrap';
 import Swal from 'sweetalert2';
 import dayjs from 'dayjs';
@@ -24,15 +24,14 @@ import { Box } from '@mui/material';
 
 export const UserAgenda = () => {
 	const { loggedUser } = useAuth();
-	const { getTurns, createTurn, deleteTurn } = useTurnActions();
+	const { getEvents, deleteEvent, createGoogleEvent } = useEventActions();
 	const [startDate, setStartDate] = useState(dayjs());
-	const [turnoOcupado, setTurnoOcupado] = useState([]);
-	const user = loggedUser.email;
-	const turns = useSelector((state) => state.turns.turns);
-	const statusTurn = useSelector((state) => state.turns.status);
-	const statusUpdate = useSelector((state) => state.turns.statusUpdate);
-	const statusDelete = useSelector((state) => state.turns.statusDelete);
-	const statusSign = useSelector((state) => state.turns.statusSign);
+	const [end, setEnd] = useState(new Date());
+	const events = useSelector((state) => state.events.events);
+	const statusEvent = useSelector((state) => state.events.statusEvent);
+	const statusUpdate = useSelector((state) => state.events.statusUpdate);
+	const statusDelete = useSelector((state) => state.events.statusDelete);
+	const statusSign = useSelector((state) => state.events.statusSign);
 	const form = useRef();
 	// deshabilita seleccion de dias de fin de semana
 	// const lastMonday = dayjs().startOf('week');
@@ -49,66 +48,67 @@ export const UserAgenda = () => {
 		return view === 'hours' && (isHourBefore9 || isHourAfter6);
 	};
 
-	const loadTurns = async () => {
+	const loadEvents = async () => {
 		try {
-			await getTurns();
+			await getEvents();
 		} catch (error) {
-			console.error('Error al obtener turnos', error);
+			console.error('Error al obtener eventos', error);
 		}
 	};
 
 	useEffect(() => {
-		loadTurns();
+		loadEvents();
 	}, [statusUpdate, statusSign, statusDelete]);
 
-	const columns = React.useMemo(
-		() => [
-			{
-				header: 'Turno',
-				accessorKey: 'turno',
-				size: 50,
-			},
-			{
-				header: 'Usuario',
-				accessorKey: 'email',
-				size: 50,
-			},
-			{
-				header: 'Motivo',
-				accessorKey: 'motivo',
-				enableResizing: true,
-				size: 300,
-			},
-		],
-		[]
-	);
+	const columns = React.useMemo(() => [
+		{
+			header: 'Evento',
+			accessorKey: 'start',
+			size: 50,
+		},
+		{
+			header: 'Usuario',
+			accessorKey: 'user',
+			size: 50,
+		},
+		{
+			header: 'Motivo',
+			accessorKey: 'description',
+			size: 200,
+		},
+	]);
 
 	const actions = [
 		{
 			text: 'Eliminar',
 			icon: (
-				<Tooltip title='Borrar turno' arrow>
+				<Tooltip title='Borrar evento' arrow>
 					<DeleteIcon color='error' cursor='pointer' />
 				</Tooltip>
 			),
-			onClick: (row) => deleteTurn(row.original._id),
+			onClick: (row) =>
+				deleteEvent({
+					eventId: row.original.eventId,
+					id: row.original._id,
+				}),
 		},
 	];
 
-	// funcion para crear nuevo turno
+	// funcion para crear nuevo evento
 	const handleCrearCita = async () => {
-		// Convierte el turno seleccionado al formato
-		const formatoTurnoSeleccionado =
-			dayjs(startDate).format('DD/MM/YYYY HH:mm');
-		// Comprueba si el turno seleccionado ya está ocupado
-		const isTurnoOcupado = turnoOcupado.some(
-			(turno) => turno.turno === formatoTurnoSeleccionado
+		// Convierte el evento seleccionado al formato
+		const formatoEventoSeleccionado = dayjs(startDate)
+			.format('DD-MM-YYYY HH:mm')
+			.toString();
+		// Comprueba si el evento seleccionado ya está ocupado
+		const isEventoOcupado = events.some(
+			(event) => event.start === formatoEventoSeleccionado
 		);
-		if (isTurnoOcupado) {
+		if (isEventoOcupado) {
 			Swal.fire({
 				icon: 'error',
-				title: 'Turno no disponible',
-				text: 'Lo siento, elige otro turno',
+				title: 'Evento no disponible',
+				text: 'Lo siento, elige otro evento',
 				confirmButtonColor: '#8f8e8b',
 			});
 			return;
@@ -123,23 +123,31 @@ export const UserAgenda = () => {
 				},
 				showCancelButton: true,
 				confirmButtonColor: '#8f8e8b',
-				confirmButtonText: 'Confirmar Turno',
+				confirmButtonText: 'Confirmar Evento',
 				cancelButtonText: 'Cancelar',
 			});
 			if (isConfirmed) {
 				const values = {
-					turno: formatoTurnoSeleccionado,
-					email: user,
-					motivo: motivoConsulta,
+					summary: 'Evento Cliente',
+					description: motivoConsulta,
+					start: {
+						dateTime: startDate.toISOString(),
+						timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+					},
+					end: {
+						dateTime: end.toISOString(),
+						timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+					},
+					user: loggedUser.email,
 				};
 				try {
 					// await emailjs.send(
 					// 	'service_iew5q2g',
 					// 	'template_fgl8bsq',
-					// 	nuevoTurno,
+					// 	nuevoEvento,
 					// 	'saMzvd5sdlHj2BhYr'
 					// );
-					createTurn(values);
+					createGoogleEvent(values);
 				} catch (error) {
 					console.error(
 						'Error al enviar el formulario por EmailJS:',
@@ -147,7 +155,7 @@ export const UserAgenda = () => {
 					);
 				}
 			} else {
-				Swal.fire('Su turno no fue agendado', '', 'info');
+				Swal.fire('Su evento no fue agendado', '', 'info');
 			}
 		}
 		return;
@@ -158,7 +166,7 @@ export const UserAgenda = () => {
 			<section className='bg-gradient-to-tl from-[#1e1e1e] to-[#4077ad] pb-3 pt-24'>
 				<Header />
 				<div className='rounded-xl container-lg mb-1 '>
-					<Detail modulo={'Turnos'} />
+					<Detail modulo={'Eventos'} />
 				</div>
 
 				<hr className='linea text-white mx-3' />
@@ -166,7 +174,7 @@ export const UserAgenda = () => {
 				<div className='flex items-center justify-center'>
 					<div>
 						<h1 className='my-4 text-2xl font-extrabold text-center text-white'>
-							Turnos Online
+							Eventos Online
 						</h1>
 						<p className='my-4 text-sm text-center text-white'>
 							(Horario de Atencion al Publico: Lunes a Jueves de 09 a
@@ -195,7 +203,16 @@ export const UserAgenda = () => {
 											inputFormat='DD/MM/YYYY HH:mm'
 											shouldDisableDate={isWeekend}
 											selected={startDate}
-											onChange={(date) => setStartDate(date)}
+											onChange={(date) => {
+												setStartDate(date);
+												const newEndDate = dayjs(startDate).add(
+													1,
+													'hour'
+												);
+												setEnd(() => {
+													return newEndDate.toDate();
+												});
+											}}
 											minutesStep={30}
 											views={[
 												'year',
@@ -206,7 +223,10 @@ export const UserAgenda = () => {
 											]}
 											slotProps={{
 												textField: () => ({
-													sx: { width: '100%', maxWidth: '300px' },
+													sx: {
+														width: '100%',
+														maxWidth: '300px',
+													},
 													focused: true,
 													size: 'medium',
 												}),
@@ -223,7 +243,7 @@ export const UserAgenda = () => {
 								ref={form}
 								onClick={handleCrearCita}>
 								<i className='text-xl pe-2 bi bi-calendar-check'></i>
-								Verificar Turno
+								Verificar Evento
 							</Button>
 							<Link
 								to='/AdminUsu'
@@ -235,15 +255,15 @@ export const UserAgenda = () => {
 						<hr className='linea text-white mx-3' />
 
 						<h2 className='my-4 text-2xl font-extrabold text-center text-white'>
-							Su/s turno/s registrado/s
+							Su/s evento/s registrado/s
 						</h2>
-						{statusTurn === 'Cargando' ? (
+						{statusEvent === 'Cargando' ? (
 							<Loader />
 						) : (
-							<div className='table-responsive'>
+							<div className=' flex flex-wrap table-responsive'>
 								<Table
 									columns={columns}
-									data={turns}
+									data={events}
 									actions={actions}
 								/>
 							</div>

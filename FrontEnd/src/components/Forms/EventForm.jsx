@@ -5,51 +5,51 @@ import { useForm } from 'react-hook-form';
 import { Form } from 'react-bootstrap';
 import { FormInput, SaveButton, CancelButton } from '../../utils/Form.jsx';
 import '../../css/Header.css';
-import { useTurnActions } from '../../hooks/UseTurns.js';
+import { useEventActions } from '../../hooks/UseEvents.js';
 import { useSelector } from 'react-redux';
 import Loader from '../../utils/Loader.jsx';
 
-export const TurnForm = ({ rowId, onClose, mode }) => {
+export const EventForm = ({ rowId, onClose, mode }) => {
 	const {
 		register,
 		handleSubmit,
 		setValue,
 		formState: { errors },
 	} = useForm();
-	const { getTurn, updateTurn } = useTurnActions();
-	const turn = useSelector((state) => state.turns.turn);
-	const statusTurn = useSelector((state) => state.turns.statusTurn);
+	const { getEvent, updateEvent } = useEventActions();
+	const event = useSelector((state) => state.events.event);
+	const statusEvent = useSelector((state) => state.events.statusEvent);
 
 	useEffect(() => {
 		if (mode === 'edit' || mode === 'view') {
-			getTurn(rowId);
+			getEvent(rowId);
 		}
-	}, []);
+	}, [rowId]);
 
 	useEffect(() => {
 		if (
-			statusTurn === 'Exitoso' &&
-			turn &&
+			statusEvent === 'Exitoso' &&
+			event &&
 			(mode === 'edit' || mode === 'view')
 		) {
-			setValue('turno', turn.turno);
-			setValue('email', turn.email);
-			setValue('motivo', turn.motivo);
+			setValue('start', event.start);
+			setValue('creator', event.creator);
+			setValue('motivo', event.motivo);
 		}
-	}, [statusTurn, turn]);
+	}, [statusEvent, event]);
 
 	const onSubmit = handleSubmit(async (values) => {
 		try {
 			if (mode === 'edit') {
-				await updateTurn({ rowId, values });
+				await updateEvent({ rowId, values });
 				onClose();
 			}
 		} catch (error) {
-			console.error('Error al editar el turno:', error);
+			console.error('Error al editar el evento:', error);
 		}
 	});
 
-	if (statusTurn === 'Cargando') {
+	if (statusEvent === 'Cargando') {
 		return <Loader />;
 	}
 
@@ -60,7 +60,7 @@ export const TurnForm = ({ rowId, onClose, mode }) => {
 				className='flex flex-wrap justify-around items-center'>
 				<FormInput
 					label='Cliente'
-					name='email'
+					name='creator'
 					type='text'
 					register={register}
 					mode={mode}
@@ -69,14 +69,14 @@ export const TurnForm = ({ rowId, onClose, mode }) => {
 					options={{
 						required: {
 							value: true,
-							message: 'El email es requerido',
+							message: 'El email es obligatorio',
 						},
 					}}
 				/>
 
 				<FormInput
-					label='Turno'
-					name='turno'
+					label='Evento'
+					name='start'
 					type='text'
 					register={register}
 					errors={errors}
@@ -84,7 +84,7 @@ export const TurnForm = ({ rowId, onClose, mode }) => {
 					options={{
 						required: {
 							value: true,
-							message: 'El Turno es requerido',
+							message: 'El Evento es obligatorio',
 						},
 					}}
 					readOnly={mode === 'view'}
@@ -100,7 +100,7 @@ export const TurnForm = ({ rowId, onClose, mode }) => {
 					options={{
 						required: {
 							value: true,
-							message: 'El motivo es requerido',
+							message: 'El motivo es obligatorio',
 						},
 					}}
 					readOnly={mode === 'view'}
@@ -114,7 +114,7 @@ export const TurnForm = ({ rowId, onClose, mode }) => {
 							onSubmit={onSubmit}
 							label={
 								mode === 'create'
-									? 'Registrar Turno'
+									? 'Registrar Evento'
 									: 'Guardar Cambios'
 							}
 						/>

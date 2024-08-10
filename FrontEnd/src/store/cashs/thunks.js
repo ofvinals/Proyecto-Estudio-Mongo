@@ -51,10 +51,10 @@ export const getCash = createAsyncThunk(
 
 export const createCash = createAsyncThunk(
 	'cash/createCash',
-	async ({values}, { dispatch }) => {
+	async (values, { dispatch }) => {
 		try {
 			const token = localStorage.getItem('token');
-			const res = await apiURL.post('/api/cashs', values, {
+			const res = await apiURL.post('/api/cajas', values, {
 				withCredentials: true,
 				headers: { authorization: `Bearer ${token}` },
 			});

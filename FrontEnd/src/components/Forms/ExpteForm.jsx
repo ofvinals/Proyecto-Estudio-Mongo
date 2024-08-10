@@ -35,7 +35,7 @@ export const ExpteForm = ({ rowId, onClose, mode }) => {
 		if (mode === 'edit' || mode === 'view') {
 			getExpte(rowId);
 		}
-	}, []);
+	}, [rowId]);
 
 	useEffect(() => {
 		if (
@@ -116,7 +116,7 @@ export const ExpteForm = ({ rowId, onClose, mode }) => {
 					options={{
 						required: {
 							value: true,
-							message: 'El numero de expediente es requerido',
+							message: 'El numero de expediente es obligatorio',
 						},
 					}}
 				/>
@@ -158,7 +158,7 @@ export const ExpteForm = ({ rowId, onClose, mode }) => {
 					options={{
 						required: {
 							value: true,
-							message: 'La radicacion del expediente es requerido',
+							message: 'La radicacion del expediente es obligatorio',
 						},
 					}}
 				/>
@@ -187,7 +187,7 @@ export const ExpteForm = ({ rowId, onClose, mode }) => {
 					options={{
 						required: {
 							value: true,
-							message: 'La radicacion del expediente es requerido',
+							message: 'La radicacion del expediente es obligatorio',
 						},
 					}}
 				/>
@@ -200,7 +200,7 @@ export const ExpteForm = ({ rowId, onClose, mode }) => {
 					errors={errors}
 					mode={mode}
 					options={{
-						required: { value: true, message: 'El actor es requerido' },
+						required: { value: true, message: 'El actor es obligatorio' },
 					}}
 				/>
 
@@ -214,7 +214,7 @@ export const ExpteForm = ({ rowId, onClose, mode }) => {
 					options={{
 						required: {
 							value: true,
-							message: 'El demandado es requerido',
+							message: 'El demandado es obligatorio',
 						},
 					}}
 				/>
@@ -238,7 +238,7 @@ export const ExpteForm = ({ rowId, onClose, mode }) => {
 					options={{
 						required: {
 							value: true,
-							message: 'El tipo de proceso es requerido',
+							message: 'El tipo de proceso es obligatorio',
 						},
 					}}
 				/>
@@ -260,7 +260,7 @@ export const ExpteForm = ({ rowId, onClose, mode }) => {
 					options={{
 						required: {
 							value: true,
-							message: 'El estado del expediente es requerido',
+							message: 'El estado del expediente es obligatorio',
 						},
 					}}
 				/>

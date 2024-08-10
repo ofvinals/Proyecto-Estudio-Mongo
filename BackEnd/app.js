@@ -7,7 +7,7 @@ const cookieParser = require('cookie-parser');
 const authRoutes = require('./routes/auth.routes.js');
 const usersRoutes = require('./routes/users.routes.js');
 const cajasRoutes = require('./routes/cajas.routes.js');
-const turnosRoutes = require('./routes/turnos.routes.js');
+const eventsRoutes = require('./routes/events.routes.js');
 const gastosRoutes = require('./routes/gastos.routes.js');
 const exptesRoutes = require('./routes/exptes.routes.js');
 const uploadRoutes = require('./routes/upload.routes.js');
@@ -50,7 +50,7 @@ app.use('/api', usersRoutes);
 app.use('/api', cajasRoutes);
 app.use('/api', gastosRoutes);
 app.use('/api', exptesRoutes);
-app.use('/api', turnosRoutes);
+app.use('/api', eventsRoutes);
 app.use('/api', uploadRoutes);
 app.use('/api', notasRoutes);
 
@@ -94,21 +94,6 @@ app.get('/scrape', async (req, res) => {
 		res.status(500).send('Error al realizar el scraping');
 	}
 });
-
-// const oauth2Client = new google.auth.OAuth2(
-// 	CLIENT_ID, // Reemplaza con tu Client ID
-// 	CLIENT_SECRET, // Reemplaza con tu Client Secret
-// 	REDIRECT_URI // Reemplaza con tu Redirect URI
-// );
-
-// // Configura los tokens de acceso y refresco
-// oauth2Client.setCredentials({
-// 	access_token: 'ACCESS_TOKEN',
-// 	refresh_token: 'REFRESH_TOKEN',
-// });
-
-// // API de Google Calendar
-// const calendar = google.calendar({ version: 'v3', auth: oauth2Client });
 
 async function main() {
 	try {

@@ -15,7 +15,6 @@ const createUser = async (req, res) => {
 	// Extraer los campos del cuerpo de la solicitud (request body)
 	const { nombre, apellido, email, dni, domicilio, celular, password } =
 		req.body;
-
 	try {
 		// encripta el password
 		const passwordHash = await bcrypt.hash(password, 10);
@@ -30,12 +29,9 @@ const createUser = async (req, res) => {
 			password: passwordHash,
 		});
 		const savedUser = await newUser.save();
-
 		// crea el token
 		const token = await createAccessToken({ id: savedUser._id });
-
 		res.cookie('token', token);
-
 		// envia respuesta del registro al frontend
 		res.json({
 			id: savedUser._id,
@@ -84,14 +80,10 @@ const getUserByGoogle = async (req, res) => {
 const updateUser = async (req, res) => {
 	try {
 		const { password, ...updateFields } = req.body;
-console.log(req.body)
-console.log(req.params)
-
 		// Agregar el password solo si está presente
 		if (password) {
 			updateFields.password = await bcrypt.hash(password, 10);
 		}
-
 		const updatedUser = await User.findByIdAndUpdate(
 			req.params.id,
 			updateFields,
@@ -100,11 +92,9 @@ console.log(req.params)
 				lean: true,
 			}
 		);
-
 		if (!updatedUser) {
 			return res.status(404).json({ message: 'Usuario no encontrado' });
 		}
-
 		res.json(updatedUser);
 	} catch (error) {
 		return res.status(500).json({ message: error.message });

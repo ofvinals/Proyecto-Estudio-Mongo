@@ -23,13 +23,13 @@ const CashForm = ({ rowId, onClose, mode }) => {
 	} = useForm();
 	const { getCash, updateCash, createCash } = useCashActions();
 	const cash = useSelector((state) => state.cashs.cash);
-	const statusCash = useSelector((state) => state.cashs.status);
+	const statusCash = useSelector((state) => state.cashs.statusCash);
 
 	useEffect(() => {
 		if (mode === 'edit' || mode === 'view') {
 			getCash(rowId);
 		}
-	}, [statusCash]);
+	}, [rowId]);
 
 	useEffect(() => {
 		if (
@@ -58,6 +58,7 @@ const CashForm = ({ rowId, onClose, mode }) => {
 				const file = values.file[0];
 				fileDownloadUrl = await uploadFile(file);
 			}
+
 			const selectedDate = new Date(values.fecha + 'T00:00:00');
 			const formattedDate = selectedDate.toLocaleDateString('es-AR', {
 				timeZone: 'America/Argentina/Buenos_Aires',
@@ -71,7 +72,6 @@ const CashForm = ({ rowId, onClose, mode }) => {
 				fileUrl: fileDownloadUrl,
 				estado: values.estado,
 			};
-
 			if (mode === 'edit') {
 				const values = data;
 				await updateCash({ rowId, values });
@@ -117,7 +117,7 @@ const CashForm = ({ rowId, onClose, mode }) => {
 				options={{
 					required: {
 						value: true,
-						message: 'El concepto es requerido',
+						message: 'El concepto es obligatorio',
 					},
 				}}
 			/>
@@ -142,7 +142,7 @@ const CashForm = ({ rowId, onClose, mode }) => {
 				options={{
 					required: {
 						value: true,
-						message: 'El monto es requerido',
+						message: 'El monto es obligatorio',
 					},
 				}}
 			/>
