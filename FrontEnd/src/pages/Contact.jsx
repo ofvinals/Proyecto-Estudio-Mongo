@@ -1,37 +1,75 @@
 import { useRef } from 'react';
 import emailjs from '@emailjs/browser';
-import Swal from 'sweetalert2';
 import '../css/Header.css';
 import { Whatsapp } from '../components/Whatsapp';
 import { Header } from '../components/header/Header';
+import { Button } from 'react-bootstrap';
+import { useForm } from 'react-hook-form';
+import { getDownloadURL, getStorage, ref } from 'firebase/storage';
 
 export const Contact = () => {
+	const toast = useRef(null);
 	const form = useRef();
+	const {
+		register,
+		handleSubmit,
+		formState: { errors },
+		reset,
+	} = useForm();
 
-	const sendEmail = (e) => {
-		e.preventDefault();
+	const showToast = (severity, summary, detail) => {
+		if (toast.current) {
+			toast.current.show({
+				severity: severity,
+				summary: summary,
+				detail: detail,
+			});
+		}
+	};
 
+	const fetchImageUrl = async () => {
+		try {
+			const storage = getStorage();
+			const imageRef = ref(storage, '/LOGOHOME.jpg');
+			const url = await getDownloadURL(imageRef);
+			return url;
+		} catch (error) {
+			console.error('Error al obtener la URL de la imagen:', error);
+			return '';
+		}
+	};
+
+	const onSubmit = handleSubmit(async (values) => {
+		const templateParams = {
+			url: await fetchImageUrl(),
+			user_name: values.user_name,
+			user_email: values.user_email,
+			message: values.message,
+			proyect: 'Estudio Juridico Posse y Asociados',
+			messageLog: `Recibimos tu contacto. A la brevedad posible nos pondremos en contacto con vos!.-`,
+		};
 		emailjs
-			.sendForm(
+			.send(
 				'service_iew5q2g',
-				'template_qar0tof',
-				form.current,
+				'template_fgl8bsq',
+				templateParams,
 				'saMzvd5sdlHj2BhYr'
 			)
 			.then(
-				() => {
-					Swal.fire({
-						icon: 'success',
-						title: 'Mensaje enviado correctamente! Te responderemos a la brevedad posible!',
-						showConfirmButton: false,
-						timer: 3000,
-					});
+				(result) => {
+					console.log('Correo enviado con éxito:', result.text);
+					reset();
+					showToast(
+						'success',
+						'Formulario Enviado',
+						'Formulario de contacto enviado correctamente!'
+					);
 				},
 				(error) => {
-					console.log(error.text);
+					console.error('Error al enviar el correo:', error.text);
 				}
 			);
-	};
+	});
 
 	return (
 		<>
@@ -50,7 +88,7 @@ export const Contact = () => {
 				<form
 					className=' bg-white p-4 rounded-xl flex flex-wrap w-full sm:w-2/3 max-w-[335px] flex-col justify-center items-center mt-10'
 					ref={form}
-					onSubmit={sendEmail}>
+					onSubmit={onSubmit}>
 					<label className='text-start bg-transparent text-xl mb-0 mt-2 text-background font-bold w-full '>
 						Tu Nombre
 					</label>
@@ -58,8 +96,18 @@ export const Contact = () => {
 						className='items-center shadow-2xl w-full rounded-md p-2 focus:outline-none border-2 border-black text-black'
 						type='text'
 						name='user_name'
-						required
+						{...register('user_name', {
+							required: {
+								value: true,
+								message: 'Tu nombre es obligatorio',
+							},
+						})}
 					/>
+					{errors.user_name && (
+						<span className='error-message'>
+							{errors.user_name.message}
+						</span>
+					)}
 					<label
 						className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-bold'
 						placeholder='Ingrese su email..'>
@@ -69,8 +117,18 @@ export const Contact = () => {
 						className='items-center shadow-2xl w-full rounded-md p-2 focus:outline-none border-2 border-black text-black'
 						type='email'
 						name='user_email'
-						required
+						{...register('user_email', {
+							required: {
+								value: true,
+								message: 'Tu email es obligatorio',
+							},
+						})}
 					/>
+					{errors.user_email && (
+						<span className='error-message'>
+							{errors.user_email.message}
+						</span>
+					)}
 					<label
 						className='text-start bg-transparent text-xl mb-0 mt-2 text-background w-full font-bold'
 						placeholder='Ingrese su mensaje..'>
@@ -80,14 +138,23 @@ export const Contact = () => {
 						className='items-center shadow-2xl w-full h-[200px] rounded-md p-2 focus:outline-none border-2 border-black text-black'
 						name='message'
 						placeholder='Escribi tu mensaje...'
-						required
+						{...register('message', {
+							required: {
+								value: true,
+								message: 'Tu mensaje es obligatorio',
+							},
+						})}
 					/>
-					<button
+					{errors.message && (
+						<span className='error-message'>
+							{errors.message.message}
+						</span>
+					)}
+					<Button
 						className='bg-background shadow-3xl btnLogout text-white text-center p-2 border-2 w-[230px] my-3  border-white rounded-xl font-semibold'
-						type='submit'
-						value='Enviar'>
+						type='submit'>
 						Enviar
-					</button>
+					</Button>
 				</form>
 			</section>
 		</>

@@ -4,8 +4,6 @@ const bcrypt = require('bcryptjs');
 const Jwt = require('jsonwebtoken');
 const axios = require('axios');
 
-// const { TOKEN_SECRET } = require('../app.js');
-
 const register = async (req, res) => {
 	const { email, password, nombre, apellido, dni, domicilio, celular } =
 		req.body;
