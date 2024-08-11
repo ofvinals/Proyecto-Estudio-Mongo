@@ -35,6 +35,7 @@ app.use(
 			'http://localhost:5173',
 			'https://proyecto-estudio-mongo.vercel.app',
 			'https://proyecto-estudio-mongo.onrender.com',
+			'https://api.resend.com/emails'
 		],
 		credentials: true,
 		optionsSuccessStatus: 200,

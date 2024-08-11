@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import '../../css/Header.css';
 import { useAuth } from '../../hooks/useAuth';
-// import emailjs from '@emailjs/browser';
+import { Resend } from 'resend';
 import Modals from '../../utils/Modals';
 import { Login } from './Login';
 
@@ -36,12 +36,21 @@ export const Registro = ({ setOpenRegister }) => {
 	const onSubmit = handleSubmit(async (values) => {
 		try {
 			await registerUser(values);
-			// emailjs.sendForm(
-			// 	'service_iew5q2g',
-			// 	'template_fgl8bsq',
-			// 	form.current,
-			// 	'saMzvd5sdlHj2BhYr'
-			// );
+			// const resend = new Resend('re_cHtXRTKP_C7bW9atwwc7FPmQTUZjfGPny');
+			// await resend.emails.send({
+			// 	from: 'ofvinals@gmail.com',
+			// 	to: values.email,
+			// 	subject: '¡Bienvenido a Estudio Posse y Asociados!',
+			// 	html: `<p>Hola ${values.nombre},</p><p>Gracias por registrarte en nuestro sitio.</p>`,
+			// });
+
+			// // Envía el correo a ti mismo
+			// await resend.emails.send({
+			// 	from: 'ofvinals@gmail.com',
+			// 	to: 'ofvinals@gmail.com',
+			// 	subject: 'Nuevo registro',
+			// 	html: `<p>Nuevo usuario registrado:</p><p>Nombre: ${values.nombre}</p><p>Email: ${values.email}</p>`,
+			// });
 			navigate('/adminusu');
 		} catch (error) {
 			console.error('Error al registrar el usuario:', error);
