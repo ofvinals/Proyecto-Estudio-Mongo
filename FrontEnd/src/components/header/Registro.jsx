@@ -6,9 +6,10 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import '../../css/Header.css';
 import { useAuth } from '../../hooks/useAuth';
-import { Resend } from 'resend';
+import emailjs from '@emailjs/browser';
 import Modals from '../../utils/Modals';
 import { Login } from './Login';
+import { getDownloadURL, getStorage, ref } from 'firebase/storage';
 
 export const Registro = ({ setOpenRegister }) => {
 	const { registerUser } = useAuth();
@@ -18,6 +19,7 @@ export const Registro = ({ setOpenRegister }) => {
 		getValues,
 		handleSubmit,
 		formState: { errors },
+		reset,
 	} = useForm();
 	const form = useRef();
 	const [showPassword, setShowPassword] = useState(false);
@@ -33,24 +35,45 @@ export const Registro = ({ setOpenRegister }) => {
 		setOpenModal('login');
 	};
 
+	const fetchImageUrl = async () => {
+		try {
+			const storage = getStorage();
+			const imageRef = ref(storage, '/LOGOHOME.jpg');
+			const url = await getDownloadURL(imageRef);
+			return url;
+		} catch (error) {
+			console.error('Error al obtener la URL de la imagen:', error);
+			return '';
+		}
+	};
+
 	const onSubmit = handleSubmit(async (values) => {
 		try {
 			await registerUser(values);
-			// const resend = new Resend('re_cHtXRTKP_C7bW9atwwc7FPmQTUZjfGPny');
-			// await resend.emails.send({
-			// 	from: 'ofvinals@gmail.com',
-			// 	to: values.email,
-			// 	subject: '¡Bienvenido a Estudio Posse y Asociados!',
-			// 	html: `<p>Hola ${values.nombre},</p><p>Gracias por registrarte en nuestro sitio.</p>`,
-			// });
-
-			// // Envía el correo a ti mismo
-			// await resend.emails.send({
-			// 	from: 'ofvinals@gmail.com',
-			// 	to: 'ofvinals@gmail.com',
-			// 	subject: 'Nuevo registro',
-			// 	html: `<p>Nuevo usuario registrado:</p><p>Nombre: ${values.nombre}</p><p>Email: ${values.email}</p>`,
-			// });
+			const templateParams = {
+				url: await fetchImageUrl(),
+				user_name: values.user_name,
+				user_email: values.user_email,
+				message: values.message,
+				proyect: 'Estudio Juridico Posse y Asociados',
+				messageLog: `Bienvenido al primer Estudio Juridico online de Tucuman. Estamos a tu disposicion para brindarte el mejor asesoramiento juridico!.-`,
+			};
+			emailjs
+				.send(
+					'service_iew5q2g',
+					'template_fgl8bsq',
+					templateParams,
+					'saMzvd5sdlHj2BhYr'
+				)
+				.then(
+					(result) => {
+						console.log('Correo enviado con éxito:', result.text);
+						reset();
+					},
+					(error) => {
+						console.error('Error al enviar el correo:', error.text);
+					}
+				);
 			navigate('/adminusu');
 		} catch (error) {
 			console.error('Error al registrar el usuario:', error);
