@@ -9,6 +9,7 @@ import { useExpteActions } from '../../hooks/UseExptes.js';
 import { uploadFile } from '../../firebase/config.js';
 import { useSelector } from 'react-redux';
 import Loader from '../../utils/Loader.jsx';
+import { selectExpte, selectMovStatus } from '../../store/exptes/selectors.js';
 
 export const MovForm = ({ rowId, onClose, mode }) => {
 	const {
@@ -19,8 +20,8 @@ export const MovForm = ({ rowId, onClose, mode }) => {
 	} = useForm();
 	const { createMov, updateMov } = useExpteActions();
 	const [selectedMov, setSelectedMov] = useState([]);
-	const expte = useSelector((state) => state.exptes.expte);
-	const statusMov = useSelector((state) => state.exptes.statusMov);
+	const expte = useSelector(selectExpte);
+	const statusMov = useSelector(selectMovStatus);
 
 	useEffect(() => {
 		if (expte && (mode === 'edit' || mode === 'view')) {
@@ -36,7 +37,6 @@ export const MovForm = ({ rowId, onClose, mode }) => {
 			setValue('fecha', formattedDate);
 			setValue('descripcion', selectedMovimiento.descripcion);
 			setValue('fileUrl', selectedMovimiento.fileUrl);
-			console.log(selectedMovimiento);
 			setSelectedMov(selectedMovimiento);
 		}
 	}, []);
@@ -73,7 +73,7 @@ export const MovForm = ({ rowId, onClose, mode }) => {
 	if (statusMov === 'Cargando') {
 		return <Loader />;
 	}
-	console.log(selectedMov);
+
 	return (
 		<Form
 			className='flex flex-wrap justify-around items-center'
@@ -118,7 +118,7 @@ export const MovForm = ({ rowId, onClose, mode }) => {
 						type='file'
 						{...register('file')}
 					/>
-				) : selectedMov.file? (
+				) : selectedMov.file ? (
 					<a
 						href={selectedMov.file}
 						target='_blank'

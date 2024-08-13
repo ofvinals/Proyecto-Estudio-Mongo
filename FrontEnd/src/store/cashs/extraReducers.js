@@ -9,66 +9,66 @@ import {
 export const cashExtraReducers = (builder) => {
 	builder
 		.addCase(getCashs.pending, (state) => {
-			state.status = 'Cargando';
+			state.status.cashs = 'Cargando';
 		})
 		.addCase(getCashs.fulfilled, (state, action) => {
-			state.status = 'Exitoso';
+			state.status.cashs = 'Exitoso';
 			state.cashs = action.payload;
 		})
 		.addCase(getCashs.rejected, (state, action) => {
-			state.status = 'Fallido';
+			state.status.cashs = 'Fallido';
 			state.error = action.payload;
 		});
 
 	builder
 		.addCase(getCash.pending, (state) => {
-			state.statusCash = 'Cargando';
+			state.status.cash = 'Cargando';
 		})
 		.addCase(getCash.fulfilled, (state, action) => {
-			state.statusCash = 'Exitoso';
+			state.status.cash  = 'Exitoso';
 			state.cash = action.payload;
 		})
 		.addCase(getCash.rejected, (state, action) => {
-			state.statusCash = 'Fallido';
+			state.status.cash  = 'Fallido';
 			state.error = action.payload;
 		});
 
 	builder
 		.addCase(createCash.pending, (state) => {
-			state.statusCash = 'Cargando';
+			state.status.sign = 'Cargando';
 		})
 		.addCase(createCash.fulfilled, (state, action) => {
-			state.statusCash = 'Exitoso';
+			state.status.sign = 'Exitoso';
 			state.cashs = action.payload;
 		})
 		.addCase(createCash.rejected, (state, action) => {
-			state.statusCash = 'Fallido';
+			state.status.sign = 'Fallido';
 			state.error = action.payload;
 		});
 
 	builder
 		.addCase(deleteCash.pending, (state) => {
-			state.statusDelete = 'Cargando';
+			state.status.delete = 'Cargando';
 		})
 		.addCase(deleteCash.fulfilled, (state, action) => {
-			state.statusDelete = 'Exitoso';
+			state.status.delete = 'Exitoso';
 			state.cashs = action.payload;
 		})
 		.addCase(deleteCash.rejected, (state, action) => {
-			state.statusDelete = 'Fallido';
+			state.status.delete = 'Fallido';
 			state.error = action.payload;
 		});
 
 	builder
 		.addCase(updateCash.pending, (state) => {
-			state.statusUpdate = 'Cargando';
+			state.status.update = 'Cargando';
 		})
 		.addCase(updateCash.fulfilled, (state, action) => {
-			state.statusUpdate = 'Exitoso';
+			state.status.update = 'Exitoso';
 			state.cashs = action.payload;
 		})
 		.addCase(updateCash.rejected, (state, action) => {
-			state.statusUpdate = 'Fallido';
+			state.status.update = 'Fallido';
 			state.error = action.payload;
 		});
 };

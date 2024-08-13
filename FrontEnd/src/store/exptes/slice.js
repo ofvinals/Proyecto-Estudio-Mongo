@@ -5,12 +5,16 @@ const initialState = {
 	exptes: [],
 	expte: null,
 	mov: null,
-	status: 'Inactivo',
-	statusExpte: 'Inactivo',
-	statusSign: 'Inactivo',
-	statusUpdate: 'Inactivo',
-	statusDelete: 'Inactivo',
-	statusMov: 'Inactivo',
+	movs: [],
+	status: {
+		exptes: 'Inactivo',
+		expte: 'Inactivo',
+		movs: 'Inactivo',
+		mov: 'Inactivo',
+		sign: 'Inactivo',
+		update: 'Inactivo',
+		delete: 'Inactivo',
+	},
 	error: null,
 };
 

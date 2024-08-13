@@ -31,7 +31,7 @@ export const GoogleCalendarForm = ({ onClose }) => {
 	const createEventCalendar = (data) => {
 		try {
 			const values = {
-				summary: data.eventName,
+				summary: data.summary,
 				description: data.description,
 				start: {
 					dateTime: start.toISOString(),
@@ -91,12 +91,13 @@ export const GoogleCalendarForm = ({ onClose }) => {
 
 			<FormSelect
 				label='Tipo de evento'
-				name='eventName'
+				name='summary'
 				register={register}
 				errors={errors}
 				selectOptions={[
-					{ value: 'AUDIENCIA', label: 'AUDIENCIA' },
-					{ value: 'VENCIMIENTO', label: 'VENCIMIENTO' },
+					{ value: 'Audiencia', label: 'Audiencia' },
+					{ value: 'Vencimiento', label: 'Vencimiento' },
+					{ value: 'Turno Cliente', label: 'Turno Cliente' },
 				]}
 				options={{ required: 'El tipo de evento es obligatorio' }}
 			/>

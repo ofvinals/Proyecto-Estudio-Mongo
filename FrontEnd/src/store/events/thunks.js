@@ -112,6 +112,9 @@ export const createGoogleEvent = createAsyncThunk(
 					user: values.user,
 					eventUrl: data.event.htmlLink,
 				};
+				// if (values.isVirtual && data.event.conferenceData) {
+				// 	eventData.meetUrl = data.event.conferenceData.entryPoints[0].uri;
+				// }
 				dispatch(createEvent(eventData));
 				return data;
 			} else {

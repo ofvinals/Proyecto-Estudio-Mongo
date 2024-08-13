@@ -9,7 +9,7 @@ const PrivateRoute = () => {
 	const dispatch = useDispatch();
 	const loggedUser = useSelector((state) => state.auth.loggedUser);
 	const { isLoading } = useLoad();
-	console.log(isLoading)
+
 	useEffect(() => {
 		if (!loggedUser) {
 			dispatch(verifyLoggedUser());
@@ -19,7 +19,7 @@ const PrivateRoute = () => {
 	if (isLoading) {
 		return <Loader />;
 	}
-	console.log(isLoading)
+	
 	return loggedUser ? <Outlet /> : <Navigate to='/home' />;
 };
 

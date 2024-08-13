@@ -4,11 +4,13 @@ import { billExtraReducers } from './extraReducers';
 const initialState = {
 	bills: [],
 	bill: null,
-	status: 'Inactivo',
-	statusBill: 'Inactivo',
-	statusSign: 'Inactivo',
-	statusUpdate: 'Inactivo',
-	statusDelete: 'Inactivo',
+	status: {
+		bills: 'Inactivo',
+		bill: 'Inactivo',
+		sign: 'Inactivo',
+		update: 'Inactivo',
+		delete: 'Inactivo',
+	},
 	error: null,
 };
 

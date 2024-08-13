@@ -14,6 +14,7 @@ export const store = configureStore({
 		auth: authReducer,
 		users: usersReducer,
 		exptes: exptesReducer,
+		movs: exptesReducer,
 		events: eventsReducer,
 		bills: billsReducer,
 		cashs: cajasReducer,

@@ -16,16 +16,15 @@ import { useSelector } from 'react-redux';
 import { useNotesActions } from '../../hooks/UseNotes.js';
 import Loader from '../../utils/Loader.jsx';
 import { Form } from 'react-bootstrap';
+import { selectNotes, selectNoteStatus } from '../../store/notes/selectors.js';
 
 export const Notes = () => {
 	const [data, setData] = useState([]);
 	const [mostrarNotasPendientes, setMostrarNotasPendientes] = useState(true);
 	const { getNotes, createNote, archiveNote, desarchiveNote } =
 		useNotesActions();
-	const notes = useSelector((state) => state.notes.notes);
-	const statusNote = useSelector((state) => state.notes.status);
-	const statusUpdate = useSelector((state) => state.notes.statusUpdate);
-	const statusSign = useSelector((state) => state.notes.statusSign);
+	const notes = useSelector(selectNotes);
+	const statusNote = useSelector(selectNoteStatus);
 	const {
 		register,
 		handleSubmit,
@@ -47,7 +46,7 @@ export const Notes = () => {
 
 	useEffect(() => {
 		loadNotas();
-	}, [statusUpdate, statusSign]);
+	}, []);
 
 	useEffect(() => {
 		if (notes.length > 0) {
@@ -56,7 +55,7 @@ export const Notes = () => {
 			);
 			setData(notasPendientes);
 		}
-	}, [notes]);
+	}, []);
 
 	useEffect(() => {
 		if (mostrarNotasPendientes) {
@@ -70,7 +69,7 @@ export const Notes = () => {
 			);
 			setData(notasArchivadas);
 		}
-	}, [mostrarNotasPendientes, notes]);
+	}, [mostrarNotasPendientes, notes, statusNote]);
 
 	const onSubmit = handleSubmit(async (values) => {
 		values.estado = 'Pendiente';
@@ -153,22 +152,24 @@ export const Notes = () => {
 							},
 						}}
 					/>
-					<FormInput
-						label='Recordatorio/Nota'
-						name='recordatorio'
-						type='textarea'
-						register={register}
-						errors={errors}
-						placeholder='Ingresa el recordatorio o nota...'
-						rows={3}
-						customClass='true'
-						options={{
-							required: {
-								value: true,
-								message: 'El texto de recordatorio es requerido',
-							},
-						}}
-					/>
+					<div className='w-1/2'>
+						<FormInput
+							label='Recordatorio/Nota'
+							name='recordatorio'
+							type='textarea'
+							register={register}
+							errors={errors}
+							placeholder='Ingresa el recordatorio o nota...'
+							rows={3}
+							customClass='true'
+							options={{
+								required: {
+									value: true,
+									message: 'El texto de recordatorio es requerido',
+								},
+							}}
+						/>
+					</div>
 					<div className='flex flex-col sm:flex-row flex-wrap items-center justify-around w-full'>
 						<SaveButton onSubmit={onSubmit} label='Registrar Nota' />
 						<CancelButton

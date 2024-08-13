@@ -13,6 +13,7 @@ import {
 import { uploadFile } from '../../firebase/config.js';
 import { useSelector } from 'react-redux';
 import Loader from '../../utils/Loader.jsx';
+import { selectCash, selectCashStatus } from '../../store/cashs/selectors.js';
 
 const CashForm = ({ rowId, onClose, mode }) => {
 	const {
@@ -22,8 +23,8 @@ const CashForm = ({ rowId, onClose, mode }) => {
 		formState: { errors },
 	} = useForm();
 	const { getCash, updateCash, createCash } = useCashActions();
-	const cash = useSelector((state) => state.cashs.cash);
-	const statusCash = useSelector((state) => state.cashs.statusCash);
+	const statusCash = useSelector(selectCashStatus);
+	const cash = useSelector(selectCash);
 
 	useEffect(() => {
 		if (mode === 'edit' || mode === 'view') {
@@ -32,11 +33,7 @@ const CashForm = ({ rowId, onClose, mode }) => {
 	}, [rowId]);
 
 	useEffect(() => {
-		if (
-			statusCash === 'Exitoso' &&
-			cash &&
-			(mode === 'edit' || mode === 'view')
-		) {
+		if (cash && (mode === 'edit' || mode === 'view')) {
 			const fechaParts = cash.fecha.split('/');
 			const year = fechaParts[2];
 			const month = fechaParts[1].padStart(2, '0');
@@ -78,7 +75,7 @@ const CashForm = ({ rowId, onClose, mode }) => {
 				onClose();
 			} else if (mode === 'create') {
 				const values = data;
-				await createCash(values);
+				await createCash({ values });
 				onClose();
 			}
 		} catch (error) {
@@ -104,7 +101,7 @@ const CashForm = ({ rowId, onClose, mode }) => {
 				options={{
 					required: {
 						value: true,
-						message: 'La fecha es requerida',
+						message: 'La fecha es obligatoria',
 					},
 				}}
 			/>

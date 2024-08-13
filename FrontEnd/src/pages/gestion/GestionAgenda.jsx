@@ -21,17 +21,18 @@ import { Link } from 'react-router-dom';
 import { Detail } from '../../components/Gestion/Detail.jsx';
 import { Header } from '../../components/header/Header.jsx';
 import { CalendarSCta } from '../../components/Forms/CalendarSCtaForm.jsx';
-
+import {
+	selectEvents,
+	selectEventStatus,
+} from '../../store/events/selectors.js';
 export const GestionAgenda = () => {
 	const { loggedUser } = useAuth();
 	const { getEvents, deleteEvent } = useEventActions();
 	const [rowId, setRowId] = useState(null);
 	const admin = loggedUser.admin;
 	const coadmin = loggedUser.coadmin;
-	const events = useSelector((state) => state.events.events);
-	const statusEvent = useSelector((state) => state.events.statusEvent);
-	const statusUpdate = useSelector((state) => state.events.statusUpdate);
-	const statusSign = useSelector((state) => state.events.statusSign);
+	const events = useSelector(selectEvents);
+	const statusEvent = useSelector(selectEventStatus);
 	const viewModal = useModal();
 	const editModal = useModal();
 	const googleModal = useModal();
@@ -47,7 +48,7 @@ export const GestionAgenda = () => {
 
 	useEffect(() => {
 		dataEvents();
-	}, [statusUpdate, statusSign]);
+	}, []);
 
 	const columns = React.useMemo(() => [
 		{

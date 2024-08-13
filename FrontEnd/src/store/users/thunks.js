@@ -123,7 +123,7 @@ export const updateUser = createAsyncThunk(
 			dispatch(
 				showToast({
 					type: 'error',
-					message: 'Usuarios obtenidos exitosamente',
+					message: 'Error al obtener usuarios',
 				})
 			);
 			console.error('Error:', error);

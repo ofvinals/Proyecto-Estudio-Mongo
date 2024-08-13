@@ -12,105 +12,106 @@ import {
 export const expteExtraReducers = (builder) => {
 	builder
 		.addCase(getExptes.pending, (state) => {
-			state.status = 'Cargando';
+			state.status.exptes = 'Cargando';
 		})
 		.addCase(getExptes.fulfilled, (state, action) => {
-			state.status = 'Exitoso';
+			state.status.exptes = 'Exitoso';
 			state.exptes = action.payload;
 		})
 		.addCase(getExptes.rejected, (state, action) => {
-			state.status = 'Fallido';
+			state.status.exptes = 'Fallido';
 			state.error = action.payload;
 		});
 
 	builder
 		.addCase(getExpte.pending, (state) => {
-			state.statusExpte = 'Cargando';
+			state.status.expte = 'Cargando';
 		})
 		.addCase(getExpte.fulfilled, (state, action) => {
-			state.statusExpte = 'Exitoso';
+			state.status.expte = 'Exitoso';
 			state.expte = action.payload;
 		})
 		.addCase(getExpte.rejected, (state, action) => {
-			state.statusExpte = 'Fallido';
+			state.status.expte = 'Fallido';
 			state.error = action.payload;
 		});
 
 	builder
 		.addCase(createExpte.pending, (state) => {
-			state.statusExpte = 'Cargando';
+			state.status.sign = 'Cargando';
 		})
 		.addCase(createExpte.fulfilled, (state, action) => {
-			state.statusExpte = 'Exitoso';
+			state.status.sign = 'Exitoso';
 			state.exptes = action.payload;
 		})
 		.addCase(createExpte.rejected, (state, action) => {
-			state.statusExpte = 'Fallido';
+			state.status.sign = 'Fallido';
 			state.error = action.payload;
 		});
 
 	builder
 		.addCase(deleteExpte.pending, (state) => {
-			state.statusDelete = 'Cargando';
+			state.status.delete = 'Cargando';
 		})
 		.addCase(deleteExpte.fulfilled, (state, action) => {
-			state.statusDelete = 'Exitoso';
+			state.status.delete = 'Exitoso';
 			state.exptes = action.payload;
 		})
 		.addCase(deleteExpte.rejected, (state, action) => {
-			state.statusDelete = 'Fallido';
+			state.status.delete = 'Fallido';
 			state.error = action.payload;
 		});
 
 	builder
 		.addCase(updateExpte.pending, (state) => {
-			state.statusUpdate = 'Cargando';
+			state.status.update = 'Cargando';
 		})
 		.addCase(updateExpte.fulfilled, (state, action) => {
-			state.statusUpdate = 'Exitoso';
-			state.exptes = action.payload;
+			state.status.update = 'Exitoso';
+			state.expte = action.payload;
 		})
 		.addCase(updateExpte.rejected, (state, action) => {
-			state.statusUpdate = 'Fallido';
+			state.status.update = 'Fallido';
 			state.error = action.payload;
 		});
 
 	builder
 		.addCase(createMov.pending, (state) => {
-			state.statusMov = 'Cargando';
+			console.log(state);
+			state.status.sign = 'Cargando';
 		})
 		.addCase(createMov.fulfilled, (state, action) => {
-			state.statusMov = 'Exitoso';
-			state.exptes = action.payload;
+			state.status.sign = 'Exitoso';
+			state.expte=(action.payload);
 		})
 		.addCase(createMov.rejected, (state, action) => {
-			state.statusMov = 'Fallido';
+			state.status.sign = 'Fallido';
 			state.error = action.payload;
 		});
 
 	builder
 		.addCase(deleteMov.pending, (state) => {
-			state.statusDelete = 'Cargando';
+			state.status.delete = 'Cargando';
 		})
 		.addCase(deleteMov.fulfilled, (state, action) => {
-			state.statusDelete = 'Exitoso';
-			state.movs = action.payload;
+			state.status.delete = 'Exitoso';
+			state.expte = action.payload;
 		})
 		.addCase(deleteMov.rejected, (state, action) => {
-			state.statusDelete = 'Fallido';
+			state.status.delete = 'Fallido';
 			state.error = action.payload;
 		});
 
 	builder
 		.addCase(updateMov.pending, (state) => {
-			state.statusUpdate = 'Cargando';
+			state.status.update = 'Cargando';
 		})
 		.addCase(updateMov.fulfilled, (state, action) => {
-			state.statusUpdate = 'Exitoso';
-			state.movs = action.payload;
+			state.status.update = 'Exitoso';
+			state.mov = action.payload;
 		})
 		.addCase(updateMov.rejected, (state, action) => {
-			state.statusUpdate = 'Fallido';
+			state.status.update = 'Fallido';
 			state.error = action.payload;
 		});
 };

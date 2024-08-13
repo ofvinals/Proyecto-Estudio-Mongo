@@ -4,24 +4,15 @@ import '../css/Header.css';
 import { Detail } from '../components/Gestion/Detail.jsx';
 import { Header } from '../components/header/Header.jsx';
 import { Novedades } from '../components/Gestion/Novedades.jsx';
-import { useState } from 'react';
 import Modals from '../utils/Modals.jsx';
 import { UserForm } from '../components/Forms/UserForm.jsx';
+import useModal from '../hooks/useModal.js';
 
 export const DashboardUser = () => {
 	const { loggedUser, logoutUser } = useAuth();
 	const navigate = useNavigate();
 	const rowId = loggedUser.id;
-	const [openEditModal, setopenEditModal] = useState(false);
-
-	const handleCloseModal = () => {
-		setopenEditModal(false);
-	};
-
-	const handleOpenEditModal = () => {
-		setopenEditModal(true);
-	};
-
+	const editModal = useModal();
 	const handleLogOut = async () => {
 		await logoutUser();
 		navigate('/home');
@@ -68,7 +59,7 @@ export const DashboardUser = () => {
 						className='bg-white shadow-3xl btnAdmin mx-2 text-primary text-center p-2 border-2 w-[230px] mb-3 border-primary rounded-xl font-bold'
 						type='button'
 						onClick={() => {
-							handleOpenEditModal(rowId);
+							editModal.openModal();
 						}}>
 						<i className='text-xl pe-2 bi bi-person-gear'></i>
 						Modificar tus Datos
@@ -85,10 +76,14 @@ export const DashboardUser = () => {
 			</section>
 
 			<Modals
-				isOpen={openEditModal}
-				onClose={handleCloseModal}
+				isOpen={editModal.isOpen}
+				onClose={editModal.closeModal}
 				title='Editar Datos del Usuario'>
-				<UserForm rowId={rowId} onClose={handleCloseModal} mode='edit' />
+				<UserForm
+					rowId={rowId}
+					onClose={editModal.closeModal}
+					mode='edit'
+				/>
 			</Modals>
 		</>
 	);

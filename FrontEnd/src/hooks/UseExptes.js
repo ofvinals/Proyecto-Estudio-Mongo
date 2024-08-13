@@ -32,7 +32,7 @@ export function useExpteActions() {
 		await dispatch(createExpteThunk({ values }));
 	};
 
-	const updateExpte = async (rowId, values) => {
+	const updateExpte = async ({rowId, values}) => {
 		await dispatch(updateExpteThunk({ id: rowId, values }));
 	};
 

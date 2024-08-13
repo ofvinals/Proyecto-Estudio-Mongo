@@ -5,7 +5,6 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { MobileDateTimePicker } from '@mui/x-date-pickers/MobileDateTimePicker';
-import { useAuth } from '../../hooks/useAuth.js';
 import { useEventActions } from '../../hooks/UseEvents.js';
 import { Button } from 'react-bootstrap';
 import Swal from 'sweetalert2';
@@ -21,18 +20,22 @@ import Tooltip from '@mui/material/Tooltip';
 import Loader from '../../utils/Loader.jsx';
 import { useSelector } from 'react-redux';
 import { Box } from '@mui/material';
-
+import {
+	selectEvents,
+	selectEventStatus,
+} from '../../store/events/selectors.js';
+import useModal from '../../hooks/useModal.js';
+import Modals from '../../utils/Modals.jsx';
+import { EventUserForm } from '../../components/Forms/EventUserForm.jsx';
 export const UserAgenda = () => {
-	const { loggedUser } = useAuth();
-	const { getEvents, deleteEvent, createGoogleEvent } = useEventActions();
+	const { getEvents, deleteEvent } = useEventActions();
 	const [startDate, setStartDate] = useState(dayjs());
 	const [end, setEnd] = useState(new Date());
-	const events = useSelector((state) => state.events.events);
-	const statusEvent = useSelector((state) => state.events.statusEvent);
-	const statusUpdate = useSelector((state) => state.events.statusUpdate);
-	const statusDelete = useSelector((state) => state.events.statusDelete);
-	const statusSign = useSelector((state) => state.events.statusSign);
+	const events = useSelector(selectEvents);
+	const statusEvent = useSelector(selectEventStatus);
 	const form = useRef();
+	const newModal = useModal();
+
 	// deshabilita seleccion de dias de fin de semana
 	// const lastMonday = dayjs().startOf('week');
 	// const nextSunday = dayjs().endOf('week').startOf('day');
@@ -44,7 +47,6 @@ export const UserAgenda = () => {
 	const shouldDisableTime = (value, view) => {
 		const isHourBefore9 = value.hour() < 9;
 		const isHourAfter6 = value.hour() >= 19;
-
 		return view === 'hours' && (isHourBefore9 || isHourAfter6);
 	};
 
@@ -58,7 +60,7 @@ export const UserAgenda = () => {
 
 	useEffect(() => {
 		loadEvents();
-	}, [statusUpdate, statusSign, statusDelete]);
+	}, []);
 
 	const columns = React.useMemo(() => [
 		{
@@ -113,50 +115,8 @@ export const UserAgenda = () => {
 			});
 			return;
 		} else {
-			// si no esta ocupado lanza modal para ingresar motivo de consulta y guarda en Localstorage
-			const { value: motivoConsulta, isConfirmed } = await Swal.fire({
-				input: 'textarea',
-				title: 'Ingrese el motivo de su consulta',
-				inputPlaceholder: 'Ingrese el motivo aca...',
-				inputAttributes: {
-					'aria-label': 'Ingrese su mensaje aca',
-				},
-				showCancelButton: true,
-				confirmButtonColor: '#8f8e8b',
-				confirmButtonText: 'Confirmar Evento',
-				cancelButtonText: 'Cancelar',
-			});
-			if (isConfirmed) {
-				const values = {
-					summary: 'Evento Cliente',
-					description: motivoConsulta,
-					start: {
-						dateTime: startDate.toISOString(),
-						timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-					},
-					end: {
-						dateTime: end.toISOString(),
-						timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-					},
-					user: loggedUser.email,
-				};
-				try {
-					// await emailjs.send(
-					// 	'service_iew5q2g',
-					// 	'template_fgl8bsq',
-					// 	nuevoEvento,
-					// 	'saMzvd5sdlHj2BhYr'
-					// );
-					createGoogleEvent(values);
-				} catch (error) {
-					console.error(
-						'Error al enviar el formulario por EmailJS:',
-						error
-					);
-				}
-			} else {
-				Swal.fire('Su evento no fue agendado', '', 'info');
-			}
+			// si no esta ocupado lanza modal para ingresar motivo de consulta
+			newModal.openModal();
 		}
 		return;
 	};
@@ -174,7 +134,7 @@ export const UserAgenda = () => {
 				<div className='flex items-center justify-center'>
 					<div>
 						<h1 className='my-4 text-2xl font-extrabold text-center text-white'>
-							Eventos Online
+							Turnos Online
 						</h1>
 						<p className='my-4 text-sm text-center text-white'>
 							(Horario de Atencion al Publico: Lunes a Jueves de 09 a
@@ -271,6 +231,17 @@ export const UserAgenda = () => {
 					</div>
 				</div>
 			</section>
+			<Modals
+				isOpen={newModal.isOpen}
+				onClose={newModal.closeModal}
+				title='Registrar Turno'>
+				<EventUserForm
+					onClose={newModal.closeModal}
+					mode='create'
+					startDate={startDate}
+					end={end}
+				/>
+			</Modals>
 		</>
 	);
 };

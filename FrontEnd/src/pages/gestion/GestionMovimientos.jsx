@@ -22,6 +22,12 @@ import { useSelector } from 'react-redux';
 import useModal from '../../hooks/useModal';
 import { calcularDiasTranscurridos } from '../../hooks/useExptesFilter.js';
 import { Button } from 'react-bootstrap';
+import {
+	selectExpte,
+	selectExpteStatus,
+	selectMovStatus,
+	selectMov,
+} from '../../store/exptes/selectors.js';
 
 export const GestionMovimientos = () => {
 	const { loggedUser } = useAuth();
@@ -31,11 +37,10 @@ export const GestionMovimientos = () => {
 	const [expteId, setExpteId] = useState([]);
 	const [rowId, setRowId] = useState(null);
 	const [diasCaducidad, setDiasCaducidad] = useState([]);
-	const expte = useSelector((state) => state.exptes.expte);
-	const statusExpte = useSelector((state) => state.exptes.statusExpte);
-	const statusUpdate = useSelector((state) => state.exptes.statusUpdate);
-	const statusDelete = useSelector((state) => state.exptes.statusDelete);
-	const statusSign = useSelector((state) => state.exptes.statusSign);
+	const expte = useSelector(selectExpte);
+	const statusExpte = useSelector(selectExpteStatus);
+	const statusMov = useSelector(selectMovStatus);
+	const mov = useSelector(selectMov);
 	const viewModal = useModal();
 	const editModal = useModal();
 	const newModal = useModal();
@@ -52,14 +57,14 @@ export const GestionMovimientos = () => {
 
 	useEffect(() => {
 		dataExpte();
-	}, [statusSign, statusUpdate, statusDelete]);
+	}, []);
 
 	useEffect(() => {
-		if (expte && expte.movimientos) {
+		if (expte) {
 			setData(expte.movimientos);
 			setExpteId(expte._id);
 		}
-	}, [expte]);
+	}, [statusExpte, statusMov, expte, mov]);
 
 	useEffect(() => {
 		const dataCaducidad = async () => {

@@ -20,7 +20,10 @@ import { useSelector } from 'react-redux';
 import useModal from '../../hooks/useModal';
 import { filterExpedientes } from '../../hooks/useExptesFilter.js';
 import { Button } from 'react-bootstrap';
-
+import {
+	selectExptes,
+	selectExpteStatus,
+} from '../../store/exptes/selectors.js';
 export const GestionExpedientes = () => {
 	const { loggedUser } = useAuth();
 	const { getExptes, deleteExpte } = useExpteActions();
@@ -29,11 +32,8 @@ export const GestionExpedientes = () => {
 	const [data, setData] = useState([]);
 	const [rowId, setRowId] = useState(null);
 	const navigate = useNavigate();
-	const exptes = useSelector((state) => state.exptes.exptes);
-	const statusExpte = useSelector((state) => state.exptes.status);
-	const statusUpdate = useSelector((state) => state.exptes.statusUpdate);
-	const statusDelete = useSelector((state) => state.exptes.statusDelete);
-	const statusSign = useSelector((state) => state.exptes.statusSign);
+	const exptes = useSelector(selectExptes);
+	const statusExpte = useSelector(selectExpteStatus);
 	const editModal = useModal();
 	const newModal = useModal();
 	const user = loggedUser.email;
@@ -44,7 +44,7 @@ export const GestionExpedientes = () => {
 		try {
 			await getExptes();
 		} catch (error) {
-			console.error('Error al obtener expedientes:', error);
+			console.error('Error al obtener expedientes', error);
 		}
 	};
 
@@ -53,17 +53,19 @@ export const GestionExpedientes = () => {
 	}, []);
 
 	useEffect(() => {
-		const filteredExptes = exptes.filter((expte) =>
-			viewArchived
-				? expte.estado === 'Terminado'
-				: expte.estado !== 'Terminado'
-		);
-		const finalFilteredExptes =
-			admin || coadmin
-				? filteredExptes
-				: filteredExptes.filter((expte) => expte.cliente === user);
-		setData(finalFilteredExptes);
-	}, [exptes, viewArchived, statusDelete, statusUpdate, statusSign]);
+		if (statusExpte === 'Exitoso') {
+			const filteredExptes = exptes.filter((expte) =>
+				viewArchived
+					? expte.estado === 'Terminado'
+					: expte.estado !== 'Terminado'
+			);
+			const finalFilteredExptes =
+				admin || coadmin
+					? filteredExptes
+					: filteredExptes.filter((expte) => expte.cliente === user);
+			setData(finalFilteredExptes);
+		}
+	}, [exptes, viewArchived, statusExpte]);
 
 	useEffect(() => {
 		try {
@@ -76,13 +78,7 @@ export const GestionExpedientes = () => {
 		} catch (error) {
 			console.error('Error al obtener expedientes caducados', error);
 		}
-	}, [exptes, viewCaducidad]);
-
-	useEffect(() => {
-		if (statusUpdate === 'Exitoso' || statusSign === 'Exitoso') {
-			dataExptes();
-		}
-	}, [statusUpdate, statusSign]);
+	}, [exptes, viewCaducidad, statusExpte]);
 
 	const columns = useMemo(
 		() => [
@@ -200,7 +196,7 @@ export const GestionExpedientes = () => {
 					<div>
 						<p className='my-4 text-3xl font-extrabold text-center bg-gradient-to-t from-primary to-blue-200 text-transparent bg-clip-text'>
 							{viewCaducidad
-								? 'Expedientes Proximos a Caducar'
+								? 'Expedientes Proximos a Caducar (> 60 dias)'
 								: viewArchived
 								? 'Expedientes Terminados'
 								: 'Expedientes en Tramite'}

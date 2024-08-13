@@ -22,6 +22,7 @@ import { useSelector } from 'react-redux';
 import useModal from '../../hooks/useModal';
 import { months } from '../../helpers/months.js';
 import { Button } from 'react-bootstrap';
+import { selectCashs, selectCashStatus } from '../../store/cashs/selectors.js';
 
 export const GestionCash = () => {
 	const { loggedUser } = useAuth();
@@ -29,10 +30,8 @@ export const GestionCash = () => {
 	const [data, setData] = useState([]);
 	const [viewArchived, setViewArchived] = useState(false);
 	const [rowId, setRowId] = useState(null);
-	const cashs = useSelector((state) => state.cashs.cashs);
-	const statusCash = useSelector((state) => state.cashs.statusCash);
-	const statusUpdate = useSelector((state) => state.cashs.statusUpdate);
-	const statusSign = useSelector((state) => state.cashs.statusSign);
+	const cashs = useSelector(selectCashs);
+	const statusCash = useSelector(selectCashStatus);
 	const viewModal = useModal();
 	const editModal = useModal();
 	const newModal = useModal();
@@ -42,7 +41,18 @@ export const GestionCash = () => {
 	const dataCashs = async () => {
 		try {
 			await getCashs();
-			const mesActual = (new Date().getMonth() + 1);
+		} catch (error) {
+			console.error('Error al obtener caja', error);
+		}
+	};
+
+	useEffect(() => {
+		dataCashs();
+	}, []);
+
+	useEffect(() => {
+		if (statusCash === 'Exitoso') {
+			const mesActual = new Date().getMonth() + 1;
 			const filteredCashs = cashs.filter((cash) => {
 				const mesCash = cash.mes;
 				if (viewArchived) {
@@ -52,14 +62,8 @@ export const GestionCash = () => {
 				}
 			});
 			setData(filteredCashs);
-		} catch (error) {
-			console.error('Error al obtener caja', error);
 		}
-	};
-
-	useEffect(() => {
-		dataCashs();
-	}, [viewArchived, statusUpdate, statusSign, statusCash]);
+	}, [cashs, viewArchived, statusCash]);
 
 	const formatValue = (value) => {
 		if (value instanceof Date) {

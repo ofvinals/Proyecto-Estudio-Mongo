@@ -51,7 +51,7 @@ export const getCash = createAsyncThunk(
 
 export const createCash = createAsyncThunk(
 	'cash/createCash',
-	async (values, { dispatch }) => {
+	async ({values}, { dispatch }) => {
 		try {
 			const token = localStorage.getItem('token');
 			const res = await apiURL.post('/api/cajas', values, {
@@ -138,7 +138,6 @@ export const deleteCash = createAsyncThunk(
 				);
 				return res.data;
 			}
-			dispatch(getCashs());
 		} catch (error) {
 			dispatch(
 				showToast({

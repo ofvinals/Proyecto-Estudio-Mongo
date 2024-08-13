@@ -1,14 +1,13 @@
 import { useRef } from 'react';
-import emailjs from '@emailjs/browser';
 import '../css/Header.css';
 import { Whatsapp } from '../components/Whatsapp';
 import { Header } from '../components/header/Header';
 import { Button } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
-import { getDownloadURL, getStorage, ref } from 'firebase/storage';
+import { useMails } from '../hooks/useMails';
 
 export const Contact = () => {
-	const toast = useRef(null);
+	const { sendMailContact } = useMails();
 	const form = useRef();
 	const {
 		register,
@@ -17,58 +16,9 @@ export const Contact = () => {
 		reset,
 	} = useForm();
 
-	const showToast = (severity, summary, detail) => {
-		if (toast.current) {
-			toast.current.show({
-				severity: severity,
-				summary: summary,
-				detail: detail,
-			});
-		}
-	};
-
-	const fetchImageUrl = async () => {
-		try {
-			const storage = getStorage();
-			const imageRef = ref(storage, '/LOGOHOME.jpg');
-			const url = await getDownloadURL(imageRef);
-			return url;
-		} catch (error) {
-			console.error('Error al obtener la URL de la imagen:', error);
-			return '';
-		}
-	};
-
 	const onSubmit = handleSubmit(async (values) => {
-		const templateParams = {
-			url: await fetchImageUrl(),
-			user_name: values.user_name,
-			user_email: values.user_email,
-			message: values.message,
-			proyect: 'Estudio Juridico Posse y Asociados',
-			messageLog: `Recibimos tu contacto. A la brevedad posible nos pondremos en contacto con vos!.-`,
-		};
-		emailjs
-			.send(
-				'service_iew5q2g',
-				'template_fgl8bsq',
-				templateParams,
-				'saMzvd5sdlHj2BhYr'
-			)
-			.then(
-				(result) => {
-					console.log('Correo enviado con éxito:', result.text);
-					reset();
-					showToast(
-						'success',
-						'Formulario Enviado',
-						'Formulario de contacto enviado correctamente!'
-					);
-				},
-				(error) => {
-					console.error('Error al enviar el correo:', error.text);
-				}
-			);
+		sendMailContact(values);
+		reset();
 	});
 
 	return (

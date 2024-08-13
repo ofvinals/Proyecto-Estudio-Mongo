@@ -9,66 +9,66 @@ import {
 export const userExtraReducers = (builder) => {
 	builder
 		.addCase(getUsers.pending, (state) => {
-			state.status = 'Cargando';
+			state.status.users = 'Cargando';
 		})
 		.addCase(getUsers.fulfilled, (state, action) => {
-			state.status = 'Exitoso';
+			state.status.users = 'Exitoso';
 			state.users = action.payload;
 		})
 		.addCase(getUsers.rejected, (state, action) => {
-			state.status = 'Fallido';
+			state.status.users = 'Fallido';
 			state.error = action.payload;
 		});
 
 	builder
 		.addCase(getUser.pending, (state) => {
-			state.statusUser = 'Cargando';
+			state.status.user = 'Cargando';
 		})
 		.addCase(getUser.fulfilled, (state, action) => {
-			state.statusUser = 'Exitoso';
+			state.status.user = 'Exitoso';
 			state.user = action.payload;
 		})
 		.addCase(getUser.rejected, (state, action) => {
-			state.statusUser = 'Fallido';
+			state.status.user = 'Fallido';
 			state.error = action.payload;
 		});
 
 	builder
 		.addCase(deleteUser.pending, (state) => {
-			state.statusDelete = 'Cargando';
+			state.status.delete = 'Cargando';
 		})
 		.addCase(deleteUser.fulfilled, (state, action) => {
-			state.statusDelete = 'Exitoso';
+			state.status.delete = 'Exitoso';
 			state.users = action.payload;
 		})
 		.addCase(deleteUser.rejected, (state, action) => {
-			state.statusDelete = 'Fallido';
+			state.status.delete = 'Fallido';
 			state.error = action.payload;
 		});
 
 	builder
 		.addCase(updateUser.pending, (state) => {
-			state.statusUpdate = 'Cargando';
+			state.status.update = 'Cargando';
 		})
 		.addCase(updateUser.fulfilled, (state, action) => {
-			state.statusUpdate = 'Exitoso';
+			state.status.update = 'Exitoso';
 			state.user = action.payload;
 		})
 		.addCase(updateUser.rejected, (state, action) => {
-			state.statusUpdate = 'Fallido';
+			state.status.update = 'Fallido';
 			state.error = action.payload;
 		});
+
 	builder
 		.addCase(getUserbyGoogle.pending, (state) => {
-			state.statusUser = 'Cargando';
+			state.status.user = 'Cargando';
 		})
 		.addCase(getUserbyGoogle.fulfilled, (state, action) => {
-			state.statusUser = 'Exitoso';
+			state.status.user = 'Exitoso';
 			state.users = action.payload;
-			console.log(action);
 		})
 		.addCase(getUserbyGoogle.rejected, (state, action) => {
-			state.statusUser = 'Fallido';
+			state.status.user = 'Fallido';
 			state.error = action.payload;
 		});
 };

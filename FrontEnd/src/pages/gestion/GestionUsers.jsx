@@ -18,6 +18,7 @@ import Modals from '../../utils/Modals.jsx';
 import { useSelector } from 'react-redux';
 import Loader from '../../utils/Loader.jsx';
 import useModal from '../../hooks/useModal.js';
+import { selectUsers, selectUserStatus } from '../../store/users/selectors.js';
 
 export const GestionUsers = () => {
 	const { loggedUser } = useAuth();
@@ -25,10 +26,8 @@ export const GestionUsers = () => {
 	const coadmin = loggedUser.coadmin;
 	const [rowId, setRowId] = useState(null);
 	const { getUsers, deleteUser } = useUserActions();
-	const users = useSelector((state) => state.users.users);
-	const statusUser = useSelector((state) => state.users.status);
-	const statusUpdate = useSelector((state) => state.users.statusUpdate);
-	const statusSign = useSelector((state) => state.users.statusSign);
+	const users = useSelector(selectUsers);
+	const statusUser = useSelector(selectUserStatus);
 	const viewModal = useModal();
 	const editModal = useModal();
 
@@ -42,7 +41,7 @@ export const GestionUsers = () => {
 
 	useEffect(() => {
 		dataUsers();
-	}, [statusUpdate, statusSign]);
+	}, []);
 
 	const columns = React.useMemo(
 		() => [

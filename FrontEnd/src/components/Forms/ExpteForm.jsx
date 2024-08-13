@@ -14,6 +14,11 @@ import { useUserActions } from '../../hooks/UseUserActions.js';
 import { useExpteActions } from '../../hooks/UseExptes.js';
 import { useSelector } from 'react-redux';
 import Loader from '../../utils/Loader.jsx';
+import {
+	selectExpte,
+	selectExpteStatus,
+} from '../../store/exptes/selectors.js';
+import { selectUsers } from '../../store/users/selectors.js';
 
 export const ExpteForm = ({ rowId, onClose, mode }) => {
 	const {
@@ -26,9 +31,9 @@ export const ExpteForm = ({ rowId, onClose, mode }) => {
 	} = useForm();
 	const { getUsers } = useUserActions();
 	const { getExpte, updateExpte, createExpte } = useExpteActions();
-	const users = useSelector((state) => state.users.users);
-	const expte = useSelector((state) => state.exptes.expte);
-	const statusExpte = useSelector((state) => state.exptes.statusExpte);
+	const statusExpte = useSelector(selectExpteStatus);
+	const expte = useSelector(selectExpte);
+	const users = useSelector(selectUsers);
 
 	useEffect(() => {
 		getUsers();
@@ -38,11 +43,7 @@ export const ExpteForm = ({ rowId, onClose, mode }) => {
 	}, [rowId]);
 
 	useEffect(() => {
-		if (
-			statusExpte === 'Exitoso' &&
-			expte &&
-			(mode === 'edit' || mode === 'view')
-		) {
+		if (expte && (mode === 'edit' || mode === 'view')) {
 			setValue('cliente', expte.cliente);
 			setValue('nroexpte', expte.nroexpte);
 			setValue('radicacion', expte.radicacion);
@@ -74,10 +75,10 @@ export const ExpteForm = ({ rowId, onClose, mode }) => {
 	const onSubmit = handleSubmit(async (values) => {
 		try {
 			if (mode === 'edit') {
-				await updateExpte(rowId, values);
+				await updateExpte({ rowId, values });
 				onClose();
 			} else if (mode === 'create') {
-				await createExpte(values);
+				await createExpte({ values });
 				onClose();
 			}
 		} catch (error) {
@@ -234,6 +235,10 @@ export const ExpteForm = ({ rowId, onClose, mode }) => {
 						{ value: 'Reivindicacion', label: 'Reivindicacion' },
 						{ value: 'Sucesion', label: 'Sucesion' },
 						{ value: 'Accion de Consumo', label: 'Accion de Consumo' },
+						{ value: 'Mediacion', label: 'Mediacion' },
+						{ value: 'Prescripcion Adquisitiva', label: 'Prescripcion Adquisitiva' },
+						{ value: 'Amparo', label: 'Amparo' },
+						{ value: 'Accidente de Trabajo', label: 'Accidente de Trabajo' },
 					]}
 					options={{
 						required: {

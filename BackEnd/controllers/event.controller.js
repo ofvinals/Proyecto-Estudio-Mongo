@@ -38,9 +38,10 @@ const createEvent = async (req, res) => {
 };
 
 const createGoogleEvent = async (req, res) => {
+	console.log(req.body);
+	const credentials = JSON.parse(process.env.GOOGLE_CREDENTIALS);
 	const auth = new google.auth.GoogleAuth({
-		keyFile:
-			'client_secret_993541654096-l9jffbub2h4ro7c2d59r1euucrakkfen.apps.googleusercontent.com (2).json',
+		credentials,
 		scopes: ['https://www.googleapis.com/auth/calendar'],
 	});
 	const calendar = google.calendar({ version: 'v3', auth });
@@ -74,7 +75,8 @@ const createGoogleEvent = async (req, res) => {
 
 const updateEvent = async (req, res) => {
 	try {
-		const { eventId, user, tipo, start, description, eventUrl } = req.body;
+		const { eventId, summary, user, tipo, start, description, eventUrl } =
+			req.body;
 		const updateEvent = await Event.findByIdAndUpdate(
 			req.params.id,
 			req.body,
