@@ -4,11 +4,13 @@ import { userExtraReducers } from './extraReducers';
 const initialState = {
 	users: [],
 	user: null,
-	status: 'Inactivo',
-	statusUser: 'Inactivo',
-	statusSign: 'Inactivo',
-	statusUpdate: 'Inactivo',
-	statusDelete: 'Inactivo',
+	status: {
+		users: 'Inactivo',
+		user: 'Inactivo',
+		sign: 'Inactivo',
+		update: 'Inactivo',
+		delete: 'Inactivo',
+	},
 	error: null,
 };
 

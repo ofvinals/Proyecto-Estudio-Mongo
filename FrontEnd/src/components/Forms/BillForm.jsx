@@ -15,6 +15,8 @@ import { uploadFile } from '../../firebase/config.js';
 import { useBillActions } from '../../hooks/UseBills.js';
 import Loader from '../../utils/Loader.jsx';
 import { useSelector } from 'react-redux';
+import { selectBill, selectBillStatus } from '../../store/bills/selectors.js';
+import { selectExptes } from '../../store/exptes/selectors.js';
 
 export const BillForm = ({ rowId, onClose, mode }) => {
 	const {
@@ -27,9 +29,9 @@ export const BillForm = ({ rowId, onClose, mode }) => {
 	const [selectedExpteCaratula, setSelectedExpteCaratula] = useState('');
 	const { createBill, getBill, updateBill } = useBillActions();
 	const { getExptes } = useExpteActions();
-	const exptes = useSelector((state) => state.exptes.exptes);
-	const bill = useSelector((state) => state.bills.bill);
-	const statusBill = useSelector((state) => state.bills.statusBill);
+	const statusBill = useSelector(selectBillStatus);
+	const bill = useSelector(selectBill);
+	const exptes = useSelector(selectExptes);
 
 	useEffect(() => {
 		if (mode === 'edit' || mode === 'view') {
@@ -38,11 +40,7 @@ export const BillForm = ({ rowId, onClose, mode }) => {
 	}, [rowId]);
 
 	useEffect(() => {
-		if (
-			statusBill === 'Exitoso' &&
-			bill &&
-			(mode === 'edit' || mode === 'view')
-		) {
+		if (bill && (mode === 'edit' || mode === 'view')) {
 			setValue('nroexpte', bill.nroexpte);
 			setValue('caratula', bill.caratula);
 			setValue('concepto', bill.concepto);
@@ -93,7 +91,7 @@ export const BillForm = ({ rowId, onClose, mode }) => {
 			};
 			if (mode === 'edit') {
 				const values = data;
-				await updateBill(rowId, values);
+				await updateBill({ rowId, values });
 				onClose();
 			} else if (mode === 'create') {
 				const values = data;

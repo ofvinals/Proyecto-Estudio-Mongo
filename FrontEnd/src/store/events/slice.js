@@ -4,11 +4,13 @@ import { eventExtraReducers } from './extraReducers';
 const initialState = {
 	events: [],
 	event: null,
-	status: 'Inactivo',
-	statusEvent: 'Inactivo',
-	statusSign: 'Inactivo',
-	statusUpdate: 'Inactivo',
-	statusDelete: 'Inactivo',
+	status: {
+		events: 'Inactivo',
+		event: 'Inactivo',
+		sign: 'Inactivo',
+		update: 'Inactivo',
+		delete: 'Inactivo',
+	},
 	error: null,
 };
 

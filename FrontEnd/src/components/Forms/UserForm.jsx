@@ -8,6 +8,7 @@ import { useForm } from 'react-hook-form';
 import { useUserActions } from '../../hooks/UseUserActions.js';
 import { useSelector } from 'react-redux';
 import Loader from '../../utils/Loader.jsx';
+import { selectUser, selectUserStatus } from '../../store/users/selectors.js';
 
 export const UserForm = ({ rowId, onClose, mode }) => {
 	const {
@@ -17,8 +18,8 @@ export const UserForm = ({ rowId, onClose, mode }) => {
 		formState: { errors },
 	} = useForm();
 	const { getUser, updateUser } = useUserActions();
-	const user = useSelector((state) => state.users.user);
-	const statusUser = useSelector((state) => state.users.statusUser);
+	const statusUser = useSelector(selectUserStatus);
+	const user = useSelector(selectUser);
 
 	useEffect(() => {
 		if (mode === 'edit' || mode === 'view') {
@@ -27,11 +28,7 @@ export const UserForm = ({ rowId, onClose, mode }) => {
 	}, [rowId]);
 
 	useEffect(() => {
-		if (
-			statusUser === 'Exitoso' &&
-			user &&
-			(mode === 'edit' || mode === 'view')
-		) {
+		if (user && (mode === 'edit' || mode === 'view')) {
 			setValue('nombre', user.nombre);
 			setValue('apellido', user.apellido);
 			setValue('email', user.email);

@@ -6,12 +6,12 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import '../../css/Header.css';
 import { useAuth } from '../../hooks/useAuth';
-import emailjs from '@emailjs/browser';
 import Modals from '../../utils/Modals';
 import { Login } from './Login';
-import { getDownloadURL, getStorage, ref } from 'firebase/storage';
+import { useMails } from '../../hooks/useMails';
 
 export const Registro = ({ setOpenRegister }) => {
+	const { sendMailRegister } = useMails();
 	const { registerUser } = useAuth();
 	const navigate = useNavigate();
 	const {
@@ -35,45 +35,11 @@ export const Registro = ({ setOpenRegister }) => {
 		setOpenModal('login');
 	};
 
-	const fetchImageUrl = async () => {
-		try {
-			const storage = getStorage();
-			const imageRef = ref(storage, '/LOGOHOME.jpg');
-			const url = await getDownloadURL(imageRef);
-			return url;
-		} catch (error) {
-			console.error('Error al obtener la URL de la imagen:', error);
-			return '';
-		}
-	};
-
 	const onSubmit = handleSubmit(async (values) => {
 		try {
 			await registerUser(values);
-			const templateParams = {
-				url: await fetchImageUrl(),
-				user_name: values.user_name,
-				user_email: values.user_email,
-				message: values.message,
-				proyect: 'Estudio Juridico Posse y Asociados',
-				messageLog: `Bienvenido al primer Estudio Juridico online de Tucuman. Estamos a tu disposicion para brindarte el mejor asesoramiento juridico!.-`,
-			};
-			emailjs
-				.send(
-					'service_iew5q2g',
-					'template_fgl8bsq',
-					templateParams,
-					'saMzvd5sdlHj2BhYr'
-				)
-				.then(
-					(result) => {
-						console.log('Correo enviado con éxito:', result.text);
-						reset();
-					},
-					(error) => {
-						console.error('Error al enviar el correo:', error.text);
-					}
-				);
+			reset();
+			await sendMailRegister(values);
 			navigate('/adminusu');
 		} catch (error) {
 			console.error('Error al registrar el usuario:', error);

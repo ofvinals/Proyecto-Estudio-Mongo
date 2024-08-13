@@ -22,6 +22,7 @@ import { useSelector } from 'react-redux';
 import useModal from '../../hooks/useModal.js';
 import { Button } from 'react-bootstrap';
 import { Pagos } from '../../components/Pagos.jsx';
+import { selectBills, selectBillStatus } from '../../store/bills/selectors.js';
 
 export const GestionBills = () => {
 	const { loggedUser } = useAuth();
@@ -29,10 +30,8 @@ export const GestionBills = () => {
 	const [viewArchived, setViewArchived] = useState(false);
 	const [rowId, setRowId] = useState(null);
 	const [data, setData] = useState([]);
-	const bills = useSelector((state) => state.bills.bills);
-	const statusBill = useSelector((state) => state.bills.statusBill);
-	const statusUpdate = useSelector((state) => state.bills.statusUpdate);
-	const statusSign = useSelector((state) => state.bills.statusSign);
+	const bills = useSelector(selectBills);
+	const statusBill = useSelector(selectBillStatus);
 	const admin = loggedUser.admin;
 	const coadmin = loggedUser.coadmin;
 	const user = loggedUser.user;
@@ -45,29 +44,27 @@ export const GestionBills = () => {
 		try {
 			await getBills();
 		} catch (error) {
-			console.error('Error al obtener gastos:', error);
+			console.error('Error al obtener caja', error);
 		}
 	};
 
 	useEffect(() => {
 		dataBills();
-	}, [statusUpdate, statusSign, statusBill]);
-
-	useEffect(() => {
-		const filteredGastos = bills.filter((gasto) =>
-			viewArchived
-				? gasto.estado === 'Pagado'
-				: gasto.estado !== 'Pagado'
-		);
-		const finalFilteredGastos = admin
-			? filteredGastos
-			: filteredGastos.filter((gasto) => gasto.cliente === user);
-		setData(finalFilteredGastos);
 	}, []);
 
 	useEffect(() => {
-		dataBills();
-	}, [viewArchived]);
+		if (statusBill === 'Exitoso') {
+			const filteredGastos = bills.filter((gasto) =>
+				viewArchived
+					? gasto.estado === 'Pagado'
+					: gasto.estado === 'Pendiente'
+			);
+			const finalFilteredGastos = admin
+				? filteredGastos
+				: filteredGastos.filter((gasto) => gasto.cliente === user);
+			setData(finalFilteredGastos);
+		}
+	}, [bills, viewArchived, statusBill]);
 
 	const formatValue = (value) => {
 		if (value instanceof Date) {

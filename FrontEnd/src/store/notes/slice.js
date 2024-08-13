@@ -4,11 +4,13 @@ import { noteExtraReducers } from './extraReducers';
 const initialState = {
 	notes: [],
 	note: null,
-	status: 'Inactivo',
-	statusNote: 'Inactivo',
-	statusSign: 'Inactivo',
-	statusUpdate: 'Inactivo',
-	statusDelete: 'Inactivo',
+	status: {
+		notes: 'Inactivo',
+		note: 'Inactivo',
+		sign: 'Inactivo',
+		update: 'Inactivo',
+		delete: 'Inactivo',
+	},
 	error: null,
 };
 

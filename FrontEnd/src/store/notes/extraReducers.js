@@ -9,66 +9,66 @@ import {
 export const noteExtraReducers = (builder) => {
 	builder
 		.addCase(getNotes.pending, (state) => {
-			state.status = 'Cargando';
+			state.status.notes = 'Cargando';
 		})
 		.addCase(getNotes.fulfilled, (state, action) => {
-			state.status = 'Exitoso';
+			state.status.notes = 'Exitoso';
 			state.notes = action.payload;
 		})
 		.addCase(getNotes.rejected, (state, action) => {
-			state.status = 'Fallido';
+			state.status.notes = 'Fallido';
 			state.error = action.payload;
 		});
 
 	builder
 		.addCase(getNote.pending, (state) => {
-			state.statusNote = 'Cargando';
+			state.status.note = 'Cargando';
 		})
 		.addCase(getNote.fulfilled, (state, action) => {
-			state.statusNote = 'Exitoso';
+			state.status.note = 'Exitoso';
 			state.note = action.payload;
 		})
 		.addCase(getNote.rejected, (state, action) => {
-			state.statusNote = 'Fallido';
+			state.status.note = 'Fallido';
 			state.error = action.payload;
 		});
 
 	builder
 		.addCase(deleteNote.pending, (state) => {
-			state.statusDelete = 'Cargando';
+			state.status.delete = 'Cargando';
 		})
 		.addCase(deleteNote.fulfilled, (state, action) => {
-			state.statusDelete = 'Exitoso';
+			state.status.delete = 'Exitoso';
 			state.notes = action.payload;
 		})
 		.addCase(deleteNote.rejected, (state, action) => {
-			state.statusDelete = 'Fallido';
+			state.status.delete = 'Fallido';
 			state.error = action.payload;
 		});
 
 	builder
 		.addCase(createNote.pending, (state) => {
-			state.statusNote = 'Cargando';
+			state.status.sign = 'Cargando';
 		})
 		.addCase(createNote.fulfilled, (state, action) => {
-			state.statusNote = 'Exitoso';
+			state.status.sign = 'Exitoso';
 			state.notes = action.payload;
 		})
 		.addCase(createNote.rejected, (state, action) => {
-			state.statusNote = 'Fallido';
+			state.status.sign = 'Fallido';
 			state.error = action.payload;
 		});
 
 	builder
 		.addCase(updateNote.pending, (state) => {
-			state.statusUpdate = 'Cargando';
+			state.status.update = 'Cargando';
 		})
 		.addCase(updateNote.fulfilled, (state, action) => {
-			state.statusUpdate = 'Exitoso';
+			state.status.update = 'Exitoso';
 			state.notes = action.payload;
 		})
 		.addCase(updateNote.rejected, (state, action) => {
-			state.statusUpdate = 'Fallido';
+			state.status.update = 'Fallido';
 			state.error = action.payload;
 		});
 };
