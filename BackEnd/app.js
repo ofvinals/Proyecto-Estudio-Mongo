@@ -33,7 +33,7 @@ app.use(
 		origin: [
 			'http://localhost:5174',
 			'http://localhost:5173',
-			'https://estudioposse.vercel.app/',
+			'https://estudioposse.vercel.app',
 			'https://proyecto-estudio-mongo.onrender.com',
 		],
 		credentials: true,
