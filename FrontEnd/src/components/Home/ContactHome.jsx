@@ -46,7 +46,7 @@ export const ContactHome = () => {
 							className='btnhome text-base p-2 bg-background text-white rounded-lg font-semibold min-w-[222px] max-w-[300px] flex items-center justify-center text-center border-1 border-white hover:border-[#25aff0]'
 							onClick={handleLogin}>
 							<i className='icosecboton bi bi-calendar-check me-2'></i>
-							AGENDA TU TURNO ONLINE!
+							AGENDA TU CITA ONLINE!
 						</Button>
 					</div>
 				</div>

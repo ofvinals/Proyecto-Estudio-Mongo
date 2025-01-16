@@ -21,11 +21,6 @@ export const Home = () => {
 		setOpenLogin(true);
 	};
 
-	const handleRegisterUser = () => {
-		setOpenLogin(false);
-		setOpenRegister(true);
-	};
-
 	return (
 		<>
 			<Header />
@@ -41,12 +36,15 @@ export const Home = () => {
 					</div>
 
 					<div className='flex flex-row justify-center top-3/4 left-0 right-0 sm:top-80 absolute'>
-						<Button
-							className='btnhome text-base p-1 bg-background text-white rounded-lg font-semibold min-w-[222px] max-w-[300px] flex items-center justify-center text-center border-1 border-white hover:border-[#25aff0] '
-							onClick={handleRegisterUser}>
-							<i className=' text-2xl pr-1 bi bi-calendar-check me-2 '></i>
-							Agenda tu turno ahora!
-						</Button>
+						<a
+							href='https://chatgpt.com/g/g-677eed1b1b0c8191a677c280be06d7f1-abogado-virtual-argentina'
+							target='_blank'
+							rel='noopener noreferrer'>
+							<Button className='btnhome text-base p-1 px-3 bg-background text-white rounded-lg font-semibold min-w-[222px] max-w-[300px] flex items-center justify-center text-center border-1 border-white hover:border-[#25aff0]'>
+								<i className='text-2xl pr-1 fa-solid fa-hexagon-nodes me-2'></i>
+								Consulta Nuestro Asistente Virtual!
+							</Button>
+						</a>
 					</div>
 				</div>
 			</section>
