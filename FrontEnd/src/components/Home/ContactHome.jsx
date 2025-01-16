@@ -25,18 +25,23 @@ export const ContactHome = () => {
 							allowFullScreen=''
 							loading='lazy'></iframe>
 					</div>
-					<div className='sm:w-6/12 w-full top flex-nowrap flex-col flex items-center justify-center'>
-						<div className='conttel flex flex-col text-center items-center w-6/12 text-base '>
-							<i className='text-[#25b0f0] text-2xl bi bi-telephone-fill mb-3l bi bi-telephone-fill me-2 mb-3'></i>
-							<p className='text-white text-2xl'>+54 381-458 1382</p>
+					<div className='w-full sm:w-6/12 flex flex-col items-center justify-center gap-6 mt-5 sm:mt-0'>
+						<div className='conttel flex flex-col text-center items-center max-w-[264px] px-4'>
+							<i className='text-[#25b0f0] text-2xl bi bi-telephone-fill mb-3'></i>
+							<p className='text-white text-xl sm:text-2xl'>
+								+54 381-458 1382
+							</p>
 						</div>
-						<div className='contmail flex flex-col text-center items-center w-6/12 text-base mt-12 sm:mt-4'>
-							<i className='text-[#25b0f0] text-2xl bi bi-envelope-at-fill me-2 '></i>
-							<p className='text-white text-2xl'>ofvinals@gmail.com</p>
+						<div className='contmail flex flex-col text-center items-center max-w-[264px] px-4'>
+							<i className='text-[#25b0f0] text-2xl bi bi-envelope-at-fill mb-1'></i>
+							<p className='text-white text-xl sm:text-2xl break-words'>
+								estudioposseyasociados @ 
+								gmail.com
+							</p>
 						</div>
-						<div className='contdir flex flex-col text-center items-center w-6/12 text-base mt-16 sm:mt-8'>
-							<i className='text-[#25b0f0] text-2xl bi bi-geo-alt-fill me-2 '></i>
-							<p className='text-white text-2xl'>
+						<div className='contdir flex flex-col text-center items-center max-w-[264px] px-4 pt-8'>
+							<i className='text-[#25b0f0] text-2xl bi bi-geo-alt-fill mb-3'></i>
+							<p className='text-white text-xl sm:text-2xl'>
 								9 de Julio 620 Planta Baja C - SMT
 							</p>
 						</div>
