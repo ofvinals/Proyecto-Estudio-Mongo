@@ -22,10 +22,13 @@ export const Services = () => {
 					<div className='sm:w-6/12 h-[400px] px-10 flex items-center justify-center flex-col text-center bg-white text-background'>
 						<h3 className='font-bold text-3xl mb-4'>Derecho Civil</h3>
 						<p className='font-semibold'>
-							Lorem ipsum dolor sit amet consectetur adipisicing elit.
-							Consectetur quibusdam error impedit expedita delectus
-							perferendis ab reiciendis officia, nisi vero id voluptas!
-							Dignissimos dolores, dolor nobis ipsam ex optio delectus.
+							Brindamos asesoramiento integral en todas las ramas del
+							Derecho Civil, desde contratos hasta responsabilidad
+							extracontractual. Representamos a nuestros clientes en
+							procesos de reclamación de daños y perjuicios, disputas de
+							propiedad, incumplimientos de obligaciones contractuales,
+							entre otros. Nuestro objetivo es proteger tus derechos y
+							buscar soluciones legales, eficientes y justas.-
 						</p>
 					</div>
 				</div>
