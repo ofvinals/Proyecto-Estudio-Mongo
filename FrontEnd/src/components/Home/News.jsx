@@ -17,7 +17,7 @@ export const News = () => {
 
 	return (
 		<div>
-			<h2 className='bg-gradient-to-t from-primary to-blue-200 text-transparent bg-clip-text text-4xl font-bold text-center py-5'>
+			<h2 className='bg-gradient-to-t from-background to-blue-200 text-transparent bg-clip-text text-4xl font-bold text-center py-5'>
 				Noticias Judiciales de Interés
 			</h2>
 

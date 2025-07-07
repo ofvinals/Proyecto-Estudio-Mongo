@@ -27,7 +27,7 @@ export const Contact = () => {
 			<section className='pb-5 flex flex-col justify-center items-center backgroundimage'>
 				<Whatsapp />
 				<div className=''>
-					<h1 className='text-3xl font-bold mt-28 bg-gradient-to-t from-primary to-blue-200 text-transparent bg-clip-text text-center'>
+					<h1 className='text-3xl font-bold mt-28 bg-gradient-to-t from-primary to-background text-transparent bg-clip-text text-center'>
 						¡Contactanos!
 					</h1>
 					<p className='text-center text-white p-2 md:mx-24'>

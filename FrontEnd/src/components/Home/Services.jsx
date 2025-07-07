@@ -14,7 +14,7 @@ export const Services = () => {
 				<Row>
 					<CardGroup className='flex flex-wrap flex-row justify-around items-center'>
 						<Col xs={10} sm={6} md={4} className='flex justify-center'>
-							<Card className='cardbody d-flex flex-col flex-nowrap justify-center w-[210px] h-[350px] items-center text-center text-white bg-[#185574] m-3 transform transition duration-300 hover:scale-105'>
+							<Card className='cardbody d-flex flex-col flex-nowrap justify-center w-[210px] h-[350px] items-center text-center text-white bg-background m-3 transform transition duration-300 hover:scale-105'>
 								<div className='h-full'>
 									<i className='text-3xl mt-7 fa-solid fa-file-contract'></i>
 									<Card.Title className='text-xl font-semibold text-white text-center m-2'>
@@ -29,14 +29,14 @@ export const Services = () => {
 										</ul>
 									</div>
 								</div>
-								<Link className='text-[#25b0f0] pb-3 font-bold hover:text-white' to='/services '>
+								<Link className='text-[#8c8e8f] pb-3 font-bold hover:text-white' to='/services '>
 									Saber mas<i className="ps-2 fa-solid fa-arrow-right-long"></i>
 								</Link>
 							</Card>
 						</Col>
 
 						<Col xs={10} sm={6} md={4} className='flex justify-center'>
-							<Card className='cardbody d-flex flex-col flex-nowrap justify-center w-[210px] h-[350px] items-center text-center text-white bg-[#185574] m-3 transform transition duration-300 hover:scale-105'>
+							<Card className='cardbody d-flex flex-col flex-nowrap justify-center w-[210px] h-[350px] items-center text-center text-white bg-background m-3 transform transition duration-300 hover:scale-105'>
 								<div className='h-full'>
 									<i className='text-3xl mt-7 fa-solid fa-person-digging'></i>
 									<Card.Title className='text-xl font-semibold text-white text-center m-2'>
@@ -50,14 +50,14 @@ export const Services = () => {
 										</ul>
 									</div>
 								</div>
-								<Link className=' text-[#25b0f0] pb-3 font-bold hover:text-white' to='/services '>
+								<Link className=' text-[#8c8e8f] pb-3 font-bold hover:text-white' to='/services '>
 									Saber mas<i className="ps-2 fa-solid fa-arrow-right-long"></i>
 								</Link>
 							</Card>
 						</Col>
 
 						<Col xs={10} sm={6} md={4} className='flex justify-center'>
-                  <Card className='cardbody d-flex flex-col flex-nowrap justify-center w-[210px] h-[350px] items-center text-center text-white bg-[#185574] m-3 transform transition duration-300 hover:scale-105'>
+                  <Card className='cardbody d-flex flex-col flex-nowrap justify-center w-[210px] h-[350px] items-center text-center text-white bg-background m-3 transform transition duration-300 hover:scale-105'>
 								<div className='h-full'>
 									<i className='text-3xl mt-7 fa-solid fa-stamp'></i>
 									<Card.Title className='text-xl font-semibold text-white text-center m-2'>
@@ -71,14 +71,14 @@ export const Services = () => {
 										</ul>
 									</div>
 								</div>
-								<Link className=' text-[#25b0f0] pb-3 font-bold hover:text-white' to='/services '>
+								<Link className=' text-[#8c8e8f] pb-3 font-bold hover:text-white' to='/services '>
 									Saber mas<i className="ps-2 fa-solid fa-arrow-right-long"></i>
 								</Link>
 							</Card>
 						</Col>
 
 						<Col xs={10} sm={6} md={4} className='flex justify-center'>
-                  <Card className='cardbody d-flex flex-col flex-nowrap justify-center w-[210px] h-[350px] items-center text-center text-white bg-[#185574] m-3 transform transition duration-300 hover:scale-105'>
+                  <Card className='cardbody d-flex flex-col flex-nowrap justify-center w-[210px] h-[350px] items-center text-center text-white bg-background m-3 transform transition duration-300 hover:scale-105'>
 								<div className='h-full'>
 									<i className='text-3xl mt-7 fa-solid fa-landmark'></i>
 									<Card.Title className='text-xl font-semibold text-white text-center m-2'>
@@ -93,14 +93,14 @@ export const Services = () => {
 										</ul>
 									</div>
 								</div>
-								<Link className=' text-[#25b0f0] pb-3 font-bold hover:text-white' to='/services'>
+								<Link className=' text-[#8c8e8f] pb-3 font-bold hover:text-white' to='/services'>
 									Saber mas<i className="ps-2 fa-solid fa-arrow-right-long"></i>
 								</Link>
 							</Card>
 						</Col>
 
 						<Col xs={10} sm={6} md={4} className='flex justify-center'>
-                  <Card className='cardbody d-flex flex-col flex-nowrap justify-center w-[210px] h-[350px] items-center text-center text-white bg-[#185574] m-3 transform transition duration-300 hover:scale-105'>
+                  <Card className='cardbody d-flex flex-col flex-nowrap justify-center w-[210px] h-[350px] items-center text-center text-white bg-background m-3 transform transition duration-300 hover:scale-105'>
 								<div className='h-full'>
 									<i className='text-3xl mt-7 fa-solid fa-briefcase'></i>
 									<Card.Title className='text-xl font-semibold text-white text-center m-2'>
@@ -114,14 +114,14 @@ export const Services = () => {
 										</ul>
 									</div>
 								</div>
-								<Link className=' text-[#25b0f0] pb-3 font-bold hover:text-white' to='/services '>
+								<Link className=' text-[#8c8e8f] pb-3 font-bold hover:text-white' to='/services '>
 									Saber mas<i className="ps-2 fa-solid fa-arrow-right-long"></i>
 								</Link>
 							</Card>
 						</Col>
 
 						<Col xs={10} sm={6} md={4} className='flex justify-center'>
-                  <Card className='cardbody d-flex flex-col flex-nowrap justify-center w-[210px] h-[350px] items-center text-center text-white bg-[#185574] m-3 transform transition duration-300 hover:scale-105'>
+                  <Card className='cardbody d-flex flex-col flex-nowrap justify-center w-[210px] h-[350px] items-center text-center text-white bg-background m-3 transform transition duration-300 hover:scale-105'>
 								<div className='h-full'>
 									<i className='text-3xl mt-7 fa-solid fa-scale-balanced'></i>
 									<Card.Title className='text-xl font-semibold text-white text-center m-2'>
@@ -135,7 +135,7 @@ export const Services = () => {
 										</ul>
 									</div>
 								</div>
-								<Link className=' text-[#25b0f0] pb-3 font-bold hover:text-white' to='/services '>
+								<Link className=' text-[#8c8e8f] pb-3 font-bold hover:text-white' to='/services '>
 									Saber mas<i className="ps-2 fa-solid fa-arrow-right-long"></i>
 								</Link>
 							</Card>

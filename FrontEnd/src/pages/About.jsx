@@ -10,7 +10,7 @@ export const Nosotros = () => {
 			<Header />
 			<section className='flex flex-wrap justify-center flex-col backgroundimage pt-28'>
 				<Whatsapp />
-				<h1 className=' text-3xl my-3 font-bold  bg-gradient-to-t from-primary to-blue-200 text-transparent bg-clip-text text-center'>
+				<h1 className=' text-3xl my-3 font-bold  bg-gradient-to-t from-primary to-background text-transparent bg-clip-text text-center'>
 					Sobre Nosotros
 				</h1>
 				<h2 className='text-2xl text-white text-center font-semibold my-3'>

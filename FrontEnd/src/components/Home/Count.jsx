@@ -84,7 +84,7 @@ export const Count = () => {
 
 	return (
 		<>
-			<div className='rounded-t-lg pt-2 mt-10 text-[#25b0f0] bg-[#185574] font-semibold flex flex-row w-full items-center justify-around text-3xl '>
+			<div className='rounded-t-lg pt-2 mt-10 text-[#25b0f0] bg-background font-semibold flex flex-row w-full items-center justify-around text-3xl '>
 				<p
 					id='promo1-value'
 					className='bg-gradient-to-t from-primary to-blue-200 text-transparent bg-clip-text font-bold'>
@@ -101,7 +101,7 @@ export const Count = () => {
 					+0
 				</p>
 			</div>
-			<div className='rounded-b-lg py-3 text-white bg-[#185574] font-semibold flex flex-row w-full items-center justify-around text-xl'>
+			<div className='rounded-b-lg py-3 text-white bg-background font-semibold flex flex-row w-full items-center justify-around text-xl'>
 				<p className='w-4/12 text-center'>Casos de exito</p>
 				<p className='w-4/12 text-center'>Años de trayectoria</p>
 				<p className='w-4/12 text-center'>Clientes</p>

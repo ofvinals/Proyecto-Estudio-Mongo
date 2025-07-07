@@ -9,7 +9,7 @@ export const CarrouselHome = () => {
 				<Carousel.Item>
 					<div className='imagencar1 items-center rounded-xl'>
 						<div className='flex flex-col'>
-							<h3 className='text-[#25b0f0] w-full text-4xl font-bold text-center mb-8'>
+							<h3 className='text-[#8c8e8f] w-full text-4xl font-bold text-center mb-8'>
 								Disponibilidad
 							</h3>
 							<ul className='text-white text[14px] font-bold flex flex-col text-center mx-10 lg:mx-32'>
@@ -25,7 +25,7 @@ export const CarrouselHome = () => {
 				<Carousel.Item>
 					<div className='imagencar2 rounded-xl'>
 						<div className='d-flex flex-column'>
-							<h3 className='text-[#25b0f0] w-full text-4xl font-bold text-center mb-8'>
+							<h3 className='text-[#8c8e8f] w-full text-4xl font-bold text-center mb-8'>
 								Expediente Virtual
 							</h3>
 							<ul className='text-white text[14px] font-bold flex flex-col text-center mx-10 lg:mx-32'>
@@ -45,7 +45,7 @@ export const CarrouselHome = () => {
 				<Carousel.Item>
 					<div className='imagencar3 rounded-xl'>
 						<div className='d-flex flex-column'>
-							<h3 className='text-[#25b0f0] w-full text-4xl font-bold text-center mb-8'>
+							<h3 className='text-[#8c8e8f] w-full text-4xl font-bold text-center mb-8'>
 								Formas de pago
 							</h3>
 							<ul className='text-white text[14px] font-bold flex flex-col text-center mx-10 lg:mx-32'>
@@ -62,7 +62,7 @@ export const CarrouselHome = () => {
 				<Carousel.Item>
 					<div className='imagencar2 rounded-xl'>
 						<div className='d-flex flex-column'>
-							<h3 className='text-[#25b0f0] w-full text-4xl font-bold text-center mb-8'>
+							<h3 className='text-[#8c8e8f] w-full text-4xl font-bold text-center mb-8'>
 								Estudio Juridico 2.0
 							</h3>
 							<p className='text-white text[14px] font-bold flex flex-col text-center mx-10 lg:mx-32'>
@@ -79,7 +79,7 @@ export const CarrouselHome = () => {
 					<div className='imagencar2 rounded-xl'>
 						<div className='d-flex flex-column'>
 							{' '}
-							<h3 className='text-[#25b0f0] w-full text-4xl font-bold text-center mb-8'>
+							<h3 className='text-[#8c8e8f] w-full text-4xl font-bold text-center mb-8'>
 								Asesoramiento para empresas
 							</h3>
 							<ul className='text-white text[14px] font-bold flex flex-col text-center mx-10 lg:mx-32'>

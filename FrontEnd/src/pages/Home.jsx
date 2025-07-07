@@ -58,7 +58,7 @@ export const Home = () => {
 				</Button>
 			</section>
 
-			<p className=' bg-[#185574] p-5 rounded-lg w-full text-5xl font-bold text-center my-10 text-white'>
+			<p className=' bg-background p-5 rounded-lg w-full text-5xl font-bold text-center my-10 text-white'>
 				Somos el {''}
 				<span className='bg-gradient-to-t from-primary to-blue-200 text-transparent bg-clip-text'>
 					primer Estudio Juridico online {''}
@@ -72,12 +72,12 @@ export const Home = () => {
 
 			<section className='d-flex flex-row justify-center my-10 mr-2 md:mx-16 xl:mx-36 h-[380px]'>
 				<div className='imagenlogosec4 flex justify-center items-center  w-5/12'></div>
-				<div className='w-7/12 h-full flex bg-[#185574] rounded-md flex-col justify-center align-center'>
+				<div className='w-7/12 h-full flex bg-background rounded-md flex-col justify-center align-center'>
 					<p className='text-white w-full flex text-center justify-center text-2xl lg:text-3xl font-bold mt-3 '>
 						PORQUE ELEGIRNOS
 					</p>
 					<p className='text-white text-[14px] w-full text-center px-1 pt-3 sm:text-[16px]'>
-						Mas de 35 años de ejercicio de la abogacia avalan el
+						Mas de 70 años de ejercicio de la abogacia avalan el
 						profesionalismo con el que llevamos a cabo un servicio de
 						asesoría legal de excelencia. Nos caracteriza la seriedad y
 						responsabilidad en la relacion con nuestros clientes.-
