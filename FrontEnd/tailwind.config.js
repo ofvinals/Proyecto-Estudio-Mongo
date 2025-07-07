@@ -7,9 +7,9 @@ export default {
 				sans: ['Roboto', 'sans-serif'], // Aquí puedes definir tus fuentes personalizadas
 			},
 			colors: {
-				primary: '#25aff0',
+				primary: '#8c8e8f',
 				secondary: '',
-				background: '#185574',
+				background: '#343536',
 			},
 		},
 		dropShadow: {

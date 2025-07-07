@@ -13,7 +13,7 @@ export const ContactHome = () => {
 	return (
 		<section className='flex items-center justify-center pt-10'>
 			<div className='imagensection4 md:w-[750px] xl:w-[1100px] rounded-xl mt-3 flex flex-col flex-around h-[550px] sm:h-[450px] w-full mb-10'>
-				<p className=' titlecontac w-full flex justify-center font-bold text-4xl text-[#25b0f0] text-center items-center'>
+				<p className=' titlecontac w-full flex justify-center font-bold text-4xl text-white text-center items-center'>
 					CONTACTO
 				</p>
 				<div className='flex flex-col sm:flex-row w-full justify-center items-center'>
@@ -27,20 +27,20 @@ export const ContactHome = () => {
 					</div>
 					<div className='w-full sm:w-6/12 flex flex-col items-center justify-center gap-6 mt-5 sm:mt-0'>
 						<div className='conttel flex flex-col text-center items-center max-w-[264px] px-4'>
-							<i className='text-[#25b0f0] text-2xl bi bi-telephone-fill mb-3'></i>
+							<i className='text-white text-2xl bi bi-telephone-fill mb-3'></i>
 							<p className='text-white text-xl sm:text-2xl'>
 								+54 381-458 1382
 							</p>
 						</div>
 						<div className='contmail flex flex-col text-center items-center max-w-[264px] px-4'>
-							<i className='text-[#25b0f0] text-2xl bi bi-envelope-at-fill mb-1'></i>
+							<i className='text-white text-2xl bi bi-envelope-at-fill mb-1'></i>
 							<p className='text-white text-xl sm:text-2xl break-words'>
 								estudioposseyasociados @ 
 								gmail.com
 							</p>
 						</div>
 						<div className='contdir flex flex-col text-center items-center max-w-[264px] px-4 pt-8'>
-							<i className='text-[#25b0f0] text-2xl bi bi-geo-alt-fill mb-3'></i>
+							<i className='text-white text-2xl bi bi-geo-alt-fill mb-3'></i>
 							<p className='text-white text-xl sm:text-2xl'>
 								9 de Julio 620 Planta Baja C - SMT
 							</p>

@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 
 export const Footer = () => {
 	return (
-		<footer className='pt-5 bg-[#222a37]'>
+		<footer className='pt-5 bg-background'>
 			<div className='container text-center'>
 				<div className='row'>
 					<ul className='col-6 col-md-4 nav justify-center items-center my-1'>

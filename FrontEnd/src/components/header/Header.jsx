@@ -50,7 +50,7 @@ export const Header = () => {
 		const handleScroll = () => {
 			if (window.scrollY > 0) {
 				setScrolled(true);
-				setLogoSrc('/logo 1.png');
+				setLogoSrc('/logo estudio.png');
 			} else {
 				setScrolled(false);
 				setLogoSrc('/logo 2.png');
@@ -109,28 +109,28 @@ export const Header = () => {
 									className={textClassName}
 									to='/services'
 									onClick={handleNavCollapse}>
-									<i className='pr-2 text-xl text-[#185574] lg:hidden bi bi-server'></i>
+									<i className='pr-2 text-xl text-background lg:hidden bi bi-server'></i>
 									Servicios
 								</Link>
 								<Link
 									className={textClassName}
 									to='/nosotros'
 									onClick={handleNavCollapse}>
-									<i className='pr-2 text-xl text-[#185574] lg:hidden bi bi-file-person-fill'></i>
+									<i className='pr-2 text-xl text-background lg:hidden bi bi-file-person-fill'></i>
 									Quienes Somos
 								</Link>
 								<Link
 									className={textClassName}
 									to='/contact'
 									onClick={handleNavCollapse}>
-									<i className='pr-2 text-xl text-[#185574] lg:hidden bi bi-chat-square-text-fill'></i>
+									<i className='pr-2 text-xl text-background lg:hidden bi bi-chat-square-text-fill'></i>
 									Contacto
 								</Link>
 								<Link
 									className={textClassName}
 									to='/interes'
 									onClick={handleNavCollapse}>
-									<i className='pr-2 text-xl text-[#185574] lg:hidden bi bi-browser-safari'></i>
+									<i className='pr-2 text-xl text-background lg:hidden bi bi-browser-safari'></i>
 									Sitios de interes
 								</Link>
 								{user ? (
@@ -138,7 +138,7 @@ export const Header = () => {
 										className={textClassName}
 										to='/adminusu'
 										onClick={handleNavCollapse}>
-										<i className='pr-2 text-xl text-[#185574] lg:hidden bi bi-person-fill-check'></i>
+										<i className='pr-2 text-xl text-background lg:hidden bi bi-person-fill-check'></i>
 										Panel de Usuarios
 									</Link>
 								) : null}
@@ -147,7 +147,7 @@ export const Header = () => {
 										className={textClassName}
 										to='/admin'
 										onClick={handleNavCollapse}>
-										<i className='pr-2 text-xl text-[#185574] lg:hidden bi bi-person-fill-gear'></i>
+										<i className='pr-2 text-xl text-background lg:hidden bi bi-person-fill-gear'></i>
 										Panel de Administracion
 									</Link>
 								) : null}
@@ -174,7 +174,7 @@ export const Header = () => {
 										</Button>
 									)}
 									<Button
-										className={`btnreg md:mb-1 bg-[#185574] w-[142px] text-white border-2 border-[#185574] p-2 rounded-lg  ${
+										className={`btnreg md:mb-1 bg-background w-[142px] text-white border-2 border-background p-2 rounded-lg  ${
 											user ? 'hidden' : ''
 										}`}
 										onClick={() => {
