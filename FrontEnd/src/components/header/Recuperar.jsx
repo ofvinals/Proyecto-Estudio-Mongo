@@ -41,7 +41,7 @@ export const Recuperar = ({ onClose }) => {
 					className='mb-3 d-flex justify-content-center'
 					controlId='inputpassword'>
 					<button
-						className='bg-white shadow-3xl btnAdmin mx-2 text-primary text-center p-2 border-2 w-[150px] my-3 border-primary rounded-xl font-bold'
+						className='bg-white shadow-3xl btnAdmin mx-2 text-background text-center p-2 border-2 w-[150px] my-3 border-background rounded-xl font-bold'
 						onClick={(e) => handleSubmit(e)}>
 						Enviar
 					</button>
