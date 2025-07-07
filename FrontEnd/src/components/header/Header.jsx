@@ -70,8 +70,8 @@ export const Header = () => {
 		? 'text-background hover:decoration-background text-wrap hover:underline hover:decoration-2 lg:text-center  hover:underline-offset-8 p-3'
 		: 'text-background lg:text-white hover:decoration-background lg:hover:decoration-white text-wrap hover:underline hover:decoration-2 lg:text-center  hover:underline-offset-8 p-3';
 	const loginbtnClassName = scrolled
-		? 'm-3 lg:m-0 btnlogin md:mb-2 lg:mb-0 w-[152px] bg-transparent border-2 border-[#185574] p-2 lg:mr-3 rounded-lg text-[#185574]'
-		: 'm-3 lg:m-0 btnlogin md:mb-2 lg:mb-0 w-[152px] bg-transparent border-2 border-[#185574] p-2 lg:mr-3 rounded-lg text-[#185574]';
+		? 'm-3 lg:m-0 btnlogin md:mb-2 lg:mb-0 w-[152px] bg-transparent border-2 border-background p-2 lg:mr-3 rounded-lg text-white'
+		: 'm-3 lg:m-0 btnlogin md:mb-2 lg:mb-0 w-[152px] bg-transparent border-2 border-background p-2 lg:mr-3 rounded-lg text-white';
 	const toggleClassName = scrolled ? 'bg-background' : '';
 
 	return (
